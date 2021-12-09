@@ -1,0 +1,8 @@
+image: node:boron
+
+pipelines:
+  default:
+    - step:
+        script:
+          - npm install
+          - npm test
