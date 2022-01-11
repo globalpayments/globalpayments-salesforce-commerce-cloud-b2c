@@ -1,0 +1,63 @@
+  <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
+  <div id="gpayerror"></div> 
+ <form id="payment-form" action="/Payment/Charge" method="post">
+    <!-- Other input fields to capture relevant data -->
+    <label for="billing_zip">Billing Zip Code</label>
+    <input id="billing_zip" name="billing_zip" value="47150" type="tel" />
+
+    <!-- Target for the credit card form -->
+    <div id="credit-card"></div>
+</form>
+<script src="https://js.globalpay.com/v1/globalpayments.js"></script>
+
+
+<script type="text/javascript">
+// Configure account
+GlobalPayments.configure({
+    accessToken: '${pdict.token}',
+    env: "sandbox" // or "production"
+});
+
+// Create Form
+const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "gp-default" });
+
+cardForm.on("token-success", (resp) => {
+    // add payment token to form as a hidden input
+    const token = document.createElement("input");
+    token.type = "hidden";
+    token.name = "payment_token";
+    token.value = resp.paymentReference;
+  $('#gpayerror').text(''); 
+    // Submit data to the integration's backend for processing
+    const form = document.getElementById("payment-form");
+     $.ajax({
+              url:'GlobalPay-Authentications',
+              type: 'get',
+              datatype : "json",
+              data: {gpayResp:JSON.stringify(resp)
+                     },
+              success: function (data) {
+                  if (data.success) { 
+                    window.open(
+                      data.authenticate.three_ds.redirect_url,
+                      '_blank'
+                    );
+                    console.log('data::'+data);
+                  } else { 
+                    console.log('data::'+data);
+                  }
+              },
+              error: function (err) {
+                  if (err.responseJSON.redirectUrl) {
+                  } 
+              }
+            });  
+    form.appendChild(token);
+    form.submit();
+});
+
+cardForm.on("token-error", (resp) => {
+    // show error to the consumer
+    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+});
+</script>
