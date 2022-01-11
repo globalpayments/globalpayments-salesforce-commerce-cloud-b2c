@@ -1,0 +1,11 @@
+<!---Displaying button for applepay--->
+<div class="tab-pane apple-pay-content" id="apple-pay-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+ <div class="apple-pay-button">
+   <button id="apple-pay-button" class="btn btn-apple-pay-button" >
+                <img class="apple-pay-logo" src="${URLUtils.staticURL('/images/apple-pay-button.png')}" 
+                  alt="ApplePay">
+  </button>
+  </div>
+</fieldset>
+</div>

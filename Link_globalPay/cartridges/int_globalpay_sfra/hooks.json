@@ -1,0 +1,13 @@
+{
+    "hooks": [{
+            "name": "app.payment.processor.globalpay_creditcard",
+            "script": "./cartridge/scripts/hooks/payment/processor/globalpaycredit"
+        },{
+            "name": "app.payment.processor.globalpay_paypal",
+            "script": "./cartridge/scripts/hooks/payment/processor/globalpaypaypal"
+        },{
+            "name": "app.payment.processor.globalpay_applepay",
+            "script": "./cartridge/scripts/hooks/payment/processor/globalpayapplepay"
+        }
+    ]
+}

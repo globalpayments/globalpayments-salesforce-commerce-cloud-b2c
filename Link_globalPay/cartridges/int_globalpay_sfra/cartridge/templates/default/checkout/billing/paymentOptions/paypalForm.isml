@@ -1,0 +1,11 @@
+<!---Displaying button for payment through paypal--->
+<div class="tab-pane paypal-content" id="paypal-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+<div class="paypal-button">
+  <button id="paypal-button" class="btn btn-paypal-button" >
+                <img class="paypal-logo" src="${URLUtils.staticURL('/images/paypal-logo-button.png')}" 
+                 alt="PayPal">
+  </button>
+  </div>
+</fieldset>
+</div>

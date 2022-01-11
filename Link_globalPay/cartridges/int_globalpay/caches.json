@@ -1,0 +1,8 @@
+{
+    "caches": [
+        {
+            "id": "GlobalPayAccessToken",
+            "expireAfterSeconds": 3600
+        }
+    ]
+}

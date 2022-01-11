@@ -1,0 +1,16 @@
+
+<div class="tab-pane apple-pay-content" id="apple-pay-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is apple Pay --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="GP_DW_APPLE_PAY"
+        >
+<fieldset class="apple-pay-form">
+            <isinclude template="checkout/billing/paymentOptions/applePayForm" />
+        </fieldset>
+        </fieldset>
+  </div>
+
+
