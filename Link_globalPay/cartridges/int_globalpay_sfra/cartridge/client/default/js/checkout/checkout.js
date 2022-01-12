@@ -311,6 +311,12 @@ console.log('testing....');
                                 window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;   //
                                 // Populate the Address Summary
                                 //
+                                if($('.tab-pane.active').attr('id') == 'google-pay-content')
+                                {
+                                    placeOrderSuccess(data);//populate order details
+                             defer.resolve(data);
+                                }
+                                else{
                                 $('body').trigger('checkout:updateCheckoutView',
                                     { order: data.order, customer: data.customer });
 
@@ -328,6 +334,7 @@ console.log('testing....');
 
                                 scrollAnimate();
                                 defer.resolve(data);
+                            }
                             }
                         },
                         error: function (err) {
@@ -359,28 +366,7 @@ console.log('testing....');
                                     defer.reject(data);
                                 }
                             } else {
-                                var redirect = $('<form>')
-                                    .appendTo(document.body)
-                                    .attr({
-                                        method: 'POST',
-                                        action: data.continueUrl
-                                    });
-
-                                $('<input>')
-                                    .appendTo(redirect)
-                                    .attr({
-                                        name: 'orderID',
-                                        value: data.orderID
-                                    });
-
-                                $('<input>')
-                                    .appendTo(redirect)
-                                    .attr({
-                                        name: 'orderToken',
-                                        value: data.orderToken
-                                    });
-
-                                redirect.submit();
+                                placeOrderSuccess(data);//populate order details
                                 defer.resolve(data);
                             }
                         },
@@ -391,6 +377,31 @@ console.log('testing....');
                     });
 
                     return defer;
+                }
+                function placeOrderSuccess(data)
+                {
+                    var redirect = $('<form>')
+                    .appendTo(document.body)
+                    .attr({
+                        method: 'POST',
+                        action: data.continueUrl
+                    });
+
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'orderID',
+                        value: data.orderID
+                    });
+
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'orderToken',
+                        value: data.orderToken
+                    });
+
+                redirect.submit();
                 }
                 var p = $('<div>').promise(); // eslint-disable-line
                 setTimeout(function () {
@@ -455,7 +466,16 @@ console.log('testing....');
                 $('.btn-paypal-button',plugin).on('click',function() {
                     members.nextStage();
                 });
-
+                $('body').on('submit:googlepay',function(e,data)
+                {
+                    console.log(data);
+                    var token=document.createElement('input');
+                    token.type="hidden";
+                    token.name="payment_token";
+                    token.value=data;
+                    $('#dwfrm_billing').append(token);
+                    members.nextStage();
+                });
                 //
                 // remember stage (e.g. shipping)
                 //

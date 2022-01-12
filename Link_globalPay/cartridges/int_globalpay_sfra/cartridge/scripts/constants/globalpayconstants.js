@@ -23,5 +23,12 @@ var authorizationData = new Object();
  paypalData.entryMode = 'paypal';
 
  globalpayConstants.paypalData = paypalData;
+ var googlePay=new Object();
+ googlePay.account_name = 'transaction_processing';
+ googlePay.channel = 'CNP';
+ googlePay.type = 'SALE';
+ googlePay.entryMode = 'ECOM';
+ googlePay.provider='PAY_BY_GOOGLE';
 
+ globalpayConstants.googlePay=googlePay;
 module.exports = globalpayConstants;
