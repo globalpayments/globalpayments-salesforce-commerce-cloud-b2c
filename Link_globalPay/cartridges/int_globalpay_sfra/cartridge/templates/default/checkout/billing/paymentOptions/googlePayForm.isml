@@ -1,11 +1,2 @@
 <!---Displaying button for googlepay--->
-<div class="tab-pane google-pay-content" id="google-pay-content" role="tabpanel">
-<fieldset class="payment-form-fields">
-  <div class="google-pay-button">
-   <button id="google-pay-button" class="btn btn-google-pay-button">
-                <img class="google-pay-logo" src="${URLUtils.staticURL('/images/google-pay-button.svg')}" 
-                  alt="GooglePay">
-  </button>
-  </div>
-</fieldset>
-</div>
+<div id="google-pay-btn"></div>

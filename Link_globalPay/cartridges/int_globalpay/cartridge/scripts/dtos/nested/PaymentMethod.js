@@ -5,6 +5,7 @@ var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var Card = require('~/cartridge/scripts/dtos/paymentMethods/Card');
 var Authentication = require('~/cartridge/scripts/dtos/paymentMethods/Authentication');
 var Apm = require('~/cartridge/scripts/dtos/paymentMethods/Apm');
+var DigitalWallet=require('~/cartridge/scripts/dtos/paymentMethods/DigitalWallet');
 
 var PaymentMethodRequest = AbstractRequest.extend({
     init: function (requestObj) {
@@ -29,6 +30,7 @@ var PaymentMethodRequest = AbstractRequest.extend({
                 enumerable: true,
                 writable: true
             },
+            digitalWallet: AbstractResponse.getAccessorDescriptorWithConstructor(DigitalWallet.Request),
             card: AbstractResponse.getAccessorDescriptorWithConstructor(Card.Request),
             authentication: AbstractResponse.getAccessorDescriptorWithConstructor(Authentication.Request),
             apm:AbstractResponse.getAccessorDescriptorWithConstructor(Apm.Request),
@@ -58,6 +60,7 @@ var PaymentMethodResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
+            digitalWallet: AbstractResponse.getAccessorDescriptorWithConstructor(DigitalWallet.Request),
             card: AbstractResponse.getAccessorDescriptorWithConstructor(Card.Response),
             authentication: AbstractResponse.getAccessorDescriptorWithConstructor(Authentication.Response),
             apm:AbstractResponse.getAccessorDescriptorWithConstructor(Apm.Response),
