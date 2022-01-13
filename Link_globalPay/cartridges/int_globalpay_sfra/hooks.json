@@ -8,6 +8,10 @@
         },{
             "name": "app.payment.processor.globalpay_applepay",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpayapplepay"
+        },
+        {
+            "name": "app.payment.processor.google_pay",
+            "script": "./cartridge/scripts/hooks/payment/processor/globalpaygooglepay"
         }
     ]
 }
