@@ -10,7 +10,7 @@ server.extend(page);
 server.append('Begin', function (req, res, next) {
     var globalPayHelper = require('int_globalpay/cartridge/scripts/helpers/globalPayHelper');  
     var gpayToken =  globalPayHelper.getAccessToken();
-    var env =   globalPayHelper.getPreferences().env;
+    var env =  'sandbox';// globalPayHelper.getPreferences().env;
     var viewData = res.getViewData();
         viewData = {
             token : gpayToken,

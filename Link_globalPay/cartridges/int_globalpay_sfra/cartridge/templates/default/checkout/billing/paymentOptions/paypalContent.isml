@@ -1,0 +1,15 @@
+<div class="tab-pane paypal-content" id="paypal-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is paypal --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="GP_DW_PAYPAL"
+        >
+<fieldset class="paypal-form">
+            <isinclude template="checkout/billing/paymentOptions/paypalForm" />
+        </fieldset>
+        </fieldset>
+  </div>
+
+

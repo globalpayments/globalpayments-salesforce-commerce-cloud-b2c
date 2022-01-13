@@ -1,0 +1,10 @@
+<li class="nav-item" data-method-id="${paymentOption.ID}">
+    <a class="nav-link apple-pay-tab" data-toggle="tab" href="#apple-pay-content" role="tab">
+        <img class="apple-pay-option"
+                src="${URLUtils.staticURL('/images/apple.png')}"
+                height="32"
+                alt="${paymentOption.name}"
+                title="${paymentOption.name}"
+        >
+    </a>
+</li>

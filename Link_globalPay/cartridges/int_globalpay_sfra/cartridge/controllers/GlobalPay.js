@@ -2,6 +2,11 @@
 var page = module.superModule;
 var server = require('server');
 
+server.get('Threeds', function(req, res, next){
+            res.render('globalpay/threeds');
+    next();
+});
+
 server.get('Authentications', function(req, res, next){
     // service logic import 
     var globalPayHelper = require('int_globalpay/cartridge/scripts/helpers/globalPayHelper');
@@ -11,6 +16,8 @@ server.get('Authentications', function(req, res, next){
             "authenticate" : authenticate });
     next();
 });
+
+
 
 server.post('Transactions', function(req, res, next){
     // service logic import 

@@ -5,38 +5,87 @@ var SERVICE_NAME = 'int_globalpay.http.generic';
 /**
  * Creates and prepares Global Pay service
  *
- * @param {string} token - service bearer token
- *
  * @returns {dw.service.Service} Global Pay service.
  */
-function getService(token) {
+function getService() {
     var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+    var UUIDUtils = require('dw/util/UUIDUtils');
 
     return LocalServiceRegistry.createService(SERVICE_NAME, {
         createRequest: function (svc, requestObject) {
             var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+            var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+            var accessToken = requestObject.getToken();
 
             svc.setAuthentication('NONE');
-            svc.setRequestMethod('POST');
+            svc.setRequestMethod(requestObject.getHttpMethod());
             svc.setURL(svc.getURL() + '/' + requestObject.getEndpoint());
-            svc.addHeader('content-type', 'application/json');
-            svc.addHeader('x-gp-version', globalPayHelper.getPreferences().apiVersion);
 
-            if (token) {
-                svc.addHeader('Authorization', 'Bearer ' + token);
+            svc.addHeader('content-type', 'application/json');
+            svc.addHeader('x-gp-version', globalPayPreferences.getPreferences().apiVersion);
+            svc.addHeader('x-gp-idempotency', UUIDUtils.createUUID());
+
+            if (accessToken) {
+                svc.addHeader('Authorization', 'Bearer ' + accessToken);
             }
 
-            return JSON.stringify(requestObject.getDTO());
+            if (['POST', 'PATCH'].indexOf(requestObject.getHttpMethod()) > -1) {
+                return requestObject.getDTO();
+            }
         },
+
         parseResponse: function (svc, response) {
-            return JSON.parse(response.text);
+            var serviceResponse = null;
+
+            try {
+                serviceResponse = JSON.parse(response.text);
+            } catch (e) {
+                // TODO add error handling
+            }
+
+            return serviceResponse;
         },
+
         filterLogMessage: function (msg) {
             return msg;
         }
     });
 }
 
+function executeRequest(requestObject, responseClass) {
+    var service = getService();
+    var serviceResult = service.call(requestObject);
+
+    if (serviceResult.isOk()) {
+        return {
+            success: true,
+            response: new responseClass(serviceResult.getObject())
+        };
+    } else  {
+        var errorObject = {
+            error_code: 'GENERAL_ERROR',
+            detailed_error_code: serviceResult.getError(),
+            detailed_error_description: serviceResult.getMsg()
+        };
+
+        if (serviceResult.getErrorMessage()) {
+            var APIError = require('*/cartridge/scripts/dtos/APIError');
+
+            try {
+                errorObject = JSON.parse(serviceResult.getErrorMessage());
+            } catch (e) {}
+        }
+
+        // TODO add retry mechanism for expired/invalid access token with max retries = 3 // https://developer.globalpay.com/authentication
+        // 40001/40002
+
+        return {
+            success: false,
+            error: new APIError.Response(errorObject)
+        }
+    }
+}
+
 module.exports = {
-    getService: getService
+    executeRequest: executeRequest
 };
