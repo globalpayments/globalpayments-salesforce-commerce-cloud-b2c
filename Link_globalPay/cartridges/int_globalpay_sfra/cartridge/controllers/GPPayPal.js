@@ -6,11 +6,11 @@ server.use('PayPalReturn', function(req, res, next){
         var Transaction = require('dw/system/Transaction');
         var OrderMgr = require('dw/order/OrderMgr');
         var gputil = require('*/cartridge/scripts/utils/gputil');
-         
+        var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
         var reqMap = req.httpParameterMap;
         var orderId = req.httpParameterMap.id.toString().split('_')[2];
         var order = OrderMgr.getOrder(orderId);
-        
+        COHelpers.sendConfirmationEmail(order, req.locale.id);
         gputil.orderUpdate(order);
         //Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
         var orderId = order.orderNo;
