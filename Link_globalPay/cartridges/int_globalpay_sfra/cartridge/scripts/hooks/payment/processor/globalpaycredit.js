@@ -237,7 +237,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
         if (!applicablePaymentCards.contains(paymentCardValue)) {
             // Invalid Payment Instrument
-            var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+            var invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
             return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
         }
     }
