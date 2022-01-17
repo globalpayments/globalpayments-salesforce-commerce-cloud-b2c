@@ -10,6 +10,7 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 
 /**
  * Verifies the required information for billing form is provided.
@@ -145,9 +146,43 @@ function savePaymentInformation(req, basket, billingData) {
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
- function createToken() {
-    return Math.random().toString(36).substr(2);
-}
+/**
+ * Creates a token. This should be replaced by utilizing a tokenization provider
+ * @returns {string} a token
+ */
+ function createToken(formdata) {
+    var creditcardnumber = formdata.cardNumber;
+    var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
+    var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
+      /*  return Math.random().toString(36).substr(2);*/
+    var tokenizeData = {
+      usage_mode: "MULTIPLE", //    'transaction_processing',
+      reference: '93459c79-f3f9-427d-84d9-ca0584bb55bf',
+      first_name: formdata.name.split(' ')[0],
+      last_name: formdata.name.split(' ')[1],
+      card: {
+        number: formdata.cardNumber,
+        expiry_month: expirymonth,
+        expiry_year: expiryyear
+      },
+      entry_mode: "ECOM"
+    };
+    var tokenization = globalPayHelper.tokenize(tokenizeData);
+    return tokenization.id;
+  }
+  /**
+   * Removes token. This should be replaced by utilizing a tokenization provider
+   * @returns {string} a detokenize result
+   */
+  function removeToken(creditcrdaToken) {
+      var creditcardid = creditcrdaToken;
+      var tokenizeData = {
+          id: creditcrdaToken // CreditcardToken
+      };
+      var detokenization = globalPayHelper.detokenize(tokenizeData);
+      return detokenization;
+  }
+
 
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
@@ -222,6 +257,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     var creditCardStatus;
     var cardType =   paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
+    var PaymentInstrument = require('dw/order/PaymentInstrument');
 
 
     // Validate payment instrument
@@ -299,7 +335,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         currency: basket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
-            id:paymentInformation.paymentId.value
+            id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? paymentInformation.creditCardToken : paymentInformation.paymentId.value
         },
         notifications: {
             challenge_return_url: 'http://testing.test/wc-api/globalpayments_threedsecure_challengenotification/',
@@ -331,22 +367,33 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
 
         paymentInstrument.custom.gp_authenticationid = authentication.id;
-        paymentInstrument.custom.gp_paymentmethodid = paymentInformation.paymentId.value;
+        paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
         paymentInstrument.setCreditCardNumber(cardNumber);
         paymentInstrument.setCreditCardType(cardType);
         paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
         paymentInstrument.setCreditCardExpirationYear(expirationYear); 
-        paymentInstrument.setCreditCardToken(
-            paymentInformation.creditCardToken
-                ? paymentInformation.creditCardToken
-                : createToken()
-        );
+        //paymentInstrument.setCreditCardToken(paymentInformation.creditCardToken? paymentInformation.creditCardToken: createToken());
+        paymentInstrument.setCreditCardToken(authentication.id); 
     });
     return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
+}
+
+function getTokenbyUUID(req, uuidToken){
+    var testcust = req.currentCustomer;
+    var creditCardToken;
+    testcust.wallet.paymentInstruments.forEach(function(each){
+        if(each.UUID == uuidToken){
+            creditCardToken = each.raw.creditCardToken;
+            return each.raw.creditCardToken;
+        }
+        
+    })  
+    return creditCardToken;
 }
 
 exports.processForm = processForm;
 exports.savePaymentInformation = savePaymentInformation;
 exports.Authorize = Authorize;
 exports.createToken = createToken;
+exports.removeToken = removeToken;
 exports.Handle = Handle
