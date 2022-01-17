@@ -527,7 +527,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
                 stage: 'payment',
                 step: 'paymentInstrument'
             },
-            errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
+            errorMessage: Resource.msg('error.show.valid.payments', 'globalpay', null)
         });
         return next();
     } 

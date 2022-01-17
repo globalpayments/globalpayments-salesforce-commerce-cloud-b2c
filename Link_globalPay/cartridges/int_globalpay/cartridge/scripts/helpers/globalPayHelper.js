@@ -56,7 +56,37 @@ function authenticate(data) {
 
     return result;
 }
+function tokenize(data) {
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var Tokenize = require('*/cartridge/scripts/dtos/paymentMethods/PaymentTokenization');
+  var tokenizeRequest = new Tokenize.Request();
+  tokenizeRequest.setToken(getAccessToken());
+  tokenizeRequest.setusage_mode(data.usage_mode);
+  tokenizeRequest.setReference(data.reference);
+  tokenizeRequest.setFirst_name(data.first_name);
+  tokenizeRequest.setLast_name(data.last_name);
+  tokenizeRequest.setentry_mode(data.entry_mode);
+  tokenizeRequest.setcard(data.card);
+  var result = globalPayService.executeRequest(tokenizeRequest, Tokenize.Response);
+  if (result.success) {
+      return result.response;
+  }
 
+  return null;
+}
+function detokenize(data) {
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var DeleteTokenize = require('*/cartridge/scripts/dtos/paymentMethods/DeletePaymentTokenization');
+
+  var deletetokenizeRequest = new DeleteTokenize.Request();
+  deletetokenizeRequest.setToken(getAccessToken());
+  deletetokenizeRequest.setcctokenId(data.id);
+  var result = globalPayService.executeRequest(deletetokenizeRequest, DeleteTokenize.Response);
+  if (result.success) {
+      return result.response;
+  }
+  return null;
+}
 function authorize(data) {
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
     var Authorize = require('*/cartridge/scripts/dtos/Authorize');
@@ -265,5 +295,7 @@ module.exports = {
     authorize: authorize,
     capture: capture,
     paypal: paypal,
-    gpay:gpay
+    gpay:gpay,
+    tokenize:tokenize,
+    detokenize:detokenize
 };

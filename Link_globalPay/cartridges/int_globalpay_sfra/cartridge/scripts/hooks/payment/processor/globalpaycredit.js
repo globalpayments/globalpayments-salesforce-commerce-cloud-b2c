@@ -10,6 +10,7 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 
 /**
  * Verifies the required information for billing form is provided.
@@ -141,13 +142,44 @@ function savePaymentInformation(req, basket, billingData) {
 }
 
   
+
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
- function createToken() {
-    return Math.random().toString(36).substr(2);
-}
+ function createToken(formdata) {
+    var creditcardnumber = formdata.cardNumber;
+    var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
+    var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
+      /*  return Math.random().toString(36).substr(2);*/
+    var tokenizeData = {
+      usage_mode: "MULTIPLE", //    'transaction_processing',
+      reference: '93459c79-f3f9-427d-84d9-ca0584bb55bf',
+      first_name: formdata.name.split(' ')[0],
+      last_name: formdata.name.split(' ')[1],
+      card: {
+        number: formdata.cardNumber,
+        expiry_month: expirymonth,
+        expiry_year: expiryyear
+      },
+      entry_mode: "ECOM"
+    };
+    var tokenization = globalPayHelper.tokenize(tokenizeData);
+    return tokenization.id;
+  }
+  /**
+   * Removes token. This should be replaced by utilizing a tokenization provider
+   * @returns {string} a detokenize result
+   */
+  function removeToken(creditcrdaToken) {
+      var creditcardid = creditcrdaToken;
+      var tokenizeData = {
+          id: creditcrdaToken // CreditcardToken
+      };
+      var detokenization = globalPayHelper.detokenize(tokenizeData);
+      return detokenization;
+  }
+
 
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
@@ -237,7 +269,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
         if (!applicablePaymentCards.contains(paymentCardValue)) {
             // Invalid Payment Instrument
-            var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+            var invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
             return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
         }
     }
@@ -349,4 +381,5 @@ exports.processForm = processForm;
 exports.savePaymentInformation = savePaymentInformation;
 exports.Authorize = Authorize;
 exports.createToken = createToken;
+exports.removeToken = removeToken;
 exports.Handle = Handle
