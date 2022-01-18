@@ -31,7 +31,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
                 channel: globalpayconstants.googlePay.channel,
                 type:globalpayconstants.googlePay.type,
                 capture_mode: captureMode.value,
-                amount: Math.ceil(order.merchandizeTotalGrossPrice.value),
+                amount: order.merchandizeTotalGrossPrice.value * 100,
                 currency: order.currencyCode,
                 reference: order.orderNo,
                 country:  order.customerLocaleID,
