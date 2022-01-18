@@ -46,7 +46,7 @@
         </options>
     </field>
 
-    <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
+    <field formid="securityCode" label="profile.securitycode" type="string" mandatory="false" binding="securityCode"
            max-length="4" missing-error="error.card.info.missing.securityCode" />
 
     <field formid="paymentId" label="profile.paymentId" type="string"  binding="paymentId"/>
