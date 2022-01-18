@@ -254,6 +254,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     var creditCardStatus;
     var cardType =   paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
+    var PaymentInstrument = require('dw/order/PaymentInstrument');
 
 
     // Validate payment instrument
@@ -331,7 +332,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         currency: basket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
-            id:paymentInformation.paymentId.value
+            id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? paymentInformation.creditCardToken : paymentInformation.paymentId.value
         },
         notifications: {
             challenge_return_url: 'http://testing.test/wc-api/globalpayments_threedsecure_challengenotification/',
@@ -363,18 +364,28 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
 
         paymentInstrument.custom.gp_authenticationid = authentication.id;
-        paymentInstrument.custom.gp_paymentmethodid = paymentInformation.paymentId.value;
+        paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
         paymentInstrument.setCreditCardNumber(cardNumber);
         paymentInstrument.setCreditCardType(cardType);
         paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
         paymentInstrument.setCreditCardExpirationYear(expirationYear); 
-        paymentInstrument.setCreditCardToken(
-            paymentInformation.creditCardToken
-                ? paymentInformation.creditCardToken
-                : createToken()
-        );
+        //paymentInstrument.setCreditCardToken(paymentInformation.creditCardToken? paymentInformation.creditCardToken: createToken());
+        paymentInstrument.setCreditCardToken(authentication.id); 
     });
     return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
+}
+
+function getTokenbyUUID(req, uuidToken){
+    var testcust = req.currentCustomer;
+    var creditCardToken;
+    testcust.wallet.paymentInstruments.forEach(function(each){
+        if(each.UUID == uuidToken){
+            creditCardToken = each.raw.creditCardToken;
+            return each.raw.creditCardToken;
+        }
+        
+    })  
+    return creditCardToken;
 }
 
 exports.processForm = processForm;

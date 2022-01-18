@@ -190,14 +190,14 @@ server.prepend(
 
         var paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor(); 
         var paymentFormResult;
-        if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-            paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
+        paymentForm.creditCardFields.securityCode.htmlValue = '121';
+        if (HookManager.hasHook('app.payment.globalpay.processor.' + paymentProcessor.ID.toLowerCase())) {
+            paymentFormResult = HookManager.callHook('app.payment.globalpay.processor.' + paymentProcessor.ID.toLowerCase(),
                 'processForm',
                 req,
                 paymentForm,
                 viewData
-            );
-        } else {
+            );        } else {
             paymentFormResult = HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
         }
 
@@ -220,10 +220,21 @@ server.prepend(
             htmlName: paymentForm.paymentMethod.value
         };
         viewData.paymentInformation = viewData.paymentInformation;
-        viewData.paymentInformation.paymentId = {
-            value: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
-            htmlName: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+        if (viewData.storedPaymentUUID 
+            && req.currentCustomer.raw.authenticated
+            && req.currentCustomer.raw.registered
+        ) {
+                viewData.paymentInformation.paymentId = {
+                value: viewData.storedPaymentUUID,//JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
+                htmlName: viewData.storedPaymentUUID// JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+            }
+        } else {
+            viewData.paymentInformation.paymentId = {
+                value:  JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
+                htmlName: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+            }
         }
+        
         res.setViewData(viewData);
 
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
