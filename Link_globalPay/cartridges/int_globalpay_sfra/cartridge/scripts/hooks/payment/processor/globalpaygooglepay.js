@@ -7,7 +7,7 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-
+var server = require('server');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
@@ -26,6 +26,9 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
             var captureMode = preferences.captureMode;
             var HookManager = require('dw/system/HookMgr');
             var Locale = require('dw/util/Locale');
+            var paymentForm = server.forms.getForm('billing');
+            var token= JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
+            var signedMessage=JSON.parse(token.signedMessage);
             var googlePayData = {
                 account_name: globalpayconstants.googlePay.account_name,
                 channel: globalpayconstants.googlePay.channel,
@@ -34,20 +37,28 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
                 amount: order.merchandizeTotalGrossPrice.value * 100,
                 currency: order.currencyCode,
                 reference: order.orderNo,
-                country:  order.customerLocaleID,
+                country:  'US',
                 payment_method: {
                     name: order.customerName,
                     entry_mode: globalpayconstants.googlePay.entryMode,
                     digital_wallet: {
                         provider: globalpayconstants.googlePay.provider,
-                        payment_token: {
-                            signature:"MEYCIQCkQmlhYa14X6r8Yf9F/8DpMKecNtCQNx2uVIHJbqVRtgIhANkmAHzlVUdj5N5gB4AqHxR4V+j7a1affcI9AbfFAi/e",
-                            protocolVersion:"ECv1",
-                            signedMessage:{
-                                encryptedMessage:"isSBYRDyuzHGg//8nHIDVC6gKzSpG+h9oGy/YpZ2qj6my61YVHRXgT4SK5NkkBt3jaZQwN+CDHHI4kuGEYLThbE+derWHc72YtDYNyluNAOkZcUG5xUtUP5Hx839i5NKLA4XW6Kc45LCJaAu5B38G3k8Z9OdHfam4Su9nvuald498PO6TcRvzniUlWEA4lGjKb2Yw6SRf0uQcvKaM95dspW1oyIb+raLYvKLiQt+qdhZA8yhSM0YpW7U0Ezz6Ho1t9SOKQrq/vmT/IHmroa3pt3u6N+FOgNmcuVYLFwi+IZvh8w7ybv/gBfzugVs4S+5f9ESg+bA/TV9BKR8Fxh9UW0P6rPX3nn5A9C83orPuFxJgYPp73T/JpkGAUVN4jKt2xZbOFJIQIhndiN4qJyCzVDWYaITRzsdxsvdiBzwpqPepb4g41U7UPHsU6m1SMrKOTwiiNIwhwAbbSOrX37lNRjvZxupJKQcFpUo","ephemeralPublicKey":"BAtnZTHIOqZLdvdGP+blshoSXSnXgq9lJ29jLeGL1bMrmIa1Nbt4Pqyj8KjQpamQ5BIKgwBd6AOhYIV7hvgl/AI\\u003d",
-                                tag:"EP8cC6haHis2KDqkWH2br3bTu3YMseVIRg1kCzrqJ9A\\u003d"
-                            }
-                        }  
+                        //need to be removed once we get the solution for payment token
+                        tokenFormat: "CARD_NUMBER",
+                        expiryMonth: "12",
+                        expiryYear: "25",
+                        cryptogram: "234234234",    
+                        token: "5167300431085507",          
+                        eci: "3"
+                        // payment_token: {
+                        //     signature:token.signature,
+                        //     protocolVersion:token.protocolVersion,
+                        //     signedMessage:{
+                        //         encryptedMessage: signedMessage.encryptedMessage,
+                        //         ephemeralPublicKey:signedMessage.ephemeralPublicKey,
+                        //         tag:signedMessage.tag
+                        //     }
+                        // }  
                     }
                 }
             }
@@ -62,7 +73,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
             } else {
                 try {
                     Transaction.wrap(function () {
-                        paymentInstrument.custom.gp_transactionid = googlePayresp.response.id;
+                        paymentInstrument.custom.gp_transactionid = googlePayresp.id;
                         paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
                         paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
                     });

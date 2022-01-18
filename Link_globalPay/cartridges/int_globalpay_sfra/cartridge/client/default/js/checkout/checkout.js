@@ -494,11 +494,7 @@ console.log('testing....');
                 $('body').on('submit:googlepay',function(e,data)
                 {
                     console.log(data);
-                    var token=document.createElement('input');
-                    token.type="hidden";
-                    token.name="payment_token";
-                    token.value=data;
-                    $('#dwfrm_billing').append(token);
+                    $('#paymentToken').val(data.paymentToken);
                     members.nextStage();
                 });
                 //

@@ -51,6 +51,7 @@
 
     <field formid="paymentId" label="profile.paymentId" type="string"  binding="paymentId"/>
 
+    <field formid="paymentToken" label="profile.paymentToken" type="string"  binding="paymentToken"/>
     <field formid="saveCard" label="label.save.card" binding="saveCard" type="boolean" mandatory="false" checked="true" />
 
 </form>

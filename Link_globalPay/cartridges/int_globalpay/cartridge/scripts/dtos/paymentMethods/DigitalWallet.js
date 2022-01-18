@@ -19,7 +19,15 @@ var DigitalWalletRequest = AbstractRequest.extend({
                     return String(this.__.provider);
                 }
             },
-            token_format: {
+            token:{
+                enumerable: true,
+                writable: true
+            },
+            eci:{
+                enumerable: true,
+                writable: true
+            },
+            tokenFormat: {
                 enumerable: true,
                 writable: true
             },
@@ -61,19 +69,23 @@ var DigitalWalletResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-            cvvResult: {
+            tokenFormat: {
                 enumerable: true,
                 writable: true
             },
-            avsAddressResult: {
+            eci: {
                 enumerable: true,
                 writable: true
             },
-            avsPostalCodeResult: {
+            authcode: {
                 enumerable: true,
                 writable: true
             },
-            avsAction: {
+            brand_reference: {
+                enumerable: true,
+                writable: true
+            },
+            brand: {
                 enumerable: true,
                 writable: true
             },

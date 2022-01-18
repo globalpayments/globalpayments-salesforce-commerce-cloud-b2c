@@ -120,7 +120,8 @@ function handlePayments(req, res, next) {
         {
             //place and update order 
             var gputil = require('*/cartridge/scripts/utils/gputil');
-            gputil.orderUpdate(order);    
+            gputil.orderUpdate(order);
+            COHelpers.sendConfirmationEmail(order, req.locale.id);    
             var URLUtils = require('dw/web/URLUtils');
             //redirect to Confirmation page
             res.json({
