@@ -3,6 +3,9 @@
             "name": "app.payment.processor.globalpay_creditcard",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpaycredit"
         },{
+            "name": "app.payment.globalpay.processor.globalpay_creditcard",
+            "script": "./cartridge/scripts/hooks/payment/processor/gpbasic_credit_form_processor"
+        },{
             "name": "app.payment.processor.globalpay_paypal",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpaypaypal"
         },{
