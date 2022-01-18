@@ -11,7 +11,7 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
  /* Route to handle paypal submission. This route is called only when either
     PayPal Express or PayPal billing agreement is called from either mini cart or cart page. */
 // eslint-disable-next-line
-function handlePayPal(req, res, next) {
+function handlePayments(req, res, next) {
     var billingFormErrors = {};
     var viewData = {};
     var Transaction = require('dw/system/Transaction');
@@ -22,6 +22,7 @@ function handlePayPal(req, res, next) {
     var PaymentManager = require('dw/order/PaymentMgr');
     var HookManager = require('dw/system/HookMgr');
     var OrderMgr = require('dw/order/OrderMgr');
+    var Resource = require('dw/web/Resource');
     billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
     if (Object.keys(billingFormErrors).length ) {
@@ -104,6 +105,8 @@ function handlePayPal(req, res, next) {
         var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
 
       //  Transaction.wrap(function () { OrderMgr.failOrder(order, true); }); 
+      if(paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null))
+      {
         res.json({
             renderedPaymentInstruments: renderedStoredPaymentInstrument,
             customer: accountModel,
@@ -113,8 +116,22 @@ function handlePayPal(req, res, next) {
             paypalresp : handlePaymentResult.authorizationResult.paypalresp
         });
     }
+    else
+        {
+            //place and update order 
+            var gputil = require('*/cartridge/scripts/utils/gputil');
+            gputil.orderUpdate(order);    
+            var URLUtils = require('dw/web/URLUtils');
+            //redirect to Confirmation page
+            res.json({
+                error: false,
+                orderID: order.orderNo,
+                orderToken: order.orderToken,
+                continueUrl: URLUtils.url('Order-Confirm').toString()
+            });
+        }
+    }
 }
-
 
 server.prepend(
     'SubmitPayment',
@@ -129,8 +146,8 @@ server.prepend(
         var viewData = {};
         var paymentForm = server.forms.getForm('billing');
 
-        if(paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null)){
-            handlePayPal(req, res, next);
+        if(paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null)||paymentForm.paymentMethod.value==Resource.msg('paymentmethodname.googlepay', 'globalpay', null)){
+            handlePayments(req, res, next);
             this.emit('route:Complete', req, res);
             return;
         }
@@ -520,7 +537,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
                 stage: 'payment',
                 step: 'paymentInstrument'
             },
-            errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
+            errorMessage: Resource.msg('error.show.valid.payments', 'globalpay', null)
         });
         return next();
     } 

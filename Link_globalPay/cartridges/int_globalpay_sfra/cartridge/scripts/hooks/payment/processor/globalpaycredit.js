@@ -142,10 +142,7 @@ function savePaymentInformation(req, basket, billingData) {
 }
 
   
-/**
- * Creates a token. This should be replaced by utilizing a tokenization provider
- * @returns {string} a token
- */
+
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
@@ -273,7 +270,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
         if (!applicablePaymentCards.contains(paymentCardValue)) {
             // Invalid Payment Instrument
-            var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+            var invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
             return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
         }
     }

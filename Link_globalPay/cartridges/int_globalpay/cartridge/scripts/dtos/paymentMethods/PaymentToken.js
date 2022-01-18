@@ -2,55 +2,51 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var Action = require('~/cartridge/scripts/dtos/nested/Action');
+var SignedMessages= require('~/cartridge/scripts/dtos/paymentMethods/SignedMessages');
 
 var createSetter = function (fieldName) {
     return function (val) {
         this.__[fieldName] = val;
     }
 }
-var DeletePaymentTokenRequest = AbstractRequest.extend({
+
+var PaymentTokenRequest = AbstractRequest.extend({
     init: function (requestObj) {
         Object.defineProperties(this, {
-            // TODO add more fields as per the Model here:
-            cctokenId: {
+            signature: {
                 enumerable: true,
                 writable: true
-            }
+            },
+            protocolVersion: {
+                enumerable: true,
+                writable: true
+            },
+            signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
         });
 
         this._super(requestObj);
-    },
-    
-    getEndpoint: function () {
-        return this.prepareEndpoint(
-            'payment-methods/:cctokenId/detokenize',
-            {cctokenId: this.cctokenId }
-        );
-    },
-
-    getHttpMethod: function () {
-        return 'POST';
     }
 });
 
-var DeletePaymentTokenResponse = AbstractResponse.extend({
+var PaymentTokenResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
-            id: {
+            signature: {
                 enumerable: true,
                 writable: true
             },
-            status: {
+            protocolVersion: {
                 enumerable: true,
                 writable: true
             },
-            action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response)
+            signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request),
         });
+
         this._super(responseObj);
     }
 });
+
 module.exports = {
-    Request: DeletePaymentTokenRequest,
-    Response: DeletePaymentTokenResponse
+    Request: PaymentTokenRequest,
+    Response: PaymentTokenResponse
 };

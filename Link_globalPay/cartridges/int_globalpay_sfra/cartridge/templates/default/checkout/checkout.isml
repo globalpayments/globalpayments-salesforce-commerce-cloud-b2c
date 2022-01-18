@@ -8,7 +8,7 @@
         assets.addJs('/js/checkout.js');
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
-
+  <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
     <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
         <isinclude template="reporting/reportingUrls" />
     </isif>

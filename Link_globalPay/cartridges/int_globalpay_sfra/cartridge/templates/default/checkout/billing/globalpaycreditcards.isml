@@ -27,7 +27,7 @@ cardForm.on("token-success", (resp) => {
     $('#gpayerror').text(''); 
     $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
     $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
-    $("#expirationMonth").val(resp.details.expiryMonth);
+    $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
 
