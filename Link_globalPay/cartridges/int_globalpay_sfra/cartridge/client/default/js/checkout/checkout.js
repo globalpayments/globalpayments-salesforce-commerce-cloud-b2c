@@ -410,6 +410,25 @@ console.log('testing....');
                     .indexOf($('.data-checkout-stage').data('checkout-stage'));
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
 
+                if ($('.data-checkout-stage').data('customer-type') === 'registered') {
+                    // if payment method is credit card
+                    if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
+                        //if saved cards section is shown
+                        if (!($('.payment-information').data('is-new-payment'))) {
+                            $('.next-step-button .submit-payment').removeClass('d-none');
+                        }
+                    }
+                }
+                if ($('.payment-information').data('payment-method-id') === 'GP_DW_PAYPAL') {
+                    $('.next-step-button .submit-payment').addClass('d-none');
+                }
+                if ($('.payment-information').data('payment-method-id') === 'GP_DW_GOOGLE_PAY') {
+                    $('.next-step-button .submit-payment').addClass('d-none');
+                }
+                if ($('.payment-information').data('payment-method-id') === 'GP_DW_APPLE_PAY') {
+                    $('.next-step-button .submit-payment').addClass('d-none');
+                }
+
                 $('body').on('click', '.submit-customer-login', function (e) {
                     e.preventDefault();
                     members.nextStage();
@@ -441,6 +460,12 @@ console.log('testing....');
                     members.gotoStage('customer');
                 });
 
+                $('.cancel-new-payment',plugin).on('click',function() {
+                    $('.next-step-button .submit-payment').removeClass('d-none')
+                });
+                $('.add-payment',plugin).on('click',function() {
+                    $('.next-step-button .submit-payment').addClass('d-none')
+                });
                 $('.shipping-summary .edit-button', plugin).on('click', function () {
                     if (!$('#checkout-main').hasClass('multi-ship')) {
                         $('body').trigger('shipping:selectSingleShipping');
