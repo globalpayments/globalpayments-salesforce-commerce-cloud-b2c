@@ -28,7 +28,7 @@
     type: 'PAYMENT_GATEWAY',
     parameters: {
       'gateway': 'globalpayments',
-      'gatewayMerchantId': 'Nj2NKgGD9GsIxumeTsTIwNXs3XWjSbnL'
+      'gatewayMerchantId': 'MER_7e3e2c7df34f42819b3edee31022ee3f'
     }
   };
   
@@ -91,7 +91,7 @@
     paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
     paymentDataRequest.merchantInfo = {
       // @todo a merchant ID is available for a production environment after approval by Google
-       merchantId: 'Nj2NKgGD9GsIxumeTsTIwNXs3XWjSbnL',
+       merchantId: 'MER_7e3e2c7df34f42819b3edee31022ee3f',
       merchantName: 'globalpayments'
     };
     return paymentDataRequest;
@@ -139,7 +139,7 @@
       currencyCode: 'USD',
       totalPriceStatus: 'FINAL',
       // set to cart total
-      totalPrice: '1.00'
+      totalPrice: $('.grand-total-sum').text().replace(/\$/g, '')
     };
   }
   

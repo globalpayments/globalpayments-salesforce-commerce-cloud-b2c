@@ -24,7 +24,7 @@ var AbstractRequest = AbstractBase.extend({
                 value: {}
             },
             token: {
-                enumerable: false,
+                enumerable: true,
                 writable: true
             }
         });

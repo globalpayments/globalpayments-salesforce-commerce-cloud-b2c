@@ -4,5 +4,5 @@ var processInclude = require('base/util');
 
 $(document).ready(function () {
     processInclude(require('./checkout/checkout'));
-    processInclude(require('./googlePay/googlePay'));
+    processInclude(require('./googlepay/googlepay'));
 });

@@ -60,7 +60,7 @@ var PaymentMethodResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-            digitalWallet: AbstractResponse.getAccessorDescriptorWithConstructor(DigitalWallet.Request),
+            digitalWallet: AbstractResponse.getAccessorDescriptorWithConstructor(DigitalWallet.Response),
             card: AbstractResponse.getAccessorDescriptorWithConstructor(Card.Response),
             authentication: AbstractResponse.getAccessorDescriptorWithConstructor(Authentication.Response),
             apm:AbstractResponse.getAccessorDescriptorWithConstructor(Apm.Response),

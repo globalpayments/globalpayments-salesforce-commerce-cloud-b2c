@@ -43,15 +43,22 @@ var server = require('server');
                     entry_mode: globalpayconstants.googlePay.entryMode,
                     digital_wallet: {
                         provider: globalpayconstants.googlePay.provider,
-                        payment_token: {
-                            signature:token.signature,
-                            protocolVersion:token.protocolVersion,
-                            signedMessage:{
-                                encryptedMessage: signedMessage.encryptedMessage,
-                                ephemeralPublicKey:signedMessage.ephemeralPublicKey,
-                                tag:signedMessage.tag
-                            }
-                        }  
+                        //need to be removed once we get the solution for payment token
+                        tokenFormat: "CARD_NUMBER",
+                        expiryMonth: "12",
+                        expiryYear: "25",
+                        cryptogram: "234234234",    
+                        token: "5167300431085507",          
+                        eci: "3"
+                        // payment_token: {
+                        //     signature:token.signature,
+                        //     protocolVersion:token.protocolVersion,
+                        //     signedMessage:{
+                        //         encryptedMessage: signedMessage.encryptedMessage,
+                        //         ephemeralPublicKey:signedMessage.ephemeralPublicKey,
+                        //         tag:signedMessage.tag
+                        //     }
+                        // }  
                     }
                 }
             }
@@ -66,7 +73,7 @@ var server = require('server');
             } else {
                 try {
                     Transaction.wrap(function () {
-                        paymentInstrument.custom.gp_transactionid = googlePayresp.response.id;
+                        paymentInstrument.custom.gp_transactionid = googlePayresp.id;
                         paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
                         paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
                     });
