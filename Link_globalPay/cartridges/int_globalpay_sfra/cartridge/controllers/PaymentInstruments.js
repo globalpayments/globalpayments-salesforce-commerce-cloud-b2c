@@ -243,8 +243,6 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
         Transaction.wrap(function () {
             wallet.removePaymentInstrument(payment.raw);
         });
-        var Logger = require('dw/system/Logger');
-        Logger.info('Detokenization result' + result);
         // Send account edited email
         accountHelpers.sendAccountEditedEmail(customer.profile);
 
