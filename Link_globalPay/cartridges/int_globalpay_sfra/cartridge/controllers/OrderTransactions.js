@@ -32,23 +32,23 @@ function (req, res, next) {
                     amount: amount //order.amount
                 };
                 refundresult = globalPayHelper.refund(transactionData);
-                var test = refundresult;
-                if(refundresult.status){
+                if(refundresult== undefined || refundresult == null){
+                    res.setStatusCode(400);
+                }
+                else if(refundresult.status){
                     Transaction.wrap(function () {
                         order.setStatus(Order.ORDER_STATUS_CANCELLED); 
                     });
                 }
-                if(refundresult== undefined){
-                    res.setStatusCode(400);
-                }
+                
             }else if(order.status==6){
                 res.setStatusCode(400);
-                refundresult= "Cannot process the Order which is already refunded.";
+                refundresult= Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
                 
             }else{
                 res.setStatusCode(400);
                 refundresult = {
-                    error: "Invalid data input"
+                    error:  Resource.msg('order.refund.error', 'globalpay', null)
                 }
             }
         }else{
@@ -92,13 +92,13 @@ function (req, res, next) {
                 }else{
                     res.setStatusCode(400);
                     captureresult={
-                        error: 'Invalid Data Input '
+                        error: Resource.msg('order.capture.invalidata', 'globalpay', null)
                     }
                 }
             }else{
                 res.setStatusCode(400);
                 captureresult={
-                    error: 'Order is either completed or Cancelled'
+                    error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
                 }
             }
         }else{
