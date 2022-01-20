@@ -430,15 +430,14 @@ console.log('testing....');
                         }
                     }
                 }
-                if ($('.payment-information').data('payment-method-id') === 'GP_DW_PAYPAL') {
-                    $('.next-step-button .submit-payment').addClass('d-none');
-                }
-                if ($('.payment-information').data('payment-method-id') === 'GP_DW_GOOGLE_PAY') {
-                    $('.next-step-button .submit-payment').addClass('d-none');
-                }
-                if ($('.payment-information').data('payment-method-id') === 'GP_DW_APPLE_PAY') {
-                    $('.next-step-button .submit-payment').addClass('d-none');
-                }
+                $('body').on('click', '.payment-options .nav-item', function (e) {
+                    e.preventDefault();
+                    if(e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab'){
+                        $('.next-step-button .submit-payment').hide();
+                    }
+                    else
+                    {$('.next-step-button .submit-payment').show();}
+                });
 
                 $('body').on('click', '.submit-customer-login', function (e) {
                     e.preventDefault();
