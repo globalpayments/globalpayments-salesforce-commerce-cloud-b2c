@@ -39,6 +39,8 @@ function (req, res, next) {
                     Transaction.wrap(function () {
                         order.setStatus(Order.ORDER_STATUS_CANCELLED); 
                     });
+                }else{
+                    res.setStatusCode(400);
                 }
                 
             }else if(order.status==6){
@@ -80,7 +82,7 @@ function (req, res, next) {
                     payment_method: {
                         entry_mode: "ECOM",
                         id: paymentID // paymentID
-  }
+                    }
                 };
                 captureresult = globalPayHelper.capture(transactionData);
                 var status = captureresult;
