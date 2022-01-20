@@ -125,7 +125,7 @@ function refund(data) {
         return result.response;
     }
 
-    return result.error;
+    return result;
 }
 function capture(data) {
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
