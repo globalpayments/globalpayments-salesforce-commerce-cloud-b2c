@@ -23,7 +23,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
 (function ($) {
     $.fn.checkout = function () { // eslint-disable-line
         var plugin = this;
-console.log('testing....');
+//console.log('testing....');
         //
         // Collect form data from user input
         //
@@ -285,6 +285,9 @@ console.log('testing....');
                             $('body').trigger('checkout:enableButton', '.next-step-button button');
                             // look for field validation errors
                            if (data.error) {
+                            $('a.nav-link.credit-card-tab').removeClass("disabled");
+                            $('a.nav-link.google-pay-tab').removeClass("disabled");
+                            $('a.nav-link.apple-pay-tab').removeClass("disabled");
                                 if (data.fieldErrors.length) {
                                     data.fieldErrors.forEach(function (error) {
                                         if (Object.keys(error).length) {
@@ -488,6 +491,9 @@ console.log('testing....');
                     members.gotoStage('payment');
                 });
                 $('.btn-paypal-button',plugin).on('click',function() {
+                    $('a.nav-link.credit-card-tab').addClass("disabled");
+                    $('a.nav-link.google-pay-tab').addClass("disabled");
+                    $('a.nav-link.apple-pay-tab').addClass("disabled");
                     members.nextStage();
                 });
                 $('body').on('submit:googlepay',function(e,data)
