@@ -328,7 +328,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         channel: globalpayconstants.authenticationData.channel,
         country: Locale.getLocale(req.locale.id).country,
         reference: '93459c79-f3f9-427d-84d9-ca0584bb55bf',
-        amount: Math.ceil(basket.merchandizeTotalGrossPrice.value),
+        amount: basket.merchandizeTotalGrossPrice.value * 100,
         currency: basket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
