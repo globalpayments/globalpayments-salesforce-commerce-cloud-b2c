@@ -12,7 +12,8 @@ function getPreferences(site) {
         enableGooglepay: currentSite.getCustomPreferenceValue('gp_enable_googlepay'),
         enableApplepay: currentSite.getCustomPreferenceValue('gp_enable_applepay'),
         enablePaypal: currentSite.getCustomPreferenceValue('gp_enable_paypal'),
-        captureMode: currentSite.getCustomPreferenceValue('gp_captureMode')
+        captureMode: currentSite.getCustomPreferenceValue('gp_captureMode'),
+        clientId: currentSite.getCustomPreferenceValue('gp_clientID')
     };
 }
 

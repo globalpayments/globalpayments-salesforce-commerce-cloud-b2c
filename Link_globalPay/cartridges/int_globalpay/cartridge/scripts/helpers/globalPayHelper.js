@@ -110,6 +110,23 @@ function authorize(data) {
     return result;
 }
 
+function refund(data) {
+    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+    var Refund = require('*/cartridge/scripts/dtos/Refund');
+
+    var refundRequest = new Refund.Request();
+    refundRequest.setToken(getAccessToken());
+    refundRequest.setTransactionId(data.transaction_id);
+    refundRequest.setAmount(data.amount);
+
+    var result = globalPayService.executeRequest(refundRequest, Refund.Response);
+
+    if (result.success) {
+        return result.response;
+    }
+
+    return error;
+}
 function capture(data) {
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
     var Capture = require('*/cartridge/scripts/dtos/Capture');
@@ -128,7 +145,7 @@ function capture(data) {
         return result.response;
     }
 
-    return null;
+        return result.error;
 }
 
 function paypal(data){
@@ -183,6 +200,7 @@ module.exports = {
     authenticate: authenticate,
     authorize: authorize,
     capture: capture,
+    refund:refund,
     paypal: paypal,
     gpay:gpay,
     tokenize:tokenize,
