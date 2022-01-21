@@ -146,7 +146,7 @@ function refund(data) {
     return result.response;
   }
 
-  return error;
+    return result;
 }
 /**
  * Forms required data to be sent to service to perform capture call.

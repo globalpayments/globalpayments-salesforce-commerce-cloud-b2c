@@ -4,15 +4,16 @@ var server = require('server');
 var security = require('*/cartridge/scripts/middleware/security');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 var Order  = require('dw/order/Order');
+var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
 /**
- * Account-Show : The Account-Show endpoint will render the shopper's account page. Once a shopper logs in they will see is a dashboard that displays profile, address, payment and order information.
- * @name Base/Account-Show
+ * OrderTransactions-RefundTransaction : The OrderTransactions-RefundTransaction endpoint will render the refund APi functionality from GP. Once a order is completed and needs order to be refunded.
+ * @name Base/OrderTransactions-RefundTransaction
  * @function
  * @memberof OrderTransactions
  * @param {middleware} - server.middleware.https
- * @param {serverfunction} - get
+ * @param {serverfunction} - post
  * 
  **/
 
@@ -39,6 +40,8 @@ function (req, res, next) {
                     Transaction.wrap(function () {
                         order.setStatus(Order.ORDER_STATUS_CANCELLED); 
                     });
+                }else{
+                    res.setStatusCode(400);
                 }
                 
             }else if(order.status==6){
@@ -59,6 +62,15 @@ function (req, res, next) {
     });
     next();
 });
+
+/**
+ * OrderTransactions-CaptureTransaction : The OrderTransactions-CaptureTransaction endpoint will render the Capture API functionality from GP. Once a order is authorized and needs that amount to be captured.
+ * @name Base/OrderTransactions-CaptureTransaction
+ * @function
+ * @memberof CaptureTransaction
+ * @param {middleware} - server.middleware.https
+ * @param {serverfunction} - post
+ **/
 server.post('CaptureTransaction',
 security.ValidateHeaders,
 server.middleware.https,
@@ -80,7 +92,7 @@ function (req, res, next) {
                     payment_method: {
                         entry_mode: "ECOM",
                         id: paymentID // paymentID
-  }
+                    }
                 };
                 captureresult = globalPayHelper.capture(transactionData);
                 var status = captureresult;
