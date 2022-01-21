@@ -4,10 +4,14 @@ var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
 var Action = require('~/cartridge/scripts/dtos/nested/Action');
 var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
-
+/**
+ * Forms all the fields required to send for Authorize request.
+ * @param {obj} requestObj - object that contains fields for request to be sent.
+ */
 var AuthorizeRequest = AbstractRequest.extend({
     init: function (requestObj) {
         Object.defineProperties(this, {
+            // add more fields as per the Model here:
             accountName: {
                 enumerable: true,
                 writable: true
@@ -54,7 +58,10 @@ var AuthorizeRequest = AbstractRequest.extend({
         return 'POST';
     }
 });
-
+/**
+ * Forms all the fields to be returned as part of Authorize response.
+ * @param {obj} responseObj - object that contains fields from response.
+ */
 var AuthorizeResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
@@ -74,6 +81,7 @@ var AuthorizeResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
+            // add more fields as per the Model here:
             action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
             paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
         });
