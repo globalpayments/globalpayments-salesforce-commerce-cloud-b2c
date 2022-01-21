@@ -31,7 +31,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
                 channel: globalpayconstants.paypalData.channel,
                 capture_mode: captureMode.value,
                 type: globalpayconstants.paypalData.type,
-                amount: order.merchandizeTotalGrossPrice.value * 100,
+                amount: order.totalGrossPrice.value * 100,
                 currency: order.currencyCode,
                 reference: order.orderNo,
                 country: Locale.getLocale(req.locale.id).country,
