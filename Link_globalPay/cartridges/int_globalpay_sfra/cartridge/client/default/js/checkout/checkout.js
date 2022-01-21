@@ -314,10 +314,10 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                 window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;   //
                                 // Populate the Address Summary
                                 //
-                                if($('.tab-pane.active').attr('id') == 'google-pay-content')
+                                if($('.tab-pane.active').attr('id') == 'google-pay-content'||$('.tab-pane.active').attr('id') =='apple-pay-content')
                                 {
                                     placeOrderSuccess(data);//populate order details
-                             defer.resolve(data);
+                                    defer.resolve(data);
                                 }
                                 else{
                                 $('body').trigger('checkout:updateCheckoutView',
@@ -500,6 +500,9 @@ var scrollAnimate = require('base/components/scrollAnimate');
                 {
                     console.log(data);
                     $('#paymentToken').val(data.paymentToken);
+                    members.nextStage();
+                });
+                $('.apple-pay-content #apple-pay-button', plugin).on('click', function () {
                     members.nextStage();
                 });
                 //
