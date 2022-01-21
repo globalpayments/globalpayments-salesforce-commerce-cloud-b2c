@@ -7,9 +7,14 @@ var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
 var ThreeDs = require('~/cartridge/scripts/dtos/nested/ThreeDs');
 var Notifications = require('~/cartridge/scripts/dtos/nested/Notifications');
 
+/**
+ * Forms all the fields required to send for Authentication request.
+ * @param {obj} requestObj - object that contains fields for request to be sent.
+ */
 var AuthenticationRequest = AbstractRequest.extend({
     init: function (requestObj) {
         Object.defineProperties(this, {
+            // add more fields as per the Model here:
             accountName: {
                 enumerable: true,
                 writable: true
@@ -58,9 +63,14 @@ var AuthenticationRequest = AbstractRequest.extend({
     }
 });
 
+/**
+ * Forms all the fields to be returned as part of Authentication response.
+ * @param {obj} responseObj - object that contains fields from response.
+ */
 var AuthenticationResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
+            // add more fields as per the Model here:
             status: {
                 enumerable: true,
                 writable: true
