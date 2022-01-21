@@ -47,4 +47,12 @@ captureTransaction.capture_sequence = 'FIRST';
 captureTransaction.entry_mode = 'ECOM';
 globalpayConstants.captureTransaction = captureTransaction;
 
+var applePay = new Object();
+applePay.account_name = 'transaction_processing';
+applePay.channel = 'CNP';
+applePay.type = 'SALE';
+applePay.entryMode = 'ECOM';
+applePay.provider = 'APPLEPAY';
+
+globalpayConstants.applePay = applePay;
 module.exports = globalpayConstants;

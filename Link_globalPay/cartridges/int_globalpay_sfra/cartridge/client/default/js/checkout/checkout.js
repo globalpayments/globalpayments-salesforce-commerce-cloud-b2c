@@ -291,8 +291,8 @@ var scrollAnimate = require('base/components/scrollAnimate');
                   if (data.fieldErrors.length) {
                     data.fieldErrors.forEach(function (error) {
                       if (Object.keys(error).length) {
-                          formHelpers.loadFormErrors('.payment-form', error);
-                        }
+                        formHelpers.loadFormErrors('.payment-form', error);
+                      }
                     });
                   }
 
@@ -313,7 +313,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                   if ($('.tab-pane.active').attr('id') == 'paypal-content') { window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url; }   //
                                 // Populate the Address Summary
                                 //
-                  if ($('.tab-pane.active').attr('id') == 'google-pay-content') {
+                  if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'apple-pay-content') {
                     placeOrderSuccess(data);// populate order details
                     defer.resolve(data);
                   } else {
@@ -493,6 +493,9 @@ var scrollAnimate = require('base/components/scrollAnimate');
           $('body').on('submit:googlepay', function (e, data) {
             console.log(data);
             $('#paymentToken').val(data.paymentToken);
+            members.nextStage();
+          });
+          $('.apple-pay-content #apple-pay-button', plugin).on('click', function () {
             members.nextStage();
           });
                 //

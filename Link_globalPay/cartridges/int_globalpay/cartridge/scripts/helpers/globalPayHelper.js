@@ -223,16 +223,38 @@ function gpay(data) {
   }
   return null;
 }
-
+function applePay(data)
+{
+    var applePay = require('*/cartridge/scripts/dtos/ApplePay');
+    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+    var applePayRequest = new applePay.Request();
+    applePayRequest.setToken(getAccessToken());
+    applePayRequest.setAccountName(data.account_name);
+    applePayRequest.setChannel(data.channel);
+    applePayRequest.setCaptureMode(data.capture_mode);
+    applePayRequest.setType(data.type);
+    applePayRequest.setAmount(data.amount);
+    applePayRequest.setCurrency(data.currency);
+    applePayRequest.setReference(data.reference);
+    applePayRequest.setCountry(data.country);
+    applePayRequest.setPaymentMethod(data.payment_method);
+  
+    var result = globalPayService.executeRequest(applePayRequest, applePay.Response);
+    if (result.success) {
+        return result.response;
+    }
+    return null;
+}
 
 module.exports = {
-  getAccessToken: getAccessToken,
-  authenticate: authenticate,
-  authorize: authorize,
-  capture: capture,
-  refund: refund,
-  paypal: paypal,
-  gpay: gpay,
-  tokenize: tokenize,
-  detokenize: detokenize
+    getAccessToken: getAccessToken,
+    authenticate: authenticate,
+    authorize: authorize,
+    capture: capture,
+    refund:refund,
+    paypal: paypal,
+    gpay:gpay,
+    tokenize:tokenize,
+    detokenize:detokenize,
+    applePay:applePay
 };
