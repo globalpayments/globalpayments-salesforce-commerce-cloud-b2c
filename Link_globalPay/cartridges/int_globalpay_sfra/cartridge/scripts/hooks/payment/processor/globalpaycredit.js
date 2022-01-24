@@ -206,7 +206,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
         channel: globalpayconstants.authorizationData.channel,
         capture_mode: captureMode.value,
         type: globalpayconstants.authorizationData.type,
-        amount: order.merchandizeTotalGrossPrice.value * 100,//'5000', 
+        amount: order.totalGrossPrice.value * 100,//'5000', 
         currency: order.currencyCode,
         reference: orderNumber,
         country: Locale.getLocale(req.locale.id).country,
