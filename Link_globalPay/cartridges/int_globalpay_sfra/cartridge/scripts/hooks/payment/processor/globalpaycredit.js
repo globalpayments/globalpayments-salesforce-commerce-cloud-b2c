@@ -206,7 +206,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
         channel: globalpayconstants.authorizationData.channel,
         capture_mode: captureMode.value,
         type: globalpayconstants.authorizationData.type,
-        amount: order.merchandizeTotalGrossPrice.value * 100,//'5000', 
+        amount: order.totalGrossPrice.value * 100,//'5000', 
         currency: order.currencyCode,
         reference: orderNumber,
         country: Locale.getLocale(req.locale.id).country,
@@ -328,7 +328,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         channel: globalpayconstants.authenticationData.channel,
         country: Locale.getLocale(req.locale.id).country,
         reference: '93459c79-f3f9-427d-84d9-ca0584bb55bf',
-        amount: Math.ceil(basket.merchandizeTotalGrossPrice.value),
+        amount: Math.ceil(basket.totalGrossPrice.value),
         currency: basket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {

@@ -30,7 +30,7 @@ var server = require('server');
                 channel: globalpayconstants.applePay.channel,
                 type:globalpayconstants.applePay.type,
                 capture_mode: captureMode.value,
-                amount: order.merchandizeTotalGrossPrice.value * 100,
+                amount: order.totalGrossPrice.value * 100,
                 currency: order.currencyCode,
                 reference: order.orderNo,
                 country:  'US',
