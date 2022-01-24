@@ -20,43 +20,49 @@ var OrderMgr = require('dw/order/OrderMgr');
 server.post('RefundTransaction',
 security.ValidateHeaders,
 server.middleware.https,
-function (req, res, next) {
-  var refundresult;
-  if (!(res.viewData.securityErrorMessage)) {
-    var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
-    var order = OrderMgr.getOrder(req.querystring.orderID);
-    var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-    var amount = (order.totalGrossPrice) * 100;
-    if (order.status == 5) {
-      var transactionData = {
-        transaction_id: ordertransactionid,
-        amount: amount
-      };
-      refundresult = globalPayHelper.refund(transactionData);
-      if (refundresult == undefined || refundresult == null) {
-        res.setStatusCode(400);
-      } else if (refundresult.status) {
-        Transaction.wrap(function () {
-          order.setStatus(Order.ORDER_STATUS_CANCELLED);
-        });
-      } else {
-        res.setStatusCode(400);
-      }
-    } else if (order.status == 6) {
-      res.setStatusCode(400);
-      refundresult = Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
-    } else {
-      res.setStatusCode(400);
-      refundresult = {
-        error: Resource.msg('order.refund.error', 'globalpay', null)
-      };
-    }
-  } else {
-  }
-  res.json({
-    refundresult: refundresult
-  });
-  next();
+function (req, res, next) { 
+    var refundresult;
+        if(!(res.viewData.securityErrorMessage)){
+                var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+                var order = OrderMgr.getOrder(req.querystring.orderID);
+                var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+                var amount = (order.totalGrossPrice)*100;
+                if(order.getPaymentStatus()=='PAYMENT_STATUS_PAID'){
+                    var transactionData = {
+                    transaction_id: ordertransactionid,  // Transaction ID 
+                    amount: amount //order.amount
+                };
+                refundresult = globalPayHelper.refund(transactionData);
+                if(refundresult== undefined || refundresult == null){
+                    res.setStatusCode(400);
+                }
+                else if(refundresult.status){
+                    var canceldescription = Resource.msg('order.refund.canceldecsription', 'globalpay', null);
+                    Transaction.wrap(function () {
+                        order.setStatus(Order.ORDER_STATUS_CANCELLED);
+                        order.setCancelDescription(canceldescription);
+                    });
+                }else{
+                    res.setStatusCode(400);
+                }
+                
+            }else if(order.status==6){
+                res.setStatusCode(400);
+                refundresult= Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
+                
+            }else{
+                res.setStatusCode(400);
+                refundresult = {
+                    error:  Resource.msg('order.refund.error', 'globalpay', null)
+                }
+            }
+        }else{
+            //refundresult = res.viewData.errorMessage;
+        }
+    res.json({
+        refundresult :  refundresult
+    });
+    next(); 
 });
 
 /**
@@ -70,15 +76,43 @@ function (req, res, next) {
 server.post('CaptureTransaction',
 security.ValidateHeaders,
 server.middleware.https,
-function (req, res, next) {
-  var captureresult;
-  if (!(res.viewData.securityErrorMessage)) {
-    var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
-    var order = OrderMgr.getOrder(req.querystring.orderID);
-    var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-    var amount = (order.totalGrossPrice) * 100;
-    var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
-
+function (req, res, next) { 
+    var captureresult;
+        if(!(res.viewData.securityErrorMessage)){
+                var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+                var order = OrderMgr.getOrder(req.querystring.orderID);
+                var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+                var amount = (order.totalGrossPrice)*100;
+                var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
+                
+            if(order.getPaymentStatus()=='PAYMENT_STATUS_NOTPAID'){
+                var transactionData = {
+                    transaction_id: ordertransactionid,  // Transaction ID 
+                    amount: amount, //order.amount
+                    capture_sequence: "FIRST",
+                    total_capture_count: 0,
+                    payment_method: {
+                        entry_mode: "ECOM",
+                        id: paymentID // paymentID
+                    }
+                };
+                captureresult = globalPayHelper.capture(transactionData);
+                var status = captureresult;
+                if(captureresult.status!=null){
+                    Transaction.wrap(function () {
+                        order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
+                    });
+                }else{
+                    res.setStatusCode(400);
+                 
+                }
+            }else{
+                res.setStatusCode(400);
+                captureresult={
+                    error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
+                }
+            }
+        }else{ 
     if (order.status != 5 && order.status != 6) {
       var transactionData = {
         transaction_id: ordertransactionid,
