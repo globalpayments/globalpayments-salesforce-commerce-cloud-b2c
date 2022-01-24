@@ -313,11 +313,13 @@ var scrollAnimate = require('base/components/scrollAnimate');
                   if ($('.tab-pane.active').attr('id') == 'paypal-content') { window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url; }   //
                                 // Populate the Address Summary
                                 //
-                  if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'apple-pay-content') {
-                    placeOrderSuccess(data);// populate order details
-                    defer.resolve(data);
-                  } else {
-                    $('body').trigger('checkout:updateCheckoutView',
+                                if($('.tab-pane.active').attr('id') == 'google-pay-content'||$('.tab-pane.active').attr('id') =='apple-pay-content')
+                                {
+                                    placeOrderSuccess(data);//populate order details
+                                    defer.resolve(data);
+                                }
+                                else{
+                                $('body').trigger('checkout:updateCheckoutView',
                                     { order: data.order, customer: data.customer });
 
                     if (data.renderedPaymentInstruments) {
@@ -481,23 +483,24 @@ var scrollAnimate = require('base/components/scrollAnimate');
             members.gotoStage('shipping');
           });
 
-          $('.payment-summary .edit-button', plugin).on('click', function () {
-            members.gotoStage('payment');
-          });
-          $('.btn-paypal-button', plugin).on('click', function () {
-            $('a.nav-link.credit-card-tab').addClass('disabled');
-            $('a.nav-link.google-pay-tab').addClass('disabled');
-            $('a.nav-link.apple-pay-tab').addClass('disabled');
-            members.nextStage();
-          });
-          $('body').on('submit:googlepay', function (e, data) {
-            console.log(data);
-            $('#paymentToken').val(data.paymentToken);
-            members.nextStage();
-          });
-          $('.apple-pay-content #apple-pay-button', plugin).on('click', function () {
-            members.nextStage();
-          });
+                $('.payment-summary .edit-button', plugin).on('click', function () {
+                    members.gotoStage('payment');
+                });
+                $('.btn-paypal-button',plugin).on('click',function() {
+                    $('a.nav-link.credit-card-tab').addClass("disabled");
+                    $('a.nav-link.google-pay-tab').addClass("disabled");
+                    $('a.nav-link.apple-pay-tab').addClass("disabled");
+                    members.nextStage();
+                });
+                $('body').on('submit:googlepay',function(e,data)
+                {
+                    console.log(data);
+                    $('#paymentToken').val(data.paymentToken);
+                    members.nextStage();
+                });
+                $('.apple-pay-content #apple-pay-button', plugin).on('click', function () {
+                    members.nextStage();
+                });
                 //
                 // remember stage (e.g. shipping)
                 //
