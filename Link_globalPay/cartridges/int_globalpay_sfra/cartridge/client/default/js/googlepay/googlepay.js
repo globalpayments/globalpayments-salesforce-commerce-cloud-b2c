@@ -3,20 +3,22 @@
  * configuration
  */
  const baseRequest = {
-    apiVersion: 2,
-    apiVersionMinor: 0
+    apiVersion: parseInt($('input[name=gpayapiversion]').val()),
+    apiVersionMinor:  parseInt($('input[name=gpayapiversionminor]').val())
   };
   
   /**
    * Card networks supported by your site and your gateway
    */
-  const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
+   var gpayallowedcardnetworks=$('input[name=gpayallowedcardnetworks]').val().split(',');
+   const allowedCardNetworks = gpayallowedcardnetworks;
   
   /**
    * Card authentication methods supported by your site and your gateway
    * supported card networks
    */
-  const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+   var gpayallowedcardauthmethods=$('input[name=gpayallowedcardauthmethods]').val().split(',');
+   const allowedCardAuthMethods = gpayallowedcardauthmethods;
   
   /**
    * Identify your gateway and your site's gateway merchant identifier
@@ -24,11 +26,11 @@
    * The Google Pay API response will return an encrypted payment method capable
    * of being charged by a supported gateway after payer authorization
    */
-  const tokenizationSpecification = {
-    type: 'PAYMENT_GATEWAY',
+   const tokenizationSpecification = {
+    type: $('input[name=gpaytokentype]').val(),
     parameters: {
-      'gateway': 'globalpayments',
-      'gatewayMerchantId': 'MER_7e3e2c7df34f42819b3edee31022ee3f'
+      'gateway': $('input[name=gpaymerchantname]').val(),
+      'gatewayMerchantId': $('input[name=gpaymerchantid]').val()
     }
   };
   
@@ -37,7 +39,7 @@
    * fields
    */
   const baseCardPaymentMethod = {
-    type: 'CARD',
+    type: $('input[name=gpaybasecardmethod]').val(),
     parameters: {
       allowedAuthMethods: allowedCardAuthMethods,
       allowedCardNetworks: allowedCardNetworks
@@ -91,8 +93,8 @@
     paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
     paymentDataRequest.merchantInfo = {
       // @todo a merchant ID is available for a production environment after approval by Google
-       merchantId: 'MER_7e3e2c7df34f42819b3edee31022ee3f',
-      merchantName: 'globalpayments'
+       merchantId: $('input[name=gpaymerchantid]').val(),
+      merchantName: $('input[name=gpayMerchantName]').val()
     };
     return paymentDataRequest;
   }
@@ -103,7 +105,7 @@
    */
   function getGooglePaymentsClient() {
     if ( paymentsClient === null ) {
-      paymentsClient = new google.payments.api.PaymentsClient({environment: 'TEST'});
+      paymentsClient = new google.payments.api.PaymentsClient({environment: $('input[name=gpayenv]').val()});
     }
     return paymentsClient;
   }
@@ -135,9 +137,9 @@
    */
   function getGoogleTransactionInfo() {
     return {
-      countryCode: 'US',
-      currencyCode: 'USD',
-      totalPriceStatus: 'FINAL',
+      countryCode: $('input[name=country]').val(),
+      currencyCode:$('input[name=currency]').val(),
+      totalPriceStatus: $('input[name=gpaytotalpricestatus]').val(),
       // set to cart total
       totalPrice: $('.grand-total-sum').text().replace(/\$/g, '')
     };
@@ -150,8 +152,8 @@
     const paymentDataRequest = getGooglePaymentDataRequest();
     // transactionInfo must be set but does not affect cache
     paymentDataRequest.transactionInfo = {
-      totalPriceStatus: 'NOT_CURRENTLY_KNOWN',
-      currencyCode: 'USD'
+      totalPriceStatus: $('input[name=gpaypriortotalpricestatus]').val(),
+      currencyCode: $('input[name=currency]').val()
     };
     const paymentsClient = getGooglePaymentsClient();
     paymentsClient.prefetchPaymentData(paymentDataRequest);

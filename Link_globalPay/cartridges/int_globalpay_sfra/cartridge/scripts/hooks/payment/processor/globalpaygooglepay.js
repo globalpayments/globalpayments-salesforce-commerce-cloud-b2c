@@ -37,18 +37,18 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     amount: order.merchandizeTotalGrossPrice.value * 100,
     currency: order.currencyCode,
     reference: order.orderNo,
-    country: globalpayconstants.googlePay.country,
+    country: Locale.getLocale(req.locale.id).country,
     payment_method: {
       name: order.customerName,
       entry_mode: globalpayconstants.googlePay.entryMode,
       digital_wallet: {
         provider: globalpayconstants.googlePay.provider,
-        tokenFormat: globalpayconstants.googlePay.tokenFormat,
-        expiryMonth: globalpayconstants.googlePay.expiryMonth,
-        expiryYear: globalpayconstants.googlePay.expiryYear,
-        cryptogram: globalpayconstants.googlePay.cryptogram,
-        token: globalpayconstants.googlePay.token,
-        eci: globalpayconstants.googlePay.eci
+        tokenFormat: preferences.gpayTokenFormat,
+        expiryMonth: preferences.gpayExpiryMonth,
+        expiryYear: preferences.gpayExpiryYear,
+        cryptogram: preferences.gpayCryptogram,
+        token: preferences.gpayToken,
+        eci: preferences.gpayECI
       }
     }
   };

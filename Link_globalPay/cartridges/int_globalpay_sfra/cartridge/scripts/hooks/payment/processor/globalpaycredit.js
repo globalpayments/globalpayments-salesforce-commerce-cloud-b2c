@@ -99,7 +99,7 @@ function savePaymentInformation(req, basket, billingData) {
         && req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
         && billingData.saveCard
-        && (billingData.paymentMethod.value === 'CREDIT_CARD')
+        && (billingData.paymentMethod.value === globalpayconstants.reditCardPay.paymentMethod)
     ) {
     var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
@@ -140,8 +140,8 @@ function createToken(formdata) {
   var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
      
   var tokenizeData = {
-    usage_mode: globalpayconstants.tokenData.usage_mode,
-    reference: globalpayconstants.tokenData.reference,
+    usage_mode: globalpayconstants.authorizationData.usage_mode,
+    reference: globalpayconstants.authorizationData.reference,
     first_name: formdata.name.split(' ')[0],
     last_name: formdata.name.split(' ')[1],
     card: {

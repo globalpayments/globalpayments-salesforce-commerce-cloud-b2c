@@ -20,7 +20,23 @@ function getPreferences(site) {
     env: currentSite.getCustomPreferenceValue('env'),
     threedsecureChallenge: currentSite.getCustomPreferenceValue('gp_threedsecure_challengenotification'), // http://testing.test/wc-api/globalpayments_threedsecure_challengenotification/
     threedsecureMethod: currentSite.getCustomPreferenceValue('gp_threedsecure_methodnotification'), // http://testing.test/wc-api/globalpayments_threedsecure_methodnotification/
-    captureModeValue: currentSite.getCustomPreferenceValue('gp_captureModeValue')
+    captureModeValue: currentSite.getCustomPreferenceValue('gp_captureModeValue'),
+    gpayMerchantId: currentSite.getCustomPreferenceValue('gpayMerchantId'),
+    gpayMerchantName: currentSite.getCustomPreferenceValue('gpayMerchantName'),
+    gpayEnv: currentSite.getCustomPreferenceValue('gpayEnv'),
+    gpayBaseCardMethod: currentSite.getCustomPreferenceValue('gpayBaseCardMethod'),
+    gpayTokenType: currentSite.getCustomPreferenceValue('gpayTokenType'),
+    gpayApiVersion: currentSite.getCustomPreferenceValue('gpayApiVersion'),
+    gpayApiVersionMinor: currentSite.getCustomPreferenceValue('gpayApiVersionMinor'),
+    gpayAllowedCardNetworks: currentSite.getCustomPreferenceValue('gpayAllowedCardNetworks'),
+    gpayAllowedCardAuthMethods: currentSite.getCustomPreferenceValue('gpayAllowedCardAuthMethods'),
+    gpayTotalPriceStatus: currentSite.getCustomPreferenceValue('gpayTotalPriceStatus'),
+    gpayPriorTotalPriceStatus: currentSite.getCustomPreferenceValue('gpayPriorTotalPriceStatus'),
+    gpayTokenFormat: currentSite.getCustomPreferenceValue('gpayTokenFormat'),
+    gpayExpiryMonth: currentSite.getCustomPreferenceValue('gpayExpiryMonth'),
+    gpayExpiryYear: currentSite.getCustomPreferenceValue('gpayExpiryYear'),
+    gpayCryptogram: currentSite.getCustomPreferenceValue('gpayCryptogram'),
+    gpayToken: currentSite.getCustomPreferenceValue('gpayToken')
   };
 }
 

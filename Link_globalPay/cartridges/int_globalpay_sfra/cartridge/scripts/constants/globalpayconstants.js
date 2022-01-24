@@ -14,6 +14,7 @@ authorizationData.source = 'BROWSER';
 authorizationData.type = 'SALE';
 authorizationData.entrymode = 'ECOM';
 authorizationData.reference = '93459c79-f3f9-427d-84d9-ca0584bb55bf';
+authorizationData.usage_mode = 'MULTIPLE';
 globalpayConstants.authorizationData = authorizationData;
 
 var paypalData = new Object();
@@ -32,20 +33,6 @@ googlePay.channel = 'CNP';
 googlePay.type = 'SALE';
 googlePay.entryMode = 'ECOM';
 googlePay.provider = 'PAY_BY_GOOGLE';
-googlePay.token_format = 'CARD_NUMBER';
-googlePay.expiryMonth = '12';
-googlePay.expiryYear = '25';
-googlePay.cryptogram = '234234234';
-googlePay.token = '5167300431085507';
-googlePay.eci = '3';
-googlePay.country = 'US';
-googlePay.paymentType = 'PAYMENT_GATEWAY';
-googlePay.apiVersion = 2;
-googlePay.apiVersionMinor = 0;
-googlePay.paymentTypeParam = 'globalpayments';
-googlePay.gatewayMerchantId = 'MER_7e3e2c7df34f42819b3edee31022ee3f';
-googlePay.baseCardPaymentMethod = 'CARD';
-googlePay.env = 'TEST';
 globalpayConstants.googlePay = googlePay;
 
 var creditCardPay = new Object();
@@ -59,10 +46,5 @@ var captureTransaction = new Object();
 captureTransaction.capture_sequence = 'FIRST';
 captureTransaction.entry_mode = 'ECOM';
 globalpayConstants.captureTransaction = captureTransaction;
-
-var tokenData = new Object();
-tokenData.reference = '93459c79-f3f9-427d-84d9-ca0584bb55bf';
-tokenData.usage_mode = 'MULTIPLE';
-globalpayConstants.tokenData = tokenData;
 
 module.exports = globalpayConstants;

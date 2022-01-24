@@ -9,6 +9,7 @@ var page = module.superModule;
 server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+
  /* Route to handle paypal submission. This route is called only when either
     PayPal Express or PayPal billing agreement is called from either mini cart or cart page. */
 // eslint-disable-next-line
@@ -492,6 +493,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     return next();
   }
 
+  //Validate Order
   var validationOrderStatus = hooksHelper('app.validate.order', 'validateOrder', currentBasket, require('*/cartridge/scripts/hooks/validateOrder').validateOrder);
   if (validationOrderStatus.error) {
     res.json({
@@ -580,6 +582,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
     return next();
   }
 
+  //handle error
   if (handlePaymentResult.error) {
     res.json({
       error: true,

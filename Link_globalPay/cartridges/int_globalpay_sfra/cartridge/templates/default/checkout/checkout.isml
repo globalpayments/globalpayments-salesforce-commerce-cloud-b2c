@@ -1,4 +1,18 @@
 <isdecorate template="common/layout/checkout">
+<input type="hidden" name="env" id="env" value="${pdict.env}"/>
+<input type="hidden" name="currency" id="currency" value="${pdict.currency}"/>
+<input type="hidden" name="country" id="country" value="${pdict.country}"/>
+<input type="hidden" name="gpaymerchantid" id="gpaymerchantid" value="${pdict.gpaymerchantid}"/>
+<input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.gpaymerchantname}"/>
+<input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
+<input type="hidden" name="gpaybasecardmethod" id="gpaybasecardmethod" value="${pdict.gpaybasecardmethod}"/>
+<input type="hidden" name="gpaytokentype" id="gpaytokentype" value="${pdict.gpaytokentype}"/>
+<input type="hidden" name="gpayapiversion" id="gpayapiversion" value="${pdict.gpayapiversion}"/>
+<input type="hidden" name="gpayapiversionminor" id="gpayapiversionminor" value="${pdict.gpayapiversionminor}"/>
+<input type="hidden" name="gpayallowedcardnetworks" id="gpayallowedcardnetworks" value="${pdict.gpayallowedcardnetworks}"/>
+<input type="hidden" name="gpayallowedcardauthmethods" id="gpayallowedcardauthmethods" value="${pdict.gpayallowedcardauthmethods}"/>
+<input type="hidden" name="gpaytotalpricestatus" id="gpaytotalpricestatus" value="${pdict.gpaytotalpricestatus}"/>
+<input type="hidden" name="gpaypriortotalpricestatus" id="gpaypriortotalpricestatus" value="${pdict.gpaypriortotalpricestatus}"/>
 
     <!----------------------------------------------------------------------------------->
     <!-- Load Static Assets -->
