@@ -27,8 +27,8 @@ function (req, res, next) {
                 var order = OrderMgr.getOrder(req.querystring.orderID);
                 var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
                 var amount = (order.totalGrossPrice)*100;
-            if(order.status==5){
-                var transactionData = {
+                if(order.getPaymentStatus()=='PAYMENT_STATUS_PAID'){
+                    var transactionData = {
                     transaction_id: ordertransactionid,  // Transaction ID 
                     amount: amount //order.amount
                 };
@@ -37,8 +37,10 @@ function (req, res, next) {
                     res.setStatusCode(400);
                 }
                 else if(refundresult.status){
+                    var canceldescription = Resource.msg('order.refund.canceldecsription', 'globalpay', null);
                     Transaction.wrap(function () {
-                        order.setStatus(Order.ORDER_STATUS_CANCELLED); 
+                        order.setStatus(Order.ORDER_STATUS_CANCELLED);
+                        order.setCancelDescription(canceldescription);
                     });
                 }else{
                     res.setStatusCode(400);
@@ -83,7 +85,7 @@ function (req, res, next) {
                 var amount = (order.totalGrossPrice)*100;
                 var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
                 
-            if(order.status!=5 && order.status!=6){
+            if(order.getPaymentStatus()=='PAYMENT_STATUS_NOTPAID'){
                 var transactionData = {
                     transaction_id: ordertransactionid,  // Transaction ID 
                     amount: amount, //order.amount
@@ -99,13 +101,10 @@ function (req, res, next) {
                 if(captureresult.status!=null){
                     Transaction.wrap(function () {
                         order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
-                        order.setStatus(Order.ORDER_STATUS_COMPLETED); 
                     });
                 }else{
                     res.setStatusCode(400);
-                    captureresult={
-                        error: Resource.msg('order.capture.invalidata', 'globalpay', null)
-                    }
+                 
                 }
             }else{
                 res.setStatusCode(400);
