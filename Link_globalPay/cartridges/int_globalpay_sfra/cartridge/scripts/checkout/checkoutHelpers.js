@@ -15,57 +15,57 @@ var Transaction = require('dw/system/Transaction');
  * @param {string} orderNumber - The order number for the order
  * @returns {Object} an error object
  */
- function handlePayments(order, orderNumber, req) {
-    var result = {};
+function handlePayments(order, orderNumber, req) {
+  var result = {};
 
-    if (order.totalNetPrice !== 0.00) {
-        var paymentInstruments = order.paymentInstruments;
+  if (order.totalNetPrice !== 0.00) {
+    var paymentInstruments = order.paymentInstruments;
 
-        if (paymentInstruments.length === 0) {
-            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
-            result.error = true;
-        }
+    if (paymentInstruments.length === 0) {
+      Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+      result.error = true;
+    }
 
-        if (!result.error) {
-            for (var i = 0; i < paymentInstruments.length; i++) {
-                var paymentInstrument = paymentInstruments[i];
-                var paymentProcessor = PaymentMgr
+    if (!result.error) {
+      for (var i = 0; i < paymentInstruments.length; i++) {
+        var paymentInstrument = paymentInstruments[i];
+        var paymentProcessor = PaymentMgr
                     .getPaymentMethod(paymentInstrument.paymentMethod)
                     .paymentProcessor;
-                var authorizationResult;
-                if (paymentProcessor === null) {
-                    Transaction.begin();
-                    paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
-                    Transaction.commit();
-                } else {
-                    if (HookMgr.hasHook('app.payment.processor.' +paymentProcessor.ID.toLowerCase())) {
-                        authorizationResult = HookMgr.callHook(
+        var authorizationResult;
+        if (paymentProcessor === null) {
+          Transaction.begin();
+          paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+          Transaction.commit();
+        } else {
+          if (HookMgr.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
+            authorizationResult = HookMgr.callHook(
                             'app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                             'Authorize',
                             orderNumber,
                             paymentInstrument,
                             paymentProcessor,
-                            req, 
+                            req,
                             order
                         );
-                        result.authorizationResult = authorizationResult;
-                    } else {
-                        authorizationResult = HookMgr.callHook(
+            result.authorizationResult = authorizationResult;
+          } else {
+            authorizationResult = HookMgr.callHook(
                             'app.payment.processor.default',
                             'Authorize'
                         );
-                        result.authorizationResult = authorizationResult;
-                    }
-                    if (authorizationResult.error) {
-                        Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
-                        result.error = true;
-                        break;
-                    }
-                }
-            }
+            result.authorizationResult = authorizationResult;
+          }
+          if (authorizationResult.error) {
+            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
+            result.error = true;
+            break;
+          }
         }
+      }
     }
-    return result;
+  }
+  return result;
 }
 
 base.handlePayments = handlePayments;

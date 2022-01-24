@@ -12,7 +12,20 @@
 // Configure account
 GlobalPayments.configure({
     accessToken: '${pdict.token}',
-    env: "sandbox" // or "production"
+    env: '${pdict.env}', // or "production"
+    currency: '${pdict.currency}',
+    country:'${pdict.country}',
+    gpaymerchantid:'${pdict.gpaymerchantid}',
+    gpaymerchantname:'${pdict.gpaymerchantname}',
+    gpayenv:'${pdict.gpayenv}',
+    gpaybasecardmethod:'${pdict.gpaybasecardmethod}',
+    gpaytokentype:'${pdict.gpaytokentype}',
+    gpayapiversion:'${pdict.gpayapiversion}',
+    gpayapiversionminor:'${pdict.gpayapiversionminor}',
+    gpayallowedcardnetworks:'${pdict.gpayallowedcardnetworks}',
+    gpayallowedcardauthmethods:'${pdict.gpayallowedcardauthmethods}',
+    gpaytotalpricestatus:'${pdict.gpaytotalpricestatus}',
+    gpaypriortotalpricestatus:'${pdict.gpaypriortotalpricestatus}'
 });
 
 // Create Form

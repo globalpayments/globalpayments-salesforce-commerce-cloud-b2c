@@ -33,6 +33,6 @@
     "ie >= 10"
   ],
   "paths": {
-    "base": "../SFCC_base/cartridges/app_storefront_base/"
- }
+    "base": "../../sfra-base/cartridges/app_storefront_base/"
+  }
 }

@@ -3,7 +3,7 @@
 var server = require('server');
 var security = require('*/cartridge/scripts/middleware/security');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-var Order  = require('dw/order/Order');
+var Order = require('dw/order/Order');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
@@ -14,13 +14,13 @@ var OrderMgr = require('dw/order/OrderMgr');
  * @memberof OrderTransactions
  * @param {middleware} - server.middleware.https
  * @param {serverfunction} - post
- * 
+ *
  **/
 
 server.post('RefundTransaction',
 security.ValidateHeaders,
 server.middleware.https,
-function (req, res, next) {
+function (req, res, next) { 
     var refundresult;
         if(!(res.viewData.securityErrorMessage)){
                 var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
@@ -62,7 +62,7 @@ function (req, res, next) {
     res.json({
         refundresult :  refundresult
     });
-    next();
+    next(); 
 });
 
 /**
@@ -76,7 +76,7 @@ function (req, res, next) {
 server.post('CaptureTransaction',
 security.ValidateHeaders,
 server.middleware.https,
-function (req, res, next) {
+function (req, res, next) { 
     var captureresult;
         if(!(res.viewData.securityErrorMessage)){
                 var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
@@ -112,14 +112,44 @@ function (req, res, next) {
                     error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
                 }
             }
-        }else{
-
-            //refundresult = res.viewData.errorMessage;
+        }else{ 
+    if (order.status != 5 && order.status != 6) {
+      var transactionData = {
+        transaction_id: ordertransactionid,
+        amount: amount,
+        capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
+        total_capture_count: 0,
+        payment_method: {
+          entry_mode: globalpayconstants.captureTransaction.entry_mode,
+          id: paymentID
         }
-          
-    res.json({
-        captureresult :  captureresult
-    });
-    next();
+      };
+      captureresult = globalPayHelper.capture(transactionData);
+      var status = captureresult;
+      if (captureresult.status != null) {
+        Transaction.wrap(function () {
+          order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
+          order.setStatus(Order.ORDER_STATUS_COMPLETED);
+        });
+      } else {
+        res.setStatusCode(400);
+        captureresult = {
+          error: Resource.msg('order.capture.invalidata', 'globalpay', null)
+        };
+      }
+    } else {
+      res.setStatusCode(400);
+      captureresult = {
+        error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
+      };
+    }
+  } else {
+
+  }
+
+  res.json({
+    captureresult: captureresult
+  });
+  next();
 });
 module.exports = server.exports();
