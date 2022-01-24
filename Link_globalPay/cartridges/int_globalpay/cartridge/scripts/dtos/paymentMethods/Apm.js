@@ -8,10 +8,14 @@ var createSetter = function (fieldName) {
         this.__[fieldName] = val;
     }
 }
-
+/**
+ * Forms all the fields required to send for Apm request.
+ * @param {obj} requestObj - object that contains fields for request to be sent.
+ */
 var ApmRequest = AbstractRequest.extend({
     init: function (requestObj) {
         Object.defineProperties(this, {
+            // add more fields as per the Model here:
             provider: {
                 enumerable: true,
                 set: createSetter('provider'),
@@ -24,7 +28,10 @@ var ApmRequest = AbstractRequest.extend({
         this._super(requestObj);
     }
 });
-
+/**
+ * Forms all fields to be Returned as part of Apm response.
+ * @param {obj} responseObj - object that contains fields from response.
+ */
 var ApmResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
@@ -40,7 +47,7 @@ var ApmResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-             provider_redirect_url: {
+            provider_redirect_url: {
                 enumerable: true,
                 writable: true
             },
@@ -60,7 +67,7 @@ var ApmResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             }
-
+            // add more fields as per the Model here:
         });
 
         this._super(responseObj);

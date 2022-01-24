@@ -3,8 +3,6 @@
  * @module dtos/base/AbstractResponse
  */
 
-var Logger = require('dw/system/Logger');
-
 var AbstractBase = require('~/cartridge/scripts/dtos/base/AbstractBase');
 
 /**
@@ -16,41 +14,41 @@ var AbstractBase = require('~/cartridge/scripts/dtos/base/AbstractBase');
  * @returns {module:dtos/base/AbstractResponse~AbstractResponse}
  */
 var AbstractResponse = AbstractBase.extend({
-    init: function (responseObj) {
-        Object.defineProperties(this, {
-            __: {
-                enumerable: false,
-                writable: true,
-                value: {}
-            }
-        });
+  init: function (responseObj) {
+    Object.defineProperties(this, {
+      __: {
+        enumerable: false,
+        writable: true,
+        value: {}
+      }
+    });
 
-        if (!empty(responseObj)) {
-            Object.keys(this)
-            .filter(function(key) { return key !== '_super'})
-            .forEach(function(key) {
-                this[key] = responseObj[AbstractBase.camelToSnakeCase(key)];
+    if (!empty(responseObj)) {
+      Object.keys(this)
+            .filter(function (key) { return key !== '_super'; })
+            .forEach(function (key) {
+              this[key] = responseObj[AbstractBase.camelToSnakeCase(key)];
             }.bind(this));
-        }
-
-        this._super();
     }
+
+    this._super();
+  }
 });
 
 AbstractResponse.getAccessorDescriptorWithConstructor = function (constructorFn) {
-    var UUIDUtils = require('dw/util/UUIDUtils');
-    var uniqueInternalProperty = UUIDUtils.createUUID();
+  var UUIDUtils = require('dw/util/UUIDUtils');
+  var uniqueInternalProperty = UUIDUtils.createUUID();
 
-    return {
-        enumerable: true,
-        set: function (val) {
-            this.__[uniqueInternalProperty] = new constructorFn(val);
-        },
-        get: function () {
-            return this.__[uniqueInternalProperty];
-        }
-    };
-}
+  return {
+    enumerable: true,
+    set: function (val) {
+      this.__[uniqueInternalProperty] = new constructorFn(val);
+    },
+    get: function () {
+      return this.__[uniqueInternalProperty];
+    }
+  };
+};
 
 /** @type {module:dtos/base/AbstractResponse~AbstractResponse.prototype} */
 module.exports = AbstractResponse;

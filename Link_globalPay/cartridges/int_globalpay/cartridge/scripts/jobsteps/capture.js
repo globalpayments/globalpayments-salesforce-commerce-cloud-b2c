@@ -6,11 +6,11 @@ var drStates = require('../globalpay/gpCustomStates.json');
 var Status = require('dw/system/Status');
 var MAX_ORDERS_PER_REQUEST = 20;
 
-var updateOrderStatus =  function (params) {
-var test = '';
+var updateOrderStatus = function (params) {
+  var test = '';
 
-return test;
-}
+  return test;
+};
 module.exports = {
-    updateOrderStatus : updateOrderStatus
+  updateOrderStatus: updateOrderStatus
 };

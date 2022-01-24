@@ -323,12 +323,12 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
  */
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 
-    var authenticationData = {
+    var authenticationData = { 
         account_name: globalpayconstants.authenticationData.account_name,
         channel: globalpayconstants.authenticationData.channel,
         country: Locale.getLocale(req.locale.id).country,
         reference: '93459c79-f3f9-427d-84d9-ca0584bb55bf',
-        amount: Math.ceil(basket.totalGrossPrice.value),
+        amount: basket.totalGrossPrice.value * 100,
         currency: basket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
