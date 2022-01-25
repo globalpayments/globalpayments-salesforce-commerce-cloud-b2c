@@ -10,7 +10,7 @@ var orderUpdate = function (order) {
 
   Transaction.wrap(function () {
     var placeOrderStatus = OrderMgr.placeOrder(order);
-    if (captureMode.value == preferences.captureModeValue) {
+    if (captureMode.value == 'AUTO') {
       order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
       order.setStatus(Order.ORDER_STATUS_COMPLETED);
     }
