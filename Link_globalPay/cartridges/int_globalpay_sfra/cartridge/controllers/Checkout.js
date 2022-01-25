@@ -19,14 +19,6 @@ server.append('Begin', function (req, res, next) {
     var gpayMerchantId=preferences.gpayMerchantId;
     var gpayMerchantName=preferences.gpayMerchantName;
     var gpayEnv=preferences.gpayEnv;
-    var gpayBaseCardMethod=preferences.gpayBaseCardMethod;
-    var gpayTokenType=preferences.gpayTokenType;
-    var gpayApiVersion=preferences.gpayApiVersion;
-    var gpayApiVersionMinor=preferences.gpayApiVersionMinor;
-    var gpayAllowedCardNetworks=preferences.gpayAllowedCardNetworks;
-    var gpayAllowedCardAuthMethods=preferences.gpayAllowedCardAuthMethods;
-    var gpayTotalPriceStatus=preferences.gpayTotalPriceStatus;
-    var gpayPriorTotalPriceStatus=preferences.gpayPriorTotalPriceStatus;
 
     var viewData = res.getViewData();
         viewData = {
@@ -36,15 +28,7 @@ server.append('Begin', function (req, res, next) {
             country: Locale.getLocale(req.locale.id).country,
             gpaymerchantid:gpayMerchantId,
             gpaymerchantname:gpayMerchantName,
-            gpayenv:gpayEnv,
-            gpaybasecardmethod:gpayBaseCardMethod,
-            gpaytokentype:gpayTokenType,
-            gpayapiversion:gpayApiVersion,
-            gpayapiversionminor:gpayApiVersionMinor,
-            gpayallowedcardnetworks:gpayAllowedCardNetworks,
-            gpayallowedcardauthmethods:gpayAllowedCardAuthMethods,
-            gpaytotalpricestatus:gpayTotalPriceStatus,
-            gpaypriortotalpricestatus:gpayPriorTotalPriceStatus
+            gpayenv:gpayEnv
         };
     res.setViewData(viewData);
     next();

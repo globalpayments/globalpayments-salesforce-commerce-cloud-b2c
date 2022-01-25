@@ -3,22 +3,20 @@
  * configuration
  */
  const baseRequest = {
-    apiVersion: parseInt($('input[name=gpayapiversion]').val()),
-    apiVersionMinor:  parseInt($('input[name=gpayapiversionminor]').val())
+    apiVersion: 2,
+    apiVersionMinor:  0
   };
   
   /**
    * Card networks supported by your site and your gateway
    */
-   var gpayallowedcardnetworks=$('input[name=gpayallowedcardnetworks]').val().split(',');
-   const allowedCardNetworks = gpayallowedcardnetworks;
+   const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
   
   /**
    * Card authentication methods supported by your site and your gateway
    * supported card networks
    */
-   var gpayallowedcardauthmethods=$('input[name=gpayallowedcardauthmethods]').val().split(',');
-   const allowedCardAuthMethods = gpayallowedcardauthmethods;
+   const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
   
   /**
    * Identify your gateway and your site's gateway merchant identifier
@@ -27,7 +25,7 @@
    * of being charged by a supported gateway after payer authorization
    */
    const tokenizationSpecification = {
-    type: $('input[name=gpaytokentype]').val(),
+    type: 'PAYMENT_GATEWAY',
     parameters: {
       'gateway': $('input[name=gpaymerchantname]').val(),
       'gatewayMerchantId': $('input[name=gpaymerchantid]').val()
@@ -39,7 +37,7 @@
    * fields
    */
   const baseCardPaymentMethod = {
-    type: $('input[name=gpaybasecardmethod]').val(),
+    type: 'CARD',
     parameters: {
       allowedAuthMethods: allowedCardAuthMethods,
       allowedCardNetworks: allowedCardNetworks
@@ -139,7 +137,7 @@
     return {
       countryCode: $('input[name=country]').val(),
       currencyCode:$('input[name=currency]').val(),
-      totalPriceStatus: $('input[name=gpaytotalpricestatus]').val(),
+      totalPriceStatus: 'FINAL',
       // set to cart total
       totalPrice: $('.grand-total-sum').text().replace(/\$/g, '')
     };
@@ -152,7 +150,7 @@
     const paymentDataRequest = getGooglePaymentDataRequest();
     // transactionInfo must be set but does not affect cache
     paymentDataRequest.transactionInfo = {
-      totalPriceStatus: $('input[name=gpaypriortotalpricestatus]').val(),
+      totalPriceStatus: 'NOT_CURRENTLY_KNOWN',
       currencyCode: $('input[name=currency]').val()
     };
     const paymentsClient = getGooglePaymentsClient();
