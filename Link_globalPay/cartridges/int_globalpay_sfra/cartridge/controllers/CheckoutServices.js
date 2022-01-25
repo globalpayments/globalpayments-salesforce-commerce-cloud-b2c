@@ -366,8 +366,8 @@ server.prepend(
           return;
         }
 
-        if (HookMgr.hasHook('app.payment.form.processor.' + processor.ID.toLowerCase())) {
-          HookMgr.callHook('app.payment.form.processor.' + processor.ID.toLowerCase(),
+        if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
+          HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
                     'savePaymentInformation',
                     req,
                     currentBasket,
