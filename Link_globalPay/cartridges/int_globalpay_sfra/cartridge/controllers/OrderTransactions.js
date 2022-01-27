@@ -104,7 +104,6 @@ function (req, res, next) {
                     });
                 }else{
                     res.setStatusCode(400);
-                 
                 }
             }else{
                 res.setStatusCode(400);
@@ -113,39 +112,8 @@ function (req, res, next) {
                 }
             }
         }else{ 
-    if (order.status != 5 && order.status != 6) {
-      var transactionData = {
-        transaction_id: ordertransactionid,
-        amount: amount,
-        capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
-        total_capture_count: 0,
-        payment_method: {
-          entry_mode: globalpayconstants.captureTransaction.entry_mode,
-          id: paymentID
-        }
-      };
-      captureresult = globalPayHelper.capture(transactionData);
-      var status = captureresult;
-      if (captureresult.status != null) {
-        Transaction.wrap(function () {
-          order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
-          order.setStatus(Order.ORDER_STATUS_COMPLETED);
-        });
-      } else {
-        res.setStatusCode(400);
-        captureresult = {
-          error: Resource.msg('order.capture.invalidata', 'globalpay', null)
-        };
-      }
-    } else {
-      res.setStatusCode(400);
-      captureresult = {
-        error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
-      };
+          res.setStatusCode(400);
     }
-  } else {
-
-  }
 
   res.json({
     captureresult: captureresult
