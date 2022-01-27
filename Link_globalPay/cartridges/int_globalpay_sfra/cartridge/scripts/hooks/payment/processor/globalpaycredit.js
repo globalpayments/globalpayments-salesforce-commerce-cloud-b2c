@@ -188,50 +188,23 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-  var authorizationData = {
-    account_name: globalpayconstants.authorizationData.account_name,
-    channel: globalpayconstants.authorizationData.channel,
-    capture_mode: captureMode.value,
-    type: globalpayconstants.authorizationData.type,
-    amount: order.merchandizeTotalGrossPrice.value * 100,
-    currency: order.currencyCode,
-    reference: orderNumber,
-    country: Locale.getLocale(req.locale.id).country,
-    payment_method: {
-      id: paymentInstrument.custom.gp_paymentmethodid,
-      entry_mode: globalpayconstants.authorizationData.entrymode,
-      authentication: {
-        id: paymentInstrument.custom.gp_authenticationid
-      }
-    }
-  };
-  var authorization = globalPayHelper.authorize(authorizationData);
-  if (!empty(authorization) && 'success' in authorization && !authorization.success) {
-    var error = true;
-    var serverErrors = [];
-    var fieldErrors = {};
-    var error = false;
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-    var preferences = globalPayPreferences.getPreferences();
-    var captureMode = preferences.captureMode;
-    var authorizationData = {
-      account_name: globalpayconstants.authorizationData.account_name,
-      channel: globalpayconstants.authorizationData.channel,
-      capture_mode: captureMode.value,
-      type: globalpayconstants.authorizationData.type,
-      amount: order.totalGrossPrice.value * 100,
-      currency: order.currencyCode,
-      reference: orderNumber,
-      country: Locale.getLocale(req.locale.id).country,
-      payment_method: {
-        id: paymentInstrument.custom.gp_paymentmethodid,
-        entry_mode: globalpayconstants.creditCardPay.entry_mode,
-        authentication: {
-          id: paymentInstrument.custom.gp_authenticationid
+      var authorizationData = {
+        account_name: globalpayconstants.authorizationData.account_name,
+        channel: globalpayconstants.authorizationData.channel,
+        capture_mode: captureMode.value,
+        type: globalpayconstants.authorizationData.type,
+        amount: order.merchandizeTotalGrossPrice.value * 100,
+        currency: order.currencyCode,
+        reference: orderNumber,
+        country: Locale.getLocale(req.locale.id).country,
+        payment_method: {
+          id: paymentInstrument.custom.gp_paymentmethodid,
+          entry_mode: globalpayconstants.authorizationData.entrymode,
+          authentication: {
+            id: paymentInstrument.custom.gp_authenticationid
+          }
         }
-      }
-    };
+      };
     var authorization = globalPayHelper.authorize(authorizationData);
     if (!empty(authorization) && 'success' in authorization && !authorization.success) {
       var error = true;
@@ -251,7 +224,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
             );
       }
     }
-  }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
 
@@ -300,7 +272,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     currency: basket.currencyCode,
     source: globalpayconstants.authenticationData.source,
     payment_method: {
-      id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? paymentInformation.creditCardToken : paymentInformation.paymentId.value
+      id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
     },
     notifications: {
       challenge_return_url: preferences.threedsecureChallenge,
