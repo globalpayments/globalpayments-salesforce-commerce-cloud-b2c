@@ -2,23 +2,32 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-
+var ShippingAddress = require('~/cartridge/scripts/dtos/nested/ShippingAddress');
 /**
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var ThreeDsRequest = AbstractRequest.extend({
+ var OrderRequest = AbstractRequest.extend({
   init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
-      source: {
+      timeCreatedReference: {
         enumerable: true,
         writable: true
       },
-      preference: {
+      amount: {
         enumerable: true,
         writable: true
-      }
+      },
+      currency: {
+        enumerable: true,
+        writable: true
+      },
+      addressMatchIndicator: {
+        enumerable: true,
+        writable: true
+      },
+      shippingAddress : AbstractResponse.getAccessorDescriptorWithConstructor(ShippingAddress.Request),
 
     });
 
@@ -31,38 +40,9 @@ var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse')
  * Forms all the fields to be returned as part of ThreeDs response.
  * @param {obj} responseObj - object that contains response.
  */
-var ThreeDsResponse = AbstractResponse.extend({
+var OrderResponse = AbstractResponse.extend({
   init: function (responseObj) {
     Object.defineProperties(this, {
-      // add more fields as per the Model here:
-      enrolledStatus: {
-        enumerable: true,
-        writable: true
-      },
-      challengeModel: {
-        enumerable: true,
-        writable: true
-      },
-      challengeStatus: {
-        enumerable: true,
-        writable: true
-      },
-      challengeValue: {
-        enumerable: true,
-        writable: true
-      },
-      redirectUrl: {
-        enumerable: true,
-        writable: true
-      },
-      source: {
-        enumerable: true,
-        writable: true
-      },
-      preference: {
-        enumerable: true,
-        writable: true
-      }
     });
 
     this._super(responseObj);
@@ -70,6 +50,6 @@ var ThreeDsResponse = AbstractResponse.extend({
 });
 
 module.exports = {
-  Request: ThreeDsRequest,
-  Response: ThreeDsResponse
+  Request: OrderRequest,
+  Response: OrderResponse
 };
