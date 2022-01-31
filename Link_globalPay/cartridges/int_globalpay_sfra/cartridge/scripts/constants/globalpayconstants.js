@@ -53,6 +53,26 @@ applePay.channel = 'CNP';
 applePay.type = 'SALE';
 applePay.entryMode = 'ECOM';
 applePay.provider = 'APPLEPAY';
-
 globalpayConstants.applePay = applePay;
+
+var threeDsStepOne = new Object();
+threeDsStepOne.account_name = 'transaction_processing';
+threeDsStepOne.source = 'BROWSER';
+threeDsStepOne.preference = 'NO_PREFERENCE';
+threeDsStepOne.method_url_completion_status = 'YES';
+threeDsStepOne.merchant_contact_url = 'http://www.vacationtoplan.in/shopping/contact/';
+threeDsStepOne.time_created_reference = '2022-01-23T22:17:11.000000Z';
+threeDsStepOne.address_match_indicator = true
+threeDsStepOne.accept_header = '*/*'; 
+threeDsStepOne.color_depth = 'TWENTY_FOUR_BITS';
+threeDsStepOne.ip = '82.217.170.253';
+threeDsStepOne.java_enabled = false;
+threeDsStepOne.javascript_enabled = true;
+threeDsStepOne.screen_height = 864;
+threeDsStepOne.screen_width = 1536;
+threeDsStepOne.challenge_window_size = 'WINDOWED_500X600';
+threeDsStepOne.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36';
+threeDsStepOne.timezone = '-1';
+
+globalpayConstants.threeDsStepOne = threeDsStepOne;
 module.exports = globalpayConstants;

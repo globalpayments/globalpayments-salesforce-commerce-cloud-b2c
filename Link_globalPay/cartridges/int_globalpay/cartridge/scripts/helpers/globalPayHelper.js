@@ -158,6 +158,7 @@ function capture(data) {
 
   var captureRequest = new Capture.Request();
   captureRequest.setToken(getAccessToken());
+  captureRequest.setAuthId(data.auth_id);
   captureRequest.setTransactionId(data.transaction_id);
   captureRequest.setAmount(data.amount);
   captureRequest.setCaptureSequence(data.capture_sequence);
@@ -245,6 +246,38 @@ function applePay(data)
     }
     return null;
 }
+function  threeDsStepone(data) {
+  var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDsStepone');
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var threeDsSteponeReq = new threeDsStepone.Request();
+      threeDsSteponeReq.setToken(getAccessToken());
+      threeDsSteponeReq.setThreeDs(data.three_ds);
+      threeDsSteponeReq.setAuthId(data.auth_id);
+      threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
+      threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
+      threeDsSteponeReq.setOrder(data.order);
+      threeDsSteponeReq.setPaymentMethod(data.payment_method);
+      threeDsSteponeReq.setBrowserData(data.browser_data);
+
+    var result = globalPayService.executeRequest(threeDsSteponeReq, threeDsStepone.Response);
+      if (result.success) {
+          return result.response;
+      }
+      return null;
+  }
+
+  function threeDsSteptwo(data){
+    var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
+    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+    var threeDsSteptwoReq = new threeDsSteptwo.Request();
+        threeDsSteptwoReq.setToken(getAccessToken());
+        threeDsSteptwoReq.setAuthId(data.auth_id);
+    var result = globalPayService.executeRequest(threeDsSteptwoReq, threeDsSteptwo.Response);
+      if (result.success) {
+          return result.response;
+      }
+      return null;
+  }
 
 module.exports = {
     getAccessToken: getAccessToken,
@@ -256,5 +289,7 @@ module.exports = {
     gpay:gpay,
     tokenize:tokenize,
     detokenize:detokenize,
-    applePay:applePay
+    applePay:applePay,
+    threeDsStepone:threeDsStepone,
+    threeDsSteptwo:threeDsSteptwo
 };
