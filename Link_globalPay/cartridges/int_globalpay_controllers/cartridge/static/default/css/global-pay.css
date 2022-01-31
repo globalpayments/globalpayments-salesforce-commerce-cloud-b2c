@@ -1,0 +1,36 @@
+
+.credit-card-payment
+{
+    display:none;
+}
+.checkout-billing .button-fancy-large
+{
+    display:none;
+}
+/*
+ * Gpay styles
+ */
+#google-pay-btn
+{
+    text-align: center; 
+}
+
+/*
+ * Paypal styles
+ */
+ .paypal-button
+ {
+    text-align: center;
+ }
+ #paypal-button
+ {
+    background-color: white;
+    border:none;
+    padding: 0;
+    margin: 0;
+ }
+ 
+.paypal-logo{
+    width: 50%;
+    height: 50%;
+}

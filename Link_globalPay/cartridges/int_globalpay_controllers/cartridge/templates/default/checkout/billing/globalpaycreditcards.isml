@@ -1,0 +1,56 @@
+  <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
+  <div id="gpayerror"></div> 
+ <form id="payment-form" action="/Payment/Charge" method="post">
+    <!-- Other input fields to capture relevant data -->
+    <!-- Target for the credit card form -->
+    <div id="credit-card"></div>
+</form>
+<script src="https://js.globalpay.com/v1/globalpayments.js"></script>
+
+
+<script type="text/javascript">
+// Configure account
+GlobalPayments.configure({
+    accessToken: '${pdict.token}',
+    env: '${pdict.env}', // or "production"
+    currency: '${pdict.currency}',
+    country:'${pdict.country}',
+    gpaymerchantid:'${pdict.gpaymerchantid}',
+    gpaymerchantname:'${pdict.gpaymerchantname}',
+    gpayenv:'${pdict.gpayenv}',
+    gpaybasecardmethod:'${pdict.gpaybasecardmethod}',
+    gpaytokentype:'${pdict.gpaytokentype}',
+    gpayapiversion:'${pdict.gpayapiversion}',
+    gpayapiversionminor:'${pdict.gpayapiversionminor}',
+    gpayallowedcardnetworks:'${pdict.gpayallowedcardnetworks}',
+    gpayallowedcardauthmethods:'${pdict.gpayallowedcardauthmethods}',
+    gpaytotalpricestatus:'${pdict.gpaytotalpricestatus}',
+    gpaypriortotalpricestatus:'${pdict.gpaypriortotalpricestatus}'
+});
+
+// Create Form
+const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "gp-default" });
+
+cardForm.on("token-success", (resp) => {
+    // add payment token to form as a hidden input
+    const token = document.createElement("input");
+    token.type = "hidden";
+    token.name = "payment_token";
+    token.value = resp.paymentReference; 
+    $('#gpayerror').text(''); 
+    $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
+    $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
+    $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
+    $("#expirationYear").val(resp.details.expiryYear);
+    $("#paymentId").val(JSON.stringify(resp));
+
+   $( ".submit-payment" ).trigger( "click" );
+    form.appendChild(token);
+    form.submit();
+});
+
+cardForm.on("token-error", (resp) => {
+    // show error to the consumer
+    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+});
+</script>
