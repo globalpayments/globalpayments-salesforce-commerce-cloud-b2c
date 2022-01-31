@@ -2,7 +2,7 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-
+var MethodData = require('~/cartridge/scripts/dtos/nested/MethodData');
 /**
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
@@ -62,7 +62,8 @@ var ThreeDsResponse = AbstractResponse.extend({
       preference: {
         enumerable: true,
         writable: true
-      }
+      },
+      methodData:AbstractResponse.getAccessorDescriptorWithConstructor(MethodData.Response)
     });
 
     this._super(responseObj);

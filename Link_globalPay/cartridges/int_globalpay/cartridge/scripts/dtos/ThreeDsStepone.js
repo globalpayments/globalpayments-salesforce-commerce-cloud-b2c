@@ -76,7 +76,8 @@ var ThreeDsSteponeResponse = AbstractResponse.extend({
               status: {
                 enumerable: true,
                 writable: true
-              }
+              }, 
+              threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response),
              });
 
         this._super(responseObj);

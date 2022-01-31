@@ -55,7 +55,7 @@ applePay.entryMode = 'ECOM';
 applePay.provider = 'APPLEPAY';
 globalpayConstants.applePay = applePay;
 
-var applePay = new Object();
+var threeDsStepOne = new Object();
 threeDsStepOne.account_name = 'transaction_processing';
 threeDsStepOne.source = 'BROWSER';
 threeDsStepOne.preference = 'NO_PREFERENCE';
