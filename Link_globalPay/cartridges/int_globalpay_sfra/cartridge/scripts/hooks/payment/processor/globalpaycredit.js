@@ -188,42 +188,42 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-      var authorizationData = {
-        account_name: globalpayconstants.authorizationData.account_name,
-        channel: globalpayconstants.authorizationData.channel,
-        capture_mode: captureMode.value,
-        type: globalpayconstants.authorizationData.type,
-        amount: order.merchandizeTotalGrossPrice.value * 100,
-        currency: order.currencyCode,
-        reference: orderNumber,
-        country: Locale.getLocale(req.locale.id).country,
-        payment_method: {
-          id: paymentInstrument.custom.gp_paymentmethodid,
-          entry_mode: globalpayconstants.authorizationData.entrymode,
-          authentication: {
-            id: paymentInstrument.custom.gp_authenticationid
-          }
-        }
-      };
-    var authorization = globalPayHelper.authorize(authorizationData);
-    if (!empty(authorization) && 'success' in authorization && !authorization.success) {
-      var error = true;
-      var serverErrors = [];
-      if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
-    } else {
-      try {
-        Transaction.wrap(function () {
-          paymentInstrument.custom.gp_transactionid = authorization.id;
-          paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
-          paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
-        });
-      } catch (e) {
-        error = true;
-        serverErrors.push(
-                Resource.msg('error.technical', 'checkout', null)
-            );
+  var authorizationData = {
+    account_name: globalpayconstants.authorizationData.account_name,
+    channel: globalpayconstants.authorizationData.channel,
+    capture_mode: captureMode.value,
+    type: globalpayconstants.authorizationData.type,
+    amount: order.merchandizeTotalGrossPrice.value * 100,
+    currency: order.currencyCode,
+    reference: orderNumber,
+    country: Locale.getLocale(req.locale.id).country,
+    payment_method: {
+      id: paymentInstrument.custom.gp_paymentmethodid,
+      entry_mode: globalpayconstants.authorizationData.entrymode,
+      authentication: {
+        id: paymentInstrument.custom.gp_authenticationid
       }
     }
+  };
+  var authorization = globalPayHelper.authorize(authorizationData);
+  if (!empty(authorization) && 'success' in authorization && !authorization.success) {
+    var error = true;
+    var serverErrors = [];
+    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+  } else {
+    try {
+      Transaction.wrap(function () {
+        paymentInstrument.custom.gp_transactionid = authorization.id;
+        paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+        paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
+      });
+    } catch (e) {
+      error = true;
+      serverErrors.push(
+                Resource.msg('error.technical', 'checkout', null)
+            );
+    }
+  }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
 
