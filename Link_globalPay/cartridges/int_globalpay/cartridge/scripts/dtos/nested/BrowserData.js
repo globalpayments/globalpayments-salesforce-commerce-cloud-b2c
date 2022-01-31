@@ -1,25 +1,59 @@
 'use strict';
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var MethodData = require('~/cartridge/scripts/dtos/nested/MethodData');
+var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse'); 
 /**
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var ThreeDsRequest = AbstractRequest.extend({
+ var BrowserDataRequest = AbstractRequest.extend({
   init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
-      source: {
+      acceptHeader: {
         enumerable: true,
         writable: true
       },
-      preference: {
+      colorDepth: {
+        enumerable: true,
+        writable: true
+      },
+      ip: {
+        enumerable: true,
+        writable: true
+      },
+      javaEnabled: {
+        enumerable: true,
+        writable: true
+      },
+      javascriptEnabled: {
+        enumerable: true,
+        writable: true
+      },
+      language: {
+        enumerable: true,
+        writable: true
+      },
+      screenHeight: {
+        enumerable: true,
+        writable: true
+      },
+      screenWidth: {
+        enumerable: true,
+        writable: true
+      },
+      challengeWindowSize: {
+        enumerable: true,
+        writable: true
+      },
+      timezone: {
+        enumerable: true,
+        writable: true
+      },
+      userAgent: {
         enumerable: true,
         writable: true
       }
-
     });
 
     this._super(requestObj);
@@ -31,39 +65,9 @@ var MethodData = require('~/cartridge/scripts/dtos/nested/MethodData');
  * Forms all the fields to be returned as part of ThreeDs response.
  * @param {obj} responseObj - object that contains response.
  */
-var ThreeDsResponse = AbstractResponse.extend({
+var BrowserDataResponse = AbstractResponse.extend({
   init: function (responseObj) {
     Object.defineProperties(this, {
-      // add more fields as per the Model here:
-      enrolledStatus: {
-        enumerable: true,
-        writable: true
-      },
-      challengeModel: {
-        enumerable: true,
-        writable: true
-      },
-      challengeStatus: {
-        enumerable: true,
-        writable: true
-      },
-      challengeValue: {
-        enumerable: true,
-        writable: true
-      },
-      redirectUrl: {
-        enumerable: true,
-        writable: true
-      },
-      source: {
-        enumerable: true,
-        writable: true
-      },
-      preference: {
-        enumerable: true,
-        writable: true
-      },
-      methodData:AbstractResponse.getAccessorDescriptorWithConstructor(MethodData.Response)
     });
 
     this._super(responseObj);
@@ -71,6 +75,6 @@ var ThreeDsResponse = AbstractResponse.extend({
 });
 
 module.exports = {
-  Request: ThreeDsRequest,
-  Response: ThreeDsResponse
+  Request: BrowserDataRequest,
+  Response: BrowserDataResponse
 };

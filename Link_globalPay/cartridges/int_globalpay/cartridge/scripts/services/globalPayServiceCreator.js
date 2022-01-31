@@ -6,6 +6,7 @@ var ENDPOINT_AUTHENTICATION = 'authentications';
 var ENDPOINT_TRANSACTION = 'transactions';
 var ENDPOINT_CAPTURE = 'transactions/:transactionId/capture';
 var ENDPOINT_PAYMENT_METHOD = 'payment_methods';
+var ENDPOINT_INITIATE = 'authentications/:authId/initiate';
 
 function prepareEndpoint(endpoint, params) {
   var preparedEndpoint = endpoint;
@@ -60,5 +61,6 @@ module.exports = {
   ENDPOINT_AUTHENTICATION: ENDPOINT_AUTHENTICATION,
   ENDPOINT_TRANSACTION: ENDPOINT_TRANSACTION,
   ENDPOINT_CAPTURE: ENDPOINT_CAPTURE,
-  ENDPOINT_PAYMENT_METHOD: ENDPOINT_PAYMENT_METHOD
+  ENDPOINT_PAYMENT_METHOD: ENDPOINT_PAYMENT_METHOD,
+  ENDPOINT_INITIATE: ENDPOINT_INITIATE
 };
