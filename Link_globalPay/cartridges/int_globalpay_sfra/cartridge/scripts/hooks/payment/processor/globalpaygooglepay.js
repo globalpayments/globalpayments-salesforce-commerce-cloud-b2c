@@ -48,7 +48,17 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
         expiryYear: '25',
         cryptogram: '234234234',
         token: '5167300431085507',
-        eci: '3'
+        eci: '3',
+        //we can remove once the token issue is fixed
+        // payment_token: {
+        //     signature:token.signature,
+        //     protocolVersion:token.protocolVersion,
+        //     signedMessage:{
+        //         encryptedMessage: signedMessage.encryptedMessage,
+        //         ephemeralPublicKey:signedMessage.ephemeralPublicKey,
+        //         tag:signedMessage.tag
+        //     }
+        // }  
       }
     }
   };
