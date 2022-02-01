@@ -173,7 +173,12 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
                     'createToken',
                     formInfo
                 );
-        paymentInstrument.setCreditCardToken(token);
+        if (!empty(token) && !empty(token.id)) {
+          paymentInstrument.setCreditCardToken(token.id);
+        }else{
+
+          
+        }
       });
 
 
