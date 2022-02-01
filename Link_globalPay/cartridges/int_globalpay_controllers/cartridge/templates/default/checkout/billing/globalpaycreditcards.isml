@@ -5,11 +5,7 @@
     <!-- Target for the credit card form -->
     <div id="credit-card"></div>
 </form>
-
-<!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
-<script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
-<link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
-
+<script src="https://js.globalpay.com/v1/globalpayments.js"></script>
 
 
 <script type="text/javascript">
@@ -21,14 +17,19 @@ GlobalPayments.configure({
     country:'${pdict.country}',
     gpaymerchantid:'${pdict.gpaymerchantid}',
     gpaymerchantname:'${pdict.gpaymerchantname}',
-    gpayenv:'${pdict.gpayenv}'
+    gpayenv:'${pdict.gpayenv}',
+    gpaybasecardmethod:'${pdict.gpaybasecardmethod}',
+    gpaytokentype:'${pdict.gpaytokentype}',
+    gpayapiversion:'${pdict.gpayapiversion}',
+    gpayapiversionminor:'${pdict.gpayapiversionminor}',
+    gpayallowedcardnetworks:'${pdict.gpayallowedcardnetworks}',
+    gpayallowedcardauthmethods:'${pdict.gpayallowedcardauthmethods}',
+    gpaytotalpricestatus:'${pdict.gpaytotalpricestatus}',
+    gpaypriortotalpricestatus:'${pdict.gpaypriortotalpricestatus}'
 });
 
 // Create Form
-const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
-
-
-
+const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "gp-default" });
 
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input

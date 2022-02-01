@@ -1,0 +1,16 @@
+{
+	"hooks": [
+		{
+			"name": "app.payment.processor.BASIC_CREDIT",
+			"script": "./payment/processor/BASIC_CREDIT"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_PAYPAL",
+			"script": "./payment/processor/PAYPAL_EXPRESS"
+		},
+		{
+			"name": "app.payment.processor.GOOGLE_PAY",
+			"script": "./payment/processor/GOOGLE_PAY"
+		}
+	]
+}
