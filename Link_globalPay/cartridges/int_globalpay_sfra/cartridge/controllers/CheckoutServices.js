@@ -111,7 +111,7 @@ function handlePayments(req, res, next) {
         error: false,
         paypalresp: handlePaymentResult.authorizationResult.paypalresp
       });
-    } else {
+    } else if(!handlePaymentResult.authorizationResult.error) {
             // place and update order
       var gputil = require('*/cartridge/scripts/utils/gputil');
       gputil.orderUpdate(order);
@@ -125,6 +125,18 @@ function handlePayments(req, res, next) {
         continueUrl: URLUtils.url('Order-Confirm').toString()
       });
     }
+   else{
+    var URLUtils = require('dw/web/URLUtils');
+    // redirect to Cart page if there is error
+    res.json({
+      error: true,
+      cartError: true,
+      fieldErrors: [],
+      serverErrors: [],
+      redirectUrl: URLUtils.url('Cart-Show').toString()
+    });
+    return;
+   }
   }
 }
 
