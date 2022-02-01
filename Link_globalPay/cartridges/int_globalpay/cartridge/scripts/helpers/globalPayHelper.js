@@ -82,7 +82,25 @@ function tokenize(data) {
     return result.response;
   }
 
-  return null;
+  return result;
+}
+/**
+ * Forms required data to be sent to service for tokenization
+ * @params {data} - data required to form Tokenization request
+ * @returns {result} - returns Tokenize response
+ */
+ function updateTokenUsagemode(data) {
+  var UpdateTokenMode = require('*/cartridge/scripts/dtos/paymentMethods/UpdatePaymentTokenizationMode');
+  var tokenupdateRequest = new UpdateTokenMode.Request();
+  tokenupdateRequest.setToken(getAccessToken());
+  tokenupdateRequest.setusage_mode(data.usage_mode);
+  tokenupdateRequest.setcctokenId(data.paymentInformationID);
+
+  var result = globalPayService.executeRequest(tokenupdateRequest, UpdateTokenMode.Response);
+  if (result.success) {
+    return result.response;
+  }
+  return result;
 }
 /**
  * Forms required data to be sent to service to detokenize.
@@ -99,7 +117,7 @@ function detokenize(data) {
   if (result.success) {
     return result.response;
   }
-  return null;
+  return result;
 }
 /**
  * Forms required data to be sent to service to authorize.
@@ -287,6 +305,7 @@ module.exports = {
     refund:refund,
     paypal: paypal,
     gpay:gpay,
+    updateTokenUsagemode:updateTokenUsagemode,
     tokenize:tokenize,
     detokenize:detokenize,
     applePay:applePay,
