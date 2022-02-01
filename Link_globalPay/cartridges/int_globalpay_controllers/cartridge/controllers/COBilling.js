@@ -563,11 +563,18 @@ function billing() {
                     // Mark step as fulfilled
                     app.getForm('billing').object.fulfilled.value = true;
                 // A successful billing page will jump to the next checkout step.
-                  if(selectedPayment=='GP_DW_PAYPAL'||selectedPayment=='GP_DW_GOOGLE_PAY')
+                  if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode||selectedPayment==globalpayconstants.googlePay.paymentTypeCode||selectedPayment==globalpayconstants.applePay.paymentTypeCode)
                   {
+                    if(!validatePayment(cart))
+                    {
+                        start();
+                    }
+                   else
+                   {
                     initAddressForm(cart);
                     initEmailAddress(cart);
                     gpapp.getController('COPlaceOrder').HandlePayment();
+                   }
                   }
                else
                  {

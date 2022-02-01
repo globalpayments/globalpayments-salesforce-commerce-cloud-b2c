@@ -34,3 +34,22 @@
     width: 50%;
     height: 50%;
 }
+/*
+ * applePay styles
+ */
+ .apple-pay-button
+ {
+    text-align: center;
+ }
+ #apple-pay-button
+ {
+    background-color: white;
+    border:none;
+    padding: 0;
+    margin: 0;
+ }
+
+.apple-pay-logo{
+    width: 50%;
+    height: 50%;
+}
