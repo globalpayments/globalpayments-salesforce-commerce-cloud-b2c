@@ -11,6 +11,10 @@
 		{
 			"name": "app.payment.processor.GOOGLE_PAY",
 			"script": "./payment/processor/GOOGLE_PAY"
+		},
+		{
+			"name": "app.payment.processor.APPLE_PAY",
+			"script": "./payment/processor/APPLE_PAY"
 		}
 	]
 }

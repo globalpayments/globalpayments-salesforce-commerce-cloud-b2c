@@ -165,9 +165,7 @@
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='GP_DW_APPLE_PAY'}">payment-method-expanded</isif>" data-method="GP_DW_APPLE_PAY">
 			<!-- Your custom payment method implementation goes here. -->
-			<div class="pplepay-button">
-			<button id="applepay-button" class="button-fancy-large btn-paypal-button" value="${Resource.msg('global.applepay','locale',null)}"><span>${Resource.msg('global.applepay','locale',null)}</span></button>
-			</div>
+			<isinclude template="checkout/billing/applePayForm" />
 		</div>
 
 	</fieldset>
