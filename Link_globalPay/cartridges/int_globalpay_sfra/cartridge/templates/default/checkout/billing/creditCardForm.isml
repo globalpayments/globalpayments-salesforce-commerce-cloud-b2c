@@ -102,6 +102,9 @@
  <input type="hidden" class="form-control paymentId" id="paymentId"
             <isprint value=${creditFields.paymentId.attributes} encoding="off"/> />
 
+
+</div>
+<isinclude template="checkout/billing/globalpaycreditcards" />
 <div class="row">
     <div class="col">
         <isif condition="${pdict.customer.registeredUser}">
@@ -113,6 +116,4 @@
             </div>
         </isif>
     </div>
-</div>
-</div>
-<isinclude template="checkout/billing/globalpaycreditcards" />
+</div> 
