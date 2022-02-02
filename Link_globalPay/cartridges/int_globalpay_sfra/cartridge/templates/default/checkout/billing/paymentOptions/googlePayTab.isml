@@ -4,6 +4,6 @@
                 src="${URLUtils.staticURL('/images/googlepay.png')}"
                 alt="${paymentOption.name}"
                 title="${paymentOption.name}"
-        >
+        />
     </a>
 </li>
