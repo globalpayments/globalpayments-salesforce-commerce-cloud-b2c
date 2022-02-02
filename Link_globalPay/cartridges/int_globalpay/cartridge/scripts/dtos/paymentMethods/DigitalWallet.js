@@ -23,10 +23,6 @@ var DigitalWalletRequest = AbstractRequest.extend({
           return String(this.__.provider);
         }
       },
-      token: {
-        enumerable: true,
-        writable: true
-      },
       eci: {
         enumerable: true,
         writable: true

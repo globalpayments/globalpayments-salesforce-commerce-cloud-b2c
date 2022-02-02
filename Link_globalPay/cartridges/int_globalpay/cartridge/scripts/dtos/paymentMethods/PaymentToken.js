@@ -2,13 +2,9 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var SignedMessages = require('~/cartridge/scripts/dtos/paymentMethods/SignedMessages');
 
-var createSetter = function (fieldName) {
-  return function (val) {
-    this.__[fieldName] = val;
-  };
-};
+
+
 /**
  * Forms all the fields required to send for PaymentToken request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
@@ -25,7 +21,11 @@ var PaymentTokenRequest = AbstractRequest.extend({
         enumerable: true,
         writable: true
       },
-      signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
+      signedMessage:{
+        enumerable: true,
+        writable: true
+      }
+      //signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
     //  add more here later as per model
     });
 
@@ -48,7 +48,10 @@ var PaymentTokenResponse = AbstractResponse.extend({
         enumerable: true,
         writable: true
       },
-      signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
+      signedMessage:{
+        enumerable: true,
+        writable: true
+      }
     });
 
     this._super(responseObj);
