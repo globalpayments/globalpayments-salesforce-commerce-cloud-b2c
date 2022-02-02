@@ -181,7 +181,7 @@
    * @param {object} paymentData response from Google Pay API after user approves payment
    */
   function processPayment(paymentData) {
-    console.log(paymentData.paymentMethodData.tokenizationData.token);
+    $('#paymentToken').val(paymentData.paymentMethodData.tokenizationData.token);
     $('#dwfrm_billing').submit();
   //  $('body').trigger('submit:googlepay',{paymentToken:paymentData.paymentMethodData.tokenizationData.token});
   }
