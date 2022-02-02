@@ -54,6 +54,7 @@ applePay.channel = 'CNP';
 applePay.type = 'SALE';
 applePay.entryMode = 'ECOM';
 applePay.provider = 'APPLEPAY';
+applePay.paymentTypeCode = 'GP_DW_APPLE_PAY';
 
 globalpayConstants.applePay = applePay;
 

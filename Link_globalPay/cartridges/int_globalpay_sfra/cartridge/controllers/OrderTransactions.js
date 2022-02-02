@@ -27,7 +27,7 @@ function (req, res, next) {
                 var order = OrderMgr.getOrder(req.querystring.orderID);
                 var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
                 var amount = (order.totalGrossPrice)*100;
-                if(order.getPaymentStatus()=='PAYMENT_STATUS_PAID'){
+                if(order.getPaymentStatus()==2){
                     var transactionData = {
                     transaction_id: ordertransactionid,  // Transaction ID 
                     amount: amount //order.amount
@@ -85,7 +85,7 @@ function (req, res, next) {
                 var amount = (order.totalGrossPrice)*100;
                 var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
                 
-            if(order.getPaymentStatus()=='PAYMENT_STATUS_NOTPAID'){
+            if(order.getPaymentStatus()==0){
                 var transactionData = {
                     transaction_id: ordertransactionid,  // Transaction ID 
                     amount: amount, //order.amount

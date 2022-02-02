@@ -95,16 +95,14 @@ function processForm(req, paymentForm, viewFormData) {
 function savePaymentInformation(req, basket, billingData) {
   var CustomerMgr = require('dw/customer/CustomerMgr');
 
-  if (!billingData.storedPaymentUUID
-        && req.currentCustomer.raw.authenticated
+  if ( req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
         && billingData.saveCard
-        && (billingData.paymentMethod.value === globalpayconstants.reditCardPay.paymentMethod)
     ) {
     var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
         );
-
+    var token = updateToken(billingData.paymentInformation.paymentId.value);
     var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
             billingData,
             basket,
@@ -129,7 +127,23 @@ function savePaymentInformation(req, basket, billingData) {
   }
 }
 
+/**
+ * Updates a token to usage mode Multiple. 
+ * @returns {string} a token
+ */
+ function updateToken(paymentTokenID) {
+  var tokenizeData = {
+    usage_mode: globalpayconstants.authorizationData.usage_mode,
+    paymentInformationID : paymentTokenID
+  };
+  var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
+  if (!empty(tokenization) && !empty(tokenization.id)) {
+    return tokenization.id;
+  }else{
+    tokenization.error
+  }
 
+}
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
@@ -152,7 +166,7 @@ function createToken(formdata) {
     entry_mode: globalpayconstants.creditCardPay.entry_mode
   };
   var tokenization = globalPayHelper.tokenize(tokenizeData);
-  return tokenization.id;
+  return tokenization;
 }
   /**
    * Removes token. This should be replaced by utilizing a tokenization provider
@@ -389,6 +403,7 @@ function getTokenbyUUID(req, uuidToken) {
 exports.processForm = processForm;
 exports.savePaymentInformation = savePaymentInformation;
 exports.Authorize = Authorize;
+exports.updateToken = updateToken;
 exports.createToken = createToken;
 exports.removeToken = removeToken;
 exports.Handle = Handle;

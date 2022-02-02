@@ -9,6 +9,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var HookMgr = require('dw/system/HookMgr');
 var OrderMgr = require('dw/order/OrderMgr');
 var Transaction = require('dw/system/Transaction');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
 /**
  * handles the payment authorization for each payment instrument
  * @param {dw.order.Order} order - the order object
@@ -68,5 +69,41 @@ function handlePayments(order, orderNumber, req) {
   return result;
 }
 
+/**
+ * saves payment instruemnt to customers wallet
+ * @param {Object} billingData - billing information entered by the user
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @param {dw.customer.Customer} customer - The current customer
+ * @returns {dw.customer.CustomerPaymentInstrument} newly stored payment Instrument
+ */
+ function savePaymentInstrumentToWallet(billingData, currentBasket, customer,token) {
+  var wallet = customer.getProfile().getWallet();
+
+  return Transaction.wrap(function () {
+      var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
+
+      storedPaymentInstrument.setCreditCardHolder(
+          currentBasket.billingAddress.fullName
+      );
+      storedPaymentInstrument.setCreditCardNumber(
+          billingData.paymentInformation.cardNumber.value
+      );
+      storedPaymentInstrument.setCreditCardType(
+          billingData.paymentInformation.cardType.value
+      );
+      storedPaymentInstrument.setCreditCardExpirationMonth(
+          billingData.paymentInformation.expirationMonth.value
+      );
+      storedPaymentInstrument.setCreditCardExpirationYear(
+          billingData.paymentInformation.expirationYear.value
+      );
+      
+      storedPaymentInstrument.setCreditCardToken(token);
+
+      return storedPaymentInstrument;
+  });
+}
+
 base.handlePayments = handlePayments;
+base.savePaymentInstrumentToWallet = savePaymentInstrumentToWallet;
 module.exports = base;
