@@ -1,3 +1,9 @@
+  <isscript>
+  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
+    var gpayToken =  globalPayHelper.getAccessToken();
+    var preferences = globalPayPreferences.getPreferences();
+  </isscript>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
   <div id="gpayerror"></div> 
  <form id="payment-form" action="/Payment/Charge" method="post">
@@ -15,13 +21,13 @@
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
-    accessToken: '${pdict.gpayToken}',
-    env: '${pdict.preferences.env}', // or "production"
+    accessToken: '${gpayToken}',
+    env: '${preferences.env}', // or "production"
     currency: '${pdict.currency}',
     country:'${pdict.country}',
-    gpaymerchantid:'${pdict.preferences.gpayMerchantId}',
-    gpaymerchantname:'${pdict.preferences.gpayMerchantName}',
-    gpayenv:'${pdict.preferences.gpayEnv}'
+    gpaymerchantid:'${preferences.gpayMerchantId}',
+    gpaymerchantname:'${preferences.gpayMerchantName}',
+    gpayenv:'${preferences.gpayEnv}'
 });
 
 // Create Form
@@ -44,10 +50,17 @@ cardForm.on("token-success", (resp) => {
     $('[name$="_expiration_year"]').val(resp.details.expiryYear).trigger('change');
     $('input[name*="_cvn"]').val('123').trigger('change');
     $('input[name*=creditCard_paymentId]').val(JSON.stringify(resp));
-
-   $('#dwfrm_billing').submit();
+if($('[name$="_expiration_year"]').val())
+{
+    $('#dwfrm_billing').submit();
     form.appendChild(token);
     form.submit();
+}
+else
+{
+    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+}
+
 });
 
 cardForm.on("token-error", (resp) => {
