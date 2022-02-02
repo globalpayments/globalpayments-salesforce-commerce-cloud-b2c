@@ -12,6 +12,7 @@
 
 
 
+
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
@@ -50,6 +51,6 @@ cardForm.on("token-success", (resp) => {
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumer
-    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
 });
 </script>
