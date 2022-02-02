@@ -176,7 +176,6 @@ function capture(data) {
 
   var captureRequest = new Capture.Request();
   captureRequest.setToken(getAccessToken());
-  captureRequest.setAuthId(data.auth_id);
   captureRequest.setTransactionId(data.transaction_id);
   captureRequest.setAmount(data.amount);
   captureRequest.setCaptureSequence(data.capture_sequence);
