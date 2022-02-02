@@ -47,7 +47,7 @@
 		</iscomment>
 
 		<div class="payment-method <isif condition="${empty(pdict.selectedPaymentID) || pdict.selectedPaymentID=='CREDIT_CARD'}">payment-method-expanded</isif>" data-method="CREDIT_CARD">
-
+<div class="d-none">
 			<iscomment>display select box with stored credit cards if customer is authenticated</iscomment>
 			<isif condition="${pdict.CurrentCustomer.authenticated && !empty(pdict.ApplicableCreditCards)}">
 
@@ -111,7 +111,11 @@
 			<isif condition="${pdict.CurrentCustomer.authenticated}">
 				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox"/>
 			</isif>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentId}" type="input"/>
+ </div>
 
+
+ <isinclude template="checkout/billing/globalpaycreditcards" />
 		</div>
 
 

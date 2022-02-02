@@ -5,31 +5,30 @@
     <!-- Target for the credit card form -->
     <div id="credit-card"></div>
 </form>
-<script src="https://js.globalpay.com/v1/globalpayments.js"></script>
+
+<!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
+<script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
+
 
 
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
-    accessToken: '${pdict.token}',
-    env: '${pdict.env}', // or "production"
+    accessToken: '${pdict.gpayToken}',
+    env: '${pdict.preferences.env}', // or "production"
     currency: '${pdict.currency}',
     country:'${pdict.country}',
-    gpaymerchantid:'${pdict.gpaymerchantid}',
-    gpaymerchantname:'${pdict.gpaymerchantname}',
-    gpayenv:'${pdict.gpayenv}',
-    gpaybasecardmethod:'${pdict.gpaybasecardmethod}',
-    gpaytokentype:'${pdict.gpaytokentype}',
-    gpayapiversion:'${pdict.gpayapiversion}',
-    gpayapiversionminor:'${pdict.gpayapiversionminor}',
-    gpayallowedcardnetworks:'${pdict.gpayallowedcardnetworks}',
-    gpayallowedcardauthmethods:'${pdict.gpayallowedcardauthmethods}',
-    gpaytotalpricestatus:'${pdict.gpaytotalpricestatus}',
-    gpaypriortotalpricestatus:'${pdict.gpaypriortotalpricestatus}'
+    gpaymerchantid:'${pdict.preferences.gpayMerchantId}',
+    gpaymerchantname:'${pdict.preferences.gpayMerchantName}',
+    gpayenv:'${pdict.preferences.gpayEnv}'
 });
 
 // Create Form
-const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "gp-default" });
+const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
+
+
+
 
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
@@ -38,13 +37,15 @@ cardForm.on("token-success", (resp) => {
     token.name = "payment_token";
     token.value = resp.paymentReference; 
     $('#gpayerror').text(''); 
-    $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
-    $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
-    $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
-    $("#expirationYear").val(resp.details.expiryYear);
-    $("#paymentId").val(JSON.stringify(resp));
+    $('input[name*="_creditCard_owner"]').val(resp.details.cardholderName?resp.details.cardholderName:$('input[name*=_firstName]').val()).trigger('change');
+    $('select[name$="_creditCard_type"]').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length)).trigger('change');
+    $('input[name*="_creditCard_number"]').val(resp.details.cardNumber).trigger('change');
+    $('[name$="_expiration_month"]').val(parseInt(resp.details.expiryMonth, 10)).trigger('change');
+    $('[name$="_expiration_year"]').val(resp.details.expiryYear).trigger('change');
+    $('input[name*="_cvn"]').val('123').trigger('change');
+    $('input[name*=creditCard_paymentId]').val(JSON.stringify(resp));
 
-   $( ".submit-payment" ).trigger( "click" );
+   $('#dwfrm_billing').submit();
     form.appendChild(token);
     form.submit();
 });

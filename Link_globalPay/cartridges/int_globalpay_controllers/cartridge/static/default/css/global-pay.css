@@ -1,9 +1,13 @@
 
-.credit-card-payment
+ .d-none
+{
+    display:none;
+} 
+.checkout-billing .button-fancy-large
 {
     display:none;
 }
-.checkout-billing .button-fancy-large
+.button-fancy-large
 {
     display:none;
 }

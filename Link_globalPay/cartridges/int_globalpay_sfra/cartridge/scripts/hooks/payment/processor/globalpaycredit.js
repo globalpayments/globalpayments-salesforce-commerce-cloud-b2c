@@ -375,7 +375,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 }
 
 function getTokenbyUUID(req, uuidToken) {
-  var testcust = req.currentCustomer;
+  var testcust = customer;
   var creditCardToken;
   testcust.wallet.paymentInstruments.forEach(function (each) {
     if (each.UUID == uuidToken) {

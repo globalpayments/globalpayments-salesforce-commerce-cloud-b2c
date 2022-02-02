@@ -1,8 +1,8 @@
 {
 	"hooks": [
 		{
-			"name": "app.payment.processor.BASIC_CREDIT",
-			"script": "./payment/processor/BASIC_CREDIT"
+			"name": "app.payment.processor.GLOBALPAY_CREDITCARD",
+			"script": "./payment/processor/GLOBAL_PAY_CREDIT"
 		},
 		{
 			"name": "app.payment.processor.GLOBALPAY_PAYPAL",
