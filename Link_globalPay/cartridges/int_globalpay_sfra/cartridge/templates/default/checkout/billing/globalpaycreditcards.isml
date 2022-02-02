@@ -12,6 +12,7 @@
 
 
 
+
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
