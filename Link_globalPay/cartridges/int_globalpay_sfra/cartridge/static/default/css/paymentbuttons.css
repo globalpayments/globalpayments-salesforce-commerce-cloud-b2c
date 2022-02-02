@@ -1305,3 +1305,8 @@ opacity: 1;
         .nav-link .paypal-tab{
             padding:0px;
         }
+        
+        .googlepay-tab-img{
+            height:24px;
+            margin-top:8px;
+        }

@@ -50,7 +50,7 @@ cardForm.on("token-success", (resp) => {
 });
 
 cardForm.on("token-error", (resp) => {
-    // show error to the consumer
+    // show error to the consumers
     $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
 });
 </script>
