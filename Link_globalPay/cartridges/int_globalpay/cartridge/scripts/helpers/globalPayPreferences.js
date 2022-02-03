@@ -22,7 +22,8 @@ function getPreferences(site) {
     threedsecureMethod: currentSite.getCustomPreferenceValue('gp_threedsecure_methodnotification'), // http://testing.test/wc-api/globalpayments_threedsecure_methodnotification/
     gpayMerchantId: currentSite.getCustomPreferenceValue('gp_gpayMerchantId'),
     gpayMerchantName: currentSite.getCustomPreferenceValue('gp_gpayMerchantName'),
-    gpayEnv: currentSite.getCustomPreferenceValue('gp_gpayEnv')
+    gpayEnv: currentSite.getCustomPreferenceValue('gp_gpayEnv'),
+    gatewayMerchantId: currentSite.getCustomPreferenceValue('gp_gatewayMerchantId')
   };
 }
 
