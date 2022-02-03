@@ -102,7 +102,7 @@ function Handle(args) {
          merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
          order:{
             time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-            amount:currentBasket.merchandizeTotalGrossPrice.value * 100,
+            amount:currentBasket.totalGrossPrice.value * 100,
             currency:currentBasket.currencyCode,
             address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
             shipping_address:{
@@ -211,7 +211,7 @@ function Authorize(args) {
       channel: globalpayconstants.authorizationData.channel,
       capture_mode: captureMode.value,
       type: globalpayconstants.authorizationData.type,
-      amount: order.merchandizeTotalGrossPrice.value * 100,
+      amount: order.totalGrossPrice.value * 100,
       currency: order.currencyCode,
       reference: orderNo,
       country:'US',
