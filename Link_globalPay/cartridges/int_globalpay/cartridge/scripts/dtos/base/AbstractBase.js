@@ -56,6 +56,11 @@ AbstractBase.snakeToCamelCase = function (str) {
             .replace('_', '');
   });
 };
+//define object values here if that should  skip the camelToSnakeCase
+AbstractBase.skipReplacement = function (key) {
+  var object=['paymentToken','payment_token'];
+ return  object.indexOf(key)>=0;
+};
 
 /** @type {module:dtos/base/AbstractBase~AbstractBase.prototype} */
 module.exports = AbstractBase;

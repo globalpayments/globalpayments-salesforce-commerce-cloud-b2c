@@ -28,7 +28,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
   var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
-  var signedMessage = JSON.parse(token.signedMessage);
   var googlePayData = {
     account_name: globalpayconstants.googlePay.account_name,
     channel: globalpayconstants.googlePay.channel,
@@ -43,22 +42,11 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
       entry_mode: globalpayconstants.googlePay.entryMode,
       digital_wallet: {
         provider: globalpayconstants.googlePay.provider,
-        tokenFormat: 'CARD_NUMBER',
-        expiryMonth: '12',
-        expiryYear: '25',
-        cryptogram: '234234234',
-        token: '5167300431085507',
-        eci: '3',
-        //we can remove once the token issue is fixed
-        // payment_token: {
-        //     signature:token.signature,
-        //     protocolVersion:token.protocolVersion,
-        //     signedMessage:{
-        //         encryptedMessage: signedMessage.encryptedMessage,
-        //         ephemeralPublicKey:signedMessage.ephemeralPublicKey,
-        //         tag:signedMessage.tag
-        //     }
-        // }  
+        payment_token: {
+          signature:token.signature,
+          protocolVersion:token.protocolVersion,
+          signedMessage:token.signedMessage
+       } 
       }
     }
   };
