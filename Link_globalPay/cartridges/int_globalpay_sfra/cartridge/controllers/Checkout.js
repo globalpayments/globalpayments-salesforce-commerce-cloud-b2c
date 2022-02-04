@@ -18,6 +18,7 @@ server.append('Begin', function (req, res, next) {
     var env = preferences.env;
     var gpayMerchantId=preferences.gpayMerchantId;
     var gpayMerchantName=preferences.gpayMerchantName;
+    var gatewayMerchantId=preferences.gatewayMerchantId;
     var gpayEnv=preferences.gpayEnv;
 
     var viewData = res.getViewData();
@@ -28,6 +29,7 @@ server.append('Begin', function (req, res, next) {
             country: Locale.getLocale(req.locale.id).country,
             gpaymerchantid:gpayMerchantId,
             gpaymerchantname:gpayMerchantName,
+            gatewayMerchantId:gatewayMerchantId,
             gpayenv:gpayEnv
         };
     res.setViewData(viewData);

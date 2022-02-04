@@ -4,6 +4,7 @@
 <input type="hidden" name="country" id="country" value="${pdict.country}"/>
 <input type="hidden" name="gpaymerchantid" id="gpaymerchantid" value="${pdict.gpaymerchantid}"/>
 <input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.gpaymerchantname}"/>
+<input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
 
 
