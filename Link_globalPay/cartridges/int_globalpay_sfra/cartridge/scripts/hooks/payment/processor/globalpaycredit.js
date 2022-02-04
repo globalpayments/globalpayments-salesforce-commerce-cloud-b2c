@@ -223,8 +223,20 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   if (!empty(authorization) && 'success' in authorization && !authorization.success) {
     var error = true;
     var serverErrors = [];
-    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+    if ('detailedErrorDescription' in authorization) {
+       serverErrors.push(authorization.error.detailedErrorDescription);
+       }
   } else {
+    if('status' in authorization && authorization.status == 'DECLINED'){
+      error = true;
+      serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
+      return {
+        fieldErrors: fieldErrors,
+        serverErrors: serverErrors,
+        error: error
+      };
+    }
+
     try {
       Transaction.wrap(function () {
         paymentInstrument.custom.gp_transactionid = authorization.id;
@@ -234,8 +246,8 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     } catch (e) {
       error = true;
       serverErrors.push(
-                Resource.msg('error.technical', 'checkout', null)
-            );
+            Resource.msg('error.technical', 'checkout', null)
+        );
     }
   }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
