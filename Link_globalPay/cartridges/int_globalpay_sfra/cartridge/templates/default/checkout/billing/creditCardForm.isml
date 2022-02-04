@@ -102,6 +102,8 @@
  <input type="hidden" class="form-control paymentId" id="paymentId"
             <isprint value=${creditFields.paymentId.attributes} encoding="off"/> />
 
+ <input type="hidden" class="form-control threedsdata" id="threedsdata"
+            <isprint value=${creditFields.threedsdata.attributes} encoding="off"/> />
 
 </div>
 <isinclude template="checkout/billing/globalpaycreditcards" />

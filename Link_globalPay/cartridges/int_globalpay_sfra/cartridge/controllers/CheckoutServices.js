@@ -252,6 +252,11 @@ server.prepend(
         };
       }
 
+      viewData.paymentInformation.threedsdata = {
+        value: JSON.parse(paymentForm.creditCardFields.threedsdata.value),
+        htmlName: JSON.parse(paymentForm.creditCardFields.threedsdata.value)
+      };
+
       res.setViewData(viewData);
 
       this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow

@@ -49,7 +49,8 @@
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="false" binding="securityCode"
            max-length="4" missing-error="error.card.info.missing.securityCode" />
 
-    <field formid="paymentId" label="profile.paymentId" type="string"  binding="paymentId"/>
+    <field formid="paymentId"   type="string"  binding="paymentId"/>
+    <field formid="threedsdata"  type="string"  binding="threedsdata"/>
 
     <field formid="paymentToken" label="profile.paymentToken" type="string"  binding="paymentToken"/>
     <field formid="saveCard" label="label.save.card" binding="saveCard" type="boolean" mandatory="false" checked="true" />

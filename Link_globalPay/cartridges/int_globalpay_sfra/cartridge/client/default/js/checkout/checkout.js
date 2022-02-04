@@ -364,7 +364,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                     window.location.href = data.redirectUrl;
                     defer.reject();
                   } else {
-                                    // go to appropriate stage and display error message
+                    // go to appropriate stage and display error message
                     defer.reject(data);
                   }
                 } else {

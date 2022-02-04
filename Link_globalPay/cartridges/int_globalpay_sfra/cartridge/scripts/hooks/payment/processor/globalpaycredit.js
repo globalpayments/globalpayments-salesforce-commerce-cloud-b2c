@@ -328,16 +328,16 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
        },
        browser_data:{
           accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-          color_depth:globalpayconstants.threeDsStepOne.color_depth,
-          ip:globalpayconstants.threeDsStepOne.ip,
-          java_enabled:globalpayconstants.threeDsStepOne.java_enabled,
-          javascript_enabled:globalpayconstants.threeDsStepOne.javascript_enabled,
-          language:"en-US",
-          screen_height:globalpayconstants.threeDsStepOne.screen_height,
-          screen_width:globalpayconstants.threeDsStepOne.screen_width,
-          challenge_window_size:globalpayconstants.threeDsStepOne.challenge_window_size,
-          timezone:globalpayconstants.threeDsStepOne.timezone,
-          user_agent:globalpayconstants.threeDsStepOne.user_agent
+          color_depth: paymentInformation.threedsdata.value.colorDepth,
+          ip: req.httpHeaders.get('true-client-ip'),
+          java_enabled: paymentInformation.threedsdata.value.javaEnabled,
+          javascript_enabled: globalpayconstants.threeDsStepOne.javascript_enabled,
+          language:paymentInformation.threedsdata.value.browserLanguage,//"en-US",
+          screen_height:paymentInformation.threedsdata.value.screenHeight,
+          screen_width:paymentInformation.threedsdata.value.screenWidth,
+          challenge_window_size: globalpayconstants.threeDsStepOne.challenge_window_size,
+          timezone:paymentInformation.threedsdata.value.browserTime,
+          user_agent:paymentInformation.threedsdata.value.userAgent
        }
     }
       var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
