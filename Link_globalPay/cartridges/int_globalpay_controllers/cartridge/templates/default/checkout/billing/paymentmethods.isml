@@ -6,6 +6,7 @@
 <input type="hidden" name="country" id="country" value="${pdict.country}"/>
 <input type="hidden" name="gpaymerchantid" id="gpaymerchantid" value="${pdict.preferences.gpayMerchantId}"/>
 <input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.preferences.gpayMerchantName}"/>
+<input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.preferences.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.preferences.gpayEnv}"/>
 
 <isif condition="${pdict.OrderTotal > 0}">
