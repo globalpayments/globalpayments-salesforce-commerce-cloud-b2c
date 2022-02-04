@@ -9,10 +9,6 @@
 <!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
-
-
-
-
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
@@ -29,7 +25,24 @@ GlobalPayments.configure({
 const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
 
 
-
+function gatherBrowserData() {
+  var javaEnabled = navigator.javaEnabled();
+  var browserLanguage = navigator.language;
+  var screenHeight = screen.height;
+  var screenWidth = screen.width;
+  var userAgent = navigator.userAgent;
+  var browserTime = new Date();
+  var browserTimezoneZoneOffset = browserTime.getTimezoneOffset();
+  var clientData = new Object();
+  clientData.colorDepth = screen.colorDepth;
+  clientData.javaEnabled = navigator.javaEnabled();
+  clientData.browserLanguage = navigator.language; // en_US
+  clientData.screenHeight = screen.height; // 1080
+  clientData.screenWidth = screen.width; // 1920
+  clientData.userAgent = navigator.userAgent;
+  clientData.browserTime = browserTime.getTimezoneOffset();// 0
+ return clientData;
+}
 
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
@@ -37,13 +50,13 @@ cardForm.on("token-success", (resp) => {
     token.type = "hidden";
     token.name = "payment_token";
     token.value = resp.paymentReference; 
-    $('#gpayerror').text(''); 
+    $('#gpayerror').text('');
     $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
     $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
     $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
-
+    $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
    $( ".submit-payment" ).trigger( "click" );
     form.appendChild(token);
     form.submit();
