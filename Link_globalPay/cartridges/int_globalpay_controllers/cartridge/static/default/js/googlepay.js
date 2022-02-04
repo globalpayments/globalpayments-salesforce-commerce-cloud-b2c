@@ -28,7 +28,7 @@
     type: 'PAYMENT_GATEWAY',
     parameters: {
       'gateway': $('input[name=gpaymerchantname]').val(),
-      'gatewayMerchantId': $('input[name=gpaymerchantid]').val()
+      'gatewayMerchantId': 'gpapiqa1'
     }
   };
   
@@ -181,7 +181,7 @@
    * @param {object} paymentData response from Google Pay API after user approves payment
    */
   function processPayment(paymentData) {
-    $('#paymentToken').val(paymentData.paymentMethodData.tokenizationData.token);
+    $('input[name$=_paymentToken]').val(paymentData.paymentMethodData.tokenizationData.token);
     $('#dwfrm_billing').submit();
   //  $('body').trigger('submit:googlepay',{paymentToken:paymentData.paymentMethodData.tokenizationData.token});
   }

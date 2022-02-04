@@ -171,7 +171,9 @@
 			<!-- Your custom payment method implementation goes here. -->
 			<isinclude template="checkout/billing/applePayForm" />
 		</div>
-
+		<div class="d-none"> 
+ <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentToken}" type="input"/>
+ <div>
 	</fieldset>
 <iselse/>
 	<div class="gift-cert-used form-indent">
