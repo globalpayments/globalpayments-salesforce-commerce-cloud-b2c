@@ -28,7 +28,7 @@
     type: 'PAYMENT_GATEWAY',
     parameters: {
       'gateway': $('input[name=gpaymerchantname]').val(),
-      'gatewayMerchantId': 'gpapiqa1'
+      'gatewayMerchantId': $('input[name=gatewayMerchantId]').val()
     }
   };
   
