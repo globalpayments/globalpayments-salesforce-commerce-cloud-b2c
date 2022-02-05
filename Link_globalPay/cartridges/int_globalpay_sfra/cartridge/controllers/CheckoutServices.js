@@ -102,7 +102,7 @@ function handlePayments(req, res, next) {
          // Handles payment authorization
     var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
 
-    if (paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
+    if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
       res.json({
         renderedPaymentInstruments: renderedStoredPaymentInstrument,
         customer: accountModel,

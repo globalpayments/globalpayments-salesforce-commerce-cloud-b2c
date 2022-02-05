@@ -117,8 +117,12 @@ server.get('Show', function (req, res, next) {
   var threeDsStepTwo = {
       auth_id : authenticationTest.id
   }
-  var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
-  var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
+  //var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
+  //var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
+  var payPalCapture = {
+    "transactionId":"TRN_M8DrlIDOGHrWohuqye84DWt3s9irKX_00003405"
+  }
+  var payPalCaptureResp =  globalPayHelper.payPalCapture(payPalCapture);
   res.json({
         // token: globalPayHelper.getAccessToken()
         // authenticationsReq:  authenticationData,
@@ -126,9 +130,9 @@ server.get('Show', function (req, res, next) {
         // authReq:authorizationData,
         // authorization: globalPayHelper.authorize(authorizationData)
         // capture: globalPayHelper.capture(captureData)
-       // paypal : globalPayHelper.paypal(paypalData)
-       threeDsStepOne: threeDsStepOneResp,//globalPayHelper.authenticate(threeDsStepOne)
-       threeDsStepTwoResp: threeDsStepTwoResp
+       // paypal : globalPayHelper.paypal(paypalData),
+       payPalCapture : payPalCaptureResp
+       
   });
   next();
 });
