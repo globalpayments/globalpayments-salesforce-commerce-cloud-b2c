@@ -7,6 +7,7 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
@@ -43,9 +44,9 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
       }
     },
     notifications: {
-      return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(), // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalReturn",
-      status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(), // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalStatus",
-      cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString() // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalCancel"
+      return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(),
+      status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(),
+      cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
     }
   };
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -100,5 +101,14 @@ function Handle(basket, req) {
 }
 
 
+function Capture(order){
+  var payPalCapture = {
+    "transactionId":order.paymentInstrument.custom.gp_transactionid
+  }
+  var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture); 
+  return payPalCaptureResp;
+}
+
 exports.Authorize = Authorize;
 exports.Handle = Handle;
+exports.Capture = Capture;

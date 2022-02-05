@@ -296,6 +296,21 @@ function  threeDsStepone(data) {
       return null;
   }
 
+
+  function payPalCapture(data){
+    var payPalCapture = require('*/cartridge/scripts/dtos/PayPalCapture');
+    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+    var payPalCaptureRequest = new payPalCapture.Request();
+        payPalCaptureRequest.setToken(getAccessToken());
+        payPalCaptureRequest.setTransactionId(data.transactionId);
+        var result = globalPayService.executeRequest(payPalCaptureRequest, payPalCapture.Response);
+        if (result.success) {
+            return result.response;
+        }
+        return null;
+  }
+
+
 module.exports = {
     getAccessToken: getAccessToken,
     authenticate: authenticate,
@@ -309,5 +324,6 @@ module.exports = {
     detokenize:detokenize,
     applePay:applePay,
     threeDsStepone:threeDsStepone,
-    threeDsSteptwo:threeDsSteptwo
+    threeDsSteptwo:threeDsSteptwo,
+    payPalCapture: payPalCapture
 };
