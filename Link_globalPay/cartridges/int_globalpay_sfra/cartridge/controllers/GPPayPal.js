@@ -20,16 +20,16 @@ server.use('PayPalReturn', function (req, res, next) {
   var reqMap = req.httpParameterMap;
   var orderId = req.httpParameterMap.id.toString().split('_')[2];
   var order = OrderMgr.getOrder(orderId);
-      COHelpers.sendConfirmationEmail(order, req.locale.id);
-
      if (HookManager.hasHook('app.payment.processor.globalpay_paypal')) {
      var paymentFormResult = HookManager.callHook('app.payment.processor.globalpay_paypal',
                 'Capture',
                 order
             );
       }
-      if(!empty(paymentFormResult) && paymentFormResult.paymentStatus == 'COMPLETED')
-      gputil.orderUpdate(order);
+      if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'){
+            gputil.orderUpdate(order);
+      COHelpers.sendConfirmationEmail(order, req.locale.id);
+      }
   var orderId = order.orderNo;
       res.render('checkout/globalpay/threeds', {
         orderId: orderId,
