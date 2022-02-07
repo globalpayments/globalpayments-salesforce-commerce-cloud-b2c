@@ -33,7 +33,24 @@ GlobalPayments.configure({
 // Create Form
 const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
 
-
+function gatherBrowserData() {
+  var javaEnabled = navigator.javaEnabled();
+  var browserLanguage = navigator.language;
+  var screenHeight = screen.height;
+  var screenWidth = screen.width;
+  var userAgent = navigator.userAgent;
+  var browserTime = new Date();
+  var browserTimezoneZoneOffset = browserTime.getTimezoneOffset();
+  var clientData = new Object();
+  clientData.colorDepth = screen.colorDepth;
+  clientData.javaEnabled = navigator.javaEnabled();
+  clientData.browserLanguage = navigator.language; // en_US
+  clientData.screenHeight = screen.height; // 1080
+  clientData.screenWidth = screen.width; // 1920
+  clientData.userAgent = navigator.userAgent;
+  clientData.browserTime = browserTime.getTimezoneOffset();// 0
+ return clientData;
+}
 
 
 cardForm.on("token-success", (resp) => {
@@ -50,6 +67,7 @@ cardForm.on("token-success", (resp) => {
     $('[name$="_expiration_year"]').val(resp.details.expiryYear).trigger('change');
     $('input[name*="_cvn"]').val('123').trigger('change');
     $('input[name*=creditCard_paymentId]').val(JSON.stringify(resp));
+   $('input[name*=_threedsdata]').val(JSON.stringify(gatherBrowserData()))
 if($('[name$="_expiration_year"]').val())
 {
     $('#dwfrm_billing').submit();

@@ -112,6 +112,7 @@
 			<isif condition="${pdict.CurrentCustomer.authenticated}">
 				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox"/>
 			</isif>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.threedsdata}" type="input"/>
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentId}" type="input"/>
  </div>
 

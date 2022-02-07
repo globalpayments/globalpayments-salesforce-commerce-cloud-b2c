@@ -15,9 +15,9 @@ var Cart = app.getModel('Cart');
  * If the verification was successful a credit card payment instrument is created.
  */
 function Handle(args) {
-    var currentBasket = Cart.get(args.Basket);
-    var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
-    var PaymentMgr = require('dw/order/PaymentMgr');
+  var currentBasket = Cart.get(args.Basket);
+  var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
+  var PaymentMgr = require('dw/order/PaymentMgr');
   var cardErrors = {};
   var Locale = require('dw/util/Locale');
   var cardNumber = creditCardForm.get('number').value();
@@ -91,44 +91,45 @@ function Handle(args) {
       return { fieldErrors: [], serverErrors: serverErrors, error: true };
     }
      if(!empty(authentication.threeDs.methodData.threeDsServerTransId)){
+      var paymentInformation=creditCardForm.get('threedsdata').value()?JSON.parse(creditCardForm.get('threedsdata').value()):"";
       var threeDsStepOne = 
-      {
-         three_ds:{
-            source:globalpayconstants.threeDsStepOne.source,
-            preference:globalpayconstants.threeDsStepOne.preference,
-         },
-         auth_id : authentication.id,
-         method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
-         merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
-         order:{
-            time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-            amount:currentBasket.totalGrossPrice.value * 100,
-            currency:currentBasket.currencyCode,
-            address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
-            shipping_address:{
-               line1:currentBasket.shipments[0].shippingAddress.address1,
-               city:currentBasket.shipments[0].shippingAddress.city,
-               postal_code:currentBasket.shipments[0].shippingAddress.postalCode,
-               country:"826"
-            }
-         },
-         payment_method:{
-            id:  customer && customer ? getTokenbyUUID(req, paymentId) : paymentId
-         },
-         browser_data:{
-            accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-            color_depth:globalpayconstants.threeDsStepOne.color_depth,
-            ip:globalpayconstants.threeDsStepOne.ip,
-            java_enabled:globalpayconstants.threeDsStepOne.java_enabled,
-            javascript_enabled:globalpayconstants.threeDsStepOne.javascript_enabled,
-            language:"en-US",
-            screen_height:globalpayconstants.threeDsStepOne.screen_height,
-            screen_width:globalpayconstants.threeDsStepOne.screen_width,
-            challenge_window_size:globalpayconstants.threeDsStepOne.challenge_window_size,
-            timezone:globalpayconstants.threeDsStepOne.timezone,
-            user_agent:globalpayconstants.threeDsStepOne.user_agent
-         }
-      }
+    {
+       three_ds:{
+          source:globalpayconstants.threeDsStepOne.source,
+          preference:globalpayconstants.threeDsStepOne.preference,
+       },
+       auth_id : authentication.id,
+       method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
+       merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
+       order:{
+          time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
+          amount:currentBasket.merchandizeTotalGrossPrice.value * 100,
+          currency:currentBasket.currencyCode,
+          address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
+          shipping_address:{
+             line1:currentBasket.shipments[0].shippingAddress.address1,
+             city:currentBasket.shipments[0].shippingAddress.city,
+             postal_code:currentBasket.shipments[0].shippingAddress.postalCode,
+             country:"826"
+          }
+       },
+       payment_method:{
+          id: customer.authenticated && customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value
+       },
+       browser_data:{
+          accept_header:globalpayconstants.threeDsStepOne.accept_header, 
+          color_depth: paymentInformation.colorDepth,
+          ip: request.httpHeaders.get('true-client-ip'),
+          java_enabled: paymentInformation.javaEnabled,
+          javascript_enabled: globalpayconstants.threeDsStepOne.javascript_enabled,
+          language:paymentInformation.browserLanguage,//"en-US",
+          screen_height:paymentInformation.screenHeight,
+          screen_width:paymentInformation.screenWidth,
+          challenge_window_size: globalpayconstants.threeDsStepOne.challenge_window_size,
+          timezone:paymentInformation.browserTime,
+          user_agent:paymentInformation.userAgent
+       }
+    }
         var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
     
         if (!empty(threeDsStepOneResp) && !empty(threeDsStepOneResp.success) && !threeDsStepOneResp.success) {
