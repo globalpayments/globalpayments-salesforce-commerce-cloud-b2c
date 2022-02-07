@@ -291,7 +291,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       channel: globalpayconstants.authenticationData.channel,
       country: Locale.getLocale(req.locale.id).country,
       reference: globalpayconstants.authorizationData.reference,
-      amount: 7
+      amount: StringUtils.formatNumber(basket.totalGrossPrice.value * 100, "00000000000"),
       currency: basket.currencyCode,
       source: globalpayconstants.authenticationData.source,
       payment_method: {
