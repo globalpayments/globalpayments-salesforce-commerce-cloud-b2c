@@ -836,6 +836,9 @@ function saveCreditCard() {
 var OrderMgr = require('dw/order/OrderMgr');
 var Order = app.getModel('Order');
 
+/*
+* Redirect to 3D secure page
+*/
 function threeds()
 {
     app.getView().render('globalpay/threeds');
@@ -882,7 +885,9 @@ exports.Billing = guard.ensure(['https'], billing);
 /** Form handler for the returnToForm form.
  * @see module:controllers/COBilling~editBillingAddress */
 exports.EditBillingAddress = guard.ensure(['https', 'post'], editBillingAddress);
-
+/*
+* Redirect to 3D secure page
+*/
 exports.Threeds=guard.ensure(['https'],threeds);
 /*
  * Local methods

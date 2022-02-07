@@ -90,8 +90,9 @@ function Handle(args) {
       serverErrors.push(authentication.error.detailedErrorDescription);
       return { fieldErrors: [], serverErrors: serverErrors, error: true };
     }
-     if(!empty(authentication.threeDs.methodData.threeDsServerTransId)){
-      var paymentInformation=creditCardForm.get('threedsdata').value()?JSON.parse(creditCardForm.get('threedsdata').value()):"";
+    var paymentInformation=creditCardForm.get('threedsdata').value()?JSON.parse(creditCardForm.get('threedsdata').value()):null;
+
+     if(!empty(authentication.threeDs.methodData.threeDsServerTransId)&&!empty(paymentInformation)){
       var threeDsStepOne = 
     {
        three_ds:{
@@ -103,7 +104,7 @@ function Handle(args) {
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
           time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount:currentBasket.merchandizeTotalGrossPrice.value * 100,
+          amount:currentBasket.totalGrossPrice.value * 100,
           currency:currentBasket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
           shipping_address:{
