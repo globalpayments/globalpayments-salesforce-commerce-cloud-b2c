@@ -9,7 +9,7 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-
+var StringUtils = require('dw/util/StringUtils');
 /**
  * Verifies the required information for billing form is provided.
  * @param {Object} req - The request object
@@ -207,7 +207,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     channel: globalpayconstants.authorizationData.channel,
     capture_mode: captureMode.value,
     type: globalpayconstants.authorizationData.type,
-    amount: order.totalGrossPrice.value * 100,
+    amount: StringUtils.formatNumber(order.totalGrossPrice.value * 100, "00000000000"),
     currency: order.currencyCode,
     reference: orderNumber,
     country: Locale.getLocale(req.locale.id).country,
@@ -291,7 +291,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       channel: globalpayconstants.authenticationData.channel,
       country: Locale.getLocale(req.locale.id).country,
       reference: globalpayconstants.authorizationData.reference,
-      amount: basket.merchandizeTotalGrossPrice.value * 100,
+      amount: 7
       currency: basket.currencyCode,
       source: globalpayconstants.authenticationData.source,
       payment_method: {
@@ -322,7 +322,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
           time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount:basket.merchandizeTotalGrossPrice.value * 100,
+          amount: StringUtils.formatNumber(basket.merchandizeTotalGrossPrice.value  * 100, "00000000000"),
           currency:basket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
           shipping_address:{
