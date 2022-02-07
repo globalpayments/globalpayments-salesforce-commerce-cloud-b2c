@@ -225,6 +225,15 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     var serverErrors = [];
     if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
   } else {
+      if('status' in authorization && authorization.status == 'DECLINED'){
+        error = true;
+        serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
+        return {
+          fieldErrors: fieldErrors,
+          serverErrors: serverErrors,
+          error: error
+        };
+      }
     try {
       Transaction.wrap(function () {
         paymentInstrument.custom.gp_transactionid = authorization.id;
