@@ -75,16 +75,14 @@ server.append(
           returningCustomer: false,
           passwordForm: passwordForm,
           reportingURLs: reportingURLs,
-          orderUUID: order.getUUID(),
-          "paymentMode": order.paymentTransaction.paymentInstrument.paymentMethod
+          orderUUID: order.getUUID()
         });
       } else {
         res.render('checkout/confirmation/confirmation', {
           order: orderModel,
           returningCustomer: true,
           reportingURLs: reportingURLs,
-          orderUUID: order.getUUID(),
-          "paymentMode": order.paymentTransaction.paymentInstrument.paymentMethod
+          orderUUID: order.getUUID()
         });
       }
       req.session.raw.custom.orderID = req.querystring.ID; // eslint-disable-line no-param-reassign

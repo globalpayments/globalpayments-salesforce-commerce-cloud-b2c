@@ -1,0 +1,13 @@
+<div class="payment-details">
+    <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
+        <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
+            <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
+        </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_PAYPAL'}">
+            <isinclude template="checkout/billing/paymentOptions/paypalSummary" />
+        </isif>
+         <isif condition="${payment.paymentMethod === 'GP_DW_GOOGLE_PAY'}">
+            <isinclude template="checkout/billing/paymentOptions/googlePaySummary" />
+        </isif>
+    </isloop>
+</div>
