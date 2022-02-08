@@ -1,4 +1,4 @@
-<div class="credit-card-type">
+<div class="google-pay-type">
     <span>${Resource.msg('msg.payment.type.googlepay', 'confirmation', null)}</span>
 </div>
 
