@@ -33,6 +33,8 @@ googlePay.channel = 'CNP';
 googlePay.type = 'SALE';
 googlePay.entryMode = 'ECOM';
 googlePay.provider = 'PAY_BY_GOOGLE';
+googlePay.captureStatus = 'CAPTURED';
+googlePay.authorizedStatus = 'PREAUTHORIZED';
 globalpayConstants.googlePay = googlePay;
 
 var creditCardPay = new Object();

@@ -127,13 +127,15 @@ function handlePayments(req, res, next) {
     }
    else{
     var URLUtils = require('dw/web/URLUtils');
+    var serverErrors = [];
+
+    serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
     // redirect to Cart page if there is error
     res.json({
       error: true,
-      cartError: true,
+      cartError: false,
       fieldErrors: [],
-      serverErrors: [],
-      redirectUrl: URLUtils.url('Cart-Show').toString()
+      serverErrors: serverErrors
     });
     return;
    }

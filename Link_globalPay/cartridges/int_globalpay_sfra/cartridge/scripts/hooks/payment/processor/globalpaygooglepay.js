@@ -1,13 +1,9 @@
 'use strict';
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var collections = require('*/cartridge/scripts/util/collections');
-var PaymentInstrument = require('dw/order/PaymentInstrument');
-var PaymentMgr = require('dw/order/PaymentMgr');
-var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var server = require('server');
+var StringUtils = require('dw/util/StringUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
@@ -21,10 +17,8 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-  var URLUtils = require('dw/web/URLUtils');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-  var HookManager = require('dw/system/HookMgr');
   var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
   var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
@@ -54,9 +48,9 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (!empty(googlePayresp) && 'success' in googlePayresp && !googlePayresp.success) {
+  if (!empty(googlePayresp) && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
     var error = true;
-    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+    if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {
     try {
       Transaction.wrap(function () {
