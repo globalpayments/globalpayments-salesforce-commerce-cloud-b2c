@@ -6,6 +6,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var Resource = require('dw/web/Resource');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
  * This is where additional PayPal integration would go. The current implementation simply creates a PaymentInstrument and
  * returns 'success'.
@@ -34,7 +35,6 @@ function Handle(args) {
     var order=args.Order;
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
@@ -62,7 +62,6 @@ function Handle(args) {
         cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString() // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalCancel"
       }
     };
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var paypalresp = globalPayHelper.paypal(paypalData);
     var serverErrors = [];
     if (!empty(paypalresp) && 'success' in paypalresp && !paypalresp.success) {
@@ -88,6 +87,14 @@ function Handle(args) {
 }
 
 
+function Capture(order){
+  var payPalCapture = {
+    "transactionId":order.paymentInstrument.custom.gp_transactionid
+  }
+  var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture); 
+  return payPalCaptureResp;
+}
+
 /*
  * Module exports
  */
@@ -97,3 +104,4 @@ function Handle(args) {
  */
 exports.Handle = Handle;
 exports.Authorize = Authorize;
+exports.Capture = Capture;

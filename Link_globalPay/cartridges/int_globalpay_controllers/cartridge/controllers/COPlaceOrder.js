@@ -310,13 +310,20 @@ function payPalReturn()
 {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
-    var orderPlacementStatus = Order.submit(order);
-    if (!orderPlacementStatus.error) {
-        changeOrderStatus(order);
-        clearForms();
-    }
-
-    app.getController('COSummary').ShowConfirmation(order);
+    if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_PAYPAL')) {
+        var paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_PAYPAL',
+                   'Capture',
+                   order
+               );
+         }
+         if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'){
+            var orderPlacementStatus = Order.submit(order);
+            if (!orderPlacementStatus.error) {
+                app.getController('COSummary').ShowConfirmation(order);
+                changeOrderStatus(order);
+                clearForms();
+            }
+         }
 }
 
 function payPalCancel()
