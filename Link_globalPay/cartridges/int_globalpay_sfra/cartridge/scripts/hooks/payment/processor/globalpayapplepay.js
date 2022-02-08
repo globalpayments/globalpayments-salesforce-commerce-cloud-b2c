@@ -8,6 +8,7 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var server = require('server');
+var StringUtils = require('dw/util/StringUtils');
 /**
  * Authorizes a payment using a apple pay.
  * @param {number} orderNumber - The current order's number
@@ -30,7 +31,7 @@ var server = require('server');
                 channel: globalpayconstants.applePay.channel,
                 type:globalpayconstants.applePay.type,
                 capture_mode: captureMode.value,
-                amount: order.totalGrossPrice.value * 100,
+                amount: StringUtils.formatNumber(order.totalGrossPrice.value * 100, "00000000000"),
                 currency: order.currencyCode,
                 reference: order.orderNo,
                 country:  'US',

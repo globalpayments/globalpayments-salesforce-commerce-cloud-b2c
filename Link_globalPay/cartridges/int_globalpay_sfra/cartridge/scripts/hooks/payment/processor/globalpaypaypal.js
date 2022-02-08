@@ -8,7 +8,7 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-
+var StringUtils = require('dw/util/StringUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
@@ -32,7 +32,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     channel: globalpayconstants.paypalData.channel,
     capture_mode: captureMode.value,
     type: globalpayconstants.paypalData.type,
-    amount: order.totalGrossPrice.value * 100,
+    amount: StringUtils.formatNumber(order.totalGrossPrice.value * 100, "00000000000"),
     currency: order.currencyCode,
     reference: order.orderNo,
     country: Locale.getLocale(req.locale.id).country,
