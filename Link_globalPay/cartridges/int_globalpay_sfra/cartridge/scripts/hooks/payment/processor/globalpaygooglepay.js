@@ -33,7 +33,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     channel: globalpayconstants.googlePay.channel,
     type: globalpayconstants.googlePay.type,
     capture_mode: captureMode.value,
-    amount: order.totalGrossPrice.value * 100,
+    amount: Math.ceil(order.totalGrossPrice.value * 100),
     currency: order.currencyCode,
     reference: order.orderNo,
     country: Locale.getLocale(req.locale.id).country,
