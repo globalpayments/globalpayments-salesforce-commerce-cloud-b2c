@@ -207,7 +207,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     channel: globalpayconstants.authorizationData.channel,
     capture_mode: captureMode.value,
     type: globalpayconstants.authorizationData.type,
-    amount: Math.ceil(order.totalGrossPrice.value * 100), 
+    amount: (order.totalGrossPrice.value * 100).toFixed(), 
     currency: order.currencyCode,
     reference: orderNumber,
     country: Locale.getLocale(req.locale.id).country,
@@ -291,7 +291,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       channel: globalpayconstants.authenticationData.channel,
       country: Locale.getLocale(req.locale.id).country,
       reference: globalpayconstants.authorizationData.reference,
-      amount: Math.ceil(basket.totalGrossPrice.value * 100),
+      amount: (basket.totalGrossPrice.value * 100).toFixed(),
       currency: basket.currencyCode,
       source: globalpayconstants.authenticationData.source,
       payment_method: {
@@ -322,7 +322,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
           time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount: Math.ceil(basket.totalGrossPrice.value  * 100),
+          amount: (basket.totalGrossPrice.value  * 100).toFixed(),
           currency:basket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
           shipping_address:{
