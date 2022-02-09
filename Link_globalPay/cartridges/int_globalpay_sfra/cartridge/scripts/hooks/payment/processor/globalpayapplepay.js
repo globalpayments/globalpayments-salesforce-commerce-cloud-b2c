@@ -31,7 +31,7 @@ var StringUtils = require('dw/util/StringUtils');
                 channel: globalpayconstants.applePay.channel,
                 type:globalpayconstants.applePay.type,
                 capture_mode: captureMode.value,
-                amount:Math.ceil(order.totalGrossPrice.value * 100),
+                amount:(order.totalGrossPrice.value * 100).toFixed(),
                 currency: order.currencyCode,
                 reference: order.orderNo,
                 country:  'US',

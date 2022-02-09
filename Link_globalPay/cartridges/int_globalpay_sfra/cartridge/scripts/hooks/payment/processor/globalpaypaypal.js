@@ -32,7 +32,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     channel: globalpayconstants.paypalData.channel,
     capture_mode: captureMode.value,
     type: globalpayconstants.paypalData.type,
-    amount: Math.ceil(order.totalGrossPrice.value * 100),
+    amount: (order.totalGrossPrice.value * 100).toFixed(),
     currency: order.currencyCode,
     reference: order.orderNo,
     country: Locale.getLocale(req.locale.id).country,
