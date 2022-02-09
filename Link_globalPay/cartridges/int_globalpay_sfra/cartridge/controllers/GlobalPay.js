@@ -43,6 +43,24 @@ server.post('Transactions', function (req, res, next) {
 });
 
 /**
+ * GlobalPay-Transactions : The GlobalPay-Transactions endpoint invokes transaction call
+ * @name Base/GlobalPay-Transactions
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
+ server.use('ThreeDs', function (req, res, next) {
+  // service logic import
+  // here we have invoke transaction call
+      var test = "";
+      res.setStatusCode(200);
+      res.json({ success: 'true' }); 
+      next();
+  });
+
+/**
  * GlobalPay-Capture : The GlobalPay-Capture endpoint invokes capture call
  * @name Base/GlobalPay-Capture
  * @function
