@@ -1,6 +1,6 @@
 <iscomment>
     This template is created to render payment information in the order confirmation email.
-</iscomment>
+</iscomment> 
 <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
     <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
         <div>

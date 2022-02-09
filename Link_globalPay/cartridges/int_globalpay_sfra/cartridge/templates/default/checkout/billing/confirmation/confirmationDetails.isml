@@ -1,4 +1,4 @@
-<div class="card confirm-details">
+<div class="card confirm-details"> 
     <div class="card-header">
         <h2 class="card-header-custom">${Resource.msg('title.receipt', 'confirmation', null)}</h2>
     </div>

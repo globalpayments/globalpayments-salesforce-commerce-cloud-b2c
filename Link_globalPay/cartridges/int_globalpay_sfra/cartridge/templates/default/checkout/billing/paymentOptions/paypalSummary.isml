@@ -1,4 +1,4 @@
-<div class="credit-card-type">
-    <span>${Resource.msg('msg.payment.type.paypal', 'confirmation', null)}</span>
+<div class="paypal-type"> 
+    <span>${Resource.msg('msg.payment.type.paypal', 'globalpay', null)}</span>
 </div>
 
