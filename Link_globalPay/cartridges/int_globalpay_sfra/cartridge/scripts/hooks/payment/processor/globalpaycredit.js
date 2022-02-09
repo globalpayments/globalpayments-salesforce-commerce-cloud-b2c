@@ -322,7 +322,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
           time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount: Math.ceil(basket.merchandizeTotalGrossPrice.value  * 100),
+          amount: Math.ceil(basket.totalGrossPrice.value  * 100),
           currency:basket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
           shipping_address:{
