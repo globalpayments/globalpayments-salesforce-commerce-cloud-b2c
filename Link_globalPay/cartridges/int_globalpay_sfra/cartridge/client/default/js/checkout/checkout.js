@@ -275,7 +275,23 @@ var scrollAnimate = require('base/components/scrollAnimate');
             }
                      // disable the next:Place Order button here
             $('body').trigger('checkout:disableButton', '.next-step-button button');
+            var javaEnabled = navigator.javaEnabled();
+            var browserLanguage = navigator.language;
+            var screenHeight = screen.height;
+            var screenWidth = screen.width;
+            var userAgent = navigator.userAgent;
+            var browserTime = new Date();
+            var browserTimezoneZoneOffset = browserTime.getTimezoneOffset();
+            var clientData = new Object();
+            clientData.colorDepth = screen.colorDepth;
+            clientData.javaEnabled = navigator.javaEnabled();
+            clientData.browserLanguage = navigator.language; // en_US
+            clientData.screenHeight = screen.height; // 1080
+            clientData.screenWidth = screen.width; // 1920
+            clientData.userAgent = navigator.userAgent;
+            clientData.browserTime = browserTime.getTimezoneOffset();// 0
 
+            $("#threedsdata").val(JSON.stringify(clientData));
             $.ajax({
               url: $('#dwfrm_billing').attr('action'),
               method: 'POST',
