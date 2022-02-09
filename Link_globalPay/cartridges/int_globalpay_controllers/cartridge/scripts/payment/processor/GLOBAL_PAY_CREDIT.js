@@ -29,7 +29,7 @@ function Handle(args) {
   var paymentCard = PaymentMgr.getPaymentCard(cardType);
   var PaymentInstrument = require('dw/order/PaymentInstrument');
   var paymentMethodID= app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value
-
+  var saveCard=false;//need to change while doing save card implementation
   currentBasket=currentBasket.object;
     // Validate payment instrument
     if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
@@ -75,7 +75,7 @@ function Handle(args) {
         currency: currentBasket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
-          id:  customer.authenticated && customer.registered ? getTokenbyUUID(request,paymentId.value ) : paymentId.value
+          id:  saveCard&&customer.authenticated && customer.registered ? getTokenbyUUID(request,paymentId.value ) : paymentId.value
         },
         notifications: {
           challenge_return_url: preferences.threedsecureChallenge,
@@ -115,7 +115,7 @@ function Handle(args) {
           }
        },
        payment_method:{
-          id: customer.authenticated && customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value
+          id: saveCard&&customer.authenticated && customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value
        },
        browser_data:{
           accept_header:globalpayconstants.threeDsStepOne.accept_header, 
@@ -167,7 +167,7 @@ function Handle(args) {
       paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
   
       paymentInstrument.custom.gp_authenticationid = authentication.id;
-      paymentInstrument.custom.gp_paymentmethodid =  customer &&customer.registered ? getTokenbyUUID(req, paymentId.value) : paymentId.value;
+      paymentInstrument.custom.gp_paymentmethodid =  saveCard&&customer &&customer.registered ? getTokenbyUUID(req, paymentId.value) : paymentId.value;
       paymentInstrument.setCreditCardNumber(cardNumber);
       paymentInstrument.setCreditCardType(cardType);
       paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
@@ -178,9 +178,9 @@ function Handle(args) {
 }
 
 function getTokenbyUUID(req, uuidToken) {
-    var testcust = customer;
+   var wallet = customer.getProfile().getWallet();
     var creditCardToken;
-    testcust.wallet.paymentInstruments.forEach(function (each) {
+    wallet.paymentInstruments.forEach(function (each) {
       if (each.UUID == uuidToken) {
         creditCardToken = each.raw.creditCardToken;
         return each.raw.creditCardToken;

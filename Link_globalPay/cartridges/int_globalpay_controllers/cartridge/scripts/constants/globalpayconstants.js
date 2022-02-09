@@ -34,6 +34,8 @@ googlePay.type = 'SALE';
 googlePay.entryMode = 'ECOM';
 googlePay.provider = 'PAY_BY_GOOGLE';
 googlePay.paymentTypeCode = 'GP_DW_GOOGLE_PAY';
+googlePay.captureStatus = 'CAPTURED';
+googlePay.authorizedStatus = 'PREAUTHORIZED';
 globalpayConstants.googlePay = googlePay;
 
 var creditCardPay = new Object();
