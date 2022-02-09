@@ -53,17 +53,25 @@ cardForm.on("token-success", (resp) => {
     $('#gpayerror').text('');
     $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
     $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
-    $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
-    $("#expirationYear").val(resp.details.expiryYear);
+    $('[name$="_expiration_month"]').val(parseInt(resp.details.expiryMonth, 10)).trigger('change');
+    $('[name$="_expiration_year"]').val(resp.details.expiryYear).trigger('change');
     $("#paymentId").val(JSON.stringify(resp));
     $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
-   $( ".submit-payment" ).trigger( "click" );
+    if($('[name$="_expiration_year"]').val() && $('[name$="_expiration_month"]'))
+{
+    $( ".submit-payment" ).trigger( "click" );
     form.appendChild(token);
     form.submit();
+}
+else
+{
+    $('#gpayerror').text('Expiration details invalid.');
+}
+
 });
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumers
-    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('#gpayerror').text('Card details or  card expiration are not valid, please enter valid card details.'); 
 });
 </script>
