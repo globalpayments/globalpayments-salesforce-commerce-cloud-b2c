@@ -68,9 +68,9 @@ function Handle(args) {
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var googlePayresp = globalPayHelper.gpay(googlePayData);
     var serverErrors = [];
-    if (!empty(googlePayresp) && 'success' in googlePayresp && !googlePayresp.success) {
+    if (!empty(googlePayresp) && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)){
       var error = true;
-      if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+      if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
     } else {
       try {
         Transaction.wrap(function () {

@@ -209,8 +209,8 @@ function handlePayment()
     var paymentInstrument = PaymentProcessor.handle(order, app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value);
     var handlePaymentsResult = handlePayments(order);
 
-    if (handlePaymentsResult.error) {
-        return Transaction.wrap(function () {
+    if (handlePaymentsResult.error ||handlePaymentsResult.missingPaymentInfo) {
+         Transaction.wrap(function () {
             OrderMgr.failOrder(order);
             return {
                 error: true,
@@ -218,30 +218,22 @@ function handlePayment()
             };
         });
 
-    } else if (handlePaymentsResult.missingPaymentInfo) {
-        return Transaction.wrap(function () {
-            OrderMgr.failOrder(order);
-            return {
-                error: true,
-                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
-            };
-        });
     }
-    
- 
-    if(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value=='GP_DW_PAYPAL')
+    if(!handlePaymentsResult.authorizationResult.error&&app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value=='GP_DW_PAYPAL')
     {
         var paypalresult=handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
     }
-    else{
+    else if(!handlePaymentsResult.authorizationResult.error){
     var orderPlacementStatus = Order.submit(order);
-    if (!orderPlacementStatus.error) {
+    if (!orderPlacementStatus.error) { 
         changeOrderStatus(order);
         clearForms();
     }
-    
     app.getController('COSummary').ShowConfirmation(order);
+    }
+    else{
+        response.redirect(URLUtils.https('COShipping-Start'));
     }
 }
 
