@@ -106,7 +106,8 @@ function savePaymentInformation(req, basket, billingData) {
     var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
             billingData,
             basket,
-            customer
+            customer,
+            token
         );
 
     req.currentCustomer.wallet.paymentInstruments.push({
