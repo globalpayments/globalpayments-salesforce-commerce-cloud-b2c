@@ -44,6 +44,8 @@ function gatherBrowserData() {
  return clientData;
 }
 
+document.getElementById("threedsdata").value = JSON.stringify(gatherBrowserData());
+
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
     const token = document.createElement("input");
