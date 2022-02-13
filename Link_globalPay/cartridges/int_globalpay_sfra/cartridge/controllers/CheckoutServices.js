@@ -605,7 +605,7 @@ server.replace('PlaceOrder', server.middleware.https, function (req, res, next) 
   if (handlePaymentResult.error) {
     res.json({
       error: true,
-      errorMessage: Resource.msg('error.technical', 'checkout', null)
+      errorMessage: 'serverErrors' in handlePaymentResult.authorizationResult ? handlePaymentResult.authorizationResult.serverErrors : Resource.msg('error.technical', 'checkout', null)
     });
     return next();
   }
