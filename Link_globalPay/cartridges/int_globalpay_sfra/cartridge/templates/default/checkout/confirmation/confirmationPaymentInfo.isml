@@ -22,6 +22,6 @@
            <div>
             <span>${Resource.msg('msg.payment.type.googlepay', 'globalpay', null)}</span>
         </div>
-        <iselse/> 
+        <iselse/>  
     </isif>
 </isloop>
