@@ -1,0 +1,30 @@
+'use strict';
+
+/* global empty dw request session customer */
+var applePay = require('*/cartridge/scripts/helpers/applepay');
+var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
+
+var orderValidationHelper = {};
+
+orderValidationHelper.validateOrder = function (basket) {
+    var result = {};
+    if (!basket) {
+        return { error: true };
+    }
+    var validatedProducts = validationHelpers.validateProducts(basket);
+    if (validatedProducts.error || !validatedProducts.hasInventory) {
+        return { error: true };
+    }
+
+    if (!applePay.isApplePayAllowed(basket)) {
+        result = { error: true };
+    }
+    var validateCartThresholdValue = validationHelpers.validateCartThresholdValue(basket);
+    if(validateCartThresholdValue.isCartThresholdBreak){
+    	result = { error: true, isCartThresholdBreak : true};
+    }
+    
+    return result;
+};
+
+module.exports = orderValidationHelper;

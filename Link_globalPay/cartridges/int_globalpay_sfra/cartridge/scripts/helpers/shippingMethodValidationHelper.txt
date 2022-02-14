@@ -1,0 +1,47 @@
+'use strict';
+
+/* global empty dw request session customer */
+
+var ShippingMgr = require('dw/order/ShippingMgr');
+var collections = require('*/cartridge/scripts/util/collections');
+
+
+var shippingMethodValidationHelper = {};
+
+function validateApplicableShippingMethods(shipment) {
+    var shipmentModel = ShippingMgr.getShipmentShippingModel(shipment);
+    var applicableShippingMethods = shipmentModel.getApplicableShippingMethods();
+    return applicableShippingMethods;
+}
+
+function validateShipmentShippingMethod(applicableShippingMethods, shipment) {
+    var isValid = false;
+    var shipmentShippingMethod = shipment.getShippingMethodID();
+
+    collections.forEach(applicableShippingMethods, function (applicableShippingMethod) {
+		// var shippingMethod = iterator.next();
+        if (applicableShippingMethod.ID === shipmentShippingMethod) {
+            isValid = true;
+        }
+    });
+
+    return isValid;
+}
+
+shippingMethodValidationHelper.validateShippingMethod = function (shipment) {
+    var result = {};
+    if (!shipment) {
+        return { error: true };
+    }
+
+    var applicableShippingMethods = validateApplicableShippingMethods(shipment);
+
+    if (applicableShippingMethods.length < 0 || !validateShipmentShippingMethod(applicableShippingMethods, shipment)) {
+        result = { error: true };
+    }
+
+    return result;
+};
+
+
+module.exports = shippingMethodValidationHelper;

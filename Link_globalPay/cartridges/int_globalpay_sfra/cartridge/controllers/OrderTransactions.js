@@ -20,7 +20,7 @@ var OrderMgr = require('dw/order/OrderMgr');
 server.post('RefundTransaction',
 security.ValidateHeaders,
 server.middleware.https,
-function (req, res, next) { 
+function (req, res, next) {
     var refundresult;
         if(!(res.viewData.securityErrorMessage)){
                 var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');

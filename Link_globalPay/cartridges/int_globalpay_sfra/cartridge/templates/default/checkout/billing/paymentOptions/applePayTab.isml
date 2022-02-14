@@ -1,10 +1,12 @@
-<li class="nav-item" data-method-id="${paymentOption.ID}">
-    <a class="nav-link apple-pay-tab" data-toggle="tab" href="#apple-pay-content" role="tab">
-        <img class="applepay-tab-img apple-pay-tab"
-                src="${URLUtils.staticURL('/images/apple.png')}"
-                height="32"
-                alt="${paymentOption.name}"
-                title="${paymentOption.name}"
-        />
-    </a>
-</li>
+<script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
+<style>
+apple-pay-button {
+  --apple-pay-button-width: 150px;
+  --apple-pay-button-height: 30px;
+  --apple-pay-button-border-radius: 3px;
+  --apple-pay-button-padding: 0px 0px;
+  --apple-pay-button-box-sizing: border-box;
+}
+</style>
+<apple-pay-button buttonstyle="black" type="plain" locale="en"></apple-pay-button>
