@@ -13,11 +13,15 @@
         <div>
             <span>${Resource.msg('msg.card.type.ending', 'confirmation', null)} ${payment.expirationMonth}/${payment.expirationYear}</span>
         </div>
+        
+        <iselseif condition="${payment.paymentMethod === 'GP_DW_PAYPAL'}">
+           <div>
+            <span>${Resource.msg('msg.payment.type.paypal', 'globalpay', null)}</span>
+        </div>
+        <iselseif condition="${payment.paymentMethod === 'GP_DW_GOOGLE_PAY'}">
+           <div>
+            <span>${Resource.msg('msg.payment.type.googlepay', 'globalpay', null)}</span>
+        </div>
+        <iselse/> 
     </isif>
-     <isif condition="${payment.paymentMethod === 'GP_DW_PAYPAL'}">
-            <isinclude template="checkout/billing/paymentOptions/paypalSummary" />
-        </isif>
-         <isif condition="${payment.paymentMethod === 'GP_DW_GOOGLE_PAY'}">
-            <isinclude template="checkout/billing/paymentOptions/googlePaySummary" />
-        </isif>
 </isloop>
