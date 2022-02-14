@@ -21,6 +21,16 @@ var scrollAnimate = require('base/components/scrollAnimate');
  *
  */
 (function ($) {
+
+  $(document).ready(function () {
+    if (window.dw &&
+        window.dw.applepay &&
+        window.ApplePaySession &&
+        window.ApplePaySession.canMakePayments()) {
+        $('body').addClass('apple-pay-enabled');
+    }
+ });
+
     $.fn.checkout = function () { // eslint-disable-line
       var plugin = this;
 // console.log('testing....');

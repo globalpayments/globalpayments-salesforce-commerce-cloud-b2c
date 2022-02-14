@@ -15,6 +15,38 @@
         {
             "name": "app.payment.processor.google_pay",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpaygooglepay"
+        },
+        {
+            "name": "dw.extensions.applepay.getRequest",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.paymentapi.beforeAuthorization",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.paymentapi.afterAuthorization",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.prepareBasket",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.paymentAuthorized.createOrder",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.shippingContactSelected",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.paymentMethodSelected",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.shippingMethodSelected",
+            "script": "./applePay.js"
         }
     ]
 }

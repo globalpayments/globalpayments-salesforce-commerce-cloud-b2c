@@ -1,0 +1,12 @@
+{
+    "hooks": [
+        {
+            "name": "dw.extensions.applepay.paymentAuthorized.authorizeOrderPayment",
+            "script": "./applePay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.getRequest",
+            "script": "./applePay.js"
+        }
+    ]
+}
