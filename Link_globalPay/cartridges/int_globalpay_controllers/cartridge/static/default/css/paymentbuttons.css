@@ -1,1 +1,18 @@
 .btn-paypal-button {padding:0}.paypal-logo{width: 200px;height: 40px;margin: 0;padding: 0;}.apple-pay-button{padding:0}.btn-apple-pay-button{padding:0}.apple-pay-logo{width: 200px;height: 40px;margin: 0;padding: 0;}
+/*
+
+ * globalpay credit form styles
+
+ */
+ .secure-payment-form label
+ {
+
+    text-align: left;
+
+ }
+ .tooltip
+ {
+
+    display:none;
+
+ }
