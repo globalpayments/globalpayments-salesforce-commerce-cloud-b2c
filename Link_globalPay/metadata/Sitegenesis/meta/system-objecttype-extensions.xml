@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="env">
+                <display-name xml:lang="x-default">Environment</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_api_version">
+                <display-name xml:lang="x-default">GP API version</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_app_id">
+                <display-name xml:lang="x-default">GP App Id</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_app_key">
+                <display-name xml:lang="x-default">GP App Key</display-name>
+                <type>password</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_captureMode">
+                <display-name xml:lang="x-default">captureMode</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">AUTO</display>
+                        <value>AUTO</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">LATER</display>
+                        <value>LATER</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_clientID">
+                <display-name xml:lang="x-default">gp clientID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_content_type">
+                <display-name xml:lang="x-default">GP Content Type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_enable_applepay">
+                <display-name xml:lang="x-default">Enable Apple Pay</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_enable_googlepay">
+                <display-name xml:lang="x-default">Enable Google Pay</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_enable_paypal">
+                <display-name xml:lang="x-default">Enable PayPal</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_env">
+                <display-name xml:lang="x-default">Gp Env</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_gatewayMerchantId">
+                <display-name xml:lang="x-default">Gp Gateway MerchantId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_gpayEnv">
+                <display-name xml:lang="x-default">Gp google Env</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_gpayMerchantId">
+                <display-name xml:lang="x-default">Gp MerchantId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_gpayMerchantName">
+                <display-name xml:lang="x-default">Gp MerchantName</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_grant_type">
+                <display-name xml:lang="x-default">GP Access Token - Grant Type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>client_credentials</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_secret">
+                <display-name xml:lang="x-default">GP Secret</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_threedsecure_challengenotification">
+                <display-name xml:lang="x-default">Gp threedsecure challengenotification</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_threedsecure_methodnotification">
+                <display-name xml:lang="x-default">Gp threedsecure methodnotification</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="gp_x_gp_version">
+                <display-name xml:lang="x-default">GP X GP Version</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="gp_globalpay">
+                <display-name xml:lang="x-default">GlobalPay</display-name>
+                <attribute attribute-id="gp_app_id"/>
+                <attribute attribute-id="gp_app_key"/>
+                <attribute attribute-id="gp_api_version"/>
+                <attribute attribute-id="gp_grant_type"/>
+                <attribute attribute-id="gp_enable_googlepay"/>
+                <attribute attribute-id="gp_enable_applepay"/>
+                <attribute attribute-id="gp_enable_paypal"/>
+                <attribute attribute-id="gp_env"/>
+                <attribute attribute-id="gp_clientID"/>
+                <attribute attribute-id="gp_captureMode"/>
+                <attribute attribute-id="env"/>
+                <attribute attribute-id="gp_x_gp_version"/>
+                <attribute attribute-id="gp_threedsecure_challengenotification"/>
+                <attribute attribute-id="gp_content_type"/>
+                <attribute attribute-id="gp_gpayMerchantId"/>
+                <attribute attribute-id="gp_gpayMerchantName"/>
+                <attribute attribute-id="gp_secret"/>
+                <attribute attribute-id="gp_threedsecure_methodnotification"/>
+                <attribute attribute-id="gp_gpayEnv"/>
+                <attribute attribute-id="gp_gatewayMerchantId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
