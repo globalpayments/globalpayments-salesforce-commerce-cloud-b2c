@@ -76,13 +76,13 @@ if($('[name$="_expiration_year"]').val())
 }
 else
 {
-    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
 }
 
 });
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumer
-    $('#gpayerror').text('Card details are not valied, please enter valid card details.'); 
+    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
 });
 </script>
