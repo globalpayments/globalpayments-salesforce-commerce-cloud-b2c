@@ -437,6 +437,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
           members.currentStage = checkoutStages
                     .indexOf($('.data-checkout-stage').data('checkout-stage'));
           $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
+          $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',false)
 
           if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                     // if payment method is credit card
@@ -487,9 +488,11 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
           $('.cancel-new-payment', plugin).on('click', function () {
             $('.next-step-button .submit-payment').removeClass('d-none');
+            $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',false)
           });
           $('.add-payment', plugin).on('click', function () {
             $('.next-step-button .submit-payment').addClass('d-none');
+            $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',true)
           });
           $('.shipping-summary .edit-button', plugin).on('click', function () {
             if (!$('#checkout-main').hasClass('multi-ship')) {
