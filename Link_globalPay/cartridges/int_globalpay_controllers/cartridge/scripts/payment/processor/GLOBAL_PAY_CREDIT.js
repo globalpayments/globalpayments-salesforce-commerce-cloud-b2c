@@ -7,6 +7,8 @@ var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 
 /* Script Modules */
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var app = require(globalpayconstants.APP);
 var gpapp=require(globalpayconstants.GPAPP);
 var Cart = app.getModel('Cart');
@@ -52,9 +54,6 @@ function Handle(args) {
         return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
       }
     }
-   
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var preferences = globalPayPreferences.getPreferences();
     var paymentTokenId=creditCardForm.get('paymentId');
     var paymentId =null;
@@ -83,7 +82,6 @@ function Handle(args) {
         }
       };
   
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var authentication = globalPayHelper.authenticate(authenticationData);
     if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
       var serverErrors = [];
@@ -204,8 +202,6 @@ function Authorize(args) {
     var serverErrors = [];
     var fieldErrors = {};
     var error = false;
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
     var authorizationData = {
@@ -249,10 +245,6 @@ function Authorize(args) {
 
 /*
  * Module exports
- */
-
-/*
- * Local methods
  */
 exports.Handle = Handle;
 exports.Authorize = Authorize;

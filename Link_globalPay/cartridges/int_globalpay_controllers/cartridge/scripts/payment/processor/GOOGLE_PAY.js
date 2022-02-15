@@ -7,6 +7,7 @@ var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var gpapp=require(globalpayconstants.GPAPP);
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
  * This is where additional PayPal integration would go. The current implementation simply creates a PaymentInstrument and
  * returns 'success'.
@@ -31,7 +32,6 @@ function Handle(args) {
     var order=args.Order;
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
@@ -64,8 +64,6 @@ function Handle(args) {
     };
     var paymentInstrument = args.PaymentInstrument;
     var paymentProcessor = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor();
-
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var googlePayresp = globalPayHelper.gpay(googlePayData);
     var serverErrors = [];
     if (!empty(googlePayresp) && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)){
@@ -91,10 +89,6 @@ function Handle(args) {
 
 /*
  * Module exports
- */
-
-/*
- * Local methods
  */
 exports.Handle = Handle;
 exports.Authorize = Authorize;
