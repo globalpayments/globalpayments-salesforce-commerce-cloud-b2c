@@ -56,7 +56,7 @@ server.post('Transactions', function (req, res, next) {
   // here we have invoke transaction call
       var test = "";
       res.setStatusCode(200);
-      res.json({ success: 'true' }); 
+      res.json({ success: 'true',message:'Successfully connect to Sfcc system.' }); 
       next();
   });
 

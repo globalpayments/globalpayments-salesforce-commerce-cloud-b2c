@@ -192,7 +192,7 @@ function removeToken(creditcrdaToken) {
  *      payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
   var Locale = require('dw/util/Locale');
@@ -211,7 +211,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     amount: (order.totalGrossPrice.value * 100).toFixed(), 
     currency: order.currencyCode,
     reference: orderNumber,
-    country: Locale.getLocale(req.locale.id).country,
+    country: Locale.getLocale(currentSite.defaultLocale).country,
     payment_method: {
       id: paymentInstrument.custom.gp_paymentmethodid,
       entry_mode: globalpayconstants.authorizationData.entrymode,
@@ -243,9 +243,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
       });
     } catch (e) {
       error = true;
-      serverErrors.push(
-                Resource.msg('error.technical', 'checkout', null)
-            );
+      serverErrors.push( Resource.msg('error.technical', 'checkout', null) );
     }
   }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
