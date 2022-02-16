@@ -10,13 +10,15 @@ var HookMgr = require('dw/system/HookMgr');
 var OrderMgr = require('dw/order/OrderMgr');
 var Transaction = require('dw/system/Transaction');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
+var Resource = require('dw/web/Resource');
+var Site = require('dw/system/Site');
 /**
  * handles the payment authorization for each payment instrument
  * @param {dw.order.Order} order - the order object
  * @param {string} orderNumber - The order number for the order
  * @returns {Object} an error object
  */
-function handlePayments(order, orderNumber, req) {
+function handlePayments(order, orderNumber) {
   var result = {};
 
   if (order.totalNetPrice !== 0.00) {
@@ -46,7 +48,7 @@ function handlePayments(order, orderNumber, req) {
                             orderNumber,
                             paymentInstrument,
                             paymentProcessor,
-                            req,
+                          //  req,
                             order
                         );
             result.authorizationResult = authorizationResult;
@@ -104,6 +106,41 @@ function handlePayments(order, orderNumber, req) {
   });
 }
 
-base.handlePayments = handlePayments;
-base.savePaymentInstrumentToWallet = savePaymentInstrumentToWallet;
-module.exports = base;
+
+/**
+ * Sends a confirmation to the current user
+ * @param {dw.order.Order} order - The current user's order
+ * @param {string} locale - the current request's locale id
+ * @returns {void}
+ */
+ function sendConfirmationEmail(order, locale) {
+  var OrderModel = require('*/cartridge/models/order');
+  var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+  var Locale = require('dw/util/Locale');
+  var gputil = require('*/cartridge/scripts/utils/gputil');
+      gputil.orderUpdate(order);
+  var currentLocale = Locale.getLocale(locale);
+
+  var orderModel = new OrderModel(order, { countryCode: currentLocale.country, containerView: 'order' });
+
+  var orderObject = { order: orderModel };
+
+  var emailObj = {
+      to: order.customerEmail,
+      subject: Resource.msg('subject.order.confirmation.email', 'order', null),
+      from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
+      type: emailHelpers.emailTypes.orderConfirmation,
+      paymentMethod: order.paymentInstruments[0].paymentMethod
+  };
+
+  emailHelpers.sendEmail(emailObj, 'checkout/confirmation/confirmationEmail', orderObject);
+}
+var output = {};
+Object.keys(base).forEach(function (key) {
+    output[key] = base[key];
+});
+
+output.handlePayments = handlePayments;
+output.savePaymentInstrumentToWallet = savePaymentInstrumentToWallet;
+output.sendConfirmationEmail = sendConfirmationEmail;
+module.exports = output;
