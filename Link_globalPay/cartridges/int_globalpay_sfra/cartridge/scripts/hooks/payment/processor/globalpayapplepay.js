@@ -87,7 +87,12 @@ var StringUtils = require('dw/util/StringUtils');
 
 
 
-
+/**
+ *Create the PaymentInstrument and update total price
+ * @param {dw.order.Basket} basket - The current basket
+ * @param {Object} req - The request object
+ * @return {Object} returns an error object
+ */
 function Handle(basket, req) {
     var currentBasket = basket;
     var cardErrors = {};

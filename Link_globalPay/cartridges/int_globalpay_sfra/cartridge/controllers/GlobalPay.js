@@ -2,6 +2,10 @@
 var page = module.superModule;
 var server = require('server');
 
+
+/**
+ * redirect to threeds page
+ */
 server.get('Threeds', function (req, res, next) {
   res.render('globalpay/threeds');
   next();

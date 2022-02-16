@@ -5,7 +5,7 @@
         <!--- payment method is apple Pay --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="GP_DW_APPLE_PAY"
+               value="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}"
         >
 <fieldset class="apple-pay-form">
             <isinclude template="checkout/billing/paymentOptions/applePayForm" />

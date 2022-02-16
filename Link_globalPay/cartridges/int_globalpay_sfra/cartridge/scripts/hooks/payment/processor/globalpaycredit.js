@@ -248,7 +248,14 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
-
+/**
+ * Update payment method and authentication for credit card payment also  handle 3d secured transaction
+ * @param {*} basket 
+ * @param {*} paymentInformation 
+ * @param {*} paymentMethodID 
+ * @param {*} req 
+ * @returns 
+ */
 
 function Handle(basket, paymentInformation, paymentMethodID, req) {
   var currentBasket = basket;
@@ -395,7 +402,12 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
-
+/**
+ * update payment tokenId to paymentInstruments
+ * @param {*} req 
+ * @param {*} uuidToken 
+ * @returns 
+ */
 function getTokenbyUUID(req, uuidToken) {
   var testcust = req.currentCustomer;
   var creditCardToken;

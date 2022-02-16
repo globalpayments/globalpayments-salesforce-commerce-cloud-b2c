@@ -70,8 +70,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
 }
 
 /**
- * Authorizes a payment using a google pay. Customizations may use other processors and custom
- *      logic to authorize google pay payment.
+ *Create the PaymentInstrument and update total price
  * @param {dw.order.Basket} basket - The current basket
  * @param {Object} req - The request object
  * @return {Object} returns an error object

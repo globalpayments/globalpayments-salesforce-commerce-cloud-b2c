@@ -4,7 +4,7 @@
         <!--- payment method is google Pay --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="GP_DW_GOOGLE_PAY"
+               value="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}"
         >
 <fieldset class="google-pay-form">
             <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
