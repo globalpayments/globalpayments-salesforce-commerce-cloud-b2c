@@ -74,8 +74,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
 }
 
 /**
- * Authorizes a payment using a paypal. Customizations may use other processors and custom
- *      logic to authorize paypal payment.
+ * Create the PaymentInstrument and update total price.
  * @param {dw.order.Basket} basket - The current basket
  * @param {Object} req - The request object
  * @return {Object} returns an error object
@@ -100,7 +99,11 @@ function Handle(basket, req) {
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
 
-
+/**
+ * Capture the transaction id
+ * @param {*} order 
+ * @returns 
+ */
 function Capture(order){
   var payPalCapture = {
     "transactionId":order.paymentInstrument.custom.gp_transactionid

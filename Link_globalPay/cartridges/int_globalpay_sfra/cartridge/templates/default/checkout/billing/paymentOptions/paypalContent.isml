@@ -4,7 +4,7 @@
         <!--- payment method is paypal --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="GP_DW_PAYPAL"
+               value="${Resource.msg('paymentmethodname.paypal', 'globalpay', null)}"
         >
 <fieldset class="paypal-form">
             <isinclude template="checkout/billing/paymentOptions/paypalForm" />

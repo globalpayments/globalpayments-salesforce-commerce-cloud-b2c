@@ -9,7 +9,7 @@
 <!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
-<script type="text/javascript">
+<script defer type="text/javascript">
 // Configure account
 GlobalPayments.configure({
     accessToken: '${pdict.token}',

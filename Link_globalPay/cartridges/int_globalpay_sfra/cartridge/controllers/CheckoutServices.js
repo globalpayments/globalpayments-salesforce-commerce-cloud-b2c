@@ -10,8 +10,8 @@ server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 
- /* Route to handle paypal submission. This route is called only when either
-    PayPal Express or PayPal billing agreement is called from either mini cart or cart page. */
+ /* Route to handle payment submission. This route is called only when either
+    PayPal Express or Googlepay or Applepay is called from either mini cart or cart page. */
 // eslint-disable-next-line
 function handlePayments(req, res, next) {
   var billingFormErrors = {};
