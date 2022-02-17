@@ -18,7 +18,7 @@ var StringUtils = require('dw/util/StringUtils');
  *      payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -27,6 +27,8 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var captureMode = preferences.captureMode;
   var HookManager = require('dw/system/HookMgr');
   var Locale = require('dw/util/Locale');
+  var Site = require('dw/system/Site');
+  var currentSite = Site.getCurrent();
   var paypalData = {
     account_name: globalpayconstants.paypalData.account_name,
     channel: globalpayconstants.paypalData.channel,
@@ -35,7 +37,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     amount: (order.totalGrossPrice.value * 100).toFixed(),
     currency: order.currencyCode,
     reference: order.orderNo,
-    country: Locale.getLocale(req.locale.id).country,
+    country: Locale.getLocale(currentSite.defaultLocale).country,
     payment_method: {
                     // name: "Doe",
       entry_mode: globalpayconstants.paypalData.entryMode,
