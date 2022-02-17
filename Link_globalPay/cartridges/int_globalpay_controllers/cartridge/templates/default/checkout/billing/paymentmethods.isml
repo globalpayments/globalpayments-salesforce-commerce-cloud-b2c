@@ -155,7 +155,7 @@
 
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='GP_DW_PAYPAL'}">payment-method-expanded</isif>" data-method="GP_DW_PAYPAL">
 			<!-- Your custom payment method implementation goes here. -->
-			  <isinclude template="checkout/billing/paypalForm" />
+			  <isinclude template="checkout/billing/paymentOptions/paypalForm" />
 		</div>
 		<iscomment>
 			GooglePay Payment
@@ -163,7 +163,7 @@
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID=='GP_DW_GOOGLE_PAY'}">payment-method-expanded</isif>" data-method="GP_DW_GOOGLE_PAY">
 			<!-- Your custom payment method implementation goes here. -->
-			 <isinclude template="checkout/billing/googlepayForm" />
+			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
 		</div>
 		<iscomment>
 			ApplePay Payment
