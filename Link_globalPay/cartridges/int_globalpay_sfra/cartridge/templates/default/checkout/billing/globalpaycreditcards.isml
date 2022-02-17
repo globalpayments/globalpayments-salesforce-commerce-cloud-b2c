@@ -47,12 +47,10 @@ function gatherBrowserData() {
 document.getElementById("threedsdata").value = JSON.stringify(gatherBrowserData());
 
 var cvv = document.getElementById("saved-payment-security-code");
-
 if (typeof(cvv) != 'undefined' && cvv != null)
 {
   cvv.addEventListener("keypress", isNumberKey, false);
 }
-
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -62,7 +60,7 @@ function isNumberKey(evt){
     }
     return true;
 }
-}
+
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
     const token = document.createElement("input");
