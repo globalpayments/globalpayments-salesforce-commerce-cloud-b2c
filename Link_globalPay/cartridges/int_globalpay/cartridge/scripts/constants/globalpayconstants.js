@@ -33,8 +33,7 @@ googlePay.channel = 'CNP';
 googlePay.type = 'SALE';
 googlePay.entryMode = 'ECOM';
 googlePay.provider = 'PAY_BY_GOOGLE';
-googlePay.captureStatus = 'CAPTURED';
-googlePay.authorizedStatus = 'PREAUTHORIZED';
+googlePay.paymentTypeCode = 'GP_DW_GOOGLE_PAY';
 globalpayConstants.googlePay = googlePay;
 
 var creditCardPay = new Object();
@@ -55,6 +54,8 @@ applePay.channel = 'CNP';
 applePay.type = 'SALE';
 applePay.entryMode = 'ECOM';
 applePay.provider = 'APPLEPAY';
+applePay.paymentTypeCode = 'GP_DW_APPLE_PAY';
+
 globalpayConstants.applePay = applePay;
 
 var threeDsStepOne = new Object();
@@ -77,4 +78,11 @@ threeDsStepOne.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebK
 threeDsStepOne.timezone = '-1';
 
 globalpayConstants.threeDsStepOne = threeDsStepOne;
+globalpayConstants.SG_CONTROLLER = 'app_storefront_controllers';
+globalpayConstants.GP_CONTROLLER = 'int_globalpay_controllers';
+globalpayConstants.GUARD = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/guard';
+globalpayConstants.APP = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/app';
+globalpayConstants.GPAPP=globalpayConstants.GP_CONTROLLER+'/cartridge/scripts/gpapp';
+globalpayConstants.SGPAGEMETA = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/meta';
+globalpayConstants.SGOBJECT = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/object';
 module.exports = globalpayConstants;
