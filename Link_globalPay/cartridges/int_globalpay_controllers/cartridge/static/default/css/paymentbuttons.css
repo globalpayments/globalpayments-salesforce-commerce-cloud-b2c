@@ -1319,3 +1319,13 @@ opacity: 1;
             height:24px;
             margin-top:8px;
         }
+
+         /*
+        * globalpay credit form styles
+        */
+        .secure-payment-form label{
+            text-align: left;
+       }
+       .tooltip{
+            display:none;
+       }

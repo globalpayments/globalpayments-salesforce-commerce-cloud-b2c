@@ -1,6 +1,0 @@
-<div id="google-pay-btn"></div>
-<fieldset class="payment-form-fields">
- 
- <input type="hidden" class="form-control paymentToken" id="paymentToken"
-             />
-</fieldset>
