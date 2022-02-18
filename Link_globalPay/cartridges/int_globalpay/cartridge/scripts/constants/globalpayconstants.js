@@ -25,6 +25,8 @@ paypalData.type = 'SALE';
 paypalData.paypal = 'paypal';
 paypalData.entryMode = 'paypal';
 paypalData.paymentTypeCode = 'GP_DW_PAYPAL';
+paypalData.captureStatus = 'CAPTURED';
+paypalData.authorizedStatus = 'PREAUTHORIZED';
 globalpayConstants.paypalData = paypalData;
 
 var googlePay = new Object();
