@@ -117,7 +117,7 @@ function start() {
         cart.calculate();
     });
 
-    var COBilling = app.getController('COBilling');
+    var COBilling = gpapp.getController('COBilling');
 
     Transaction.wrap(function () {
         if (!COBilling.ValidatePayment(cart)) {
@@ -155,7 +155,7 @@ function start() {
 
         return {};
     }
-    var handlePaymentsResult = handlePayments(order).result;
+    var handlePaymentsResult = handlePayments(order);
 
     if (handlePaymentsResult.error) {
         return Transaction.wrap(function () {
@@ -298,6 +298,16 @@ function submit() {
     app.getController('COSummary').Start();
 }
 
+/**
+ * COPlaceOrder-PayPalReturn : The COPlaceOrder-PayPalReturn endpoint invokes paypal return
+ * @name Base/COPlaceOrder-PayPalReturn
+ * @function
+ * @memberof COPlaceOrder
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
+
 function payPalReturn()
 {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
@@ -308,7 +318,7 @@ function payPalReturn()
                    order
                );
          }
-         if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'){
+         if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'||paymentFormResult.status == 'PREAUTHORIZED'){
             var orderPlacementStatus = Order.submit(order);
             if (!orderPlacementStatus.error) {
                 app.getController('COSummary').ShowConfirmation(order);
@@ -318,6 +328,15 @@ function payPalReturn()
          }
 }
 
+/**
+ * COPlaceOrder-PayPalCancel : The COPlaceOrder-PayPalCancel endpoint invokes paypal return
+ * @name Base/COPlaceOrder-PayPalCancel
+ * @function
+ * @memberof COPlaceOrder
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 function payPalCancel()
 {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];

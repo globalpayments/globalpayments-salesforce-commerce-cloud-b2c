@@ -44,7 +44,7 @@ function Handle(args) {
       channel: globalpayconstants.paypalData.channel,
       capture_mode: captureMode.value,
       type: globalpayconstants.paypalData.type,
-      amount: order.totalGrossPrice.value * 100,
+      amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
       country: 'US',
