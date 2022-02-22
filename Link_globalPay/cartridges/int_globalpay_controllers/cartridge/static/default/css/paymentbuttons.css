@@ -397,10 +397,12 @@ opacity: 1;
 
 #paypal-content {
     margin-top: -1.5%;
+    margin-left:33%;
 }
 
 #apple-pay-content {
     margin-top: -1.5%;
+    margin-left:33%;
 }
 
 .dom-ready .paypal-button .paypal-button-text:not(.immediate):not(.paypal-personalization-text):not(.hidden) {
