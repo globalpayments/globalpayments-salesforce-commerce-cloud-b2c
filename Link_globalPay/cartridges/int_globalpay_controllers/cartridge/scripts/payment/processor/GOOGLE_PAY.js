@@ -44,7 +44,7 @@ function Handle(args) {
       channel: globalpayconstants.googlePay.channel,
       type: globalpayconstants.googlePay.type,
       capture_mode: captureMode.value,
-      amount: order.totalGrossPrice.value * 100,
+      amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
       country: 'US',

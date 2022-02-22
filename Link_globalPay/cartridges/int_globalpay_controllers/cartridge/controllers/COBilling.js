@@ -807,7 +807,7 @@ function validatePayment(cart) {
  */
 function saveCreditCard() {
     var i, creditCards, newCreditCard;
-
+    var HookMgr = require('dw/system/HookMgr');
     if (customer.authenticated && app.getForm('billing').object.paymentMethods.creditCard.saveCard.value) {
         creditCards = customer.getProfile().getWallet().getPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
 
@@ -815,13 +815,25 @@ function saveCreditCard() {
             newCreditCard = customer.getProfile().getWallet().createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
             // copy the credit card details to the payment instrument
-            newCreditCard.setCreditCardHolder(app.getForm('billing').object.paymentMethods.creditCard.owner.value);
-            newCreditCard.setCreditCardNumber(app.getForm('billing').object.paymentMethods.creditCard.number.value);
-            newCreditCard.setCreditCardExpirationMonth(app.getForm('billing').object.paymentMethods.creditCard.expiration.month.value);
-            newCreditCard.setCreditCardExpirationYear(app.getForm('billing').object.paymentMethods.creditCard.expiration.year.value);
-            newCreditCard.setCreditCardType(app.getForm('billing').object.paymentMethods.creditCard.type.value);
+            var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
+            newCreditCard.setCreditCardHolder(creditCardForm.get('owner').value());
+            newCreditCard.setCreditCardNumber(creditCardForm.get('number').value());
+            newCreditCard.setCreditCardExpirationMonth(creditCardForm.get('expiration.month').value());
+            newCreditCard.setCreditCardExpirationYear(creditCardForm.get('expiration.year').value());
+            newCreditCard.setCreditCardType(creditCardForm.get('type').value());
+            var paymentTokenId=creditCardForm.get('paymentId').value();
+            if(!empty(paymentTokenId))
+           {
+                var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
 
-            for (i = 0; i < creditCards.length; i++) {
+                var token= HookMgr.callHook('app.payment.processor.' + processor.ID, 'UpdateToken', {
+                paymentTokenID:JSON.parse(paymentTokenId).paymentReference
+                });
+                if (!empty(token) && !empty(token.id)) {
+                 newCreditCard.setCreditCardToken(token.id);
+                }
+            }
+           for (i = 0; i < creditCards.length; i++) {
                 var creditcard = creditCards[i];
 
                 if (creditcard.maskedCreditCardNumber === newCreditCard.maskedCreditCardNumber && creditcard.creditCardType === newCreditCard.creditCardType) {

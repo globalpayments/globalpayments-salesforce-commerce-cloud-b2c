@@ -117,7 +117,7 @@ function start() {
         cart.calculate();
     });
 
-    var COBilling = app.getController('COBilling');
+    var COBilling = gpapp.getController('COBilling');
 
     Transaction.wrap(function () {
         if (!COBilling.ValidatePayment(cart)) {
@@ -155,7 +155,7 @@ function start() {
 
         return {};
     }
-    var handlePaymentsResult = handlePayments(order).result;
+    var handlePaymentsResult = handlePayments(order);
 
     if (handlePaymentsResult.error) {
         return Transaction.wrap(function () {
