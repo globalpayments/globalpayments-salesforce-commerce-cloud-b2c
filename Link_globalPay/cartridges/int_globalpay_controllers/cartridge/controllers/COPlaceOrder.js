@@ -162,7 +162,7 @@ function start() {
             OrderMgr.failOrder(order);
             return {
                 error: true,
-                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
+                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.declined')
             };
         });
 
