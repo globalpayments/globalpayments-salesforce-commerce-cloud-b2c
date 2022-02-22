@@ -13,7 +13,7 @@ var StringUtils = require('dw/util/StringUtils');
  *      payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -22,6 +22,8 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
   var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
   var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
+  var Site = require('dw/system/Site');
+  var currentSite = Site.getCurrent();
   var googlePayData = {
     account_name: globalpayconstants.googlePay.account_name,
     channel: globalpayconstants.googlePay.channel,
@@ -30,7 +32,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, req, order)
     amount: Math.ceil(order.totalGrossPrice.value * 100),
     currency: order.currencyCode,
     reference: order.orderNo,
-    country: Locale.getLocale(req.locale.id).country,
+    country: Locale.getLocale(currentSite.defaultLocale).country,
     payment_method: {
       name: order.customerName,
       entry_mode: globalpayconstants.googlePay.entryMode,

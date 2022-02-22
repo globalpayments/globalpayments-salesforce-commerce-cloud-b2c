@@ -303,11 +303,7 @@ function submit() {
  * @name Base/COPlaceOrder-PayPalReturn
  * @function
  * @memberof COPlaceOrder
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - post
  */
-
 function payPalReturn()
 {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
@@ -318,7 +314,7 @@ function payPalReturn()
                    order
                );
          }
-         if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'||paymentFormResult.status == 'PREAUTHORIZED'){
+         if(!empty(paymentFormResult) && (paymentFormResult.status == globalpayconstants.paypalData.captureStatus||paymentFormResult.status == globalpayconstants.paypalData.authorizedStatus)){
             var orderPlacementStatus = Order.submit(order);
             if (!orderPlacementStatus.error) {
                 app.getController('COSummary').ShowConfirmation(order);
@@ -327,15 +323,11 @@ function payPalReturn()
             }
          }
 }
-
 /**
- * COPlaceOrder-PayPalCancel : The COPlaceOrder-PayPalCancel endpoint invokes paypal return
+ * COPlaceOrder-PayPalCancel : The COPlaceOrder-PayPalCancel endpoint invokes paypal Cancel
  * @name Base/COPlaceOrder-PayPalCancel
  * @function
  * @memberof COPlaceOrder
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - post
  */
 function payPalCancel()
 {
