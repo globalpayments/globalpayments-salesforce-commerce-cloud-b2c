@@ -46,10 +46,11 @@ function gatherBrowserData() {
 
 document.getElementById("threedsdata").value = JSON.stringify(gatherBrowserData());
 
-var cvv = document.getElementById("saved-payment-security-code");
-if (typeof(cvv) != 'undefined' && cvv != null)
-{
-  cvv.addEventListener("keypress", isNumberKey, false);
+const cvvList = document.querySelectorAll("#saved-payment-security-code");
+if (cvvList.length) {
+  for (let i = 0; i < cvvList.length; i++) {
+    cvvList[i].addEventListener("keypress", isNumberKey, false);
+    }
 }
 
 function isNumberKey(evt){
