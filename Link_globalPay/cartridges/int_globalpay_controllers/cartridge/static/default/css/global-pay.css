@@ -18,3 +18,9 @@
 {
     text-align: center; 
 }
+/*
+*Save Card
+*/
+.save-card .form-row.label-inline.form-indent {
+    margin-left: 0;
+}

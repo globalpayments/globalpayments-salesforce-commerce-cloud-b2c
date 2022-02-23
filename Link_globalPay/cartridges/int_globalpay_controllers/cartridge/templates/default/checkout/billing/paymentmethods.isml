@@ -108,11 +108,6 @@
 				};
 			</isscript>
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.cvn}" type="input" rowclass="cvn" dynamicname="true" help="${help}"/>
-			<div class="save-card d-none">
-			<isif condition="${pdict.CurrentCustomer.authenticated}">
-				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox"/>
-			</isif>
-			</div>
 			<div class="d-none">
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.threedsdata}" type="input"/>
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentId}" type="input"/>
@@ -126,6 +121,11 @@
 			<div class="GP-creditcard-iframe">
  			<isinclude template="checkout/billing/globalpaycreditcards" />
  			</div>
+			<div class="save-card">
+			<isif condition="${pdict.CurrentCustomer.authenticated}">
+				<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.saveCard}" type="checkbox"/>
+			</isif>
+			</div>
 		</div>
 
 
