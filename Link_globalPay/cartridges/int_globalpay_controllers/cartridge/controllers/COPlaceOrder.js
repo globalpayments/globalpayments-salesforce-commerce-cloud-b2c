@@ -162,7 +162,7 @@ function start() {
             OrderMgr.failOrder(order);
             return {
                 error: true,
-                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
+                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.declined')
             };
         });
 
@@ -179,9 +179,15 @@ function start() {
     var orderPlacementStatus = Order.submit(order);
     if (!orderPlacementStatus.error) {
         clearForms();
+        changeOrderStatus(order);
     }
     return orderPlacementStatus;
 }
+
+/**
+ * To changes the Payment status
+ * @param {*object} order 
+ */
 function changeOrderStatus(order)
 {
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
@@ -194,6 +200,11 @@ function changeOrderStatus(order)
     }
 });
 }
+
+/**
+ * handle payment transaction for Gpay and Paypal
+ * @returns 
+ */
 function handlePayment()
 {
     var cart = Cart.get();
@@ -221,10 +232,12 @@ function handlePayment()
     }
     if(!handlePaymentsResult.authorizationResult.error&&app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value=='GP_DW_PAYPAL')
     {
+        //redirect to Paypal site if authrization is success
         var paypalresult=handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
     }
     else if(!handlePaymentsResult.authorizationResult.error){
+        // submit order for Gpay
     var orderPlacementStatus = Order.submit(order);
     if (!orderPlacementStatus.error) { 
         changeOrderStatus(order);
@@ -233,7 +246,7 @@ function handlePayment()
     app.getController('COSummary').ShowConfirmation(order);
     }
     else{
-        response.redirect(URLUtils.https('COShipping-Start'));
+        response.redirect(URLUtils.https('COShipping-Start')); //redirect to shipping page if there is any error
     }
 }
 

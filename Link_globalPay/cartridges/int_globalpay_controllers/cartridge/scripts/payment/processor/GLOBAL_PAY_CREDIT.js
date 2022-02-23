@@ -4,6 +4,7 @@
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
+var Resource = require('dw/web/Resource');
 
 /* Script Modules */
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
@@ -78,7 +79,7 @@ function Handle(args) {
         channel: globalpayconstants.authenticationData.channel,
         country: 'US',
         reference: globalpayconstants.authorizationData.reference,
-        amount: currentBasket.totalGrossPrice.value * 100,
+        amount: (currentBasket.totalGrossPrice.value * 100).toFixed(),
         currency: currentBasket.currencyCode,
         source: globalpayconstants.authenticationData.source,
         payment_method: {
@@ -110,7 +111,7 @@ function Handle(args) {
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
           time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount:currentBasket.totalGrossPrice.value * 100,
+          amount:(currentBasket.totalGrossPrice.value * 100).toFixed(),
           currency:currentBasket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
           shipping_address:{
@@ -236,10 +237,17 @@ function Authorize(args) {
       }
     };
     var authorization = globalPayHelper.authorize(authorizationData);
-    if (!empty(authorization) && 'success' in authorization && !authorization.success) {
+    if (!empty(authorization) && 'status' in authorization &&(authorization.status!= globalpayconstants.creditCardPay.captureStatus)) {
       var error = true;
       var serverErrors = [];
-      if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+      if (authorization.status==globalpayconstants.creditCardPay.declinedStatus)
+      {  
+        serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
+      }
+       else
+       {
+        serverErrors.push(authorization.error.detailedErrorDescription); 
+       }
     } else {
       try {
         Transaction.wrap(function () {

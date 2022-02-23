@@ -45,6 +45,8 @@ creditCardPay.securityCode = '121';
 creditCardPay.creditCardNumber = 'creditCardNumber';
 creditCardPay.entry_mode = 'ECOM';
 creditCardPay.paymentMethod = 'CREDIT_CARD';
+creditCardPay.captureStatus = 'CAPTURED';
+creditCardPay.declinedStatus ='DECLINED';
 globalpayConstants.creditCardPay = creditCardPay;
 
 var captureTransaction = new Object();
