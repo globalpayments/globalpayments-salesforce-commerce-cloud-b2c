@@ -15,26 +15,27 @@ server.use('PayPalReturn', function (req, res, next) {
   var Transaction = require('dw/system/Transaction');
   var OrderMgr = require('dw/order/OrderMgr');
   var gputil = require('*/cartridge/scripts/utils/gputil');
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
   var HookManager = require('dw/system/HookMgr');
   var reqMap = req.httpParameterMap;
   var orderId = req.httpParameterMap.id.toString().split('_')[2];
   var order = OrderMgr.getOrder(orderId);
-     if (HookManager.hasHook('app.payment.processor.globalpay_paypal')) {
-     var paymentFormResult = HookManager.callHook('app.payment.processor.globalpay_paypal',
+  if (HookManager.hasHook('app.payment.processor.globalpay_paypal')) {
+    var paymentFormResult = HookManager.callHook('app.payment.processor.globalpay_paypal',
                 'Capture',
                 order
             );
-      }
-      if(!empty(paymentFormResult) && paymentFormResult.status == 'CAPTURED'){
-            gputil.orderUpdate(order);
-      COHelpers.sendConfirmationEmail(order, req.locale.id);
-      }
+  }
+  if (!empty(paymentFormResult) && (paymentFormResult.status ==  globalpayconstants.paypalData.captureStatus || paymentFormResult.status == globalpayconstants.paypalData.authorizedStatus)) {
+    gputil.orderUpdate(order);
+    COHelpers.sendConfirmationEmail(order, req.locale.id);
+  }
   var orderId = order.orderNo;
-      res.render('checkout/globalpay/threeds', {
-        orderId: orderId,
-        orderToken: order.orderToken
-      });
+  res.render('checkout/globalpay/threeds', {
+    orderId: orderId,
+    orderToken: order.orderToken
+  });
   return next();
 });
 
