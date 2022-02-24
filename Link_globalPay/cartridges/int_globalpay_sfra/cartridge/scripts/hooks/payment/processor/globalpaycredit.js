@@ -382,6 +382,14 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
             PaymentInstrument.METHOD_CREDIT_CARD
         );
 
+        paymentInstruments = currentBasket.getPaymentInstruments(
+          Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
+      );
+
+      paymentInstruments = currentBasket.getPaymentInstruments(
+        Resource.msg('paymentmethodname.paypal', 'globalpay', null)
+    );
+    
     collections.forEach(paymentInstruments, function (item) {
       currentBasket.removePaymentInstrument(item);
     });
