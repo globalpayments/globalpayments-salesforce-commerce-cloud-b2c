@@ -73,12 +73,14 @@ $('.GPcreditCardList').on('change', function () {
         $('.default-creditcard').removeClass('d-none');
         $('.button-fancy-large').css('display','inline-block');
         $('.GP-creditcard-iframe').addClass('d-none');
+        $('.save-card').addClass('d-none');
         $('[name$="_saveCard"]').val('false');
         populateCreditCardForm(cardUUID);
     }
     else{
         $('.default-creditcard').addClass('d-none');
         $('.GP-creditcard-iframe').removeClass('d-none');
+        $('.save-card').removeClass('d-none');
         $('.button-fancy-large').css('display','none');
         $('[name$="_saveCard"]').val('true');
 
