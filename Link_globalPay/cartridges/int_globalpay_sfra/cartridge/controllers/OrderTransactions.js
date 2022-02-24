@@ -77,6 +77,7 @@ function (req, res, next) {
   var captureresult;
   if (!(res.viewData.securityErrorMessage)) {
     var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var order = OrderMgr.getOrder(req.querystring.orderID);
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
     var amount = (order.totalGrossPrice) * 100;
@@ -86,10 +87,10 @@ function (req, res, next) {
       var transactionData = {
         transaction_id: ordertransactionid,  // Transaction ID
         amount: amount, // order.amount
-        capture_sequence: 'FIRST',
+        capture_sequence: globalpayconstants.captureTransaction.entry_mode, //'FIRST'
         total_capture_count: 0,
         payment_method: {
-          entry_mode: 'ECOM',
+          entry_mode: globalpayconstants.captureTransaction.entry_mode,//'ECOM',
           id: paymentID // paymentID
         }
       };

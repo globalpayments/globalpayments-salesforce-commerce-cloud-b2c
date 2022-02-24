@@ -15,6 +15,7 @@ server.use('PayPalReturn', function (req, res, next) {
   var Transaction = require('dw/system/Transaction');
   var OrderMgr = require('dw/order/OrderMgr');
   var gputil = require('*/cartridge/scripts/utils/gputil');
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
   var HookManager = require('dw/system/HookMgr');
   var reqMap = req.httpParameterMap;
@@ -26,7 +27,7 @@ server.use('PayPalReturn', function (req, res, next) {
                 order
             );
   }
-  if (!empty(paymentFormResult) && (paymentFormResult.status == 'CAPTURED' || paymentFormResult.status == 'PREAUTHORIZED')) {
+  if (!empty(paymentFormResult) && (paymentFormResult.status ==  globalpayconstants.paypalData.captureStatus || paymentFormResult.status == globalpayconstants.paypalData.authorizedStatus)) {
     gputil.orderUpdate(order);
     COHelpers.sendConfirmationEmail(order, req.locale.id);
   }
