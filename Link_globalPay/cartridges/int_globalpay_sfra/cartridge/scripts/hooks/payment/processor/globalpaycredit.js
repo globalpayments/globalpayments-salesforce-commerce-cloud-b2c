@@ -224,7 +224,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   if (!empty(authorization) && 'success' in authorization && !authorization.success) {
     var error = true;
     var serverErrors = [];
-    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+    if ('error' in authorization) {serverErrors.push(authorization.error.detailedErrorDescription);}
   } else {
       if('status' in authorization && authorization.status == 'DECLINED'){
         error = true;
