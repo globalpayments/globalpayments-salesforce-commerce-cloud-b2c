@@ -91,7 +91,7 @@ function Handle(basket, req) {
         paymentInstruments = currentBasket.getPaymentInstruments(
           PaymentInstrument.METHOD_CREDIT_CARD
       );
-
+ 
       paymentInstruments = currentBasket.getPaymentInstruments(
         Resource.msg('paymentmethodname.paypal', 'globalpay', null)
     );

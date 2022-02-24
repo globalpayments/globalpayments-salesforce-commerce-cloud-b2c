@@ -89,7 +89,7 @@ function Handle(basket, req) {
   Transaction.wrap(function () {
     var paymentInstruments = currentBasket.getPaymentInstruments(
       globalpayconstants.paypalData.paymentTypeCode
-        );
+        ); 
 
             paymentInstruments = currentBasket.getPaymentInstruments(
               Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
