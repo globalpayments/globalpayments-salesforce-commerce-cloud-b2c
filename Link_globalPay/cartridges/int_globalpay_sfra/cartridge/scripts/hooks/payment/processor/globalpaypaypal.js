@@ -89,6 +89,14 @@ function Handle(basket, req) {
   Transaction.wrap(function () {
     var paymentInstruments = currentBasket.getPaymentInstruments(
       globalpayconstants.paypalData.paymentTypeCode
+        ); 
+
+            paymentInstruments = currentBasket.getPaymentInstruments(
+              Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
+          );
+          
+          paymentInstruments = currentBasket.getPaymentInstruments(
+            PaymentInstrument.METHOD_CREDIT_CARD
         );
     collections.forEach(paymentInstruments, function (item) {
       currentBasket.removePaymentInstrument(item);
