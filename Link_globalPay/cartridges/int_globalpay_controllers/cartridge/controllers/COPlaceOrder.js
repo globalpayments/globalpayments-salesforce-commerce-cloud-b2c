@@ -16,6 +16,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
+var Resource = require('dw/web/Resource');
 
 /* Script Modules */
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
@@ -162,7 +163,7 @@ function start() {
             OrderMgr.failOrder(order);
             return {
                 error: true,
-                PlaceOrderError: new Status(Status.ERROR, 'confirm.error.declined')
+                PlaceOrderError: new Status(Status.ERROR, Resource.msg('checkout.status.declined', 'globalpay', null))
             };
         });
 
