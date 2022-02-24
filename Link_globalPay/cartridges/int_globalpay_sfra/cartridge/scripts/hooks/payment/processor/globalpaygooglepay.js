@@ -87,10 +87,18 @@ function Handle(basket, req) {
     var paymentInstruments = currentBasket.getPaymentInstruments(
             Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
         );
+
+        collections.forEach(paymentInstruments, function (item) {
+          currentBasket.removePaymentInstrument(item);
+        });
         
         paymentInstruments = currentBasket.getPaymentInstruments(
           PaymentInstrument.METHOD_CREDIT_CARD
       );
+
+      collections.forEach(paymentInstruments, function (item) {
+        currentBasket.removePaymentInstrument(item);
+      });
  
       paymentInstruments = currentBasket.getPaymentInstruments(
         Resource.msg('paymentmethodname.paypal', 'globalpay', null)
