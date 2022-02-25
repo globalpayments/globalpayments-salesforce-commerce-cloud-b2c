@@ -24,3 +24,18 @@
 .save-card .form-row.label-inline.form-indent {
     margin-left: 0;
 }
+
+/*for converting vertical alignment radio buttons (payment type selection) to horizontal line*/
+.payment-method-options .form-row {
+    clear: none;
+    float: left;
+    width: 25%; }
+
+    @media screen and (max-width: 767px) {
+        .payment-method-options .form-row label {
+            float: left;
+            margin: 0;
+            padding: 0 0 0 1em;
+            width: 85px;
+            }
+    }
