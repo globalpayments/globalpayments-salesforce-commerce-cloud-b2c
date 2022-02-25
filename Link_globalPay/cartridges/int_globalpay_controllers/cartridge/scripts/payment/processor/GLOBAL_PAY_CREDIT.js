@@ -237,10 +237,14 @@ function Authorize(args) {
       }
     };
     var authorization = globalPayHelper.authorize(authorizationData);
-    if (!empty(authorization) && 'status' in authorization &&(authorization.status!= globalpayconstants.creditCardPay.captureStatus)) {
+    if ((!empty(authorization) && 'success' in authorization && !authorization.success) || (!empty(authorization) && 'status' in authorization && (authorization.status!= globalpayconstants.creditCardPay.captureStatus))) {
       var error = true;
       var serverErrors = [];
-      if (authorization.status==globalpayconstants.creditCardPay.declinedStatus)
+      if ('error' in authorization)
+      {
+        serverErrors.push(authorization.error.detailedErrorDescription);
+      }
+    else if (authorization.status==globalpayconstants.creditCardPay.declinedStatus)
       {  
         serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
       }
@@ -248,7 +252,8 @@ function Authorize(args) {
        {
         serverErrors.push(authorization.error.detailedErrorDescription); 
        }
-    } else {
+      }
+  else {
       try {
         Transaction.wrap(function () {
           paymentInstrument.custom.gp_transactionid = authorization.id;
