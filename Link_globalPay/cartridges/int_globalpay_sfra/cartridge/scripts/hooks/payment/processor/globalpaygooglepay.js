@@ -82,6 +82,7 @@ function Handle(basket, req) {
   var cardErrors = {};
   var Locale = require('dw/util/Locale');
   var Resource = require('dw/web/Resource');
+  var PaymentInstrument = require('dw/order/PaymentInstrument');
   var serverErrors = [];
   Transaction.wrap(function () {
     var paymentInstruments = currentBasket.getPaymentInstruments(
