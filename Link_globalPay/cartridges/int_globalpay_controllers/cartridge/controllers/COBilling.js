@@ -360,32 +360,27 @@ function resetPaymentForms() {
     var cart = app.getModel('Cart').get();
 
     var status = Transaction.wrap(function () {
-        if (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value.equals('PayPal')) {
-            app.getForm('billing').object.paymentMethods.creditCard.clearFormElement();
-            app.getForm('billing').object.paymentMethods.bml.clearFormElement();
+        if (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value.equals(globalpayconstants.paypalData.paymentTypeCode)) {
 
             cart.removePaymentInstruments(cart.getPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD));
-            cart.removePaymentInstruments(cart.getPaymentInstruments(PaymentInstrument.METHOD_BML));
+            cart.removePaymentInstruments(cart.getPaymentInstruments(globalpayconstants.googlePay.paymentTypeCode));
         } else if (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value.equals(PaymentInstrument.METHOD_CREDIT_CARD)) {
             app.getForm('billing').object.paymentMethods.bml.clearFormElement();
 
-            cart.removePaymentInstruments(cart.getPaymentInstruments(PaymentInstrument.METHOD_BML));
-            cart.removePaymentInstruments(cart.getPaymentInstruments('PayPal'));
-        } else if (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value.equals(PaymentInstrument.METHOD_BML)) {
-            app.getForm('billing').object.paymentMethods.creditCard.clearFormElement();
+            cart.removePaymentInstruments(cart.getPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode));
+            cart.removePaymentInstruments(cart.getPaymentInstruments(globalpayconstants.googlePay.paymentTypeCode));
 
-            if (!app.getForm('billing').object.paymentMethods.bml.ssn.valid) {
-                return false;
-            }
+        } else if (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value.equals(globalpayconstants.googlePay.paymentTypeCode)) {
 
             cart.removePaymentInstruments(cart.getPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD));
-            cart.removePaymentInstruments(cart.getPaymentInstruments('PayPal'));
+            cart.removePaymentInstruments(cart.getPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode));
         }
         return true;
     });
 
     return status;
 }
+
 
 /**
  * Validates the billing form.
