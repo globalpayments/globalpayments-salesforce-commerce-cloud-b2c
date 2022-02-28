@@ -103,7 +103,11 @@ function save(params) {
         throw new Error('Problem saving credit card');
     }
 }
-
+/**
+ * create and update creditcard token in payment instrument.
+ * @param {object} params 
+ * @returns 
+ */
 function updateCardToken(params)
 {
     var HookMgr = require('dw/system/HookMgr');
