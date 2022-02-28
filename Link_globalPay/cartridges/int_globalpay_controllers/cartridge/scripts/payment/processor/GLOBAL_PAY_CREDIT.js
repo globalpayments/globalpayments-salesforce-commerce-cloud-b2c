@@ -237,8 +237,8 @@ function Authorize(args) {
       }
     };
     var authorization = globalPayHelper.authorize(authorizationData);
-    if ((!empty(authorization) && 'success' in authorization && !authorization.success) || (!empty(authorization) && 'status' in authorization && (authorization.status!= globalpayconstants.creditCardPay.captureStatus))) {
-      var error = true;
+    if (!empty(authorization) && 'success' in authorization && !authorization.success) {  
+    var error = true;
       var serverErrors = [];
       if ('error' in authorization)
       {
