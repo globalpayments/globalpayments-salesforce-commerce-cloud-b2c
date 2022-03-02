@@ -63,6 +63,10 @@ var ThreeDsResponse = AbstractResponse.extend({
         enumerable: true,
         writable: true
       },
+      acsChallengeRequestUrl: {
+        enumerable: true,
+        writable: true
+      },
       methodData:AbstractResponse.getAccessorDescriptorWithConstructor(MethodData.Response)
     });
 
