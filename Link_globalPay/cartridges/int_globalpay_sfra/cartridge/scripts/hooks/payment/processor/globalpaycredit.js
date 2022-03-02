@@ -327,7 +327,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
        method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
        merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
        order:{
-          time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
+          time_created_reference: (new Date()).toISOString(),
           amount: (basket.totalGrossPrice.value  * 100).toFixed(),
           currency:basket.currencyCode,
           address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
@@ -416,7 +416,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     paymentInstrument.setCreditCardExpirationYear(expirationYear);
     paymentInstrument.setCreditCardToken(authentication.id);
   });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
+  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepOneResp: threeDsStepOneResp };
 }
 /**
  * update payment tokenId to paymentInstruments
