@@ -24,7 +24,7 @@ var pageMeta=require(globalpayconstants.SGPAGEMETA);
         if(secureheaders){
             order = OrderMgr.getOrder(req.orderID.stringValue);
                 var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-                var amount = (order.totalGrossPrice)*100;
+                var amount = ((order.totalGrossPrice)*100).toFixed();
                 if(order.getPaymentStatus()==2){
                     var transactionData = {
                     transaction_id: ordertransactionid,  // Transaction ID 
@@ -77,7 +77,7 @@ function captureTransaction(){
          if(secureheaders){
              var order = OrderMgr.getOrder(req.orderID.stringValue);
                  var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-                 var amount = (order.totalGrossPrice)*100;
+                 var amount = ((order.totalGrossPrice)*100).toFixed();
                  var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
                  
              if(order.getPaymentStatus()==0){
