@@ -26,7 +26,7 @@ function (req, res, next) {
     var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
     var order = OrderMgr.getOrder(req.querystring.orderID);
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-    var amount = (order.totalGrossPrice) * 100;
+    var amount = ((order.totalGrossPrice) * 100).toFixed();
     if (order.getPaymentStatus() == 2) {
       var transactionData = {
         transaction_id: ordertransactionid,  // Transaction ID
@@ -80,7 +80,7 @@ function (req, res, next) {
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var order = OrderMgr.getOrder(req.querystring.orderID);
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-    var amount = (order.totalGrossPrice) * 100;
+    var amount = ((order.totalGrossPrice) * 100).toFixed();
     var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
 
     if (order.getPaymentStatus() == 0) {
