@@ -8,13 +8,18 @@
         },{
             "name": "app.payment.processor.globalpay_paypal",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpaypaypal"
-        },{
-            "name": "app.payment.processor.apple_pay",
-            "script": "./cartridge/scripts/hooks/payment/processor/globalpayapplepay"
         },
         {
             "name": "app.payment.processor.google_pay",
             "script": "./cartridge/scripts/hooks/payment/processor/globalpaygooglepay"
+        },
+        {
+            "name": "dw.extensions.applepay.getRequest",
+            "script": "./cartridge/scripts/hooks/payment/processor/applepay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.paymentAuthorized.authorizeOrderPayment",
+            "script": "./cartridge/scripts/hooks/payment/processor/applepay.js"
         }
     ]
 }
