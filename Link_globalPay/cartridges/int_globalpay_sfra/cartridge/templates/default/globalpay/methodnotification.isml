@@ -1,0 +1,4 @@
+<script src="globalpayments-3dsecure.js"></script>
+<script>
+GlobalPayments.ThreeDSecure.handleMethodNotification(${pdict.serverTransID});
+</script>

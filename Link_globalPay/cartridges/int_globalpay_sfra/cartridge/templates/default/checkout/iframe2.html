@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Sample 3DSecure Page</title>
+      <script type="text/javascript">
+         function OnLoadEvent() {
+           document.form.submit();
+         }
+      </script>
+   </head>
+   <body onload="OnLoadEvent()">
+      <form action="three_ds.acs_challenge_request_url" method="POST">
+         <input type="hidden" name="three_ds.message_type" value="three_ds.challenge_value" />
+         <input type="hidden" name="TermUrl" value="notifications.challenge_return_url" />
+         <input type="hidden" name="three_ds.session_data_field_name" value="<Base64 Encoded DATA TO RETURN TO YOUR TermURL>" />
+         <noscript>
+            <input type="submit" />
+         </noscript>
+      </form>
+   </body>
+</html>

@@ -6,6 +6,11 @@ var ThreeDs = require('~/cartridge/scripts/dtos/nested/ThreeDs');
 var Order = require('~/cartridge/scripts/dtos/nested/Order');
 var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
 var BrowserData = require('~/cartridge/scripts/dtos/nested/BrowserData');
+var Payer = require('~/cartridge/scripts/dtos/nested/Payer');
+var PayerPriorThreeDsAuthenticationData = require('~/cartridge/scripts/dtos/nested/PayerPriorThreeDsAuthenticationData');
+var RecurringAuthorizationData = require('~/cartridge/scripts/dtos/nested/RecurringAuthorizationData');
+var PayerLoginData = require('~/cartridge/scripts/dtos/nested/PayerLoginData');
+var WorkPhone = require('~/cartridge/scripts/dtos/nested/WorkPhone');
 /**
  * Forms all the fields required to send for Authentication request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
@@ -27,6 +32,10 @@ var BrowserData = require('~/cartridge/scripts/dtos/nested/BrowserData');
                 writable: true
               },
               order : AbstractResponse.getAccessorDescriptorWithConstructor(Order.Request),
+             // payer : AbstractResponse.getAccessorDescriptorWithConstructor(Payer.Request),
+              //payerPriorThreeDsAuthenticationData : AbstractResponse.getAccessorDescriptorWithConstructor(PayerPriorThreeDsAuthenticationData.Request),
+              //recurringAuthorizationData : AbstractResponse.getAccessorDescriptorWithConstructor(RecurringAuthorizationData.Request),
+              //payerLoginData : AbstractResponse.getAccessorDescriptorWithConstructor(PayerLoginData.Request),
               paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
               browserData: AbstractResponse.getAccessorDescriptorWithConstructor(BrowserData.Request),
 
@@ -76,7 +85,10 @@ var ThreeDsSteponeResponse = AbstractResponse.extend({
               status: {
                 enumerable: true,
                 writable: true
-              }, 
+              }, messageCategory:{
+                enumerable: true,
+                writable: true
+              },
               threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response),
              });
 

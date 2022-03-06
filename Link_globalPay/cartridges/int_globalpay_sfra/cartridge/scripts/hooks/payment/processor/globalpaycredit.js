@@ -259,6 +259,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
 
 function Handle(basket, paymentInformation, paymentMethodID, req) {
   var currentBasket = basket;
+  var URLUtils = require('dw/web/URLUtils');
   var cardErrors = {};
   var Locale = require('dw/util/Locale');
   var cardNumber = paymentInformation.cardNumber.value;
@@ -303,9 +304,9 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       payment_method: {
         id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
       },
-      notifications: {
-        challenge_return_url: preferences.threedsecureChallenge,
-        three_ds_method_return_url: preferences.threedsecureMethod
+      notifications: {       
+        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),// preferences.threedsecureChallenge,
+        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()//
       }
     };
 
@@ -335,12 +336,57 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
              line1:basket.shipments[0].shippingAddress.address1,
              city:basket.shipments[0].shippingAddress.city,
              postal_code:basket.shipments[0].shippingAddress.postalCode,
-             country:"826"
+             country:globalpayconstants.country
           }
        },
        payment_method:{
           id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
        },
+
+       payer: {
+        reference: "6dcb24f5-74a0-4da3-98da-4f0aa0e88db3",
+        account_age: "LESS_THAN_THIRTY_DAYS",
+        account_creation_date: "2019-01-10",
+        account_change_date: "2019-01-28",
+        account_change_indicator: "THIS_TRANSACTION",
+        account_password_change_date: "2019-01-15",
+        account_password_change_indicator: "LESS_THAN_THIRTY_DAYS",
+        home_phone: {
+            country_code: "44",
+            subscriber_number: "123456789"
+        },
+        work_phone: {
+            country_code: "44",
+            subscriber_number: "1801555888"
+        },
+        payment_account_creation_date: "2019-01-01",
+        payment_account_age_indicator: "LESS_THAN_THIRTY_DAYS",
+        suspicious_account_activity: "NO_SUSPICIOUS_ACTIVITY",
+        purchases_last_6months_count: "03",
+        transactions_last_24hours_count: "01",
+        transaction_last_year_count: "05",
+        provision_attempt_last_24hours_count: "01",
+        shipping_address_time_created_reference: "2019-01-28",
+        shipping_address_creation_indicator: "THIS_TRANSACTION"
+    },
+    payer_prior_three_ds_authentication_data: {
+        authentication_method: "FRICTIONLESS_AUTHENTICATION",
+        acs_transaction_reference: "26c3f619-39a4-4040-bf1f-6fd433e6d615",
+        authentication_timestamp: "2020-07-28T10:26:49.712Z",
+        authentication_data: "secret123"
+    },
+    recurring_authorization_data: {
+        max_number_of_instalments: "05",
+        frequency: "25",
+        expiry_date: "2019-08-25"
+    },
+    payer_login_data: {
+        authentication_data: "secret123",
+        authentication_timestamp: "2020-07-28T10:26:49.712Z",
+        authentication_type: "MERCHANT_SYSTEM_AUTHENTICATION"
+    },
+
+
        browser_data:{
           accept_header:globalpayconstants.threeDsStepOne.accept_header, 
           color_depth: paymentInformation.threedsdata.value.colorDepth,
@@ -355,7 +401,61 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
           user_agent:paymentInformation.threedsdata.value.userAgent
        }
     }
+
+       var threeDsStepOneResp =  globalPayHelper.initiateRequest(threeDsStepOne);
+       threeDsStepOneResp = threeDsStepOneResp.object;
+       var threeDSResponse = new Object();
+
+       threeDSResponse.acsTransactionId 			= threeDsStepOneResp.three_ds.acs_trans_ref;
+       threeDSResponse.authenticationSource 			= threeDsStepOneResp.three_ds.authentication_source;
+       threeDSResponse.authenticationRequestType  		= threeDsStepOneResp.three_ds.message_category;
+       threeDSResponse.cardholderResponseInfo  		= threeDsStepOneResp.three_ds.cardholder_response_info;
+       threeDSResponse.challenge = new Object();
+       threeDSResponse.challenge.encodedChallengeRequest 	= threeDsStepOneResp.three_ds.challenge_value;
+       threeDSResponse.challenge.requestUrl  		= threeDsStepOneResp.three_ds.redirect_url;
+       threeDSResponse.challengeMandated  			= threeDsStepOneResp.three_ds.challenge_status;
+       threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.three_ds.authentication_source; // need to discuss
+       threeDSResponse.dsTransactionId  			= threeDsStepOneResp.three_ds.ds_trans_ref;
+       threeDSResponse.messageCategory  			= threeDsStepOneResp.message_category;
+       threeDSResponse.messageExtension 			= threeDsStepOneResp.three_ds.authenticationSource; // need to discuss
+       threeDSResponse.messageVersion  			= threeDsStepOneResp.three_ds.message_version;
+       threeDSResponse.mpi = new Object();
+       threeDSResponse.mpi.authenticationValue 		=threeDsStepOneResp.three_ds.authentication_value;
+       threeDSResponse.mpi.eci  				= threeDsStepOneResp.three_ds.eci;
+       threeDSResponse.serverTransactionId  			= threeDsStepOneResp.three_ds.server_trans_ref;
+       threeDSResponse.status  					= threeDsStepOneResp.three_ds.status;
+       threeDSResponse.statusReason  				= threeDsStepOneResp.three_ds.status_reason;
+       threeDSResponse.authID  					= threeDsStepOneResp.id;
+
+
+      /*
       var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
+
+      var threeDSResponse = new Object();
+
+      threeDSResponse.acsTransactionId 			= threeDsStepOneResp.threeDs.acsTransRef;
+      threeDSResponse.authenticationSource 			= threeDsStepOneResp.threeDs.authenticationSource;
+      threeDSResponse.authenticationRequestType  		= threeDsStepOneResp.threeDs.messageCategory;
+      threeDSResponse.cardholderResponseInfo  		= threeDsStepOneResp.threeDs.cardholderResponseInfo;
+      threeDSResponse.challenge = new Object();
+      threeDSResponse.challenge.encodedChallengeRequest 	= threeDsStepOneResp.threeDs.challengeValue;
+      threeDSResponse.challenge.requestUrl  		= threeDsStepOneResp.threeDs.redirectUrl;
+      threeDSResponse.challengeMandated  			= threeDsStepOneResp.threeDs.challengeStatus;
+      threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+      threeDSResponse.dsTransactionId  			= threeDsStepOneResp.threeDs.dsTransRef;
+      threeDSResponse.messageCategory  			= threeDsStepOneResp.messageCategory;
+      threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+      threeDSResponse.messageVersion  			= threeDsStepOneResp.threeDs.messageVersion;
+      threeDSResponse.mpi = new Object();
+      threeDSResponse.mpi.authenticationValue 		=threeDsStepOneResp.threeDs.authenticationValue;
+      threeDSResponse.mpi.eci  				= threeDsStepOneResp.threeDs.eci;
+      threeDSResponse.serverTransactionId  			= threeDsStepOneResp.threeDs.serverTransRef;
+      threeDSResponse.status  					= threeDsStepOneResp.threeDs.status;
+      threeDSResponse.statusReason  				= threeDsStepOneResp.threeDs.statusReason;
+      threeDSResponse.authID  					= threeDsStepOneResp.id;
+    */
+
+
   
       if (!empty(threeDsStepOneResp) && !empty(threeDsStepOneResp.success) && !threeDsStepOneResp.success) {
         var serverErrors = [];
@@ -416,7 +516,28 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     paymentInstrument.setCreditCardExpirationYear(expirationYear);
     paymentInstrument.setCreditCardToken(authentication.id);
   });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepOneResp: threeDsStepOneResp };
+
+  var reqAuthfields = new Object();
+          reqAuthfields.enrolled = authentication.threeDs.enrolledStatus;
+          reqAuthfields.methodData = authentication.threeDs.methodData.encodedMethodData;
+          reqAuthfields.methodUrl = authentication.threeDs.methodUrl;
+          reqAuthfields.serverTransactionId = authentication.threeDs.serverTransRef;
+          reqAuthfields.versions = new Object();
+          reqAuthfields.versions.accessControlServer = new Object();
+          reqAuthfields.versions.accessControlServer.start = authentication.threeDs.acsProtocolVersionStart;
+          reqAuthfields.versions.accessControlServer.end = authentication.threeDs.acsProtocolVersionEnd;
+          reqAuthfields.versions.directoryServer = new Object();
+          reqAuthfields.versions.directoryServer.start = authentication.threeDs.dsProtocolVersionStart;
+          reqAuthfields.versions.directoryServer.end = authentication.threeDs.dsProtocolVersionEnd;
+          reqAuthfields.id = authentication.id;
+
+  return { fieldErrors: cardErrors, 
+    serverErrors: serverErrors, 
+    error: false,
+    authentication: reqAuthfields,
+    threeDsStepOneResp: threeDSResponse,
+    threeDsStepTwoResp: threeDsStepTwoResp
+   };
 }
 /**
  * update payment tokenId to paymentInstruments

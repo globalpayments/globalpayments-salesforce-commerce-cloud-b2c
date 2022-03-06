@@ -17,6 +17,8 @@
         assets.addJs('/js/googlepay.js');
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
+
+    
 <script  src="${URLUtils.staticURL('/js/googlePayment.js')}"></script>
     <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
         <isinclude template="reporting/reportingUrls" />

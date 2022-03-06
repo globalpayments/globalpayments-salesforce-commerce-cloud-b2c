@@ -270,8 +270,12 @@ function  threeDsStepone(data) {
       threeDsSteponeReq.setToken(getAccessToken());
       threeDsSteponeReq.setThreeDs(data.three_ds);
       threeDsSteponeReq.setAuthId(data.auth_id);
-      threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
       threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
+      threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
+     // threeDsSteponeReq.setPayer(data.payer);
+     // threeDsSteponeReq.setPayerPriorThreeDsAuthenticationData(data.payer_prior_three_ds_authentication_data);
+     // threeDsSteponeReq.setRecurringAuthorizationData(data.recurring_authorization_data);
+     // threeDsSteponeReq.setPayerLoginData(data.payer_login_data);
       threeDsSteponeReq.setOrder(data.order);
       threeDsSteponeReq.setPaymentMethod(data.payment_method);
       threeDsSteponeReq.setBrowserData(data.browser_data);
@@ -311,6 +315,141 @@ function  threeDsStepone(data) {
   }
 
 
+  function initiateRequest(data){
+
+    var initiateRequest = 
+    {
+      three_ds: {
+          source: "BROWSER",
+          preference: "NO_PREFERENCE"
+      },
+      account_name:"",
+      channel: "CNP",
+      amount: "5",
+      currency: "USD",
+      country: "US",
+      method_url_completion_status: "YES",
+      payment_method: {
+          id: data.payment_method.id
+      },
+      order: {
+          time_created_reference: "2019-04-26T10:19:32.552327Z",
+          amount: "1001",
+          currency: "USD",
+          reference: "3400dd37-101d-4940-be15-3c963b6109b3",
+          address_match_indicator: "false",
+          shipping_address: {
+              line1: "Apartment 852",
+              line2:"Complex 741",
+              line3: "House 963",
+              city: "Chicago",
+              postal_code: "50001",
+              state: "IL",
+              country: "840"
+          },
+          gift_card_count: "01",
+          gift_card_currency: "USD",
+          gift_card_amount: "25000",
+          delivery_email: "james.mason@example.com",
+          delivery_timeframe: "ELECTRONIC_DELIVERY",
+          shipping_method: "ANOTHER_VERIFIED_ADDRESS",
+          shipping_name_matches_cardholder_name: "true",
+          preorder_indicator: "MERCHANDISE_AVAILABLE",
+          preorder_availability_date: "2019-04-18",
+          reorder_indicator: "FIRST_TIME_ORDER",
+          transaction_type: "GOODS_SERVICE_PURCHASE"
+      },
+      payer: {
+          reference: "6dcb24f5-74a0-4da3-98da-4f0aa0e88db3",
+          account_age: "LESS_THAN_THIRTY_DAYS",
+          account_creation_date: "2019-01-10",
+          account_change_date: "2019-01-28",
+          account_change_indicator: "THIS_TRANSACTION",
+          account_password_change_date: "2019-01-15",
+          account_password_change_indicator: "LESS_THAN_THIRTY_DAYS",
+          home_phone: {
+              country_code: "44",
+              subscriber_number: "123456789"
+          },
+          work_phone: {
+              country_code: "44",
+              subscriber_number: "1801555888"
+          },
+          payment_account_creation_date: "2019-01-01",
+          payment_account_age_indicator: "LESS_THAN_THIRTY_DAYS",
+          suspicious_account_activity: "NO_SUSPICIOUS_ACTIVITY",
+          purchases_last_6months_count: "03",
+          transactions_last_24hours_count: "01",
+          transaction_last_year_count: "05",
+          provision_attempt_last_24hours_count: "01",
+          shipping_address_time_created_reference: "2019-01-28",
+          shipping_address_creation_indicator: "THIS_TRANSACTION"
+      },
+      payer_prior_three_ds_authentication_data: {
+          authentication_method: "FRICTIONLESS_AUTHENTICATION",
+          acs_transaction_reference: "26c3f619-39a4-4040-bf1f-6fd433e6d615",
+          authentication_timestamp: "2020-07-28T10:26:49.712Z",
+          authentication_data: "secret123"
+      },
+      recurring_authorization_data: {
+          max_number_of_instalments: "05",
+          frequency: "25",
+          expiry_date: "2019-08-25"
+      },
+      payer_login_data: {
+          authentication_data: "secret123",
+          authentication_timestamp: "2020-07-28T10:26:49.712Z",
+          authentication_type: "MERCHANT_SYSTEM_AUTHENTICATION"
+      },
+      browser_data: {
+          accept_header: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+          color_depth: "TWENTY_FOUR_BITS",
+          ip: "123.123.123.123",
+          java_enabled: "true",
+          javascript_enabled: "true",
+          language: "en-US",
+          screen_height: "1080",
+          screen_width: "1920",
+          challenge_window_size: "FULL_SCREEN",
+          timezone: "0",
+          user_agent: "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36"
+      },
+      merchant_contact_url: "https://enp4qhvjseljg.x.pipedream.net/"
+    };
+
+    var initiateResp = invokeService(initiateRequest, data );
+return initiateResp;
+  }
+    function invokeService(params, addData ){
+      var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+      var Site = require('dw/system/Site');
+      var currentSite = Site.getCurrent();
+      var auth_id = addData.auth_id;
+
+    var initResp =  LocalServiceRegistry.createService('GlobalPay', {
+      createRequest: function (svc, params) {
+        svc.setRequestMethod('POST');
+        var url = 'https://apis.sandbox.globalpay.com/ucp/authentications/'+auth_id+'/initiate';
+        svc.setURL(url);//svc.getURL() + '/' + prepareEndpoint(serviceEndpoint, endpointParams));
+        svc.addHeader('content-type', 'application/json');
+        svc.addHeader('x-gp-version', currentSite.getCustomPreferenceValue('gp_x_gp_version'));
+  
+        
+          svc.addHeader('Authorization', 'Bearer ' + getAccessToken());
+         
+        return JSON.stringify(params);
+      },
+      parseResponse: function (svc, response) {
+        return JSON.parse(response.text);
+      },
+      filterLogMessage: function (msg) {
+        return msg;
+      }
+    }).call(params);
+
+    return initResp;
+  } 
+
 module.exports = {
     getAccessToken: getAccessToken,
     authenticate: authenticate,
@@ -325,5 +464,6 @@ module.exports = {
     applePay:applePay,
     threeDsStepone:threeDsStepone,
     threeDsSteptwo:threeDsSteptwo,
-    payPalCapture: payPalCapture
+    payPalCapture: payPalCapture,
+    initiateRequest: initiateRequest
 };

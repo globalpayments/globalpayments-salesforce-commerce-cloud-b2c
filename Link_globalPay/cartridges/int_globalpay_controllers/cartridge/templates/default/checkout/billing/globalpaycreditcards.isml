@@ -4,6 +4,8 @@
     var gpayToken =  globalPayHelper.getAccessToken();
     var preferences = globalPayPreferences.getPreferences();
   </isscript>
+
+  <script src="globalpayments-3dsecure.js"></script>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
   <div id="gpayerror"></div> 
  <form id="payment-form" action="/Payment/Charge" method="post">
@@ -12,7 +14,7 @@
     <div id="credit-card"></div>
 </form>
 
-<!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
+<script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
 
@@ -53,6 +55,9 @@ function gatherBrowserData() {
 }
 
 
+
+
+
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
     const token = document.createElement("input");
@@ -68,6 +73,7 @@ cardForm.on("token-success", (resp) => {
     $('input[name*="_cvn"]').val('123').trigger('change');
     $('input[name*=creditCard_paymentId]').val(JSON.stringify(resp));
    $('input[name*=_threedsdata]').val(JSON.stringify(gatherBrowserData()))
+   
 if($('[name$="_expiration_year"]').val())
 {
     $('#dwfrm_billing').submit();

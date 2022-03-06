@@ -6,7 +6,7 @@ var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse')
  * @param {obj} responseObj - object that contains Action response.
  */
 var MethodResponse = AbstractResponse.extend({
-  init: function (responseObj) {
+  init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
       threeDsServerTransId: {
@@ -16,10 +16,20 @@ var MethodResponse = AbstractResponse.extend({
       threeDsMethodReturnUrl: {
         enumerable: true,
         writable: true
+      },
+      encodedMethodData: {
+        enumerable: true,
+        writable: true
+      },methodUrl: {
+        enumerable: true,
+        writable: true
+      },serverTransRef: {
+        enumerable: true,
+        writable: true
       }
     });
 
-    this._super(responseObj);
+    this._super(requestObj);
   }
 });
 

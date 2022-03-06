@@ -164,7 +164,9 @@ server.prepend(
       var viewData = {};
       var paymentForm = server.forms.getForm('billing');
 
-      if (paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
+      if (paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null) 
+      || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.googlepay', 'globalpay', null) 
+      || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
         handlePayments(req, res, next);
         this.emit('route:Complete', req, res);
         return;
@@ -444,7 +446,10 @@ server.prepend(
           customer: accountModel,
           order: basketModel,
           form: billingForm,
-          error: false
+          error: false,
+          autherntication : result.authentication,
+          threeDsStepOneResp : result.threeDsStepOneResp,
+          paymentReference: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
         });
       });
       return next();

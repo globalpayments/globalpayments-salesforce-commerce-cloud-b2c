@@ -6,10 +6,12 @@
     <div id="credit-card"></div>
 </form>
 
-<!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
+
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
 <script defer type="text/javascript">
+// ends here
+
 // Configure account
 GlobalPayments.configure({
     accessToken: '${pdict.token}',
@@ -63,6 +65,7 @@ function isNumberKey(evt){
 }
 
 cardForm.on("token-success", (resp) => {
+     
     // add payment token to form as a hidden input
     const token = document.createElement("input");
     token.type = "hidden";
@@ -75,6 +78,8 @@ cardForm.on("token-success", (resp) => {
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
     $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
+     
+
     if($("#expirationYear").val()){
    $( ".submit-payment" ).trigger( "click" );
     form.appendChild(token);

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+   <meta charset="ISO-8859-1">
+   <head>
+      <title>Sample Open Method URL Page</title>
+      <script>
+         var form = document.createElement("form");
+         form.setAttribute("method", "POST");
+         form.setAttribute("action", "https://three_ds.method_url");
+         form.setAttribute("target", "hidden_iframe");
+         
+         var threeDSMethodData = document.createElement("input");
+         threeDSMethodData.setAttribute("type", "hidden");
+         threeDSMethodData.setAttribute("name", "threeDSMethodData");
+         // add the JSON object returned by Global Payments	    
+         threeDSMethodData.setAttribute("value", three_ds.method_data);;
+         form.appendChild(threeDSMethodData);
+         document.body.appendChild(form);
+         
+         form.submit();
+      </script>
+   </head>
+   <body>
+      <iframe id="hidden_iframe" name="hidden_iframe" style="display: none;"></iframe>
+  </body>
+</html>

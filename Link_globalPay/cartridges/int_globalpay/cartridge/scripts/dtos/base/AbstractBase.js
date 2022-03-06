@@ -58,7 +58,7 @@ AbstractBase.snakeToCamelCase = function (str) {
 };
 //define object values here if that should  skip the camelToSnakeCase
 AbstractBase.skipReplacement = function (key) {
-  var object=['paymentToken','payment_token'];
+  var object=['paymentToken','payment_token','purchases_last_6months_count','purchases_last_6months_count','transactionsLast24hoursCount','transactions_last_24hours_count'];
  return  object.indexOf(key)>=0;
 };
 

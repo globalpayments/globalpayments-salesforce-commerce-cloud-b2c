@@ -42,7 +42,7 @@ var AbstractRequest = AbstractBase.extend({
         var replacement = {};
         for (var k in value) {
           if (Object.hasOwnProperty.call(value, k)) {
-            var response=AbstractBase.skipReplacement(key)?k:AbstractBase.camelToSnakeCase(k);
+            var response= AbstractBase.skipReplacement(key)?k:AbstractBase.camelToSnakeCase(k);
             replacement[response] = value[k];
           }
         }

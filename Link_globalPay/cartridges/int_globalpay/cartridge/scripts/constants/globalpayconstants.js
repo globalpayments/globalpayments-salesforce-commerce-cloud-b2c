@@ -5,6 +5,7 @@ authenticationData.account_name = 'transaction_processing';
 authenticationData.channel = 'CNP';
 authenticationData.source = 'BROWSER';
 globalpayConstants.authenticationData = authenticationData;
+globalpayConstants.country = '826'
 
 
 var authorizationData = new Object();
