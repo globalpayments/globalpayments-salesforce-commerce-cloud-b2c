@@ -349,8 +349,10 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                 ) {
                       $('.cancel-new-payment').removeClass('checkout-hidden');
                     }
-
-                    scrollAnimate();
+                    if($('.tab-pane.active').attr('id') !== 'paypal-content'){
+                      scrollAnimate();
+                    }
+                    
                     defer.resolve(data);
                   }
                 }
