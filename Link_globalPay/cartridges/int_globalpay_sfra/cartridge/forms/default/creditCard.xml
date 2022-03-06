@@ -50,6 +50,7 @@
            max-length="4" missing-error="error.card.info.missing.securityCode" />
 
     <field formid="paymentId"   type="string"  binding="paymentId"/>
+    <field formid="authId"   type="string"  binding="authId"/>
     <field formid="threedsdata"  type="string"  binding="threedsdata"/>
 
     <field formid="paymentToken" label="profile.paymentToken" type="string"  binding="paymentToken"/>

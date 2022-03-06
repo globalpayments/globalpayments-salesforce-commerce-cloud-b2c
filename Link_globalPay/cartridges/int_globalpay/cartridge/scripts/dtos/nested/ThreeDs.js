@@ -67,6 +67,73 @@ var ThreeDsResponse = AbstractResponse.extend({
         enumerable: true,
         writable: true
       },
+      serverTransRef: {
+        enumerable: true,
+        writable: true
+      },
+      messageVersion: {
+        enumerable: true,
+        writable: true
+      },
+      enrolledStatus: {
+        enumerable: true,
+        writable: true
+      },
+      eci: {
+        enumerable: true,
+        writable: true
+      },
+      liabilityShift: {
+        enumerable: true,
+        writable: true
+      },
+      methodUrl: {
+        enumerable: true,
+        writable: true
+      },
+      sessionDataFieldName: {
+        enumerable: true,
+        writable: true
+      },
+      messageType: {
+        enumerable: true,
+        writable: true
+      },
+      acsTransRef:{
+        enumerable: true,
+        writable: true
+      },acsPotocolVersionStart:{
+        enumerable: true,
+        writable: true
+      },acsProtocolVersionEnd:{
+        enumerable: true,
+        writable: true
+      },dsProtocolVersionStart:{
+        enumerable: true,
+        writable: true
+      },dsProtocolVersionEnd:{
+        enumerable: true,
+        writable: true
+      },authenticationSource:{
+        enumerable: true,
+        writable: true
+      },messageCategory:{
+        enumerable: true,
+        writable: true
+      },cardholderResponseInfo:{
+        enumerable: true,
+        writable: true
+      },dsTransRef:{
+        enumerable: true,
+        writable: true
+      },status:{
+        enumerable: true,
+        writable: true
+      },statusReason:{
+        enumerable: true,
+        writable: true
+      },
+
       methodData:AbstractResponse.getAccessorDescriptorWithConstructor(MethodData.Response)
     });
 

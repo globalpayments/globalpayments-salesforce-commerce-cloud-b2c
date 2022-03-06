@@ -470,10 +470,6 @@ server.append('PlaceOrder', server.middleware.https, function (req, res, next) {
       errorMessage: Resource.msg('checkout.status.declined', 'globalpay', null)
   });
   }
-  
-  
-  
-
     res.setViewData(viewData);
 
    next();
