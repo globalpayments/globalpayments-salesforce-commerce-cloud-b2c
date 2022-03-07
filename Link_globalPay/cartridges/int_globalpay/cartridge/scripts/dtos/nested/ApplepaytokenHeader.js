@@ -2,7 +2,6 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var HeaderRequest = require('~/cartridge/scripts/dtos/nested/ApplepaytokenHeader');
 
 
 
@@ -10,31 +9,22 @@ var HeaderRequest = require('~/cartridge/scripts/dtos/nested/ApplepaytokenHeader
  * Forms all the fields required to send for PaymentToken request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
-var PaymentTokenRequest = AbstractRequest.extend({
+var HeaderRequest = AbstractRequest.extend({
   init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
-      signature: {
-        enumerable: true,
-        writable: true
-      },
-      protocolVersion: {
-        enumerable: true,
-        writable: true
-      },
-      signedMessage:{
-        enumerable: true,
-        writable: true
-      },
-      version:{
-        enumerable: true,
-        writable: true
-      },
-      data:{
-        enumerable: true,
-        writable: true
-      },
-      header: AbstractResponse.getAccessorDescriptorWithConstructor(HeaderRequest.Request)
+        ephemeralPublicKey:{
+            enumerable: true,
+            writable: true
+        }, 
+        transactionId:{
+          enumerable: true,
+          writable: true
+        },
+        publicKeyHash:{
+          enumerable: true,
+          writable: true
+        }
       //signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
     //  add more here later as per model
     });
@@ -46,23 +36,22 @@ var PaymentTokenRequest = AbstractRequest.extend({
  * Forms all fields to be Returned as part of PaymentToken response.
  * @param {obj} responseObj - object that contains fields from response.
  */
-var PaymentTokenResponse = AbstractResponse.extend({
+ var HeaderResponse = AbstractResponse.extend({
   init: function (responseObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
-      signature: {
+      ephemeralPublicKey:{
+          enumerable: true,
+          writable: true
+      }, 
+      transactionId:{
         enumerable: true,
         writable: true
       },
-      protocolVersion: {
+      publicKeyHash:{
         enumerable: true,
         writable: true
-      },
-      signedMessage:{
-        enumerable: true,
-        writable: true
-      },
-      header: AbstractResponse.getAccessorDescriptorWithConstructor(HeaderRequest.Response)
+      }
     });
 
     this._super(responseObj);
@@ -70,6 +59,6 @@ var PaymentTokenResponse = AbstractResponse.extend({
 });
 
 module.exports = {
-  Request: PaymentTokenRequest,
-  Response: PaymentTokenResponse
+  Request: HeaderRequest,
+  Response: HeaderResponse
 };

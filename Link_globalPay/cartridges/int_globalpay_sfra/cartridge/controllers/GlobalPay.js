@@ -29,6 +29,16 @@ server.get('Authentications', function (req, res, next) {
     authenticate: authenticate });
   next();
 });
+/**
+ * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
+ * @name Base/GlobalPay-Authorization
+ * @function
+ * @memberof GlobalPay
+ */
+ server.post('Authorization', function (req, res) {
+  //Returning Success in the basic Auth method
+  return { success: true }
+});
 
 /**
  * GlobalPay-Transactions : The GlobalPay-Transactions endpoint invokes transaction call

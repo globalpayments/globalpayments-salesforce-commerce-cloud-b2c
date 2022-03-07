@@ -260,9 +260,10 @@ function applePay(data)
     var result = globalPayService.executeRequest(applePayRequest, applePay.Response);
     if (result.success) {
         return result.response;
-    }
-    return null;
+    } 
+  return result;
 }
+
 function  threeDsStepone(data) {
   var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDsStepone');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
