@@ -2,8 +2,8 @@
     <a class="nav-link google-pay-tab" data-toggle="tab" href="#google-pay-content" role="tab">
         <img class="googlepay-tab-img google-pay-tab"
                 src="${URLUtils.staticURL('/images/googlepay.png')}"
-                alt="${paymentOption.name}"
-                title="${paymentOption.name}"
+                alt="${Resource.msg('msg.payment.type.googlepay', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.googlepay', 'globalpay', null)}"
         />
     </a>
 </li>
