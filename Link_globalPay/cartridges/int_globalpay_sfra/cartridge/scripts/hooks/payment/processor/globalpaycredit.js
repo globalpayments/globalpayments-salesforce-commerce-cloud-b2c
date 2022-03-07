@@ -288,10 +288,11 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
     }
   }
+  
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
-
+ 
   var authenticationData = {
       account_name: globalpayconstants.authenticationData.account_name,
       channel: globalpayconstants.authenticationData.channel,
@@ -309,7 +310,8 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       }
     };
 
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+   
   var authentication = globalPayHelper.authenticate(authenticationData);
   if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
     var serverErrors = [];
@@ -362,7 +364,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
         serverErrors.push(threeDsStepOneResp.error.detailedErrorDescription);
         return { fieldErrors: [], serverErrors: serverErrors, error: true };
       }
-  
+   
       var threeDsStepTwo = {
         auth_id : authentication.id
     }
@@ -372,7 +374,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     if (!empty(threeDsStepTwoResp) && !empty(threeDsStepTwoResp.success) && !threeDsStepTwoResp.success) {
       var serverErrors = [];
       serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
-      return { fieldErrors: [], serverErrors: serverErrors, error: true };
+      return { fieldErrors: [], serverErrors: serverErrors, error: true,threeDsStepTwoResp:threeDsStepTwoResp };
     } 
    }
  
