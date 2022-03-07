@@ -20,7 +20,16 @@ server.append('Begin', function (req, res, next) {
     var gpayMerchantName=preferences.gpayMerchantName;
     var gatewayMerchantId=preferences.gatewayMerchantId;
     var gpayEnv=preferences.gpayEnv;
-
+    var  ArrayList = require('dw/util/ArrayList');
+    var walletList = new ArrayList();
+    var wallet = require('dw/customer/CustomerMgr').getCustomerByCustomerNumber(customer.profile.customerNo).getProfile().getWallet();
+     
+    for(var c=0; c < wallet.paymentInstruments.length; c++ ){
+        var tokenJson = {}; 
+        tokenJson.maskCard = wallet.paymentInstruments[c].maskedCreditCardNumber;
+        tokenJson.pmttoken = wallet.paymentInstruments[c].creditCardToken;
+        walletList.add(tokenJson);
+      }
     var viewData = res.getViewData();
         viewData = {
             token : gpayToken,
@@ -30,7 +39,8 @@ server.append('Begin', function (req, res, next) {
             gpaymerchantid:gpayMerchantId,
             gpaymerchantname:gpayMerchantName,
             gatewayMerchantId:gatewayMerchantId,
-            gpayenv:gpayEnv
+            gpayenv:gpayEnv,
+            myWallet:walletList 
         };
     res.setViewData(viewData);
     next();
