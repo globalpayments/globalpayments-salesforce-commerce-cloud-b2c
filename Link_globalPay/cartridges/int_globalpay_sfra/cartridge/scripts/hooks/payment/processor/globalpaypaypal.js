@@ -87,6 +87,7 @@ function Handle(basket, req) {
   var Locale = require('dw/util/Locale');
   var serverErrors = [];
   Transaction.wrap(function () {
+    //clear previous payment instrument and update new selected payment instrument
     var paymentInstruments = currentBasket.getPaymentInstruments(
       globalpayconstants.paypalData.paymentTypeCode
         ); 

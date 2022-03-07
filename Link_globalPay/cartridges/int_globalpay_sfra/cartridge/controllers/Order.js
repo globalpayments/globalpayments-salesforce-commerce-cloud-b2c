@@ -38,7 +38,7 @@ server.append(
       var Locale = require('dw/util/Locale');
 
       var order;
-
+      //When order form is empty
       if (!req.form.orderToken || !req.form.orderID) {
         res.render('/error', {
           message: Resource.msg('error.confirmation.error', 'confirmation', null)

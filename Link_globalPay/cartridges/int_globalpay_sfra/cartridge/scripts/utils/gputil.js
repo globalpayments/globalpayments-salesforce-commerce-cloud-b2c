@@ -7,7 +7,7 @@ var orderUpdate = function (order) {
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-
+//update order status 
   Transaction.wrap(function () {
     var placeOrderStatus = OrderMgr.placeOrder(order);
       if (captureMode.value == 'AUTO') {

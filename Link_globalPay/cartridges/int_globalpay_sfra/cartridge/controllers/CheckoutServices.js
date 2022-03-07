@@ -407,6 +407,7 @@ server.prepend(
             );
 
         if (calculatedPaymentTransaction.error) {
+          //returns error object
           res.json({
             form: paymentForm,
             fieldErrors: [],

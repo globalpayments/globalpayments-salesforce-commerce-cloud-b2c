@@ -85,6 +85,7 @@ function Handle(basket, req) {
   var PaymentInstrument = require('dw/order/PaymentInstrument');
   var serverErrors = [];
   Transaction.wrap(function () {
+    //clear previous payment instrument and update new selected payment instrument
     var paymentInstruments = currentBasket.getPaymentInstruments(
             Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
         );

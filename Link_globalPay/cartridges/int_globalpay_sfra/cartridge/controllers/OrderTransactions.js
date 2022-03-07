@@ -87,11 +87,11 @@ function (req, res, next) {
       var transactionData = {
         transaction_id: ordertransactionid,  // Transaction ID
         amount: amount, // order.amount
-        capture_sequence: globalpayconstants.captureTransaction.entry_mode, //'FIRST'
+        capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
         total_capture_count: 0,
         payment_method: {
-          entry_mode: globalpayconstants.captureTransaction.entry_mode,//'ECOM',
-          id: paymentID // paymentID
+          entry_mode: globalpayconstants.captureTransaction.entry_mode,
+          id: paymentID
         }
       };
       captureresult = globalPayHelper.capture(transactionData);

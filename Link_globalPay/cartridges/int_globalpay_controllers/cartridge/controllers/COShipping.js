@@ -412,7 +412,7 @@ function editShippingAddress() {
     shippingAddressForm.handleAction({
         apply: function () {
             var object = {};
-            // @FIXME what is this statement used for?
+            //Renders shipping address form
             if (!app.getForm(session.forms.shippingaddress).copyTo(object) || !app.getForm(session.forms.shippingaddress.states).copyTo(object)) {
                 app.getView({
                     ContinueURL: URLUtils.https('COShipping-EditShippingAddress')
