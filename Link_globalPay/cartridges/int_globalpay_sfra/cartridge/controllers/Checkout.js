@@ -22,6 +22,8 @@ server.append('Begin', function (req, res, next) {
     var gpayEnv=preferences.gpayEnv;
     var  ArrayList = require('dw/util/ArrayList');
     var walletList = new ArrayList();
+
+     if(!empty(customer.profile)){
     var wallet = require('dw/customer/CustomerMgr').getCustomerByCustomerNumber(customer.profile.customerNo).getProfile().getWallet();
      
     for(var c=0; c < wallet.paymentInstruments.length; c++ ){
@@ -30,6 +32,7 @@ server.append('Begin', function (req, res, next) {
         tokenJson.pmttoken = wallet.paymentInstruments[c].creditCardToken;
         walletList.add(tokenJson);
       }
+     }
     var viewData = res.getViewData();
         viewData = {
             token : gpayToken,
