@@ -288,11 +288,10 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
     }
   }
-  
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
- 
+
   var authenticationData = {
       account_name: globalpayconstants.authenticationData.account_name,
       channel: globalpayconstants.authenticationData.channel,
@@ -310,8 +309,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       }
     };
 
-   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-   
+  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var authentication = globalPayHelper.authenticate(authenticationData);
   if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
     var serverErrors = [];
@@ -319,52 +317,6 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     return { fieldErrors: [], serverErrors: serverErrors, error: true };
   }
    if(!empty(authentication.threeDs.methodData.threeDsServerTransId)){
-    var threeDsStepOne = 
-    {
-       three_ds:{
-          source:globalpayconstants.threeDsStepOne.source,
-          preference:globalpayconstants.threeDsStepOne.preference,
-       },
-       auth_id : authentication.id,
-       method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
-       merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
-       order:{
-          time_created_reference: (new Date()).toISOString(),
-          amount: (basket.totalGrossPrice.value  * 100).toFixed(),
-          currency:basket.currencyCode,
-          address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
-          shipping_address:{
-             line1:basket.shipments[0].shippingAddress.address1,
-             city:basket.shipments[0].shippingAddress.city,
-             postal_code:basket.shipments[0].shippingAddress.postalCode,
-             country:"826"
-          }
-       },
-       payment_method:{
-          id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
-       },
-       browser_data:{
-          accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-          color_depth: paymentInformation.threedsdata.value.colorDepth,
-          ip: req.httpHeaders.get('true-client-ip'),
-          java_enabled: paymentInformation.threedsdata.value.javaEnabled,
-          javascript_enabled: globalpayconstants.threeDsStepOne.javascript_enabled,
-          language:paymentInformation.threedsdata.value.browserLanguage,//"en-US",
-          screen_height:paymentInformation.threedsdata.value.screenHeight,
-          screen_width:paymentInformation.threedsdata.value.screenWidth,
-          challenge_window_size: globalpayconstants.threeDsStepOne.challenge_window_size,
-          timezone:paymentInformation.threedsdata.value.browserTime,
-          user_agent:paymentInformation.threedsdata.value.userAgent
-       }
-    }
-      var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
-  
-      if (!empty(threeDsStepOneResp) && !empty(threeDsStepOneResp.success) && !threeDsStepOneResp.success) {
-        var serverErrors = [];
-        serverErrors.push(threeDsStepOneResp.error.detailedErrorDescription);
-        return { fieldErrors: [], serverErrors: serverErrors, error: true };
-      }
-   
       var threeDsStepTwo = {
         auth_id : authentication.id
     }
@@ -374,7 +326,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     if (!empty(threeDsStepTwoResp) && !empty(threeDsStepTwoResp.success) && !threeDsStepTwoResp.success) {
       var serverErrors = [];
       serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
-      return { fieldErrors: [], serverErrors: serverErrors, error: true,threeDsStepTwoResp:threeDsStepTwoResp };
+      return { fieldErrors: [], serverErrors: serverErrors, error: true };
     } 
    }
  
@@ -418,7 +370,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     paymentInstrument.setCreditCardExpirationYear(expirationYear);
     paymentInstrument.setCreditCardToken(authentication.id);
   });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepOneResp: threeDsStepOneResp };
+  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepTwoResp: threeDsStepTwoResp };
 }
 /**
  * update payment tokenId to paymentInstruments

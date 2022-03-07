@@ -79,7 +79,14 @@ cardForm.on("token-success", (resp) => {
     $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
     if($("#expirationYear").val()){
    $( ".submit-payment" ).trigger( "click" );
-          
+         
+         var cartData = {
+           amount : parseInt($('.grand-total-sum').text().replace('$',''))*100,
+           address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
+           city: $('input[name*="shippingAddress_addressFields_city"]').val(),
+           postalcode : $('input[name*="shippingAddress_addressFields_postalCode"]').val()
+         };
+
           const {
                 checkVersion,
                 getBrowserData,
@@ -90,7 +97,8 @@ cardForm.on("token-success", (resp) => {
             try {
                     checkVersion('GlobalPay-Authentication', {
                         card: {
-                            reference: resp.paymentReference
+                            reference: resp.paymentReference,
+                            cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
                         if ( versionCheckData.error ) {
@@ -107,7 +115,8 @@ cardForm.on("token-success", (resp) => {
                                     authId: versionCheckData.id,
                                     methodUrlComplete: true,
                                     card: {
-                                        reference: resp.paymentReference
+                                        reference: resp.paymentReference,
+                                         cartData:cartData
                                     },
                                     challengeWindow: {
                                         windowSize: ChallengeWindowSize.Windowed600x400,
@@ -132,8 +141,8 @@ cardForm.on("token-success", (resp) => {
                  }
 
 
-
-    return false;
+   // setTimeout(function() { debugger; }, 5000)
+     
     
     form.appendChild(token);
     form.submit();
