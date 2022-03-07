@@ -6,7 +6,8 @@
 <input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.gpaymerchantname}"/>
 <input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
-
+<input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
+ 
 
     <!----------------------------------------------------------------------------------->
     <!-- Load Static Assets -->
@@ -15,6 +16,7 @@
         var assets = require('*/cartridge/scripts/assets.js');
         assets.addJs('/js/checkout.js');
         assets.addJs('/js/googlepay.js');
+        assets.addJs('/js/globalpayments-3ds.js');
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
 <script  src="${URLUtils.staticURL('/js/googlePayment.js')}"></script>
