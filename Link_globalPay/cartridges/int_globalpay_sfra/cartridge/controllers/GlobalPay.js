@@ -55,14 +55,18 @@ server.use('Authentication', function (req, res, next) {
   var Locale = require('dw/util/Locale');
   var URLUtils = require('dw/web/URLUtils');
   var myreq = req;
-  var currentBasket = BasketMgr.getCurrentOrNewBasket(); 
- 
+  //var currentBasket =  BasketMgr.getBasket('139b43cf9419d4d1c13fc82acf');//getCurrentOrNewBasket(); 
+  var storedBasket  = BasketMgr.getStoredBasket();
+  var currentOrNewBasket  = BasketMgr.getCurrentOrNewBasket();
+  var currentBasket = BasketMgr.getCurrentBasket();
+
+  var body = JSON.parse(req.body);
   var authenticationData = {
       account_name: globalpayconstants.authenticationData.account_name,
       channel: globalpayconstants.authenticationData.channel,
       country: Locale.getLocale(req.locale.id).country,
       reference: globalpayconstants.authorizationData.reference,
-      amount: (currentBasket.totalGrossPrice.value * 100).toFixed(),
+      amount: body.card.cartData.amount,
       currency: currentBasket.currencyCode,
       source: globalpayconstants.authenticationData.source,
       payment_method: {
@@ -115,7 +119,7 @@ server.use('Initiation', function (req, res, next) {
   var Locale = require('dw/util/Locale');
   var URLUtils = require('dw/web/URLUtils');
   var basket = BasketMgr.getCurrentOrNewBasket(); 
-
+  var body = JSON.parse(req.body);
   var browserData = JSON.parse(req.body).browserData;
   var challengeWindow = JSON.parse(req.body).challengeWindow;
         var threeDsStepOne = 
@@ -129,13 +133,13 @@ server.use('Initiation', function (req, res, next) {
           merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
           order:{
               time_created_reference: (new Date()).toISOString(),
-              amount: (basket.totalGrossPrice.value  * 100).toFixed(),
+              amount:body.card.cartData.amount,
               currency:basket.currencyCode,
               address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
               shipping_address:{
-                line1:'92 Scarcroft Road',// basket.shipments[0].shippingAddress.address1,
-                city:'POOLEY BRIDGE',//basket.shipments[0].shippingAddress.city,
-                postal_code:'CA10 3EB',//basket.shipments[0].shippingAddress.postalCode,
+                line1:body.card.cartData.address1,// basket.shipments[0].shippingAddress.address1,
+                city:body.card.cartData.city,//basket.shipments[0].shippingAddress.city,
+                postal_code:body.card.cartData.postalcode,//basket.shipments[0].shippingAddress.postalCode,
                 country:globalpayconstants.country
               }
           },
