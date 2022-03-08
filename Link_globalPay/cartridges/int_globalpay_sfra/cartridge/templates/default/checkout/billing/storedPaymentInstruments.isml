@@ -1,11 +1,14 @@
+<isset name="currenetToken" value="" scope="page"/>
+<isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument1" status="loopState">
+<isloop items="${pdict.myWallet}" var="eachWallet" status="loopState">
+    <isif condition="${paymentInstrument1.maskedCreditCardNumber == eachWallet.maskCard }">
+    <isset name="currenetToken" value="${eachWallet.pmttoken}" scope="page"/>
+    </isif>
+</isloop>
+</isloop>
+
 <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopState">
-    <isset name="currenetToken" value="" scope="page"/>
-      <isloop items="${pdict.myWallet}" var="eachWallet" status="loopState">
-        <isif condition="${paymentInstrument.maskedCreditCardNumber == eachWallet.maskCard }">
-        <isset name="currenetToken" value="${eachWallet.pmttoken}" scope="page"/>
-        </isif>
-      </isloop> 
-<div class="row saved-payment-instrument ${loopState.first ? 'selected-payment' : ''}" data-uuid="${paymentInstrument.UUID}" data-pmt=${currenetToken}>
+    <div class="row saved-payment-instrument ${loopState.first ? 'selected-payment' : ''}" data-uuid="${paymentInstrument.UUID}" data-pmt=${currenetToken}>
         <div class="form-group required saved-security-code col-6 col-md-3">
             <img class="card-image ${loopState.first ? 'checkout-hidden' : ''}"
                  src="${paymentInstrument.cardTypeImage.src}"
@@ -32,7 +35,6 @@
                 <span>
                     ${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
                     ${paymentInstrument.creditCardType}
-                
                 </span>
             </div>
             <div class="saved-credit-card-number">
