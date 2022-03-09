@@ -257,6 +257,10 @@ server.prepend(
         value: JSON.parse(paymentForm.creditCardFields.threedsdata.value),
         htmlName: JSON.parse(paymentForm.creditCardFields.threedsdata.value)
       };
+      viewData.paymentInformation.authId = {
+        value: paymentForm.creditCardFields.authId.value,
+        htmlName: paymentForm.creditCardFields.authId.value
+      };
 
       res.setViewData(viewData);
 

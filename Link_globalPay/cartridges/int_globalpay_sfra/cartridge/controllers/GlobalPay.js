@@ -101,7 +101,7 @@ server.use('Authentication', function (req, res, next) {
        }
       //
       var reqAuthfields = new Object();
-          reqAuthfields.enrolled = !empty(authentication.threeDs.enrolledStatus)?authentication.threeDs.enrolledStatus:'';
+          reqAuthfields.enrolled =  authentication.threeDs.enrolledStatus;
           reqAuthfields.methodData = authentication.threeDs.methodData.encodedMethodData;
           reqAuthfields.methodUrl = authentication.threeDs.methodUrl;
           reqAuthfields.serverTransactionId = authentication.threeDs.serverTransRef;

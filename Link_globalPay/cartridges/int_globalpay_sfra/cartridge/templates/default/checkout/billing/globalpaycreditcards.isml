@@ -78,7 +78,7 @@ cardForm.on("token-success", (resp) => {
     $("#paymentId").val(JSON.stringify(resp));
     $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
     if($("#expirationYear").val()){
-   $( ".submit-payment" ).trigger( "click" );
+  
          
          var cartData = {
            amount : parseFloat($('.grand-total-sum').text().replace('$',''))*100,
@@ -104,9 +104,11 @@ cardForm.on("token-success", (resp) => {
                         if ( versionCheckData.error ) {
 
                         }else{
+                             console.log('::::'+JSON.stringify(versionCheckData));
                           console.log('::::'+versionCheckData.id);
                           $("#authId").val(versionCheckData.id);
-                           // setTimeout(Initate,1000)
+                          $("#authId").val(versionCheckData.id);
+                           
                        // function Initate(){
                                 try {
                                     authenticationData = initiateAuthentication('GlobalPay-Initiation', {
@@ -124,8 +126,14 @@ cardForm.on("token-success", (resp) => {
                                     }
                                     // order: {}, // optional if data available on client-side
                                     // payer: {}, // optional if data available on client-side
+                                }).then(function(){
+                                $( ".submit-payment" ).trigger( "click" );
+                                 form.appendChild(token);
+                                 form.submit();
                                 });
                                 console.log('Authentication Data', authenticationData);
+                                
+                                 
                                 }
                                 catch(e){
                                 }
@@ -139,13 +147,6 @@ cardForm.on("token-success", (resp) => {
                  catch (e) {
                     // TODO: add your error handling here
                  }
-
-
-   // setTimeout(function() { debugger; }, 5000)
-     
-    
-    form.appendChild(token);
-    form.submit();
     }
     else{
       $('#gpayerror').text('Card details are not valid, please enter valid card details.');  
