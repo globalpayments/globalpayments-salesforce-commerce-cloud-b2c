@@ -291,35 +291,11 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
-
-  var authenticationData = {
-      account_name: globalpayconstants.authenticationData.account_name,
-      channel: globalpayconstants.authenticationData.channel,
-      country: Locale.getLocale(req.locale.id).country,
-      reference: globalpayconstants.authorizationData.reference,
-      amount: (basket.totalGrossPrice.value * 100).toFixed(),
-      currency: basket.currencyCode,
-      source: globalpayconstants.authenticationData.source,
-      payment_method: {
-        id: req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
-      },
-      notifications: {
-        challenge_return_url: preferences.threedsecureChallenge,
-        three_ds_method_return_url: preferences.threedsecureMethod
-      }
-    };
-
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-  var authentication = globalPayHelper.authenticate(authenticationData);
-  if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
-    var serverErrors = [];
-    serverErrors.push(authentication.error.detailedErrorDescription);
-    return { fieldErrors: [], serverErrors: serverErrors, error: true };
-  }
-   if(!empty(authentication.threeDs.methodData.threeDsServerTransId)){
+ 
+   if(!empty(paymentInformation.isthreeds.value) && paymentInformation.isthreeds.value){
       var threeDsStepTwo = {
-        auth_id : authentication.id
-    }
+        auth_id : paymentInformation.authId.value
+      }
   
     var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
     
@@ -327,7 +303,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       var serverErrors = [];
       serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
       return { fieldErrors: [], serverErrors: serverErrors, error: true };
-    } 
+    }
    }
  
 
@@ -362,13 +338,13 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
     paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
 
-    paymentInstrument.custom.gp_authenticationid = authentication.id;
+    paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
     paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
     paymentInstrument.setCreditCardNumber(cardNumber);
     paymentInstrument.setCreditCardType(cardType);
     paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
     paymentInstrument.setCreditCardExpirationYear(expirationYear);
-    paymentInstrument.setCreditCardToken(authentication.id);
+    paymentInstrument.setCreditCardToken(paymentInformation.authId.value);
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepTwoResp: threeDsStepTwoResp };
 }

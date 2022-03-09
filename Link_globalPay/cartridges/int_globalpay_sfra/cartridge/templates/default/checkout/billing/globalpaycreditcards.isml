@@ -78,10 +78,10 @@ cardForm.on("token-success", (resp) => {
     $("#paymentId").val(JSON.stringify(resp));
     $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
     if($("#expirationYear").val()){
-   $( ".submit-payment" ).trigger( "click" );
-         
-         var cartData = {
-           amount : parseFloat($('.grand-total-sum').text().replace('$',''))*100,
+    var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
+         if($('#isnewcard').val()){
+        var cartData = {
+           amount : parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) * 100,
            address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
            city: $('input[name*="shippingAddress_addressFields_city"]').val(),
            postalcode : $('input[name*="shippingAddress_addressFields_postalCode"]').val()
@@ -97,7 +97,7 @@ cardForm.on("token-success", (resp) => {
             try {
                     checkVersion('GlobalPay-Authentication', {
                         card: {
-                            reference: resp.paymentReference,
+                            reference: pmttoken,
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
@@ -105,7 +105,8 @@ cardForm.on("token-success", (resp) => {
 
                         }else{
                           console.log('::::'+versionCheckData.id);
-                          $("#authId").val(versionCheckData.id);
+                         $("#authId").val(versionCheckData.id);
+                        
                            // setTimeout(Initate,1000)
                        // function Initate(){
                                 try {
@@ -115,7 +116,7 @@ cardForm.on("token-success", (resp) => {
                                     authId: versionCheckData.id,
                                     methodUrlComplete: true,
                                     card: {
-                                        reference: resp.paymentReference,
+                                        reference:pmttoken,// resp.paymentReference,
                                          cartData:cartData
                                     },
                                     challengeWindow: {
@@ -124,25 +125,31 @@ cardForm.on("token-success", (resp) => {
                                     }
                                     // order: {}, // optional if data available on client-side
                                     // payer: {}, // optional if data available on client-side
-                                });
-                                console.log('Authentication Data', authenticationData);
+                                }).then(function(){
+                                     $( ".submit-payment" ).trigger( "click" );
+                                })
+                                    console.log('Authentication Data', authenticationData);
+                                    console.log(':::status:'+authenticationData.status);
+                                    /*if(authenticationData.challengeMandated == 'MANDATED'
+                                    && authenticationData.status == 'CHALLENGE_REQUIRED'
+                                    ){
+                                        $("#isthreeds").val(versionCheckData.status);
+                                        console.log('::3ds Card::');
+                                    }*/
+
                                 }
                                 catch(e){
                                 }
                             //}
                         }
-
                     });
-
                  }
-
                  catch (e) {
                     // TODO: add your error handling here
                  }
-
-
-   // setTimeout(function() { debugger; }, 5000)
-     
+   // setTimeout(function() { debugger; }, 5000)     
+         }
+        
     
     form.appendChild(token);
     form.submit();

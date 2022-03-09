@@ -275,160 +275,145 @@ var scrollAnimate = require('base/components/scrollAnimate');
             }
                      // disable the next:Place Order button here
             $('body').trigger('checkout:disableButton', '.next-step-button button');
-            var javaEnabled = navigator.javaEnabled();
-            var browserLanguage = navigator.language;
-            var screenHeight = screen.height;
-            var screenWidth = screen.width;
-            var userAgent = navigator.userAgent;
-            var browserTime = new Date();
-            var browserTimezoneZoneOffset = browserTime.getTimezoneOffset();
-            var clientData = new Object();
-            clientData.colorDepth = screen.colorDepth;
-            clientData.javaEnabled = navigator.javaEnabled();
-            clientData.browserLanguage = navigator.language; // en_US
-            clientData.screenHeight = screen.height; // 1080
-            clientData.screenWidth = screen.width; // 1920
-            clientData.userAgent = navigator.userAgent;
-            clientData.browserTime = browserTime.getTimezoneOffset();// 0
-
-            $("#threedsdata").val(JSON.stringify(clientData));
             
-         var cartData = {
-          amount : parseFloat($('.grand-total-sum').text().replace('$',''))*100,
-          address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
-          city: $('input[name*="shippingAddress_addressFields_city"]').val(),
-          postalcode : $('input[name*="shippingAddress_addressFields_postalCode"]').val()
-        };
-        // started here
-        const {
-          checkVersion,
-          getBrowserData,
-          initiateAuthentication,
-          ChallengeWindowSize,
-      } = GlobalPayments.ThreeDSecure;
-      var pmttoken = $('.saved-payment-instrument' +'.selected-payment').data('pmt');
-      try {
-              checkVersion('GlobalPay-Authentication', {
-                  card: {
-                      reference: pmttoken,
-                      cartData:cartData
-                  },
-              }).then( function( versionCheckData ) {
-                  if ( versionCheckData.error ) {
-
-                  }else{
-                    console.log('::::in chekcout::'+versionCheckData.id);
-                    $("#authId").val(versionCheckData.id);
-                    
-                 // function Initate(){
+        if($('#isnewcard').val() == 'false' && $('.saved-payment-instrument' + '.selected-payment').data('pmt') !== undefined){
+                var cartData = {
+                  amount: parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) * 100,
+                  address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
+                  city: $('input[name*="shippingAddress_addressFields_city"]').val(),
+                  postalcode: $('input[name*="shippingAddress_addressFields_postalCode"]').val()
+              };
+              // started here
+              const {
+                  checkVersion,
+                  getBrowserData,
+                  initiateAuthentication,
+                  ChallengeWindowSize,
+              } = GlobalPayments.ThreeDSecure;
+              var pmttoken = $('.saved-payment-instrument' + '.selected-payment').data('pmt');
+              try {
+                  checkVersion('GlobalPay-Authentication', {
+                      card: {
+                          reference: pmttoken,
+                          cartData: cartData
+                      },
+                  }).then(function(versionCheckData) {
+                      if (versionCheckData.error) {
+              
+                      } else {
+                          console.log('::::in chekcout::' + versionCheckData.id);
+                          console.log('::::in serverTransactionId::' + versionCheckData.serverTransactionId);
+                          $("#authId").val(versionCheckData.id);
+                          $("#isthreeds").val(versionCheckData.serverTransactionId);
+                          // function Initate(){
                           try {
                               authenticationData = initiateAuthentication('GlobalPay-Initiation', {
-                              serverTransactionId: versionCheckData.serverTransactionId,
-                              challengeNotificationUrl:'',
-                              authId: versionCheckData.id,
-                              methodUrlComplete: true,
-                              card: {
-                                  reference:pmttoken,
-                                  cartData:cartData
-                              },
-                              challengeWindow: {
-                                  windowSize: ChallengeWindowSize.Windowed600x400,
-                                  displayMode: 'lightbox',
+                                  serverTransactionId: versionCheckData.serverTransactionId,
+                                  challengeNotificationUrl: '',
+                                  authId: versionCheckData.id,
+                                  methodUrlComplete: true,
+                                  card: {
+                                      reference: pmttoken,
+                                      cartData: cartData
+                                  },
+                                  challengeWindow: {
+                                      windowSize: ChallengeWindowSize.Windowed600x400,
+                                      displayMode: 'lightbox',
+                                  }
+                                  // order: {}, // optional if data available on client-side
+                                  // payer: {}, // optional if data available on client-side
+                              });
+                              console.log('Authentication Data', authenticationData);
+                              console.log(':::status:'+authenticationData.status);                           
+                              $("#isthreeds").val(authenticationData.status);              
+                          } catch (e) {
+                              console.log('e:::' + e);
+                          }
+                          //}
+                      }
+                  });
+              } catch (e) {
+                  console.log('e:::' + e);
+                  // TODO: add your error handling here
+              }
+        } 
+          $.ajax({
+              url: $('#dwfrm_billing').attr('action'),
+              method: 'POST',
+              data: paymentForm,
+              success: function(data) {
+                  // enable the next:Place Order button here
+                  $('body').trigger('checkout:enableButton', '.next-step-button button');
+                  // look for field validation errors
+                  if (data.error) {
+                      $('a.nav-link.credit-card-tab').removeClass('disabled');
+                      $('a.nav-link.google-pay-tab').removeClass('disabled');
+                      $('a.nav-link.apple-pay-tab').removeClass('disabled');
+                      if (data.fieldErrors.length) {
+                          data.fieldErrors.forEach(function(error) {
+                              if (Object.keys(error).length) {
+                                  formHelpers.loadFormErrors('.payment-form', error);
                               }
-                              // order: {}, // optional if data available on client-side
-                              // payer: {}, // optional if data available on client-side
                           });
-                          console.log('Authentication Data', authenticationData);
-                         
-
+                      }
+          
+                      if (data.serverErrors.length) {
+                          data.serverErrors.forEach(function(error) {
+                              $('.error-message').show();
+                              $('.error-message-text').text(error);
+                              scrollAnimate($('.error-message'));
+                          });
+                      }
+          
+                      if (data.cartError) {
+                          window.location.href = data.redirectUrl;
+                      }
+          
+                      defer.reject();
+                  } else {
+                      if ($('.tab-pane.active').attr('id') == 'paypal-content') {
+                          window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;
+                      } //
+                      // Populate the Address Summary
+                      //
+                      if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'apple-pay-content') {
+                          placeOrderSuccess(data); //populate order details
+                          defer.resolve(data);
+                      } else {
+                          $('body').trigger('checkout:updateCheckoutView', {
+                              order: data.order,
+                              customer: data.customer
+                          });
+          
+                          if (data.renderedPaymentInstruments) {
+                              $('.stored-payments').empty().html(
+                                  data.renderedPaymentInstruments
+                              );
                           }
-                          catch(e){
-                            console.log('e:::'+e);
+          
+                          if (data.customer.registeredUser &&
+                              data.customer.customerPaymentInstruments.length
+                          ) {
+                              $('.cancel-new-payment').removeClass('checkout-hidden');                              
+                          }  
+                          if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
+                              scrollAnimate();
                           }
-                      //}
+          
+                          defer.resolve(data);
+                      }
                   }
-              });
-           }
-           catch (e) {
-            console.log('e:::'+e);
-              // TODO: add your error handling here
-           }
-
-
-$.ajax({
-                            url: $('#dwfrm_billing').attr('action'),
-                            method: 'POST',
-                            data: paymentForm,
-                            success: function (data) {
-                                           // enable the next:Place Order button here
-                              $('body').trigger('checkout:enableButton', '.next-step-button button');
-                                          // look for field validation errors
-                              if (data.error) {
-                                $('a.nav-link.credit-card-tab').removeClass('disabled');
-                                $('a.nav-link.google-pay-tab').removeClass('disabled');
-                                $('a.nav-link.apple-pay-tab').removeClass('disabled');
-                                if (data.fieldErrors.length) {
-                                  data.fieldErrors.forEach(function (error) {
-                                    if (Object.keys(error).length) {
-                                      formHelpers.loadFormErrors('.payment-form', error);
-                                    }
-                                  });
-                                }
-              
-                                if (data.serverErrors.length) {
-                                  data.serverErrors.forEach(function (error) {
-                                    $('.error-message').show();
-                                    $('.error-message-text').text(error);
-                                    scrollAnimate($('.error-message'));
-                                  });
-                                }
-              
-                                if (data.cartError) {
-                                  window.location.href = data.redirectUrl;
-                                }
-              
-                                defer.reject();
-                              } else {
-                                if ($('.tab-pane.active').attr('id') == 'paypal-content') { window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url; }   //
-                                              // Populate the Address Summary
-                                              //
-                                              if($('.tab-pane.active').attr('id') == 'google-pay-content'||$('.tab-pane.active').attr('id') =='apple-pay-content')
-                                              {
-                                                  placeOrderSuccess(data);//populate order details
-                                                  defer.resolve(data);
-                                              }
-                                              else{
-                                              $('body').trigger('checkout:updateCheckoutView',
-                                                  { order: data.order, customer: data.customer });
-              
-                                  if (data.renderedPaymentInstruments) {
-                                    $('.stored-payments').empty().html(
-                                                      data.renderedPaymentInstruments
-                                                  );
-                                  }
-              
-                                  if (data.customer.registeredUser
-                                                  && data.customer.customerPaymentInstruments.length
-                                              ) {
-                                    $('.cancel-new-payment').removeClass('checkout-hidden');
-                                  }
-                                  if($('.tab-pane.active').attr('id') !== 'paypal-content'){
-                                    scrollAnimate();
-                                  }
-                                  
-                                  defer.resolve(data);
-                                }
-                              }
-                            },
-                            error: function (err) {
-                                          // enable the next:Place Order button here
-                              $('body').trigger('checkout:enableButton', '.next-step-button button');
-                              if (err.responseJSON && err.responseJSON.redirectUrl) {
-                                window.location.href = err.responseJSON.redirectUrl;
-                              }
-                            }
-                          });
-        // end here
+              },
+              error: function(err) {
+                  // enable the next:Place Order button here
+                  $('body').trigger('checkout:enableButton', '.next-step-button button');
+                  if (err.responseJSON && err.responseJSON.redirectUrl) {
+                      window.location.href = err.responseJSON.redirectUrl;
+                  }
+              }
+          });
+          // end here
+        
          
          
 
@@ -557,10 +542,12 @@ $.ajax({
           $('.cancel-new-payment', plugin).on('click', function () {
             $('.next-step-button .submit-payment').removeClass('d-none');
             $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',false)
+            $('#isnewcard').val(false);
           });
           $('.add-payment', plugin).on('click', function () {
             $('.next-step-button .submit-payment').addClass('d-none');
             $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',true)
+            $('#isnewcard').val(true);
           });
           $('.shipping-summary .edit-button', plugin).on('click', function () {
             if (!$('#checkout-main').hasClass('multi-ship')) {

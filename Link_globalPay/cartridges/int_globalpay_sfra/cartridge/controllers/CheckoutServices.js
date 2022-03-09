@@ -258,6 +258,15 @@ server.prepend(
         htmlName: JSON.parse(paymentForm.creditCardFields.threedsdata.value)
       };
 
+      viewData.paymentInformation.authId = {
+        value: paymentForm.creditCardFields.authId.value,
+        htmlName: paymentForm.creditCardFields.authId.value
+      };
+      viewData.paymentInformation.isthreeds = {
+        value: paymentForm.creditCardFields.isthreeds.value,
+        htmlName: paymentForm.creditCardFields.isthreeds.value
+      };
+
       res.setViewData(viewData);
 
       this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
