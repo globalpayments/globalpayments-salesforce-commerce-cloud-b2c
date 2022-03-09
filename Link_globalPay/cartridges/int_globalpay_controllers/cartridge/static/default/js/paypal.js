@@ -92,5 +92,63 @@ $('.GPcreditCardList').on('change', function () {
 
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
-    $('#dwfrm_billing').submit();
+   // $('#dwfrm_billing').submit();
+   var pmttoken = $('#savedPaymentToken');
+   var cartData = {
+    amount : parseFloat($('.order-total .order-value').text().replace('$',''))*100,
+    address1: $('input[name*="_addressFields_address1"]').val(),
+    city: $('input[name*="_addressFields_city"]').val(),
+    postalcode : $('input[name*="_addressFields_postal"]').val()
+  };
+
+   const {
+         checkVersion,
+         getBrowserData,
+         initiateAuthentication,
+         ChallengeWindowSize,
+     } = GlobalPayments.ThreeDSecure;
+
+     try {
+             checkVersion('GlobalPay-Authentication', {
+                 card: {
+                     reference: pmttoken,
+                     cartData:cartData
+                 },
+             }).then( function( versionCheckData ) {
+                 if ( versionCheckData.error ) {
+
+                 }else{
+                   $("#authId").val(versionCheckData.id);
+                    // setTimeout(Initate,1000)
+                // function Initate(){
+                         try {
+                             authenticationData = initiateAuthentication('GlobalPay-Initiation', {
+                             serverTransactionId: versionCheckData.serverTransactionId,
+                             challengeNotificationUrl:'',
+                             authId: versionCheckData.id,
+                             methodUrlComplete: true,
+                             card: {
+                                 reference: pmttoken,
+                                  cartData:cartData
+                             },
+                             challengeWindow: {
+                                 windowSize: ChallengeWindowSize.Windowed600x400,
+                                 displayMode: 'lightbox',
+                             }
+                             // order: {}, // optional if data available on client-side
+                             // payer: {}, // optional if data available on client-side
+                         });
+                         }
+                         catch(e){
+                         }
+                     //}
+                 }
+            setTimeout(function(){$('#dwfrm_billing').submit();},5000);
+             });
+     
+          }
+
+          catch (e) {
+             // TODO: add your error handling here
+          }
  });

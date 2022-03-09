@@ -91,4 +91,5 @@ globalpayConstants.APP = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/ap
 globalpayConstants.GPAPP=globalpayConstants.GP_CONTROLLER+'/cartridge/scripts/gpapp';
 globalpayConstants.SGPAGEMETA = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/meta';
 globalpayConstants.SGOBJECT = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/object';
+globalpayConstants.SGRESPONSE = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/util/Response';
 module.exports = globalpayConstants;

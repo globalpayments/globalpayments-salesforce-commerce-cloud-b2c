@@ -51,14 +51,14 @@
 
 			<iscomment>display select box with stored credit cards if customer is authenticated</iscomment>
 			<isif condition="${pdict.CurrentCustomer.authenticated && !empty(pdict.ApplicableCreditCards)}">
-
+				<input type="hidden" id="savedPaymentToken" name="savedPaymentToken" value="true" />
 				<div class="form-row">
 					<label class="label">${Resource.msg('billing.selectcreditcard','checkout',null)}</label>
 					<div class="field-wrapper">
 						<select name="${pdict.CurrentForms.billing.paymentMethods.creditCardList.htmlName}" id="GPcreditCardList" class="input-select GPcreditCardList">
 							<option value="" selected="selected">${Resource.msg('billing.creditcardlistselect','checkout',null)}</option>
 							<isloop items="${pdict.ApplicableCreditCards}" var="creditCardInstr">
-								<option value="${creditCardInstr.UUID}">(<isprint value="${creditCardInstr.creditCardType}"/>) <isprint value="${creditCardInstr.maskedCreditCardNumber}"/> - ${Resource.msg('billing.creditcardlistexp','checkout',null)} <isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />.<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" /></option>
+								<option value="${creditCardInstr.UUID}" data-pmt=${creditCardInstr.creditCardToken}>(<isprint value="${creditCardInstr.creditCardType}"/> ) <isprint value="${creditCardInstr.maskedCreditCardNumber}"/> - ${Resource.msg('billing.creditcardlistexp','checkout',null)} <isprint value="${creditCardInstr.creditCardExpirationMonth}" formatter="00" />.<isprint value="${creditCardInstr.creditCardExpirationYear}" formatter="0000" /></option>
 							</isloop>
 						</select>
 					</div>
@@ -196,4 +196,5 @@
 <script  src="${URLUtils.staticURL('/js/googlePayment.js')}"></script>
 <script  defer src="${URLUtils.staticURL('/js/googlepay.js')}"></script>
 <script  defer src="${URLUtils.staticURL('/js/paypal.js')}"></script>
+<script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/global-pay.css')}" />

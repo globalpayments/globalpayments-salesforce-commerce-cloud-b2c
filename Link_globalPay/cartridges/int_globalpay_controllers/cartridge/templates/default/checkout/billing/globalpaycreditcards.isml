@@ -11,6 +11,7 @@
     <!-- Target for the credit card form -->
     <div id="credit-card"></div>
 </form>
+<isset name="Url" value="${require('dw/web/URLUtils').url('GlobalPay-Authentication').toString()}" scope="page"/>
 
 <!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
@@ -52,7 +53,21 @@ function gatherBrowserData() {
  return clientData;
 }
 
+const cvvList = document.querySelectorAll("#saved-payment-security-code");
+if (cvvList.length) {
+  for (let i = 0; i < cvvList.length; i++) {
+    cvvList[i].addEventListener("keypress", isNumberKey, false);
+    }
+}
 
+function isNumberKey(evt){
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode == 46 || charCode > 31 && (charCode < 48 || charCode > 57)){
+        evt.preventDefault();
+        return false;
+    }
+    return true;
+}
 cardForm.on("token-success", (resp) => {
     // add payment token to form as a hidden input
     const token = document.createElement("input");
@@ -70,7 +85,68 @@ cardForm.on("token-success", (resp) => {
    $('input[name*=_threedsdata]').val(JSON.stringify(gatherBrowserData()))
 if($('[name$="_expiration_year"]').val())
 {
-    $('#dwfrm_billing').submit();
+         var cartData = {
+           amount : parseFloat($('.order-total .order-value').text().replace('$',''))*100,
+           address1: $('input[name*="_addressFields_address1"]').val(),
+           city: $('input[name*="_addressFields_city"]').val(),
+           postalcode : $('input[name*="_addressFields_postal"]').val()
+         };
+
+          const {
+                checkVersion,
+                getBrowserData,
+                initiateAuthentication,
+                ChallengeWindowSize,
+            } = GlobalPayments.ThreeDSecure;
+
+            try {
+                    checkVersion('GlobalPay-Authentication', {
+                        card: {
+                            reference: resp.paymentReference,
+                            cartData:cartData
+                        },
+                    }).then( function( versionCheckData ) {
+                        if ( versionCheckData.error ) {
+
+                        }else{
+                          console.log('::::'+versionCheckData.id);
+                          $("#authId").val(versionCheckData.id);
+                           // setTimeout(Initate,1000)
+                       // function Initate(){
+                                try {
+                                    authenticationData = initiateAuthentication('GlobalPay-Initiation', {
+                                    serverTransactionId: versionCheckData.serverTransactionId,
+                                    challengeNotificationUrl:'',
+                                    authId: versionCheckData.id,
+                                    methodUrlComplete: true,
+                                    card: {
+                                        reference: resp.paymentReference,
+                                         cartData:cartData
+                                    },
+                                    challengeWindow: {
+                                        windowSize: ChallengeWindowSize.Windowed600x400,
+                                        displayMode: 'lightbox',
+                                    }
+                                    // order: {}, // optional if data available on client-side
+                                    // payer: {}, // optional if data available on client-side
+                                });
+                                
+                                console.log('Authentication Data', authenticationData);
+                                }
+                                catch(e){
+                                }
+                            //}
+                        }
+ setTimeout(function(){$('#dwfrm_billing').submit();},5000);
+                    });
+            
+                 }
+
+                 catch (e) {
+                    // TODO: add your error handling here
+                 }
+
+
     form.appendChild(token);
     form.submit();
 }
