@@ -77,6 +77,7 @@ function captureTransaction(){
          if(secureheaders){
              var order = OrderMgr.getOrder(req.orderID.stringValue);
                  var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+                 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
                  var amount = ((order.totalGrossPrice)*100).toFixed();
                  var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
                  
@@ -84,10 +85,10 @@ function captureTransaction(){
                  var transactionData = {
                      transaction_id: ordertransactionid,  // Transaction ID 
                      amount: amount, //order.amount
-                     capture_sequence: "FIRST",
+                     capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
                      total_capture_count: 0,
                      payment_method: {
-                         entry_mode: "ECOM",
+                         entry_mode: globalpayconstants.captureTransaction.entry_mode,
                          id: paymentID // paymentID
                      }
                  };

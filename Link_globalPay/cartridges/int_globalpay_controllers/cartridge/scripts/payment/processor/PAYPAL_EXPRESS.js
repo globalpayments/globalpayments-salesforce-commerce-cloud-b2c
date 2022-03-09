@@ -23,9 +23,9 @@ function Handle(args) {
 }
 
 /**
- * Authorizes a payment using a credit card. The payment is authorized by using the PAYPAL_EXPRESS processor only
+ * Authorizes a payment using apaypal. The payment is authorized by using the PAYPAL_EXPRESS processor only
  * and setting the order no as the transaction ID. Customizations may use other processors and custom logic to
- * authorize credit card payment.
+ * authorize payment.
  */
  function Authorize(args) {
     var orderNo = args.OrderNo;
@@ -50,7 +50,6 @@ function Handle(args) {
       country: 'US',
      // country:Locale.getLocale(request.locale.id).country, need
       payment_method: {
-                      // name: "Doe",
         entry_mode: globalpayconstants.paypalData.entryMode,
         apm: {
           provider: globalpayconstants.paypalData.paypal

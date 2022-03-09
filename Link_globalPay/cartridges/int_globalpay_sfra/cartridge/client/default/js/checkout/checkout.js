@@ -519,6 +519,7 @@ $.ajax({
           $('body').on('click', '.payment-options .nav-item', function (e) {
             e.preventDefault();
             if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab') {
+              //if clecked on googlepay, applepay and paypal tabs
               $('.next-step-button .submit-payment').hide();
             } else { $('.next-step-button .submit-payment').show(); }
           });
@@ -553,7 +554,9 @@ $.ajax({
           $('.customer-summary .edit-button', plugin).on('click', function () {
             members.gotoStage('customer');
           });
-
+          // Handle add payment and back to saved cards for login flow and 
+          // Handle next step button and save card checkbox
+          //
           $('.cancel-new-payment', plugin).on('click', function () {
             $('.next-step-button .submit-payment').removeClass('d-none');
             $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked',false)
@@ -573,6 +576,7 @@ $.ajax({
                 $('.payment-summary .edit-button', plugin).on('click', function () {
                     members.gotoStage('payment');
                 });
+                // On button click disable other payment tabs
                 $('.btn-paypal-button',plugin).on('click',function() {
                     $('a.nav-link.credit-card-tab').addClass("disabled");
                     $('a.nav-link.google-pay-tab').addClass("disabled");

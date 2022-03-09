@@ -332,6 +332,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
  
 
   Transaction.wrap(function () {
+    //clear previous payment instrument and update new selected payment instrument
     var paymentInstruments = currentBasket.getPaymentInstruments(
             PaymentInstrument.METHOD_CREDIT_CARD
         );
