@@ -56,6 +56,15 @@ function Transactions() {
 
 };
 
+/**
+ * GlobalPay-Authentication : The GlobalPay-Authentications endpoint invoke the authentication
+ * @name Base/GlobalPay-Authentications
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 function Authentication() {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -117,10 +126,17 @@ function Authentication() {
           responseUtils.renderJSON(
             reqAuthfields
         );
-     //response.json(reqAuthfields);
+
 };
-
-
+/**
+ * GlobalPay-Initiation : The GlobalPay-Initiation endpoint invoke  the initiation
+ * @name Base/GlobalPay-Initiation
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 function Initiation() {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');

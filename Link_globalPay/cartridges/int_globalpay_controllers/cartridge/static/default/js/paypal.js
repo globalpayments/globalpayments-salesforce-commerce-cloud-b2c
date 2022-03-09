@@ -75,6 +75,7 @@ $('.GPcreditCardList').on('change', function () {
         $('.GP-creditcard-iframe').addClass('d-none');
         $('.save-card').addClass('d-none');
         $('[name$="_saveCard"]').val('false');
+        $('#savedPaymentToken').val($(this).find(':selected').attr('data-pmt'));
         populateCreditCardForm(cardUUID);
     }
     else{
@@ -93,7 +94,7 @@ $('.GPcreditCardList').on('change', function () {
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
    // $('#dwfrm_billing').submit();
-   var pmttoken = $('#savedPaymentToken');
+   var pmttoken = $('#savedPaymentToken').val();
    var cartData = {
     amount : parseFloat($('.order-total .order-value').text().replace('$',''))*100,
     address1: $('input[name*="_addressFields_address1"]').val(),
