@@ -147,9 +147,9 @@ server.use('Initiation', function (req, res, next) {
               currency:basket.currencyCode,
               address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
               shipping_address:{
-                line1:body.card.cartData.address1,// basket.shipments[0].shippingAddress.address1,
-                city:body.card.cartData.city,//basket.shipments[0].shippingAddress.city,
-                postal_code:body.card.cartData.postalcode,//basket.shipments[0].shippingAddress.postalCode,
+                line1:body.card.cartData.address1,
+                city:body.card.cartData.city,
+                postal_code:body.card.cartData.postalcode,
                 country:globalpayconstants.country
               }
           },
@@ -160,17 +160,17 @@ server.use('Initiation', function (req, res, next) {
 
           browser_data:{
               accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-              color_depth: browserData.colorDepth,//paymentInformation.threedsdata.value.colorDepth,
+              color_depth: browserData.colorDepth,
               ip: req.httpHeaders.get('true-client-ip'),
-              java_enabled:browserData.javaEnabled,// paymentInformation.threedsdata.value.javaEnabled,
-              javascript_enabled:browserData.javascriptEnabled,// globalpayconstants.threeDsStepOne.javascript_enabled,
-              language:browserData.language,//paymentInformation.threedsdata.value.browserLanguage,//"en-US",
-              screen_height:browserData.screenHeight,//paymentInformation.threedsdata.value.screenHeight,
-              language:browserData.language,//paymentInformation.threedsdata.value.browserLanguage,//"en-US",
-              screen_width:browserData.screenWidth,//paymentInformation.threedsdata.value.screenWidth,
-              challenge_window_size:challengeWindow.windowSize,// globalpayconstants.threeDsStepOne.challenge_window_size,
-              timezone:browserData.timezoneOffset,//paymentInformation.threedsdata.value.browserTime,
-              user_agent: browserData.userAgent//'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'//paymentInformation.threedsdata.value.userAgent
+              java_enabled:browserData.javaEnabled,
+              javascript_enabled:browserData.javascriptEnabled,
+              language:browserData.language,
+              screen_height:browserData.screenHeight,
+              language:browserData.language,
+              screen_width:browserData.screenWidth,
+              challenge_window_size:challengeWindow.windowSize,
+              timezone:browserData.timezoneOffset,
+              user_agent: browserData.userAgent
           }
         }
 
