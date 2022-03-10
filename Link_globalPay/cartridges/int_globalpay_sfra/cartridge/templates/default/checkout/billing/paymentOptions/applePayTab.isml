@@ -1,7 +1,12 @@
 <isif condition="${session.custom.applepaysession === 'yes'}" >
-        <li class="nav-item" data-method-id="${paymentOption.ID}">
-            <div class="col-6 col-sm-5" id="apple-pay-cart-button">
-                <isapplepay class="apple-pay-cart btn btn-block"></isapplepay>
-            </div>
-        </li>
- </isif>
+    <li class="nav-item" data-method-id="${paymentOption.ID}">
+        <a class="nav-link apple-pay-tab" data-toggle="tab" href="#apple-pay-content" role="tab">
+            <img class="apple-pay-option"
+                    src="${URLUtils.staticURL('/images/apple.png')}"
+                    height="32"
+                    alt="${paymentOption.name}"
+                    title="${paymentOption.name}"*********
+            >
+        </a>
+    </li>
+</isif>

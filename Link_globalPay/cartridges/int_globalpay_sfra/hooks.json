@@ -15,11 +15,11 @@
         },
         {
             "name": "dw.extensions.applepay.getRequest",
-            "script": "./cartridge/scripts/hooks/payment/processor/applepay.js"
+            "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         },
         {
             "name": "dw.extensions.applepay.paymentAuthorized.authorizeOrderPayment",
-            "script": "./cartridge/scripts/hooks/payment/processor/applepay.js"
+            "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         }
     ]
 }

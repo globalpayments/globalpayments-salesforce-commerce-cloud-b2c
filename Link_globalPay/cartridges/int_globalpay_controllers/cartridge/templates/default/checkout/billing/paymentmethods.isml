@@ -179,7 +179,7 @@
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">
 			<!-- Your custom payment method implementation goes here. -->
-			<isinclude template="checkout/billing/applePayForm" />
+			<isinclude template="checkout/billing/applePayTab" />
 		</div>
 		<div class="d-none"> 
  <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentToken}" type="input"/>
@@ -198,3 +198,15 @@
 <script  defer src="${URLUtils.staticURL('/js/paypal.js')}"></script>
 <script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/global-pay.css')}" />
+<script>
+	$(document).ready(function () {
+		alert(window.dw.applepay);
+		if (window.dw
+			&& window.dw.applepay
+			&& window.ApplePaySession
+			&& window.ApplePaySession.canMakePayments()) {
+				alert();
+			$('body').addClass('apple-pay-enabled');
+		}
+	});
+</script>
