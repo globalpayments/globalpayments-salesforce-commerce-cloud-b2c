@@ -25,11 +25,14 @@ server.append('Begin', function (req, res, next) {
 
      if(!empty(customer.profile)){
     var wallet = require('dw/customer/CustomerMgr').getCustomerByCustomerNumber(customer.profile.customerNo).getProfile().getWallet();
-     
+    var walletJson = new Object();
+       walletJson.pmt = [];
     for(var c=0; c < wallet.paymentInstruments.length; c++ ){
         var tokenJson = {}; 
         tokenJson.maskCard = wallet.paymentInstruments[c].maskedCreditCardNumber;
+        tokenJson.uuid = wallet.paymentInstruments[c].UUID;
         tokenJson.pmttoken = wallet.paymentInstruments[c].creditCardToken;
+        walletJson.pmt.push(tokenJson);
         walletList.add(tokenJson);
       }
      }
@@ -43,7 +46,8 @@ server.append('Begin', function (req, res, next) {
             gpaymerchantname:gpayMerchantName,
             gatewayMerchantId:gatewayMerchantId,
             gpayenv:gpayEnv,
-            myWallet:walletList 
+            myWallet:walletList,
+            walletJson : walletJson
         };
     res.setViewData(viewData);
     next();
