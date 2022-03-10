@@ -259,8 +259,8 @@ server.prepend(
       };
 
       viewData.paymentInformation.authId = {
-        value: paymentForm.creditCardFields.authId.value,
-        htmlName: paymentForm.creditCardFields.authId.value
+        value: req.form.authId,
+        htmlName: req.form.authId
       };
       viewData.paymentInformation.isthreeds = {
         value: paymentForm.creditCardFields.isthreeds.value,
