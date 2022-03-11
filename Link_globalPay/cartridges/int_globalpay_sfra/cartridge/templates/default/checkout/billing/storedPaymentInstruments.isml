@@ -1,6 +1,6 @@
 <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopState">
     <isset name="currenetToken" value="" scope="page"/>
-      <isloop items="${pdict.myWallet}" var="eachWallet" status="loopState">
+      <isloop items="${pdict.myWallet}" var="eachWallet">
         <isif condition="${paymentInstrument.maskedCreditCardNumber == eachWallet.maskCard }">
         <isset name="currenetToken" value="${eachWallet.pmttoken}" scope="page"/>
         </isif>
