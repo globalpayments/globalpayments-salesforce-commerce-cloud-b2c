@@ -74,80 +74,13 @@ function Handle(args) {
       htmlName: JSON.parse(paymentTokenId).paymentReference
     };
   }
-    var authenticationData = {
-        account_name: globalpayconstants.authenticationData.account_name,
-        channel: globalpayconstants.authenticationData.channel,
-        country: 'US',
-        reference: globalpayconstants.authorizationData.reference,
-        amount: (currentBasket.totalGrossPrice.value * 100).toFixed(),
-        currency: currentBasket.currencyCode,
-        source: globalpayconstants.authenticationData.source,
-        payment_method: {
-          id:  saveCard&&customer.authenticated && customer.registered ? getTokenbyUUID(request,paymentId.value ) : paymentId.value
-        },
-        notifications: {
-          challenge_return_url: preferences.threedsecureChallenge,
-          three_ds_method_return_url: preferences.threedsecureMethod
-        }
-      };
-  
-    var authentication = globalPayHelper.authenticate(authenticationData);
-    if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
-      var serverErrors = [];
-      serverErrors.push(authentication.error.detailedErrorDescription);
-      return { fieldErrors: [], serverErrors: serverErrors, error: true };
-    }
-    var paymentInformation=creditCardForm.get('threedsdata').value()?JSON.parse(creditCardForm.get('threedsdata').value()):null;
-
-     if(!empty(authentication.threeDs.methodData.threeDsServerTransId)&&!empty(paymentInformation)){
-      var threeDsStepOne = 
-    {
-       three_ds:{
-          source:globalpayconstants.threeDsStepOne.source,
-          preference:globalpayconstants.threeDsStepOne.preference,
-       },
-       auth_id : authentication.id,
-       method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
-       merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
-       order:{
-          time_created_reference:globalpayconstants.threeDsStepOne.time_created_reference,
-          amount:(currentBasket.totalGrossPrice.value * 100).toFixed(),
-          currency:currentBasket.currencyCode,
-          address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
-          shipping_address:{
-             line1:currentBasket.shipments[0].shippingAddress.address1,
-             city:currentBasket.shipments[0].shippingAddress.city,
-             postal_code:currentBasket.shipments[0].shippingAddress.postalCode,
-             country:"826"
-          }
-       },
-       payment_method:{
-          id: saveCard&&customer.authenticated && customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value
-       },
-       browser_data:{
-          accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-          color_depth: paymentInformation.colorDepth,
-          ip: request.httpHeaders.get('true-client-ip'),
-          java_enabled: paymentInformation.javaEnabled,
-          javascript_enabled: globalpayconstants.threeDsStepOne.javascript_enabled,
-          language:paymentInformation.browserLanguage,//"en-US",
-          screen_height:paymentInformation.screenHeight,
-          screen_width:paymentInformation.screenWidth,
-          challenge_window_size: globalpayconstants.threeDsStepOne.challenge_window_size,
-          timezone:paymentInformation.browserTime,
-          user_agent:paymentInformation.userAgent
-       }
-    }
-        var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne);
+   
     
-        if (!empty(threeDsStepOneResp) && !empty(threeDsStepOneResp.success) && !threeDsStepOneResp.success) {
-          var serverErrors = [];
-          serverErrors.push(threeDsStepOneResp.error.detailedErrorDescription);
-          return { fieldErrors: [], serverErrors: serverErrors, error: true };
-        }
-    
+ var authenticationId=creditCardForm.get('authId').value();
+ var isthreeds=creditCardForm.get('isthreeds').value();
+     if(!empty(isthreeds)&&!empty(authenticationId)){
         var threeDsStepTwo = {
-          auth_id : authentication.id
+          auth_id : authenticationId
       }
     
       var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
@@ -177,13 +110,13 @@ function Handle(args) {
   
       paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
   
-      paymentInstrument.custom.gp_authenticationid = authentication.id;
+      paymentInstrument.custom.gp_authenticationid = authenticationId;
       paymentInstrument.custom.gp_paymentmethodid =  saveCard&&customer &&customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value;
       paymentInstrument.setCreditCardNumber(cardNumber);
       paymentInstrument.setCreditCardType(cardType);
       paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
       paymentInstrument.setCreditCardExpirationYear(expirationYear);
-      paymentInstrument.setCreditCardToken(authentication.id);
+      paymentInstrument.setCreditCardToken(authenticationId);
     });
     return {success: true};
 }

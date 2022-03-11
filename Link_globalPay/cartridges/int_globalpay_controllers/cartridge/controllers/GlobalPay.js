@@ -194,6 +194,7 @@ function Initiation() {
 
       var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne); 
       var threeDSResponse = new Object();
+      if(!empty(threeDsStepOneResp)){
           threeDSResponse.acsTransactionId 			= threeDsStepOneResp.threeDs.acsTransRef;
           threeDSResponse.authenticationSource 			= threeDsStepOneResp.threeDs.authenticationSource;
           threeDSResponse.authenticationRequestType  		= threeDsStepOneResp.threeDs.messageCategory;
@@ -214,6 +215,7 @@ function Initiation() {
           threeDSResponse.status  					= threeDsStepOneResp.threeDs.status;
           threeDSResponse.statusReason  				= threeDsStepOneResp.threeDs.statusReason;
           threeDSResponse.authID  					= threeDsStepOneResp.id;
+      }
           responseUtils.renderJSON(
             threeDSResponse
         );

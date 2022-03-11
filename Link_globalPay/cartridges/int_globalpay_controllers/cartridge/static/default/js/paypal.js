@@ -139,6 +139,8 @@ $('.button-fancy-large').on('click', function () {
                              // order: {}, // optional if data available on client-side
                              // payer: {}, // optional if data available on client-side
                          }).then(function(authenticationData){
+                            $('input[name*=_isthreeds]').val(authenticationData.status);
+                            $('input[name*=_authId]').val(versionCheckData.id); 
                             $('#dwfrm_billing').submit();
                            })
                          }

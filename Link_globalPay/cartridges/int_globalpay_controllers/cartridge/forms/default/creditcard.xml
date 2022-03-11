@@ -68,7 +68,9 @@
 	<!-- optional flags -->
 	<field formid="saveCard" label="creditcard.savecard" type="boolean" mandatory="false" default-value="true" />
 	 <field formid="threedsdata"  type="string"  binding="threedsdata"/>
-	
+	<field formid="isthreeds"  type="string"  binding="isthreeds"/>
+	<field formid="authId"  type="string"  binding="authId"/>
+
 	<field formid="paymentId" label="creditcard.paymentId" type="string" mandatory="false" default-value="" />
 	<field formid="paymentToken" label="creditcard.paymentToken" type="string" mandatory="false" default-value="" />
 

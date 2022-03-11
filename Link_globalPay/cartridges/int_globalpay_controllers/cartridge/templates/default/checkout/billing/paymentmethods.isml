@@ -110,6 +110,8 @@
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.cvn}" type="input" rowclass="cvn" dynamicname="true" help="${help}"/>
 			<div class="d-none">
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.threedsdata}" type="input"/>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.isthreeds}" type="input"/>
+			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.authId}" type="input"/>
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentId}" type="input"/>
 			</div>
  			</div>
