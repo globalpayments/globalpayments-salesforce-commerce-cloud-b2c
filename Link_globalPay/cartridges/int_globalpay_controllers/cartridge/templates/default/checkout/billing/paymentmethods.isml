@@ -200,12 +200,10 @@
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/global-pay.css')}" />
 <script>
 	$(document).ready(function () {
-		alert(window.dw.applepay);
 		if (window.dw
 			&& window.dw.applepay
 			&& window.ApplePaySession
 			&& window.ApplePaySession.canMakePayments()) {
-				alert();
 			$('body').addClass('apple-pay-enabled');
 		}
 	});
