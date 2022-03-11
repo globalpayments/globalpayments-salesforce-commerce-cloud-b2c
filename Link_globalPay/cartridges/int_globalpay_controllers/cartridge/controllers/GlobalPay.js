@@ -302,6 +302,9 @@ function Capture() {
 */
  /* @see module:controllers/GlobalPay~Authentications */
  exports.Authentication = guard.ensure(['https'], Authentication);
+ 
+ /* @see module:controllers/GlobalPay~Authorization */
+ exports.Authorization = guard.ensure(['https'], Authorization);
  /* @see module:controllers/GlobalPay~Initiation */
  exports.Initiation = guard.ensure(['https'], Initiation);
  /* @see module:controllers/GlobalPay~ThreeDSSecureChallenge */

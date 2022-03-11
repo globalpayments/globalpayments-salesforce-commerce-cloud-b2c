@@ -1,15 +1,8 @@
 'use strict';
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-var collections = require('*/cartridge/scripts/util/collections');
-var PaymentInstrument = require('dw/order/PaymentInstrument');
-var PaymentMgr = require('dw/order/PaymentMgr');
-var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
-var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-var server = require('server');
-var StringUtils = require('dw/util/StringUtils');
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+
 /**
  * Authorizes a payment using a apple pay.
  * @param {number} orderNumber - The current order'\
@@ -20,17 +13,12 @@ var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
  * @return {Object} returns an error object
  */
 function Authorize(order, paymentdata) {
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
     var BasketMgr = require('dw/order/BasketMgr');
-    var currentBasket = BasketMgr.getCurrentBasket();
 
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
-    var HookManager = require('dw/system/HookMgr');
-    var Locale = require('dw/util/Locale');
     var serverErrors = [];
     var applePayData = {
         account_name: globalpayconstants.applePay.account_name,
@@ -60,7 +48,7 @@ function Authorize(order, paymentdata) {
         }
     }
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-    var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
+    var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
     var applePayresp = globalPayHelper.applePay(applePayData);
     var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
     if (!orderUpdateResult) {
@@ -73,4 +61,3 @@ function Authorize(order, paymentdata) {
 }
 
 exports.Authorize = Authorize;
-

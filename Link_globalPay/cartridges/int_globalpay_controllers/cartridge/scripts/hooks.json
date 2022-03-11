@@ -13,8 +13,12 @@
 			"script": "./payment/processor/GOOGLE_PAY"
 		},
 		{
-			"name": "app.payment.processor.APPLE_PAY",
-			"script": "./payment/processor/APPLE_PAY"
-		}
+            "name": "dw.extensions.applepay.getRequest",
+            "script": "./payment/processor/applepay.js"
+        },
+        {
+            "name": "dw.extensions.applepay.paymentAuthorized.authorizeOrderPayment",
+            "script": "./payment/processor/applepay.js"
+        }
 	]
 }
