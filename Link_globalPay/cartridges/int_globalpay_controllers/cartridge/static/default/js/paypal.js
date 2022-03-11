@@ -96,7 +96,7 @@ $('.button-fancy-large').on('click', function () {
    // $('#dwfrm_billing').submit();
    var pmttoken = $('#savedPaymentToken').val();
    var cartData = {
-    amount : parseFloat($('.order-total .order-value').text().replace('$',''))*100,
+    amount : parseFloat($('.order-total .order-value').text().replace('$','').replace(/,/g, ''))*100,
     address1: $('input[name*="_addressFields_address1"]').val(),
     city: $('input[name*="_addressFields_city"]').val(),
     postalcode : $('input[name*="_addressFields_postal"]').val()
