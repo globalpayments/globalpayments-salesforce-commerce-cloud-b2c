@@ -125,11 +125,13 @@ cardForm.on("token-success", (resp) => {
                                     }
                                     // order: {}, // optional if data available on client-side
                                     // payer: {}, // optional if data available on client-side
-                                }).then(function(){
+                                }).then(function(authenticationData){
+                                    console.log('Authentication Data::::11', authenticationData);
+                                    console.log(':::status:'+authenticationData.status);
+                                    $("#isthreeds").val(authenticationData.status);
                                      $( ".submit-payment" ).trigger( "click" );
                                 })
-                                    console.log('Authentication Data', authenticationData);
-                                    console.log(':::status:'+authenticationData.status);
+   
                                     /*if(authenticationData.challengeMandated == 'MANDATED'
                                     && authenticationData.status == 'CHALLENGE_REQUIRED'
                                     ){

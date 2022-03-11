@@ -345,6 +345,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                         $("#isthreeds").val(authenticationData.status);
                                         console.log('::before calling to ajax:::');
                                         paymentForm += '&authId=' + versionCheckData.id;
+                                        paymentForm += '&isthreeds=' + authenticationData.status;
                                         $("#authId").val(versionCheckData.id);
                                         //  =======
                                         $.ajax({
@@ -433,6 +434,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
 
                         paymentForm += '&authId=' + $("#authId").val();
+                        paymentForm += '&isthreeds=' + $('#isthreeds').val();
                         $.ajax({
                             url: $('#dwfrm_billing').attr('action'),
                             method: 'POST',

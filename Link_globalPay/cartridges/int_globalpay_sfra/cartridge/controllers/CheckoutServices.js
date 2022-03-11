@@ -263,8 +263,8 @@ server.prepend(
         htmlName: req.form.authId
       };
       viewData.paymentInformation.isthreeds = {
-        value: paymentForm.creditCardFields.isthreeds.value,
-        htmlName: paymentForm.creditCardFields.isthreeds.value
+        value: req.form.isthreeds,
+        htmlName: req.form.isthreeds
       };
 
       res.setViewData(viewData);
