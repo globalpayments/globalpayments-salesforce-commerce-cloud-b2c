@@ -53,7 +53,7 @@ server.post('Transactions', function (req, res, next) {
     // service logic import
     // here we have invoke transaction call
   res.json({ success: 'true' });
-  next();
+  next();``
 });
 
 server.use('Authentication', function (req, res, next) {

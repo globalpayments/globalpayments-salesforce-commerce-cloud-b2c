@@ -5,7 +5,7 @@
                     src="${URLUtils.staticURL('/images/apple.png')}"
                     height="32"
                     alt="${paymentOption.name}"
-                    title="${paymentOption.name}"*********
+                    title="${paymentOption.name}"
             >
         </a>
     </li>
