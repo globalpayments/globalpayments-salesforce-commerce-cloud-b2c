@@ -138,13 +138,14 @@ $('.button-fancy-large').on('click', function () {
                              }
                              // order: {}, // optional if data available on client-side
                              // payer: {}, // optional if data available on client-side
-                         });
+                         }).then(function(authenticationData){
+                            $('#dwfrm_billing').submit();
+                           })
                          }
                          catch(e){
                          }
                      //}
                  }
-            setTimeout(function(){$('#dwfrm_billing').submit();},5000);
              });
      
           }
