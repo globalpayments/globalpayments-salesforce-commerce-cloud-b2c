@@ -292,7 +292,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
  
-   if(!empty(paymentInformation.isthreeds.value) && paymentInformation.isthreeds.value){
+   if(!empty(paymentInformation.isthreeds.value) && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED'){
       var threeDsStepTwo = {
         auth_id : paymentInformation.authId.value
       }
