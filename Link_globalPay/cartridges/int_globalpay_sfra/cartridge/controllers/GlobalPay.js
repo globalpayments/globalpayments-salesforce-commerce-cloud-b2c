@@ -221,10 +221,10 @@ server.use('ThreeDSSecureChallenge', function (req, res, next) {
       reqEncodeFields.messageVersion 		= cresJson.messageVersion; // 2.1.0
       reqEncodeFields.transStatus 		= cresJson.transStatus; // Y
   
-      var reqcresEnoded = StringUtils.encodeBase64(JSON.stringify(reqEncodeFields));
+     // var reqcresEnoded = StringUtils.encodeBase64(JSON.stringify(reqEncodeFields));
       res.render('globalpay/chalangenotification',
           {
-            reqcresEnoded:reqcresEnoded 
+            reqcresEnoded:JSON.stringify(reqEncodeFields)
           }); 
           next();
       });
