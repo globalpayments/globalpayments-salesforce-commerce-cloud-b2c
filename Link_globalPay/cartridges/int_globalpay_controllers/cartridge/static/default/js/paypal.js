@@ -110,7 +110,7 @@ $('.button-fancy-large').on('click', function () {
      } = GlobalPayments.ThreeDSecure;
 
      try {
-             checkVersion('GlobalPay-Authentication', {
+             checkVersion($('#autenticationurl').val(), {
                  card: {
                      reference: pmttoken,
                      cartData:cartData
@@ -123,7 +123,7 @@ $('.button-fancy-large').on('click', function () {
                     // setTimeout(Initate,1000)
                 // function Initate(){
                          try {
-                             authenticationData = initiateAuthentication('GlobalPay-Initiation', {
+                             authenticationData = initiateAuthentication($('#initiationurl').val(), {
                              serverTransactionId: versionCheckData.serverTransactionId,
                              challengeNotificationUrl:'',
                              authId: versionCheckData.id,
