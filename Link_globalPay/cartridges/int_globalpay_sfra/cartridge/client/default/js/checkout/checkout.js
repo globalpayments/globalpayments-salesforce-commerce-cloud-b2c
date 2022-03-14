@@ -413,7 +413,7 @@ var threeds = require('./threeds');
                                             $('.cancel-new-payment').removeClass('checkout-hidden');
                                         }
                                         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
-                                            scrollAnimate();
+                                           // scrollAnimate();
                                         }
 
                                         defer.resolve(data);
