@@ -24,13 +24,25 @@
 				<iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment>
 				<isif condition="${paymentMethodType.value.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}"><iscontinue/></isif>
 
-				<div class="form-row label-inline">
-					<isset name="radioID" value="${paymentMethodType.value}" scope="page"/>
-					<div class="field-wrapper">
-						<input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> />
+				<isif condition="${paymentMethodType.value == 'GP_DW_APPLE_PAY'}">
+					<isif condition="${session.custom.applepaysession === 'yes'}" >
+						<div class="form-row label-inline">
+							<isset name="radioID" value="${paymentMethodType.value}" scope="page"/>
+							<div class="field-wrapper">
+								<input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> />
+							</div>
+							<label for="is-${radioID}"><isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/></label>
+						</div>
+					</isif>
+				<iselse/>
+					<div class="form-row label-inline">
+						<isset name="radioID" value="${paymentMethodType.value}" scope="page"/>
+						<div class="field-wrapper">
+							<input id="is-${radioID}" type="radio" class="input-radio" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"</isif> />
+						</div>
+						<label for="is-${radioID}"><isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/></label>
 					</div>
-					<label for="is-${radioID}"><isprint value="${Resource.msg(paymentMethodType.label,'forms',null)}"/></label>
-				</div>
+				</isif>
 
 			</isloop>
 		</div>
