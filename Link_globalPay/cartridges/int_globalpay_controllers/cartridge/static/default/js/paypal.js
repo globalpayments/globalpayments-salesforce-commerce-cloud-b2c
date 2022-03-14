@@ -138,10 +138,30 @@ $('.button-fancy-large').on('click', function () {
                              }
                              // order: {}, // optional if data available on client-side
                              // payer: {}, // optional if data available on client-side
-                         }).then(function(authenticationData){
-                            $('input[name*=_isthreeds]').val(authenticationData.status);
-                            $('input[name*=_authId]').val(versionCheckData.id); 
-                            $('#dwfrm_billing').submit();
+                         }).then(function(authenticationData){                               
+    $("#isthreeds").val(authenticationData.status);
+    $('input[name*=_isthreeds]').val(authenticationData.status);
+    $('input[name*=_authId]').val(versionCheckData.id); 
+      var eci = authenticationData.mpi.eci;
+  if (authenticationData.status != "CHALLENGE_REQUIRED") {
+        if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
+            console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
+            console.log("ECI: ", eci);
+            $('#dwfrm_billing').submit();
+        } else {
+            console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
+            console.log("ECI: ", eci);
+        }
+}// Challenge Flow
+else {
+    console.log(':::'+JSON.parse(authenticationData.challenge.response.data).transStatus);
+    if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
+        console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
+      $('#dwfrm_billing').submit();
+    } else {
+        console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
+    }
+}
                            })
                          }
                          catch(e){
