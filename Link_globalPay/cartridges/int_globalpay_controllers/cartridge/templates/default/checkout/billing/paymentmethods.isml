@@ -8,7 +8,8 @@
 <input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.preferences.gpayMerchantName}"/>
 <input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.preferences.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.preferences.gpayEnv}"/>
-
+<input type="hidden" name="autenticationurl" id="autenticationurl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentication').toString()}"/>
+<input type="hidden" name="initiationurl" id="initiationurl" value="${require('dw/web/URLUtils').url('GlobalPay-Initiation').toString()}"/>
 <isif condition="${pdict.OrderTotal > 0}">
 	<fieldset>
 

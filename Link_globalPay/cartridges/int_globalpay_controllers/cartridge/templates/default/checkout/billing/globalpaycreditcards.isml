@@ -100,7 +100,7 @@ if($('[name$="_expiration_year"]').val())
             } = GlobalPayments.ThreeDSecure;
 
             try {
-                    checkVersion('GlobalPay-Authentication', {
+                    checkVersion($('#autenticationurl').val(),{
                         card: {
                             reference: resp.paymentReference,
                             cartData:cartData
@@ -114,7 +114,7 @@ if($('[name$="_expiration_year"]').val())
                            // setTimeout(Initate,1000)
                        // function Initate(){
                                 try {
-                                    authenticationData = initiateAuthentication('GlobalPay-Initiation', {
+                                    authenticationData = initiateAuthentication($('#initiationurl').val(),{
                                     serverTransactionId: versionCheckData.serverTransactionId,
                                     challengeNotificationUrl:'',
                                     authId: versionCheckData.id,
