@@ -241,9 +241,9 @@ function Initiation() {
       reqEncodeFields.messageVersion 		= cresJson.messageVersion; // 2.1.0
       reqEncodeFields.transStatus 		= cresJson.transStatus; // Y
   
-      var reqcresEnoded = StringUtils.encodeBase64(JSON.stringify(reqEncodeFields));
+     // var reqcresEnoded = StringUtils.encodeBase64(JSON.stringify(reqEncodeFields));
       app.getView({ 
-        reqcresEnoded:reqcresEnoded 
+        reqcresEnoded: JSON.stringify(reqEncodeFields)
     }).render('globalpay/chalangenotification');
  
       }
