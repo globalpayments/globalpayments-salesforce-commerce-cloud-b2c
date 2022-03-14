@@ -127,18 +127,33 @@ cardForm.on("token-success", (resp) => {
                                     // payer: {}, // optional if data available on client-side
                                 }).then(function(authenticationData){
                                     console.log('Authentication Data::::11', authenticationData);
+
+                                    console.log('json:::authenticationData'+JSON.stringify(authenticationData));
                                     console.log(':::status:'+authenticationData.status);
                                     $("#isthreeds").val(authenticationData.status);
-                                     $( ".submit-payment" ).trigger( "click" );
+                                    var eci = authenticationData.mpi.eci;
+                                      if (authenticationData.status != "CHALLENGE_REQUIRED") {
+                                            if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
+                                                console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
+                                                console.log("ECI: ", eci);
+                                                $( ".submit-payment" ).trigger( "click" );
+                                            } else {
+                                                console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
+                                                console.log("ECI: ", eci);
+                                            }
+                                    }// Challenge Flow
+                                    else {
+                                        console.log(':::'+JSON.parse(authenticationData.challenge.response.data).transStatus);
+                                        if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
+                                            console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
+                                           $( ".submit-payment" ).trigger( "click" );
+                                        } else {
+                                            console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
+                                            //$( ".submit-payment" ).trigger( "click" );
+                                        }
+                                    }
                                 })
-   
-                                    /*if(authenticationData.challengeMandated == 'MANDATED'
-                                    && authenticationData.status == 'CHALLENGE_REQUIRED'
-                                    ){
-                                        $("#isthreeds").val(versionCheckData.status);
-                                        console.log('::3ds Card::');
-                                    }*/
-
+                               
                                 }
                                 catch(e){
                                 }
