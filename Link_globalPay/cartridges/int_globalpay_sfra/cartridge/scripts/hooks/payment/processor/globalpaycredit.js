@@ -220,6 +220,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
       }
     }
   };
+  //authorize payment
   var authorization = globalPayHelper.authorize(authorizationData);
   if (!empty(authorization) && 'success' in authorization && !authorization.success) {
     var error = true;

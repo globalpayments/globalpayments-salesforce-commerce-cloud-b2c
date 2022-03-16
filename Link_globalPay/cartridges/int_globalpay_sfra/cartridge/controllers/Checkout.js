@@ -23,6 +23,7 @@ server.append('Begin', function (req, res, next) {
     var  ArrayList = require('dw/util/ArrayList');
     var walletList = new ArrayList();
 
+    //check if profile exists 
      if(!empty(customer.profile)){
     var wallet = require('dw/customer/CustomerMgr').getCustomerByCustomerNumber(customer.profile.customerNo).getProfile().getWallet();
     var walletJson = new Object();

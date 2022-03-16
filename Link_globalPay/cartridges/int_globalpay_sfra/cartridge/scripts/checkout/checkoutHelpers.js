@@ -82,6 +82,7 @@ function handlePayments(order, orderNumber) {
   var wallet = customer.getProfile().getWallet();
 
   return Transaction.wrap(function () {
+      //create payment instrument for credit card
       var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
       storedPaymentInstrument.setCreditCardHolder(
@@ -99,7 +100,6 @@ function handlePayments(order, orderNumber) {
       storedPaymentInstrument.setCreditCardExpirationYear(
           billingData.paymentInformation.expirationYear.value
       );
-      
       storedPaymentInstrument.setCreditCardToken(token);
 
       return storedPaymentInstrument;

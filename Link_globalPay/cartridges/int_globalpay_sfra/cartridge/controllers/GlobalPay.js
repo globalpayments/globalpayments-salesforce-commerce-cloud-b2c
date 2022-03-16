@@ -53,9 +53,18 @@ server.post('Transactions', function (req, res, next) {
     // service logic import
     // here we have invoke transaction call
   res.json({ success: 'true' });
-  next();``
+  next();
 });
 
+/**
+ * GlobalPay-Authentication : The GlobalPay-Authentication endpoint invokes authentication call
+ * @name Base/GlobalPay-Authentication
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - use
+ */
 server.use('Authentication', function (req, res, next) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -65,7 +74,7 @@ server.use('Authentication', function (req, res, next) {
   var Locale = require('dw/util/Locale');
   var URLUtils = require('dw/web/URLUtils');
   var myreq = req;
-  //var currentBasket =  BasketMgr.getBasket('139b43cf9419d4d1c13fc82acf');//getCurrentOrNewBasket(); 
+
   var storedBasket  = BasketMgr.getStoredBasket();
   var currentOrNewBasket  = BasketMgr.getCurrentOrNewBasket();
   var currentBasket = BasketMgr.getCurrentBasket();
@@ -83,8 +92,8 @@ server.use('Authentication', function (req, res, next) {
         id: JSON.parse(req.body).card.reference
       },
       notifications: {
-        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),// preferences.threedsecureChallenge,
-        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()// preferences.threedsecureMethod
+        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),
+        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()
       }
     };
 
@@ -119,7 +128,15 @@ server.use('Authentication', function (req, res, next) {
   next();
 });
 
-
+/**
+ * GlobalPay-Initiation : The GlobalPay-Initiation endpoint invokes Initiation call
+ * @name Base/GlobalPay-Initiation
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - use
+ */
 server.use('Initiation', function (req, res, next) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
@@ -184,10 +201,10 @@ server.use('Initiation', function (req, res, next) {
           threeDSResponse.challenge.encodedChallengeRequest 	= threeDsStepOneResp.threeDs.challengeValue;
           threeDSResponse.challenge.requestUrl  		= threeDsStepOneResp.threeDs.redirectUrl;
           threeDSResponse.challengeMandated  			= threeDsStepOneResp.threeDs.challengeStatus;
-          threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+          threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource; 
           threeDSResponse.dsTransactionId  			= threeDsStepOneResp.threeDs.dsTransRef;
           threeDSResponse.messageCategory  			= threeDsStepOneResp.messageCategory;
-          threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+          threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource;
           threeDSResponse.messageVersion  			= threeDsStepOneResp.threeDs.messageVersion;
           threeDSResponse.mpi = new Object();
           threeDSResponse.mpi.authenticationValue 		=threeDsStepOneResp.threeDs.authenticationValue;

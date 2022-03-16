@@ -75,6 +75,7 @@ function verifyCard(req, card, form) {
     error = true;
   }
 
+  //check for credit card error status
   if (creditCardStatus && creditCardStatus.error) {
     collections.forEach(creditCardStatus.items, function (item) {
       switch (item.code) {
