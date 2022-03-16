@@ -66,67 +66,11 @@ function Transactions() {
  * @param {serverfunction} - post
  */
 function Authentication() {
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-  var preferences = globalPayPreferences.getPreferences();
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-  var BasketMgr = require('dw/order/BasketMgr');
-  var Locale = require('dw/util/Locale');
-  var URLUtils = require('dw/web/URLUtils');
-  var myreq = request.httpParameterMap.requestBodyAsString;
-  //var currentBasket =  BasketMgr.getBasket('139b43cf9419d4d1c13fc82acf');//getCurrentOrNewBasket(); 
-  var storedBasket  = BasketMgr.getStoredBasket();
-  var currentOrNewBasket  = BasketMgr.getCurrentOrNewBasket();
-  var currentBasket = BasketMgr.getCurrentBasket();
-
-  var body = JSON.parse(myreq);
-  var authenticationData = {
-      account_name: globalpayconstants.authenticationData.account_name,
-      channel: globalpayconstants.authenticationData.channel,
-      country: 'US',
-      reference: globalpayconstants.authorizationData.reference,
-      amount: body.card.cartData.amount,
-      currency: currentBasket.currencyCode,
-      source: globalpayconstants.authenticationData.source,
-      payment_method: {
-        id: JSON.parse(myreq).card.reference
-      },
-      notifications: {
-        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),// preferences.threedsecureChallenge,
-        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()// preferences.threedsecureMethod
-      }
-    };
-
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-    var authentication = globalPayHelper.authenticate(authenticationData);
-      if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
-        var serverErrors = [];
-        serverErrors.push(authentication.error.detailedErrorDescription);     
-        response.json({ 
-                  authentication: authentication, 
-                  serverErrors:serverErrors,
-                  error: true
-                });
-       }
-      //
-      var reqAuthfields = new Object();
-          reqAuthfields.enrolled = !empty(authentication.threeDs.enrolledStatus)?authentication.threeDs.enrolledStatus:'';
-          reqAuthfields.methodData = authentication.threeDs.methodData.encodedMethodData;
-          reqAuthfields.methodUrl = authentication.threeDs.methodUrl;
-          reqAuthfields.serverTransactionId = authentication.threeDs.serverTransRef;
-          reqAuthfields.versions = new Object();
-          reqAuthfields.versions.accessControlServer = new Object();
-          reqAuthfields.versions.accessControlServer.start = authentication.threeDs.acsProtocolVersionStart;
-          reqAuthfields.versions.accessControlServer.end = authentication.threeDs.acsProtocolVersionEnd;
-          reqAuthfields.versions.directoryServer = new Object();
-          reqAuthfields.versions.directoryServer.start = authentication.threeDs.dsProtocolVersionStart;
-          reqAuthfields.versions.directoryServer.end = authentication.threeDs.dsProtocolVersionEnd;
-          reqAuthfields.id = authentication.id;
-         
+  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var authentication = creditCardUtils.authenticationData(request, responseUtils);
           responseUtils.renderJSON(
-            reqAuthfields
+            authentication
         );
-
 };
 /**
  * GlobalPay-Initiation : The GlobalPay-Initiation endpoint invoke  the initiation
@@ -138,86 +82,10 @@ function Authentication() {
  * @param {serverfunction} - post
  */
 function Initiation() {
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-  var preferences = globalPayPreferences.getPreferences();
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-  var BasketMgr = require('dw/order/BasketMgr');
-  var Locale = require('dw/util/Locale');
-  var URLUtils = require('dw/web/URLUtils');
-  var basket = BasketMgr.getCurrentOrNewBasket(); 
-  var myreq=request.httpParameterMap.requestBodyAsString
-  var body = JSON.parse(myreq);
-  var browserData = JSON.parse(myreq).browserData;
-  var challengeWindow = JSON.parse(myreq).challengeWindow;
-        var threeDsStepOne = 
-        {
-          three_ds:{
-              source:globalpayconstants.threeDsStepOne.source,
-              preference:globalpayconstants.threeDsStepOne.preference,
-          },
-          auth_id :JSON.parse(myreq).authId,
-          method_url_completion_status:globalpayconstants.threeDsStepOne.method_url_completion_status,
-          merchant_contact_url:globalpayconstants.threeDsStepOne.merchant_contact_url,
-          order:{
-              time_created_reference: (new Date()).toISOString(),
-              amount:body.card.cartData.amount,
-              currency:basket.currencyCode,
-              address_match_indicator: globalpayconstants.threeDsStepOne.address_match_indicator,
-              shipping_address:{
-                line1:body.card.cartData.address1,// basket.shipments[0].shippingAddress.address1,
-                city:body.card.cartData.city,//basket.shipments[0].shippingAddress.city,
-                postal_code:body.card.cartData.postalcode,//basket.shipments[0].shippingAddress.postalCode,
-                country:globalpayconstants.country
-              }
-          },
-          payment_method:{
-              id: JSON.parse(myreq).card.reference//request.form.storedPaymentUUID && request.currentCustomer.raw.authenticated && request.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
-          },
-
-
-          browser_data:{
-              accept_header:globalpayconstants.threeDsStepOne.accept_header, 
-              color_depth: browserData.colorDepth,//paymentInformation.threedsdata.value.colorDepth,
-              ip: request.httpHeaders.get('true-client-ip'),
-              java_enabled:browserData.javaEnabled,// paymentInformation.threedsdata.value.javaEnabled,
-              javascript_enabled:browserData.javascriptEnabled,// globalpayconstants.threeDsStepOne.javascript_enabled,
-              language:browserData.language,//paymentInformation.threedsdata.value.browserLanguage,//"en-US",
-              screen_height:browserData.screenHeight,//paymentInformation.threedsdata.value.screenHeight,
-              language:browserData.language,//paymentInformation.threedsdata.value.browserLanguage,//"en-US",
-              screen_width:browserData.screenWidth,//paymentInformation.threedsdata.value.screenWidth,
-              challenge_window_size:challengeWindow.windowSize,// globalpayconstants.threeDsStepOne.challenge_window_size,
-              timezone:browserData.timezoneOffset,//paymentInformation.threedsdata.value.browserTime,
-              user_agent: browserData.userAgent//'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'//paymentInformation.threedsdata.value.userAgent
-          }
-        }
-
-      var threeDsStepOneResp =  globalPayHelper.threeDsStepone(threeDsStepOne); 
-      var threeDSResponse = new Object();
-      if(!empty(threeDsStepOneResp)){
-          threeDSResponse.acsTransactionId 			= threeDsStepOneResp.threeDs.acsTransRef;
-          threeDSResponse.authenticationSource 			= threeDsStepOneResp.threeDs.authenticationSource;
-          threeDSResponse.authenticationRequestType  		= threeDsStepOneResp.threeDs.messageCategory;
-          threeDSResponse.cardholderResponseInfo  		= threeDsStepOneResp.threeDs.cardholderResponseInfo;
-          threeDSResponse.challenge = new Object();
-          threeDSResponse.challenge.encodedChallengeRequest 	= threeDsStepOneResp.threeDs.challengeValue;
-          threeDSResponse.challenge.requestUrl  		= threeDsStepOneResp.threeDs.redirectUrl;
-          threeDSResponse.challengeMandated  			= threeDsStepOneResp.threeDs.challengeStatus;
-          threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
-          threeDSResponse.dsTransactionId  			= threeDsStepOneResp.threeDs.dsTransRef;
-          threeDSResponse.messageCategory  			= threeDsStepOneResp.messageCategory;
-          threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
-          threeDSResponse.messageVersion  			= threeDsStepOneResp.threeDs.messageVersion;
-          threeDSResponse.mpi = new Object();
-          threeDSResponse.mpi.authenticationValue 		=threeDsStepOneResp.threeDs.authenticationValue;
-          threeDSResponse.mpi.eci  				= threeDsStepOneResp.threeDs.eci;
-          threeDSResponse.serverTransactionId  			= threeDsStepOneResp.threeDs.serverTransRef;
-          threeDSResponse.status  					= threeDsStepOneResp.threeDs.status;
-          threeDSResponse.statusReason  				= threeDsStepOneResp.threeDs.statusReason;
-          threeDSResponse.authID  					= threeDsStepOneResp.id;
-      }
+  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var initiation = creditCardUtils.initiationData(request, responseUtils);
           responseUtils.renderJSON(
-            threeDSResponse
+            initiation
         );
 };
 
