@@ -21,7 +21,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var captureMode = preferences.captureMode;
   var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
-  var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
+  var token = paymentForm.creditCardFields.paymentToken.htmlValue;
   var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
   var googlePayData = {
@@ -50,7 +50,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (!empty(googlePayresp) && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
+  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
     var error = true;
     if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {
