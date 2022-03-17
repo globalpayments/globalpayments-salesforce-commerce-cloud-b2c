@@ -21,7 +21,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var captureMode = preferences.captureMode;
   var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
-  var token = paymentForm.creditCardFields.paymentToken.htmlValue;
+  var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
   var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
   var googlePayData = {
