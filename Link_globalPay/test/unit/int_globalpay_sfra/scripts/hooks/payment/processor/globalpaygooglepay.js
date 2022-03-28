@@ -3,6 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
+var gpay = sinon.stub();
 
 var paymentInstrument = {
     creditCardNumberLastDigits: '1111',
@@ -14,7 +15,7 @@ var paymentInstrument = {
     creditCardExpirationMonth: 1,
     paymentTransaction: {
         amount: {
-            value: 0
+            value: 1000
         }
     }
 };
@@ -45,7 +46,7 @@ describe('google pay', function () {
                     return {
                         creditCardFields: {
                             paymentToken: {
-                                htmlValue: 'token'
+                                htmlValue: JSON.stringify('token')
                             }
                         }
                     };
@@ -83,28 +84,45 @@ describe('google pay', function () {
                     gpayMerchantName: 'gp_gpayMerchantName',
                     gpayEnv: 'gp_gpayEnv',
                     gatewayMerchantId: 'gp_gatewayMerchantId'
-                };
-            }
-        },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
-            gpay: function () {
-                return {
-                    success: true,
-                    status: 'AUTHORIZED',
                 }
             }
         },
+        '*/cartridge/scripts/helpers/globalPayHelper': { gpay: gpay },
         '*/cartridge/scripts/services/globalPayService': {}
     });
     describe('Authorize', function () {
         it('Should process the google pay with succes result', function () {
+            gpay.returns(
+                {
+                    success: true,
+                    status: 'AUTHORIZED',
+                }
+            )
             var result = googlepayProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
             var googlePayresp = result.googlePayresp;
             assert.isTrue(googlePayresp.success);
 
             assert.equal(googlePayresp.status, 'AUTHORIZED');
         });
+        it('Should return error message for invalid amount with declined card', function () {
+            order = {
+                totalGrossPrice: 11.00,
+                currencyCode: 'US',
+                orderNo: '12345',
+                customerName: 'test_user'
+            };
+            gpay.returns(
+                {
+                    success: true,
+                    status: 'DECLINED',
+                }
+            )
+            var result = googlepayProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
+            var googlePayresp = result.googlePayresp;
+            assert.isTrue(googlePayresp.success);
 
+            assert.equal(googlePayresp.status, 'DECLINED');
+        });
 
     });
 
