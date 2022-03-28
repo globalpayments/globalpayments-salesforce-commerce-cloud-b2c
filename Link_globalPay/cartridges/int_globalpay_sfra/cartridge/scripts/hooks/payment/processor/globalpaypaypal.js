@@ -1,5 +1,4 @@
 'use strict';
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var collections = require('*/cartridge/scripts/util/collections');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -54,7 +53,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var paypalresp = globalPayHelper.paypal(paypalData);
   var serverErrors = [];
-  if (!empty(paypalresp) && 'success' in paypalresp && !paypalresp.success) {
+  if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
     var error = true;
     if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
   } else {

@@ -1,5 +1,4 @@
 'use strict';
-var Logger = require('dw/system/Logger');
 var Transaction = require('dw/system/Transaction');
 /**
  * Update the order payment instrument when card capture response arrived.
