@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-var gpPaymentUtilsObj = require('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/PaymentInstrumentUtils');
 
 var paymentInstrument = {
   creditCardNumberLastDigits: '1111',
@@ -40,14 +39,29 @@ var paymentdata = {
 describe('apple pay', function () {
   var orderNumber = '12345';
   var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
-  var gpPaymentUtils = proxyquire(gpPaymentUtilsObj, {
-     'dw/system/Transaction': {
-         wrap: function (arg) { arg(); }
-     },
-  });
-  var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
+//   var gpPaymentUtils = proxyquire(gpPaymentUtilsObj, {
+//      'dw/system/Transaction': {
+//          wrap: function (arg) { arg(); }
+//      },
+//   });
+var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/applepay', {
+    'dw/system/Status': {},
+    'server': {},
+    'dw/system/Transaction': {
+        wrap: function (arg) { arg(); }
+      },
+      'dw/extensions/applepay/ApplePayHookResult': {},
+});
+  var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
     '*/cartridge/scripts/util/collections': {},
     'dw/order/PaymentMgr': {},
+    '*/cartridge/scripts/utils/PaymentInstrumentUtils':{
+        ApplePaymentOrderUpdate: function (param) {
+            return {
+                success: true,
+              };
+          }
+    },
     'dw/order/PaymentInstrument': {},
     'dw/web/URLUtils': {},
     'dw/order/BasketMgr': {
@@ -123,11 +137,9 @@ describe('apple pay', function () {
   });
   describe('Authorize', function () {
     it('Should process the apple pay with success result', function () {
-      var result = applepayProcessor.Authorize(order, paymentdata);
-      var applePayresp = result.applePayresp;
-      assert.isTrue(applePayresp.success);
-
-      assert.equal(applePayresp.status, 'AUTHORIZED');
+      var result = gpapplepayProcessor.Authorize(order, paymentdata);
+      var applePayresp = result.success;
+      assert.isTrue(result.success);
     });
   });
 });

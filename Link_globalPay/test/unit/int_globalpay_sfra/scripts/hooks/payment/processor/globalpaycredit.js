@@ -3,8 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-var gpcheckoutHelpersObj =require('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/checkout/checkoutHelpers');
-//var gpcheckoutHelpers =require('../../../../../int_globalpay_sfra/cartridge/scripts/checkout/checkoutHelpers');
 
 var paymentInstrument = {
     creditCardNumberLastDigits: '1111',
@@ -18,6 +16,15 @@ var paymentInstrument = {
         amount: {
             value: 0
         }
+    },
+    custom:{
+gp_paymentmethodid: '11'
+    },
+    paymentTransaction:{
+        setTransactionID(){
+            '12345'
+        },
+        setPaymentProcessor(){}
     }
 };
 var paymentProcessor = {};
@@ -28,29 +35,21 @@ var order = {
     customerName: 'test_user'
 };
 
+
 describe('creditcard', function () {
     var orderNumber = '12345';
     var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
-    var gpcheckoutHelpers = proxyquire(gpcheckoutHelpersObj, {
-    'dw/order/PaymentMgr': {},
-    'dw/system/HookMgr': {},
-    'dw/order/OrderMgr': {},
-    'dw/system/Transaction': {},
-    'dw/order/PaymentInstrument': {},
-    'dw/web/Resource': {
-        //getPaymentCard: function (param) {
-        //    return param;
-        //}
-    },
-    'dw/system/Site': {
-        //getPaymentCard: function (param) {
-        //    return param;
-        //}
-    }
-});
+
     var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaycredit', {
         '*/cartridge/scripts/util/collections': {},
         'dw/order/PaymentMgr': {},
+        '*/cartridge/scripts/checkout/checkoutHelpers':{
+            savePaymentInstrumentToWallet: function (param) {
+                return param;
+            }
+        },
+        'dw/order/PaymentInstrument':{},
+        'dw/order/PaymentStatusCodes':{},
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
@@ -102,7 +101,8 @@ describe('creditcard', function () {
                     gpayMerchantId: 'gp_gpayMerchantId',
                     gpayMerchantName: 'gp_gpayMerchantName',
                     gpayEnv: 'gp_gpayEnv',
-                    gatewayMerchantId: 'gp_gatewayMerchantId'
+                    gatewayMerchantId: 'gp_gatewayMerchantId',
+                    gp_paymentmethodid:'gp_paymentmethodid'
                 };
             }
         },
@@ -111,6 +111,7 @@ describe('creditcard', function () {
                 return {
                     success: true,
                     status: 'AUTHORIZED',
+                    id:'12345'
                 }
             }
         },
@@ -119,10 +120,8 @@ describe('creditcard', function () {
     describe('Authorize', function () {
         it('Should process the creditcard with success result', function () {
             var result = creditCardProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
-            var authorization = result.authorization;
-            assert.isTrue(authorization.success);
-
-            assert.equal(authorizations.status, 'AUTHORIZED');
+            var authorization = result.error;
+            assert.isFalse(result.error);
         });
 
 

@@ -29,43 +29,7 @@ var order = {
 describe('paypal', function () {
     var orderNumber = '12345';
     var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
-    // var gpcheckoutHelpers = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/checkout/checkoutHelpers', {
-    //     'dw/order/PaymentMgr': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/system/HookMgr': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/order/OrderMgr': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/system/Transaction': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/order/PaymentInstrument': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/web/Resource': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     },
-    //     'dw/system/Site': {
-    //         //getPaymentCard: function (param) {
-    //         //    return param;
-    //         //}
-    //     }
-    // });
+
     var paypalProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaypaypal', {
         '*/cartridge/scripts/util/collections': {},
         'dw/order/PaymentInstrument': {},
