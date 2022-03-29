@@ -11,9 +11,9 @@ var orderUpdate = function (order) {
   Transaction.wrap(function () {
     var placeOrderStatus = OrderMgr.placeOrder(order);
       if (captureMode.value == 'AUTO') {
-        order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID); 
+        order.setPaymentStatus(Order.PAYMENT_STATUS_PAID); 
       } else if (captureMode.value == 'LATER') {
-        order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_NOTPAID); 
+        order.setPaymentStatus(Order.PAYMENT_STATUS_NOTPAID); 
       } 
   });
 
