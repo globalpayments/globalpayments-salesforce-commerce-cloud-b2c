@@ -86,5 +86,6 @@ function executeRequest(requestObject, responseClass) {
 }
 
 module.exports = {
-  executeRequest: executeRequest
+  executeRequest: executeRequest,
+  getService: getService
 };
