@@ -31,6 +31,8 @@ function Authorize(order, paymentdata) {
     var captureMode = preferences.captureMode;
     var HookManager = require('dw/system/HookMgr');
     var Locale = require('dw/util/Locale');
+    var Site = require('dw/system/Site');
+    var currentSite = Site.getCurrent();
     var serverErrors = [];
     var applePayData = {
         account_name: globalpayconstants.applePay.account_name,
@@ -40,13 +42,12 @@ function Authorize(order, paymentdata) {
         amount: (order.totalGrossPrice) * 100,
         currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'US',
+        country: Locale.getLocale(currentSite.defaultLocale).country,
         payment_method: {
             name: order.customerName.replace(' ', ''),
             entry_mode: globalpayconstants.applePay.entryMode,
             digital_wallet: {
                 provider: globalpayconstants.applePay.provider,
-                //need to be removed once we get the solution for payment token
                 payment_token: {
                     version: paymentdata.version,
                     data: paymentdata.data,

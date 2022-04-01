@@ -39,7 +39,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
     reference: order.orderNo,
     country: Locale.getLocale(currentSite.defaultLocale).country,
     payment_method: {
-                    // name: "Doe",
       entry_mode: globalpayconstants.paypalData.entryMode,
       apm: {
         provider: globalpayconstants.paypalData.paypal

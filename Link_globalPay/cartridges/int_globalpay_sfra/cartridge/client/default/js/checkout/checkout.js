@@ -307,7 +307,6 @@ var threeds = require('./threeds');
                             initiateAuthentication,
                             ChallengeWindowSize,
                         } = GlobalPayments.ThreeDSecure;
-                        // var pmttoken = $('.saved-payment-instrument' + '.selected-payment').data('pmt');
 
                         checkVersion('GlobalPay-Authentication', {
                             card: {

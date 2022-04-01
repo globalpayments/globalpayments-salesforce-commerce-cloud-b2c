@@ -7,6 +7,7 @@ var Order = require('dw/order/Order');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
+
 /**
  * OrderTransactions-RefundTransaction : The OrderTransactions-RefundTransaction endpoint will render the refund APi functionality from GP. Once a order is completed and needs order to be refunded.
  * @name Base/OrderTransactions-RefundTransaction
@@ -16,7 +17,6 @@ var OrderMgr = require('dw/order/OrderMgr');
  * @param {serverfunction} - post
  *
  **/
-
 server.post('RefundTransaction',
 security.ValidateHeaders,
 server.middleware.https,
@@ -27,10 +27,12 @@ function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.orderID);
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
     var amount = ((order.totalGrossPrice) * 100).toFixed();
+
+    //check payment status
     if (order.getPaymentStatus() == 2) {
       var transactionData = {
-        transaction_id: ordertransactionid,  // Transaction ID
-        amount: amount // order.amount
+        transaction_id: ordertransactionid,  
+        amount: amount 
       };
       refundresult = globalPayHelper.refund(transactionData);
       if (refundresult == undefined || refundresult == null) {
@@ -83,10 +85,11 @@ function (req, res, next) {
     var amount = ((order.totalGrossPrice) * 100).toFixed();
     var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
 
+    //check payment status
     if (order.getPaymentStatus() == 0) {
       var transactionData = {
-        transaction_id: ordertransactionid,  // Transaction ID
-        amount: amount, // order.amount
+        transaction_id: ordertransactionid,  
+        amount: amount, 
         capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
         total_capture_count: 0,
         payment_method: {

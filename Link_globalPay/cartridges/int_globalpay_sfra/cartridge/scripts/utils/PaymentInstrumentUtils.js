@@ -9,7 +9,6 @@ var Transaction = require('dw/system/Transaction');
 
 function ApplePaymentOrderUpdate(order, serviceResponse) {
 	//Update Service Response to the customer  paymentinstrument Object
-	//UpdateMobilePaymentTransactionCardAuthorize(CardHelper.getNonGCPaymemtInstument(order), serviceResponse);
 	var OrderMgr = require('dw/order/OrderMgr');
 	var Status = require('dw/system/Status');
 	if (serviceResponse.success) {

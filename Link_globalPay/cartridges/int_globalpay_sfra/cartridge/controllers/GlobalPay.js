@@ -53,9 +53,18 @@ server.post('Transactions', function (req, res, next) {
     // service logic import
     // here we have invoke transaction call
   res.json({ success: 'true' });
-  next();``
+  next();
 });
 
+/**
+ * GlobalPay-Authentication : The GlobalPay-Authentication endpoint invokes authentication call
+ * @name Base/GlobalPay-Authentication
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - use
+ */
 server.use('Authentication', function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var authentication = creditCardUtils.authenticationData(req, res);
@@ -63,7 +72,15 @@ server.use('Authentication', function (req, res, next) {
   next();
 });
 
-
+/**
+ * GlobalPay-Initiation : The GlobalPay-Initiation endpoint invokes Initiation call
+ * @name Base/GlobalPay-Initiation
+ * @function
+ * @memberof GlobalPay
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - use
+ */
 server.use('Initiation', function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var initiation = creditCardUtils.initiationData(req, res);

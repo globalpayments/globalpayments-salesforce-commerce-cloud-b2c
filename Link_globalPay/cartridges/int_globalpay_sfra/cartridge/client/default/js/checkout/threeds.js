@@ -13,7 +13,6 @@ var handle = function(versionCheckData,authenticationData,paymentForm, defer){
         if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
             console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
             console.log("ECI: ", eci);
-            //$( ".submit-payment" ).trigger( "click" );
             submitPaymentAajx(versionCheckData,authenticationData,paymentForm, defer );
         } else {
             console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
@@ -24,11 +23,9 @@ else {
     console.log(':::'+JSON.parse(authenticationData.challenge.response.data).transStatus);
     if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
         console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
-      // $( ".submit-payment" ).trigger( "click" );
       submitPaymentAajx(versionCheckData,authenticationData,paymentForm, defer );
     } else {
         console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
-        //$( ".submit-payment" ).trigger( "click" );
     }
 }  
     // end ajax   
