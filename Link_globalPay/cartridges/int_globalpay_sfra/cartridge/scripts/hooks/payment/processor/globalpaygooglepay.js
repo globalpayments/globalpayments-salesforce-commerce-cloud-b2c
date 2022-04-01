@@ -50,7 +50,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (!empty(googlePayresp) && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
+  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
     var error = true;
     if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {

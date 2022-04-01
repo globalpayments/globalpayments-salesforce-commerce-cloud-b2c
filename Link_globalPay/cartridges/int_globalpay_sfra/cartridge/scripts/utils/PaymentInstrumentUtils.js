@@ -1,6 +1,5 @@
 'use strict';
-var Logger = require('dw/system/Logger');
-var Transaction = require('dw/system/Transaction');
+
 /**
  * Update the order payment instrument when card capture response arrived.
  * @param Order
@@ -11,6 +10,8 @@ function ApplePaymentOrderUpdate(order, serviceResponse) {
 	//Update Service Response to the customer  paymentinstrument Object
 	var OrderMgr = require('dw/order/OrderMgr');
 	var Status = require('dw/system/Status');
+	var Transaction = require('dw/system/Transaction');
+	var Order = require('dw/order/Order');
 	if (serviceResponse.success) {
 		var orderPlacementStatus = Transaction.wrap(function () {
 			if (OrderMgr.placeOrder(order) === Status.ERROR) {
@@ -18,7 +19,7 @@ function ApplePaymentOrderUpdate(order, serviceResponse) {
 				return false;
 			}
 
-			order.setConfirmationStatus(dw.order.Order.CONFIRMATION_STATUS_CONFIRMED);
+			order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
 			return true;
 		});
 
