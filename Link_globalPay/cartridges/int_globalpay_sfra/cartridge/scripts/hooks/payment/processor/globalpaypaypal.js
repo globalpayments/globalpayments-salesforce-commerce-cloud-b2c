@@ -1,13 +1,11 @@
 'use strict';
+
 var collections = require('*/cartridge/scripts/util/collections');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
-var PaymentMgr = require('dw/order/PaymentMgr');
-var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-var StringUtils = require('dw/util/StringUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.

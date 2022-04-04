@@ -1,12 +1,7 @@
 'use strict';
-var collections = require('*/cartridge/scripts/util/collections');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
-var PaymentMgr = require('dw/order/PaymentMgr');
 var Resource = require('dw/web/Resource');
-var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-var server = require('server');
-var StringUtils = require('dw/util/StringUtils');
 /**
  * Authorizes a payment using a apple pay.
  * @param {number} orderNumber - The current order'\
@@ -20,7 +15,6 @@ function Authorize(order, paymentdata) {
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-    var URLUtils = require('dw/web/URLUtils');
     var BasketMgr = require('dw/order/BasketMgr');
     var currentBasket = BasketMgr.getCurrentBasket();
 
