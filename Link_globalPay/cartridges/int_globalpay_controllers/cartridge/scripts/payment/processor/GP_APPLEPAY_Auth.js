@@ -28,13 +28,12 @@ function Authorize(order, paymentdata) {
         amount: (order.totalGrossPrice) * 100,
         currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'US',
+        country: globalpayconstants.applePay.country,
         payment_method: {
             name: order.customerName.replace(' ', ''),
             entry_mode: globalpayconstants.applePay.entryMode,
             digital_wallet: {
                 provider: globalpayconstants.applePay.provider,
-                //need to be removed once we get the solution for payment token
                 payment_token: {
                     version: paymentdata.version,
                     data: paymentdata.data,

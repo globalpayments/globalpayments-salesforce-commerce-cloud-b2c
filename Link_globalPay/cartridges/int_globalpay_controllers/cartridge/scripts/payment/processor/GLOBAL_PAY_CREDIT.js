@@ -102,7 +102,6 @@ function Handle(args) {
             var creditcard = paymentInstruments[i];
             currentBasket.removePaymentInstrument(creditcard);
         }
-        //  currentBasket.removeExistingPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
   
       var paymentInstrument = currentBasket.createPaymentInstrument(
               PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice

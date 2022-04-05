@@ -47,8 +47,8 @@ function Handle(args) {
       amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
-      country: 'US',
-     // country:Locale.getLocale(request.locale.id).country, need to changes
+      country: globalpayconstants.googlePay.country,
+
       payment_method: {
         name: order.customerName,
         entry_mode: globalpayconstants.googlePay.entryMode,

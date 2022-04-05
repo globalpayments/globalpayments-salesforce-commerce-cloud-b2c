@@ -47,8 +47,7 @@ function Handle(args) {
       amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
-      country: 'US',
-     // country:Locale.getLocale(request.locale.id).country, need
+      country: globalpayconstants.paypalData.country,
       payment_method: {
         entry_mode: globalpayconstants.paypalData.entryMode,
         apm: {
