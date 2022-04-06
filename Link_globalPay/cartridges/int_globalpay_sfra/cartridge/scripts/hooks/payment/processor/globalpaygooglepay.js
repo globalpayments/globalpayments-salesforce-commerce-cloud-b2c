@@ -3,6 +3,9 @@ var collections = require('*/cartridge/scripts/util/collections');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var server = require('server');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
@@ -13,9 +16,6 @@ var server = require('server');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
   var Locale = require('dw/util/Locale');
@@ -46,7 +46,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
     }
   };
 
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
   if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
@@ -79,7 +78,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
 function Handle(basket, req) {
   var currentBasket = basket;
   var cardErrors = {};
-  var Locale = require('dw/util/Locale');
   var Resource = require('dw/web/Resource');
   var PaymentInstrument = require('dw/order/PaymentInstrument');
   var serverErrors = [];

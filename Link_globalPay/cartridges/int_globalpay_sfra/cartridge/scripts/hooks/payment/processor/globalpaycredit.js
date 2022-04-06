@@ -2,12 +2,13 @@
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var collections = require('*/cartridge/scripts/util/collections');
-var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+
 /**
  * Verifies the required information for billing form is provided.
  * @param {Object} req - The request object
@@ -148,7 +149,6 @@ function savePaymentInformation(req, basket, billingData) {
  * @returns {string} a token
  */
 function createToken(formdata) {
-  var creditcardnumber = formdata.cardNumber;
   var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
   var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
 
@@ -172,7 +172,6 @@ function createToken(formdata) {
    * @returns {string} a detokenize result
    */
 function removeToken(creditcrdaToken) {
-  var creditcardid = creditcrdaToken;
   var tokenizeData = {
     id: creditcrdaToken // CreditcardToken
   };
@@ -197,8 +196,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var serverErrors = [];
   var fieldErrors = {};
   var error = false;
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
   var authorizationData = {
@@ -259,14 +256,11 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
 function Handle(basket, paymentInformation, paymentMethodID, req) {
   var currentBasket = basket;
   var cardErrors = {};
-  var Locale = require('dw/util/Locale');
   var cardNumber = paymentInformation.cardNumber.value;
   var expirationMonth = paymentInformation.expirationMonth.value;
   var expirationYear = paymentInformation.expirationYear.value;
   var serverErrors = [];
-  var creditCardStatus;
   var cardType = paymentInformation.cardType.value;
-  var paymentCard = PaymentMgr.getPaymentCard(cardType);
   var PaymentInstrument = require('dw/order/PaymentInstrument');
 
 
@@ -287,8 +281,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
       return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
     }
   }
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+
   var preferences = globalPayPreferences.getPreferences();
  
    if(!empty(paymentInformation.isthreeds.value) && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED'){
@@ -360,7 +353,7 @@ function getTokenbyUUID(req, uuidToken) {
   testcust.wallet.paymentInstruments.forEach(function (each) {
     if (each.UUID == uuidToken) {
       creditCardToken = each.raw.creditCardToken;
-      return each.raw.creditCardToken;
+      return creditCardToken;
     }
   });
   return creditCardToken;
