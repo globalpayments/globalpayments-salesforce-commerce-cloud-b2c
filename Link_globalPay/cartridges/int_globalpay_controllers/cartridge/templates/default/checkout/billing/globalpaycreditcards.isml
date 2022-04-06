@@ -132,13 +132,17 @@ if($('[name$="_expiration_year"]').val())
                                 }).then(function(authenticationData){ 
                                    $('input[name*=_isthreeds]').val(authenticationData.status);
                                    $('input[name*=_authId]').val(versionCheckData.id); 
-                                    var eci = authenticationData.mpi.eci;
+                                    
+                                    
+                                    if (authenticationData&&authenticationData.mpi != undefined){
+                                        var eci = authenticationData.mpi.eci;
                                     if (authenticationData.status != "CHALLENGE_REQUIRED") {
                                         if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
                                             $('#dwfrm_billing').submit();
                                         } else {
                                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                                 console.log("ECI: ", eci);
+                                                 $('#gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }// Challenge Flow
                                     else {
@@ -147,7 +151,12 @@ if($('[name$="_expiration_year"]').val())
                                             $('#dwfrm_billing').submit();
                                         } else {
                                             console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
+                                             $('#gpayerror').text('Card got declined, please enter another card.');
                                         }
+                                    }
+                                    }
+                                    else{
+                                        $('#gpayerror').text('Card got declined, please enter another card.');
                                     }
                                   });
                                 console.log('Authentication Data', authenticationData);

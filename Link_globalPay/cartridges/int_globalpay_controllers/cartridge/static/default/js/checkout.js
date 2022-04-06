@@ -94,6 +94,7 @@ $('.GPcreditCardList').on('change', function () {
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
     var pmttoken = $('#savedPaymentToken').val();
+    $('#gpayerror').text(''); 
     var cartData = {
         amount: parseFloat($('.order-total .order-value').text().replace('$', '').replace(/,/g, '')) * 100,
         address1: $('input[name*="_addressFields_address1"]').val(),
@@ -137,7 +138,9 @@ $('.button-fancy-large').on('click', function () {
                         $("#isthreeds").val(authenticationData.status);
                         $('input[name*=_isthreeds]').val(authenticationData.status);
                         $('input[name*=_authId]').val(versionCheckData.id);
-                        var eci = authenticationData.mpi.eci;
+                        
+                        if (authenticationData.mpi != undefined){
+                            var eci = authenticationData.mpi.eci;
                         if (authenticationData.status != "CHALLENGE_REQUIRED") {
                             if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
                                 console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
@@ -146,6 +149,7 @@ $('.button-fancy-large').on('click', function () {
                             } else {
                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                 console.log("ECI: ", eci);
+                                $('#gpayerror').text('Card got declined, please enter another card.');
                             }
                         }// Challenge Flow
                         else {
@@ -155,8 +159,13 @@ $('.button-fancy-large').on('click', function () {
                                 $('#dwfrm_billing').submit();
                             } else {
                                 console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
+                                $('#gpayerror').text('Card got declined, please enter another card.');
                             }
                         }
+                    }
+                    else{
+                        $('#gpayerror').text('Card got declined, please enter another card.');
+                    }
                     })
                 }
                 catch (e) {
