@@ -131,6 +131,7 @@ cardForm.on("token-success", (resp) => {
                                     console.log('json:::authenticationData'+JSON.stringify(authenticationData));
                                     console.log(':::status:'+authenticationData.status);
                                     $("#isthreeds").val(authenticationData.status);
+                                    if (authenticationData.mpi != undefined){
                                     var eci = authenticationData.mpi.eci;
                                       if (authenticationData.status != "CHALLENGE_REQUIRED") {
                                             if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
@@ -140,6 +141,7 @@ cardForm.on("token-success", (resp) => {
                                             } else {
                                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                                 console.log("ECI: ", eci);
+                                                 $('#gpayerror').text('Card got declined, please enter another card.');
                                             }
                                     }// Challenge Flow
                                     else {
@@ -150,8 +152,13 @@ cardForm.on("token-success", (resp) => {
                                         } else {
                                             console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
                                             //$( ".submit-payment" ).trigger( "click" );
+                                             $('#gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }
+                                    } else {
+                                         $('#gpayerror').text('Card got declined, please enter another card.');
+                                    }
+
                                 })
                                
                                 }
@@ -164,15 +171,13 @@ cardForm.on("token-success", (resp) => {
                  catch (e) {
                     // TODO: add your error handling here
                  }
-   // setTimeout(function() { debugger; }, 5000)     
          }
-        
     
     form.appendChild(token);
     form.submit();
     }
     else{
-      $('#gpayerror').text('Card details are not valid, please enter valid card details.');  
+      $('#gpayerror').text('Card details are not valid, please enter valid card details.');
     }
 });
 
