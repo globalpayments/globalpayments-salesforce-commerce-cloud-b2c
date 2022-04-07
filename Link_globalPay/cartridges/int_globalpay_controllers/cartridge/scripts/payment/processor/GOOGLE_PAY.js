@@ -6,6 +6,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var gpapp=require(globalpayconstants.GPAPP);
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
@@ -35,6 +36,11 @@ function Handle(args) {
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
+    var countryCode = Countries.getCurrent({
+      CurrentRequest: {
+          locale: request.locale
+      }
+    }).countryCode;
     var HookManager = require('dw/system/HookMgr');
     var Locale = require('dw/util/Locale');
     var creditCardFields=gpapp.getForm('billing.paymentMethods.creditCard');
@@ -47,8 +53,7 @@ function Handle(args) {
       amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
-      country: 'US',
-     // country:Locale.getLocale(request.locale.id).country, need to changes
+      country: countryCode,
       payment_method: {
         name: order.customerName,
         entry_mode: globalpayconstants.googlePay.entryMode,
