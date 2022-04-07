@@ -1,5 +1,4 @@
 'use strict';
-var page = module.superModule;
 var server = require('server');
 
 /**
