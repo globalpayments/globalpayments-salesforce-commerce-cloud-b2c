@@ -94,7 +94,13 @@ function returnToForm(cart, params) {
         pageTitle: Resource.msg('billing.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')
     });
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+    var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
+    var countryCode = Countries.getCurrent({
+        CurrentRequest: {
+            locale: request.locale
+        }
+      }).countryCode;
     var gpayToken =  globalPayHelper.getAccessToken();
     var preferences = globalPayPreferences.getPreferences();
     if (params) {
@@ -102,16 +108,14 @@ function returnToForm(cart, params) {
             Basket: cart.object,
             preferences:preferences,
             gpayToken:gpayToken,
-            currency: 'USD',
-            country: 'US',
+            country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing')
         })).render('checkout/billing/billing');
     } else {
         app.getView({
             Basket: cart.object,
             preferences:preferences,
-            currency: 'USD',
-            country: 'US',
+            country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing')
         }).render('checkout/billing/billing');
     }
