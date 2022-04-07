@@ -15,7 +15,6 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
 function Authorize(order, paymentdata) {
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
-    var BasketMgr = require('dw/order/BasketMgr');
 
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
@@ -34,7 +33,6 @@ function Authorize(order, paymentdata) {
             entry_mode: globalpayconstants.applePay.entryMode,
             digital_wallet: {
                 provider: globalpayconstants.applePay.provider,
-                //need to be removed once we get the solution for payment token
                 payment_token: {
                     version: paymentdata.version,
                     data: paymentdata.data,
@@ -47,7 +45,6 @@ function Authorize(order, paymentdata) {
             }
         }
     }
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
     var applePayresp = globalPayHelper.applePay(applePayData);
     var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);

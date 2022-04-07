@@ -30,12 +30,10 @@ function Handle(args) {
  */
  function Authorize(args) {
     var order=args.Order;
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
-    var HookManager = require('dw/system/HookMgr');
     var Locale = require('dw/util/Locale');
     var creditCardFields=gpapp.getForm('billing.paymentMethods.creditCard');
     var token = creditCardFields.get('paymentToken').value()?JSON.parse(creditCardFields.get('paymentToken').value()):"";
@@ -48,7 +46,6 @@ function Handle(args) {
       currency: order.currencyCode,
       reference: order.orderNo,
       country: 'US',
-     // country:Locale.getLocale(request.locale.id).country, need to changes
       payment_method: {
         name: order.customerName,
         entry_mode: globalpayconstants.googlePay.entryMode,

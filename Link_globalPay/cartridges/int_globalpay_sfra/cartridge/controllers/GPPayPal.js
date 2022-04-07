@@ -12,13 +12,11 @@ var server = require('server');
  * @param {serverfunction} - post
  */
 server.use('PayPalReturn', function (req, res, next) {
-  var Transaction = require('dw/system/Transaction');
   var OrderMgr = require('dw/order/OrderMgr');
   var gputil = require('*/cartridge/scripts/utils/gputil');
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
   var HookManager = require('dw/system/HookMgr');
-  var reqMap = req.httpParameterMap;
   var orderId = req.httpParameterMap.id.toString().split('_')[2];
   var order = OrderMgr.getOrder(orderId);
   if (HookManager.hasHook('app.payment.processor.globalpay_paypal')) {
@@ -51,7 +49,6 @@ server.use('PayPalReturn', function (req, res, next) {
 server.use('PayPalCancel', function (req, res, next) {
   res.render('globalpay/threeds');
   var URLUtils = require('dw/web/URLUtils');
-  var reqMap = req.httpParameterMap;
   var Transaction = require('dw/system/Transaction');
   var OrderMgr = require('dw/order/OrderMgr');
   var orderId = req.httpParameterMap.id.toString().split('_')[2];
@@ -73,7 +70,6 @@ server.use('PayPalCancel', function (req, res, next) {
  */
 server.use('PayPalStatus', function (req, res, next) {
   res.render('globalpay/threeds');
-  var reqMap = req.httpParameterMap;
   return next();
 });
 

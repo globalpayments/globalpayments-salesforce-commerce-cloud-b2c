@@ -33,7 +33,6 @@ function Handle(args) {
     var paymentProcessor = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor();
     
     var order=args.Order;
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
@@ -48,7 +47,6 @@ function Handle(args) {
       currency: order.currencyCode,
       reference: order.orderNo,
       country: 'US',
-     // country:Locale.getLocale(request.locale.id).country, need
       payment_method: {
         entry_mode: globalpayconstants.paypalData.entryMode,
         apm: {
@@ -56,9 +54,9 @@ function Handle(args) {
         }
       },
       notifications: {
-        return_url: URLUtils.https('COPlaceOrder-PayPalReturn').toString(), // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalReturn",
-        status_url: URLUtils.https('COPlaceOrder-PayPalStatus').toString(), // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalStatus",
-        cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString() // "https://zzkf-006.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GPPayPal-PayPalCancel"
+        return_url: URLUtils.https('COPlaceOrder-PayPalReturn').toString(), 
+        status_url: URLUtils.https('COPlaceOrder-PayPalStatus').toString(), 
+        cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString() 
       }
     };
     var paypalresp = globalPayHelper.paypal(paypalData);

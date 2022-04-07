@@ -1,34 +1,15 @@
 'use strict';
-var page = module.superModule;
-//var server = require('server');
+
 /* Script Modules */
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 
 
 var guard = require(globalpayconstants.GUARD);
-var gpapp = require(globalpayconstants.GPAPP);
 var app = require(globalpayconstants.APP);
-
 var responseUtils = require(globalpayconstants.SGRESPONSE);
 
 
-/**
- * GlobalPay-Authentication : The GlobalPay-Authentications endpoint does the authentication
- * @name Base/GlobalPay-Authentications
- * @function
- * @memberof GlobalPay
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - get
- */
-function Authentications() {
-    // service logic import
-  var globalPayHelper = require('int_globalpay/cartridge/scripts/helpers/globalPayHelper');
-  var gpayResp = JSON.parse(request.querystring.gpayResp);
-  var authenticate = globalPayHelper.authenticate();
-  response.json({ success: true,
-    authenticate: authenticate });
-};
+
 /**
  * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
  * @name Base/GlobalPay-Authorization
@@ -40,24 +21,9 @@ function Authorization() {
   return { success: true }
 };
 
-/**
- * GlobalPay-Transactions : The GlobalPay-Transactions endpoint invokes transaction call
- * @name Base/GlobalPay-Transactions
- * @function
- * @memberof GlobalPay
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - post
- */
-function Transactions() {
-    // service logic import
-    // here we have invoke transaction call
-  response.json({ success: 'true' });
-
-};
 
 /**
- * GlobalPay-Authentication : The GlobalPay-Authentications endpoint invoke the authentication
+ * GlobalPay-Authentication : The GlobalPay-Authentication endpoint invoke the authentication
  * @name Base/GlobalPay-Authentications
  * @function
  * @memberof GlobalPay
@@ -131,37 +97,6 @@ function ThreeDsMethod() {
         }).render('globalpay/methodnotification');
 };
 
-/**
- * GlobalPay-Transactions : The GlobalPay-Transactions endpoint invokes transaction call
- * @name Base/GlobalPay-Transactions
- * @function
- * @memberof GlobalPay
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - post
- */
- function ThreeDs() {
-  // service logic import
-  // here we have invoke transaction call
-      var test = "";
-      response.setStatusCode(200);
-      response.json({ success: 'true',message:'Successfully connect to Sfcc system.' }); 
-    
-  };
-
-/**
- * GlobalPay-Capture : The GlobalPay-Capture endpoint invokes capture call
- * @name Base/GlobalPay-Capture
- * @function
- * @memberof GlobalPay
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - post
- */
-function Capture() {
-    // service logic import
-  response.json({ success: 'true' });
-};
 
 /*
 * Module exports
@@ -170,7 +105,7 @@ function Capture() {
 /*
 * Web exposed methods
 */
- /* @see module:controllers/GlobalPay~Authentications */
+ /* @see module:controllers/GlobalPay~Authentication */
  exports.Authentication = guard.ensure(['https'], Authentication);
  
  /* @see module:controllers/GlobalPay~Authorization */
@@ -182,8 +117,5 @@ function Capture() {
  /* @see module:controllers/GlobalPay~ThreeDsMethod */
  exports.ThreeDsMethod = guard.ensure(['https'], ThreeDsMethod);
 /* @see module:controllers/GlobalPay~ThreeDsMethod */
-exports.Capture = guard.ensure(['https'], Capture);
-/* @see module:controllers/GlobalPay~ThreeDs */
-exports.ThreeDs = guard.ensure(['https'], ThreeDs);
   
  
