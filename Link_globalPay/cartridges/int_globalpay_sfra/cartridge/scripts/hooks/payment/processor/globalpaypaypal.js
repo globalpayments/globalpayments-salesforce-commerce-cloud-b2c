@@ -5,6 +5,7 @@ var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
@@ -16,13 +17,9 @@ var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var URLUtils = require('dw/web/URLUtils');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-  var HookManager = require('dw/system/HookMgr');
   var Locale = require('dw/util/Locale');
   var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
@@ -47,7 +44,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
       cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
     }
   };
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var paypalresp = globalPayHelper.paypal(paypalData);
   var serverErrors = [];
   if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
@@ -80,7 +76,6 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
 function Handle(basket, req) {
   var currentBasket = basket;
   var cardErrors = {};
-  var Locale = require('dw/util/Locale');
   var serverErrors = [];
   Transaction.wrap(function () {
     //clear previous payment instrument and update new selected payment instrument

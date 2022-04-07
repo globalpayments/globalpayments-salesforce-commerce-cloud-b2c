@@ -1,6 +1,7 @@
 'use strict';
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 
 /**
@@ -16,6 +17,11 @@ function Authorize(order, paymentdata) {
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
 
+    var countryCode = Countries.getCurrent({
+        CurrentRequest: {
+            locale: request.locale
+        }
+      }).countryCode;
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
     var serverErrors = [];
@@ -27,7 +33,7 @@ function Authorize(order, paymentdata) {
         amount: (order.totalGrossPrice) * 100,
         currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'US',
+        country: countryCode,
         payment_method: {
             name: order.customerName.replace(' ', ''),
             entry_mode: globalpayconstants.applePay.entryMode,

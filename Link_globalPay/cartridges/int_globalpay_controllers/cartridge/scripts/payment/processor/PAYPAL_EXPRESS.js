@@ -5,6 +5,7 @@ var Cart = require('*/cartridge/scripts/models/CartModel');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var Resource = require('dw/web/Resource');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
@@ -37,7 +38,11 @@ function Handle(args) {
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
-    var Locale = require('dw/util/Locale');
+    var countryCode = Countries.getCurrent({
+      CurrentRequest: {
+          locale: request.locale
+      }
+    }).countryCode;
     var paypalData = {
       account_name: globalpayconstants.paypalData.account_name,
       channel: globalpayconstants.paypalData.channel,
@@ -46,7 +51,7 @@ function Handle(args) {
       amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: order.orderNo,
-      country: 'US',
+      country: countryCode,
       payment_method: {
         entry_mode: globalpayconstants.paypalData.entryMode,
         apm: {
@@ -54,9 +59,10 @@ function Handle(args) {
         }
       },
       notifications: {
-        return_url: URLUtils.https('COPlaceOrder-PayPalReturn').toString(), 
-        status_url: URLUtils.https('COPlaceOrder-PayPalStatus').toString(), 
-        cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString() 
+
+        return_url: URLUtils.https('COPlaceOrder-PayPalReturn').toString(),
+        status_url: URLUtils.https('COPlaceOrder-PayPalStatus').toString(),
+        cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString()
       }
     };
     var paypalresp = globalPayHelper.paypal(paypalData);

@@ -13,6 +13,11 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
 var app = require(globalpayconstants.APP);
 var gpapp=require(globalpayconstants.GPAPP);
 var Cart = app.getModel('Cart');
+var countryCode = Countries.getCurrent({
+  CurrentRequest: {
+      locale: request.locale
+  }
+}).countryCode;
 /**
  * Verifies a credit card against a valid card number and expiration date and possibly invalidates invalid form fields.
  * If the verification was successful a credit card payment instrument is created.
@@ -36,17 +41,12 @@ function Handle(args) {
     if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
       var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
       var paymentCardValue = PaymentMgr.getPaymentCard(cardType);
-     var countryCode = Countries.getCurrent({
-        CurrentRequest: {
-            locale: request.locale
-        }
-    }).countryCode;
       var applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
               customer,
               countryCode,
               null
           );
-  
+
       if (!applicablePaymentCards.contains(paymentCardValue)) {
               // Invalid Payment Instrument
         var invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
@@ -71,41 +71,38 @@ function Handle(args) {
       htmlName: JSON.parse(paymentTokenId).paymentReference
     };
   }
-   
-    
+
  var authenticationId=creditCardForm.get('authId').value();
  var isthreeds=creditCardForm.get('isthreeds').value();
      if(!empty(isthreeds)&&!empty(authenticationId)){
         var threeDsStepTwo = {
           auth_id : authenticationId
       }
-    
+
       var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
-      
+
       if (!empty(threeDsStepTwoResp) && !empty(threeDsStepTwoResp.success) && !threeDsStepTwoResp.success) {
         var serverErrors = [];
         serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
         return { fieldErrors: [], serverErrors: serverErrors, error: true };
       } 
      }
-   
-  
+
     Transaction.wrap(function () {
       var paymentInstruments = currentBasket.getPaymentInstruments(
               PaymentInstrument.METHOD_CREDIT_CARD
           );
-        
+
           for (var i = 0; i < paymentInstruments.length; i++) {
             var creditcard = paymentInstruments[i];
             currentBasket.removePaymentInstrument(creditcard);
         }
-        
+
       var paymentInstrument = currentBasket.createPaymentInstrument(
               PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
           );
-  
+
       paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
-  
       paymentInstrument.custom.gp_authenticationid = authenticationId;
       paymentInstrument.custom.gp_paymentmethodid =  saveCard&&customer &&customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value;
       paymentInstrument.setCreditCardNumber(cardNumber);
@@ -156,7 +153,7 @@ function Authorize(args) {
       amount: (order.totalGrossPrice.value * 100).toFixed(),
       currency: order.currencyCode,
       reference: orderNo,
-      country:'US',
+      country: countryCode,
       payment_method: {
         id: paymentInstrument.custom.gp_paymentmethodid,
         entry_mode: globalpayconstants.authorizationData.entrymode,

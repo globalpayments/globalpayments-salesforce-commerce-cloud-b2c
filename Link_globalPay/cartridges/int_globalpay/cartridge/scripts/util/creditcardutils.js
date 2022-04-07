@@ -5,30 +5,28 @@
   var basket = BasketMgr.getCurrentOrNewBasket();
   var Locale = require('dw/util/Locale');
   var URLUtils = require('dw/web/URLUtils');
-  //var myreq = req;
   var storedBasket  = BasketMgr.getStoredBasket();
   var currentOrNewBasket  = BasketMgr.getCurrentOrNewBasket();
   var currentBasket = BasketMgr.getCurrentBasket();
-  var myreq = request.httpParameterMap.requestBodyAsString;//controllers
+  var myreq = request.httpParameterMap.requestBodyAsString;
 
 function authenticationData(req, res) {
-  var body = JSON.parse(myreq);//for controllers
+  var body = JSON.parse(myreq);
 
 var authenticationData = {
       account_name: globalpayconstants.authenticationData.account_name,
       channel: globalpayconstants.authenticationData.channel,
-      country: 'US',//Locale.getLocale(req.locale.id).country,//sfra
+      country: Locale.getLocale(!empty(req.locale.id) ? req.locale.id : req.locale).country,
       reference: globalpayconstants.authorizationData.reference,
       amount: body.card.cartData.amount,
       currency: currentBasket.currencyCode,
       source: globalpayconstants.authenticationData.source,
       payment_method: {
-        //id: JSON.parse(req.body).card.reference//sfra
-        id: JSON.parse(myreq).card.reference//controllers
+        id: JSON.parse(myreq).card.reference
       },
       notifications: {
-        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),// preferences.threedsecureChallenge,
-        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()// preferences.threedsecureMethod
+        challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),
+        three_ds_method_return_url:URLUtils.abs('GlobalPay-ThreeDsMethod').toString()
       }
     };
 
@@ -62,8 +60,7 @@ var authenticationData = {
     }
 
 function initiationData(req,res) {
-  var body = JSON.parse(myreq);//for controllers
-        //var body = JSON.parse(req.body);
+  var body = JSON.parse(myreq);
         var browserData = JSON.parse(myreq).browserData;
         var challengeWindow = JSON.parse(myreq).challengeWindow;
               var threeDsStepOne =
@@ -88,8 +85,7 @@ function initiationData(req,res) {
                     }
                 },
                 payment_method:{
-                      id: JSON.parse(myreq).card.reference//controllers
-                    //id: JSON.parse(req.body).card.reference//req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value
+                      id: JSON.parse(myreq).card.reference
                 },
 
                 browser_data:{
@@ -119,10 +115,10 @@ function initiationData(req,res) {
                 threeDSResponse.challenge.encodedChallengeRequest 	= threeDsStepOneResp.threeDs.challengeValue;
                 threeDSResponse.challenge.requestUrl  		= threeDsStepOneResp.threeDs.redirectUrl;
                 threeDSResponse.challengeMandated  			= threeDsStepOneResp.threeDs.challengeStatus;
-                threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+                threeDSResponse.deviceRenderOptions 			= threeDsStepOneResp.threeDs.authenticationSource;
                 threeDSResponse.dsTransactionId  			= threeDsStepOneResp.threeDs.dsTransRef;
                 threeDSResponse.messageCategory  			= threeDsStepOneResp.messageCategory;
-                threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource; // need to discuss
+                threeDSResponse.messageExtension 			= threeDsStepOneResp.threeDs.authenticationSource;
                 threeDSResponse.messageVersion  			= threeDsStepOneResp.threeDs.messageVersion;
                 threeDSResponse.mpi = new Object();
                 threeDSResponse.mpi.authenticationValue 		=threeDsStepOneResp.threeDs.authenticationValue;

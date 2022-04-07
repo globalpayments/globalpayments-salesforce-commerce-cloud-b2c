@@ -3,9 +3,9 @@
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var ApplePayHookResult = require('dw/extensions/applepay/ApplePayHookResult');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 
-
-var paymentMethodID = 'DW_APPLE_PAY';
+var paymentMethodID = globalpayconstants.applePay.paymentTypeCode;
 
 /**
  * @function getRequest hook is called whenever there is a new request on the site
