@@ -1,7 +1,8 @@
 'use strict';
-var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 /**
  * Authorizes a payment using a apple pay.
  * @param {number} orderNumber - The current order'\
@@ -12,15 +13,8 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
  * @return {Object} returns an error object
  */
 function Authorize(order, paymentdata) {
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-    var BasketMgr = require('dw/order/BasketMgr');
-    var currentBasket = BasketMgr.getCurrentBasket();
-
     var preferences = globalPayPreferences.getPreferences();
     var captureMode = preferences.captureMode;
-    var HookManager = require('dw/system/HookMgr');
     var Locale = require('dw/util/Locale');
     var Site = require('dw/system/Site');
     var currentSite = Site.getCurrent();
@@ -51,12 +45,10 @@ function Authorize(order, paymentdata) {
             }
         }
     }
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
     var applePayresp = globalPayHelper.applePay(applePayData);
     var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
     if (!orderUpdateResult) {
-        var error = true;
              serverErrors.push(
                  Resource.msg('error.technical', 'checkout', null)
              );
