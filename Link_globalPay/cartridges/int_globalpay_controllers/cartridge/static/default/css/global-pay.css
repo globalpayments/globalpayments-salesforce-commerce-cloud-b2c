@@ -11,6 +11,10 @@
 {
     display:none;
 }
+.default-creditcard .gpayerror
+{
+    margin-left: 10%;
+}
 /*
  * Gpay styles
  */

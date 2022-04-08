@@ -69,6 +69,7 @@ function populateCreditCardForm(cardID) {
 // select credit card from list
 $('.GPcreditCardList').on('change', function () {
     var cardUUID = $(this).val();
+    $('.gpayerror').text(''); 
     if (cardUUID) {
         $('.default-creditcard').removeClass('d-none');
         $('.button-fancy-large').css('display', 'inline-block');
@@ -94,7 +95,7 @@ $('.GPcreditCardList').on('change', function () {
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
     var pmttoken = $('#savedPaymentToken').val();
-    $('#gpayerror').text(''); 
+    $('.gpayerror').text(''); 
     var cartData = {
         amount: parseFloat($('.order-total .order-value').text().replace('$', '').replace(/,/g, '')) * 100,
         address1: $('input[name*="_addressFields_address1"]').val(),
@@ -149,7 +150,7 @@ $('.button-fancy-large').on('click', function () {
                             } else {
                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                 console.log("ECI: ", eci);
-                                $('#gpayerror').text('Card got declined, please enter another card.');
+                                $('.gpayerror').text('Card got declined, please enter another card.');
                             }
                         }// Challenge Flow
                         else {
@@ -159,12 +160,12 @@ $('.button-fancy-large').on('click', function () {
                                 $('#dwfrm_billing').submit();
                             } else {
                                 console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
-                                $('#gpayerror').text('Card got declined, please enter another card.');
+                                $('.gpayerror').text('Card got declined, please enter another card.');
                             }
                         }
                     }
                     else{
-                        $('#gpayerror').text('Card got declined, please enter another card.');
+                        $('.gpayerror').text('Card got declined, please enter another card.');
                     }
                     })
                 }
