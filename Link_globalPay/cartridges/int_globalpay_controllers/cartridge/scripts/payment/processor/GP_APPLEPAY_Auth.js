@@ -16,7 +16,7 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
 function Authorize(order, paymentdata) {
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var URLUtils = require('dw/web/URLUtils');
-    var BasketMgr = require('dw/order/BasketMgr');
+
     var countryCode = Countries.getCurrent({
         CurrentRequest: {
             locale: request.locale
@@ -51,7 +51,6 @@ function Authorize(order, paymentdata) {
             }
         }
     }
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
     var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
     var applePayresp = globalPayHelper.applePay(applePayData);
     var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);

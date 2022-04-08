@@ -34,7 +34,6 @@ function Handle(args) {
     var paymentProcessor = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor();
     
     var order=args.Order;
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var URLUtils = require('dw/web/URLUtils');
     var preferences = globalPayPreferences.getPreferences();
@@ -60,6 +59,7 @@ function Handle(args) {
         }
       },
       notifications: {
+
         return_url: URLUtils.https('COPlaceOrder-PayPalReturn').toString(),
         status_url: URLUtils.https('COPlaceOrder-PayPalStatus').toString(),
         cancel_url: URLUtils.https('COPlaceOrder-PayPalCancel').toString()

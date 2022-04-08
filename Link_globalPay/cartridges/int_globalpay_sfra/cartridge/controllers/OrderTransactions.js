@@ -55,9 +55,7 @@ function (req, res, next) {
         error: Resource.msg('order.refund.error', 'globalpay', null)
       };
     }
-  } else {
-            // refundresult = res.viewData.errorMessage;
-  }
+  } 
   res.json({
     refundresult: refundresult
   });
@@ -78,7 +76,6 @@ server.middleware.https,
 function (req, res, next) {
   var captureresult;
   if (!(res.viewData.securityErrorMessage)) {
-    var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var order = OrderMgr.getOrder(req.querystring.orderID);
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;

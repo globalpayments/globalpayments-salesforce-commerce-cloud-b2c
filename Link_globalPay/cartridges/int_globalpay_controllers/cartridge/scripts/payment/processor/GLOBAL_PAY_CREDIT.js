@@ -32,9 +32,7 @@ function Handle(args) {
   var expirationMonth = creditCardForm.get('expiration.month').value();
   var expirationYear = creditCardForm.get('expiration.year').value();
   var serverErrors = [];
-  var creditCardStatus;
   var cardType =creditCardForm.get('type').value();
-  var paymentCard = PaymentMgr.getPaymentCard(cardType);
   var PaymentInstrument = require('dw/order/PaymentInstrument');
   var paymentMethodID= app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value
   var saveCard=false;
@@ -55,7 +53,6 @@ function Handle(args) {
         return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
       }
     }
-    var preferences = globalPayPreferences.getPreferences();
     var paymentTokenId=creditCardForm.get('paymentId').value();
     var paymentId =null;
     var uuid= request.httpParameterMap.creditCardUUID.value || request.httpParameterMap.dwfrm_billing_paymentMethods_creditCardList.stringValue;
@@ -247,7 +244,6 @@ function Authorize(args) {
  * @returns {string} a token
  */
  function createToken(formdata) {
-  var creditcardnumber = formdata.cardNumber;
   var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
   var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
 

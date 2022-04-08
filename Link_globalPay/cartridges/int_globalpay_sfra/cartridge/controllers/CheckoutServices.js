@@ -22,7 +22,6 @@ function handlePayments(req, res, next) {
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
   var PaymentManager = require('dw/order/PaymentMgr');
   var HookManager = require('dw/system/HookMgr');
-  var OrderMgr = require('dw/order/OrderMgr');
   var Resource = require('dw/web/Resource');
   billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 

@@ -12,9 +12,6 @@ var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
 var responseUtils = require('app_storefront_controllers/cartridge/scripts/util/Response');
 var guard = require(globalpayconstants.GUARD);
-var app = require(globalpayconstants.APP);
-var gpapp = require(globalpayconstants.GPAPP);
-var pageMeta=require(globalpayconstants.SGPAGEMETA);
 
  function refundTransaction() {
     var refundresult;
@@ -54,8 +51,6 @@ var pageMeta=require(globalpayconstants.SGPAGEMETA);
                     error:  Resource.msg('order.refund.error', 'globalpay', null)
                 }
             }
-        }else{
-            //refundresult = response.viewData.errorMessage;
         }
     responseUtils.renderJSON({
             refundresult :  refundresult
