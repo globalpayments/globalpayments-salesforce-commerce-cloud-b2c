@@ -48,7 +48,6 @@ function handlePayments(order, orderNumber) {
                             orderNumber,
                             paymentInstrument,
                             paymentProcessor,
-                          //  req,
                             order
                         );
             result.authorizationResult = authorizationResult;
