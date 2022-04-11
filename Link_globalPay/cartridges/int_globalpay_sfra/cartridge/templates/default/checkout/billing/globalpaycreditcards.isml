@@ -1,5 +1,4 @@
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
-  <div id="gpayerror"></div> 
  <form id="payment-form" action="/Payment/Charge" method="post">
     <!-- Other input fields to capture relevant data -->
     <!-- Target for the credit card form -->
@@ -70,7 +69,7 @@ cardForm.on("token-success", (resp) => {
     token.type = "hidden";
     token.name = "payment_token";
     token.value = resp.paymentReference; 
-    $('#gpayerror').text('');
+    $('.gpayerror').text('');
     $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
     $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
     $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
@@ -141,7 +140,7 @@ cardForm.on("token-success", (resp) => {
                                             } else {
                                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                                 console.log("ECI: ", eci);
-                                                 $('#gpayerror').text('Card got declined, please enter another card.');
+                                                 $('.gpayerror').text('Card got declined, please enter another card.');
                                             }
                                     }// Challenge Flow
                                     else {
@@ -152,11 +151,11 @@ cardForm.on("token-success", (resp) => {
                                         } else {
                                             console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
                                             //$( ".submit-payment" ).trigger( "click" );
-                                             $('#gpayerror').text('Card got declined, please enter another card.');
+                                             $('.gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }
                                     } else {
-                                         $('#gpayerror').text('Card got declined, please enter another card.');
+                                         $('.gpayerror').text('Card got declined, please enter another card.');
                                     }
 
                                 })
@@ -177,12 +176,12 @@ cardForm.on("token-success", (resp) => {
     form.submit();
     }
     else{
-      $('#gpayerror').text('Card details are not valid, please enter valid card details.');
+      $('.gpayerror').text('Card details are not valid, please enter valid card details.');
     }
 });
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumers
-    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
 });
 </script>
