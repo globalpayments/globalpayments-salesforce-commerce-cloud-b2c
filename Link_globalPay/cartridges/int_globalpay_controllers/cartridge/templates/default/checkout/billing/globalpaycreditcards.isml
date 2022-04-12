@@ -5,7 +5,7 @@
     var preferences = globalPayPreferences.getPreferences();
   </isscript>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
-  <div id="gpayerror"></div> 
+ <div class="gpayerror"></div>
  <form id="payment-form" action="/Payment/Charge" method="post">
     <!-- Other input fields to capture relevant data -->
     <!-- Target for the credit card form -->
@@ -74,7 +74,7 @@ cardForm.on("token-success", (resp) => {
     token.type = "hidden";
     token.name = "payment_token";
     token.value = resp.paymentReference; 
-    $('#gpayerror').text(''); 
+    $('.gpayerror').text(''); 
     $('input[name*="_creditCard_owner"]').val(resp.details.cardholderName?resp.details.cardholderName:$('input[name*=_firstName]').val()).trigger('change');
     $('select[name$="_creditCard_type"]').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length)).trigger('change');
     $('input[name*="_creditCard_number"]').val(resp.details.cardNumber).trigger('change');
@@ -142,7 +142,7 @@ if($('[name$="_expiration_year"]').val())
                                         } else {
                                                 console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
                                                 console.log("ECI: ", eci);
-                                                 $('#gpayerror').text('Card got declined, please enter another card.');
+                                                 $('.gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }// Challenge Flow
                                     else {
@@ -151,12 +151,12 @@ if($('[name$="_expiration_year"]').val())
                                             $('#dwfrm_billing').submit();
                                         } else {
                                             console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
-                                             $('#gpayerror').text('Card got declined, please enter another card.');
+                                             $('.gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }
                                     }
                                     else{
-                                        $('#gpayerror').text('Card got declined, please enter another card.');
+                                        $('.gpayerror').text('Card got declined, please enter another card.');
                                     }
                                   });
                                 console.log('Authentication Data', authenticationData);
@@ -179,13 +179,13 @@ if($('[name$="_expiration_year"]').val())
 }
 else
 {
-    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
 }
 
 });
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumer
-    $('#gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
 });
 </script>

@@ -95,6 +95,7 @@
 
 			</isif>
 			<div class="default-creditcard d-none">
+			<div class="gpayerror"></div>
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.owner}" type="input"/>
 
 			<isinputfield formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.type}" type="select"/>
