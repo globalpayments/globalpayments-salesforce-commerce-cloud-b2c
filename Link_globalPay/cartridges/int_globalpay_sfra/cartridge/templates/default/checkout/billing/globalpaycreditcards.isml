@@ -25,28 +25,6 @@ GlobalPayments.configure({
 // Create Form
 const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
 
-
-function gatherBrowserData() {
-  var javaEnabled = navigator.javaEnabled();
-  var browserLanguage = navigator.language;
-  var screenHeight = screen.height;
-  var screenWidth = screen.width;
-  var userAgent = navigator.userAgent;
-  var browserTime = new Date();
-  var browserTimezoneZoneOffset = browserTime.getTimezoneOffset();
-  var clientData = new Object();
-  clientData.colorDepth = screen.colorDepth;
-  clientData.javaEnabled = navigator.javaEnabled();
-  clientData.browserLanguage = navigator.language; // en_US
-  clientData.screenHeight = screen.height; // 1080
-  clientData.screenWidth = screen.width; // 1920
-  clientData.userAgent = navigator.userAgent;
-  clientData.browserTime = browserTime.getTimezoneOffset();// 0
- return clientData;
-}
-
-document.getElementById("threedsdata").value = JSON.stringify(gatherBrowserData());
-
 const cvvList = document.querySelectorAll("#saved-payment-security-code");
 if (cvvList.length) {
   for (let i = 0; i < cvvList.length; i++) {
@@ -75,7 +53,6 @@ cardForm.on("token-success", (resp) => {
     $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
-    $("#threedsdata").val(JSON.stringify(gatherBrowserData()));
     if($("#expirationYear").val()){
     var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
          if($('#isnewcard').val()){

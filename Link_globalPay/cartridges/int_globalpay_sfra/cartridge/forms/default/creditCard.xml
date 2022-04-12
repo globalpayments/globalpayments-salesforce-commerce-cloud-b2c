@@ -59,7 +59,6 @@
     <field formid="paymentId"   type="string"  binding="paymentId"/>
     <field formid="authId"   type="string"  binding="authId"/>
     <field formid="isthreeds"  type="string"  binding="isthreeds"/>
-    <field formid="threedsdata"  type="string"  binding="threedsdata"/>
 
     <field formid="paymentToken" label="profile.paymentToken" type="string"  binding="paymentToken"/>
    <!-- saveCard boolean field to save the card details -->

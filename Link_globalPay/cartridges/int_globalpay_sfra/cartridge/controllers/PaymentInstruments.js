@@ -6,7 +6,6 @@
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
-var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var globalPayHelper = require('int_globalpay/cartridge/scripts/helpers/globalPayHelper');
 
 var page = module.superModule;

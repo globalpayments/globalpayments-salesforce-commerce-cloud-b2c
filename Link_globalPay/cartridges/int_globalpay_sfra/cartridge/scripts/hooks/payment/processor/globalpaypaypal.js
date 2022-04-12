@@ -7,6 +7,7 @@ var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
@@ -79,32 +80,7 @@ function Handle(basket, req) {
   var serverErrors = [];
   Transaction.wrap(function () {
     //clear previous payment instrument and update new selected payment instrument
-    var paymentInstruments = currentBasket.getPaymentInstruments(
-      globalpayconstants.paypalData.paymentTypeCode
-        ); 
-
-        collections.forEach(paymentInstruments, function (item) {
-          currentBasket.removePaymentInstrument(item);
-        });
-
-            paymentInstruments = currentBasket.getPaymentInstruments(
-              Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
-          );
-
-          collections.forEach(paymentInstruments, function (item) {
-            currentBasket.removePaymentInstrument(item);
-          });
-          
-          paymentInstruments = currentBasket.getPaymentInstruments(
-            PaymentInstrument.METHOD_CREDIT_CARD
-        );
-    collections.forEach(paymentInstruments, function (item) {
-      currentBasket.removePaymentInstrument(item);
-    });
-
-    var paymentInstrument = currentBasket.createPaymentInstrument(
-      globalpayconstants.paypalData.paymentTypeCode, currentBasket.totalGrossPrice
-        );
+    var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode);
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }

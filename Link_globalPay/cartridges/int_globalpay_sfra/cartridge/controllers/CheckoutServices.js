@@ -252,11 +252,6 @@ server.prepend(
         };
       }
 
-      viewData.paymentInformation.threedsdata = {
-        value: JSON.parse(paymentForm.creditCardFields.threedsdata.value),
-        htmlName: JSON.parse(paymentForm.creditCardFields.threedsdata.value)
-      };
-
       viewData.paymentInformation.authId = {
         value: req.form.authId,
         htmlName: req.form.authId
