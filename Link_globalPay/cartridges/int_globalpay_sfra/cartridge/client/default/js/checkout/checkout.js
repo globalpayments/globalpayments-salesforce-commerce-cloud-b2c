@@ -558,12 +558,19 @@ var threeds = require('./threeds');
                 // Handle add payment and back to saved cards for login flow and 
                 // Handle next step button and save card checkbox
                 //
+                $(document).on('click', '.saved-payment-instrument', function (e) {
+                    $('.next-step-button .submit-payment').removeAttr('disabled');
+                    $('.gpayerror').text('');
+                });
+
                 $('.cancel-new-payment', plugin).on('click', function() {
                     $('.next-step-button .submit-payment').removeClass('d-none');
+                    $('.gpayerror').text('');
                     $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked', false)
                     $('#isnewcard').val(false);
                 });
                 $('.add-payment', plugin).on('click', function() {
+                    $('.gpayerror').text('');
                     $('.next-step-button .submit-payment').addClass('d-none');
                     $('.save-credit-card.custom-control.custom-checkbox').find('#saveCreditCard').attr('checked', true)
                     $('#isnewcard').val(true);
