@@ -5,8 +5,6 @@
   var basket = BasketMgr.getCurrentOrNewBasket();
   var Locale = require('dw/util/Locale');
   var URLUtils = require('dw/web/URLUtils');
-  var storedBasket  = BasketMgr.getStoredBasket();
-  var currentOrNewBasket  = BasketMgr.getCurrentOrNewBasket();
   var currentBasket = BasketMgr.getCurrentBasket();
   var myreq = request.httpParameterMap.requestBodyAsString;
 

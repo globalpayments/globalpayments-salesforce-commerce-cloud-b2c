@@ -8,6 +8,7 @@ var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
 
 /**
  * Verifies the required information for billing form is provided.
@@ -301,34 +302,8 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
   Transaction.wrap(function () {
     //clear previous payment instrument and update new selected payment instrument
-    var paymentInstruments = currentBasket.getPaymentInstruments(
-            PaymentInstrument.METHOD_CREDIT_CARD
-        );
-
-        collections.forEach(paymentInstruments, function (item) {
-          currentBasket.removePaymentInstrument(item);
-        });
-
-        paymentInstruments = currentBasket.getPaymentInstruments(
-          Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
-      );
-
-      collections.forEach(paymentInstruments, function (item) {
-        currentBasket.removePaymentInstrument(item);
-      });
- 
-      paymentInstruments = currentBasket.getPaymentInstruments(
-        Resource.msg('paymentmethodname.paypal', 'globalpay', null)
-    );
-
-    collections.forEach(paymentInstruments, function (item) {
-      currentBasket.removePaymentInstrument(item);
-    });
-
-    var paymentInstrument = currentBasket.createPaymentInstrument(
-            PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
-        );
-
+    var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
+    
     paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
 
     paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
