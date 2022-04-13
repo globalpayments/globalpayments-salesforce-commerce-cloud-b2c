@@ -32,6 +32,7 @@ describe('paypal', function () {
 
     var paypalProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaypaypal', {
         '*/cartridge/scripts/util/collections': {},
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':{},
         'dw/order/PaymentInstrument': {},
         'dw/order/PaymentMgr': {},
         'dw/order/PaymentStatusCodes': {},

@@ -32,6 +32,7 @@ describe('google pay', function () {
     var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
     var googlepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaygooglepay', {
         '*/cartridge/scripts/util/collections': {},
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':{},
         'dw/web/Resource': {
             msg: function (param) {
                 return param;

@@ -22,6 +22,9 @@ describe('paymentInstrumentUtils', function () {
               },
         },
         'dw/system/Logger' : {},
+        'dw/order/PaymentInstrument':{},
+        'dw/order/BasketMgr':{},
+        '*/cartridge/scripts/util/collections':{},
         'dw/system/Transaction': {
             wrap: function (arg) { arg(); return true; }
           },
