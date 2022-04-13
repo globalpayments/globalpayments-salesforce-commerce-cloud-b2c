@@ -50,6 +50,8 @@ describe('creditcard', function () {
         },
         'dw/order/PaymentInstrument':{},
         'dw/order/PaymentStatusCodes':{},
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':
+        {},
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
