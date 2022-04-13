@@ -1295,7 +1295,7 @@ opacity: 1;
         }
         .paypal-tab-img{
             padding:0px;
-            width:90px;
+            width:85px;
             height:45px;
         }
         .nav-item .paypal-tab{
@@ -1307,6 +1307,5 @@ opacity: 1;
         }
         
         .googlepay-tab-img{
-            height:24px;
-            margin-top:8px;
+            height:33px;
         }
