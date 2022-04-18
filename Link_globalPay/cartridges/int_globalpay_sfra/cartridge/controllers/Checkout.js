@@ -10,7 +10,7 @@ server.extend(page);
 server.append('Begin', function (req, res, next) {
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
-    var gpayToken =  globalPayHelper.getAccessToken();
+    var gpayToken =  globalPayHelper.getCheckoutToken();
     var BasketMgr = require('dw/order/BasketMgr');
     var currentBasket = BasketMgr.getCurrentBasket();
     var Locale = require('dw/util/Locale');
