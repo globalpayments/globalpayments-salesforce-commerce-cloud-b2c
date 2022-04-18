@@ -11,7 +11,6 @@ function getAccessToken() {
 
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var tokenCache = CacheMgr.getCache('GlobalPayAccessToken');
-
   var accessToken = tokenCache.get('accessToken:' + Site.getCurrent().ID, function () {
     var preferences = globalPayPreferences.getPreferences();
     var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
@@ -311,6 +310,35 @@ function  threeDsStepone(data) {
         return null;
   }
 
+  /*
+  Generated the token with limited access
+  */
+  function getCheckoutToken(){
+  var CacheMgr = require('dw/system/CacheMgr');
+  var Site = require('dw/system/Site');
+  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+    var accessToken ;
+    var preferences = globalPayPreferences.getPreferences();
+    var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
+
+    var accessTokenRequest = new AccessToken.Request();
+
+    accessTokenRequest.setGrantType(preferences.grantType);
+    accessTokenRequest.setAppId(preferences.appId);
+    accessTokenRequest.setAppKey(preferences.appKey);
+    accessTokenRequest.setNonce(Date.now());
+    var permissions = ["PMT_POST_Create_Single"];
+
+    accessTokenRequest.setPermissions(permissions);
+
+    var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
+
+    if (result.success) {
+      return result.response.getToken();
+    }
+  return accessToken || null;
+  }
+
 
 module.exports = {
     getAccessToken: getAccessToken,
@@ -326,5 +354,6 @@ module.exports = {
     applePay:applePay,
     threeDsStepone:threeDsStepone,
     threeDsSteptwo:threeDsSteptwo,
-    payPalCapture: payPalCapture
+    payPalCapture: payPalCapture,
+    getCheckoutToken: getCheckoutToken
 };
