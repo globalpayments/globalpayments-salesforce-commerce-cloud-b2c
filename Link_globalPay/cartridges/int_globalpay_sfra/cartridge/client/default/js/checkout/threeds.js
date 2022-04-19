@@ -2,11 +2,13 @@
 var formHelpers = require('base/checkout/formErrors');
 var scrollAnimate = require('base/components/scrollAnimate');
 var handle = function (versionCheckData, authenticationData, paymentForm, defer) {
-  console.log('Authentication Data', authenticationData);
-  console.log(':::status:' + authenticationData.status);
+  // console.log('Authentication Data', authenticationData);
+  // console.log(':::status:' + authenticationData.status);
   $('#isthreeds').val(authenticationData.status);
   console.log('::before calling to ajax:::');
-  if (authenticationData.mpi != undefined) {
+  if (authenticationData.isthreedsone) {
+    submitPaymentAajx(versionCheckData, authenticationData, paymentForm, defer);
+  } else if (authenticationData.mpi != undefined) {
     var eci = authenticationData.mpi.eci;
     if (authenticationData.status != 'CHALLENGE_REQUIRED') {
       if (eci == '05' || eci == '06' || eci == '01' || eci == '02') {
@@ -85,20 +87,17 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
         });
 
         if (data.renderedPaymentInstruments) {
-          $('.stored-payments').empty().html(
-                            data.renderedPaymentInstruments
-                        );
+          $('.stored-payments').empty().html(data.renderedPaymentInstruments);
         }
 
         if (data.customer.registeredUser &&
-                        data.customer.customerPaymentInstruments.length
+             data.customer.customerPaymentInstruments.length
                     ) {
           $('.cancel-new-payment').removeClass('checkout-hidden');
         }
         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                         // scrollAnimate();
         }
-
         defer.resolve(data);
       }
     },

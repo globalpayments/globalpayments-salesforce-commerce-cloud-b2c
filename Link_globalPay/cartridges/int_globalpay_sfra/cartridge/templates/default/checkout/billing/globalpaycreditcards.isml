@@ -77,7 +77,12 @@ cardForm.on("token-success", (resp) => {
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                        if ( versionCheckData.error ) {
+                        if(versionCheckData.enrolled == 'ENROLLED' &&
+                                versionCheckData.versions.directoryServer.start == '1.0.0'
+                                && versionCheckData.versions.directoryServer.end == '1.0.0' ){
+                                $("#authId").val(versionCheckData.id);
+                        $( ".submit-payment" ).trigger( "click" );
+                        } else if ( versionCheckData.error ) {
 
                         }else{
                           console.log('::::'+versionCheckData.id);
