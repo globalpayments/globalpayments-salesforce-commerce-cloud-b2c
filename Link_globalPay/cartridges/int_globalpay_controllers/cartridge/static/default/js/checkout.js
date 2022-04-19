@@ -117,10 +117,18 @@ $('.button-fancy-large').on('click', function () {
                 cartData: cartData
             },
         }).then(function (versionCheckData) {
-            if (versionCheckData.error) {
+            if(versionCheckData.enrolled == 'ENROLLED' &&
+            versionCheckData.versions.directoryServer.start == '1.0.0'
+            && versionCheckData.versions.directoryServer.end == '1.0.0' ){
+            $('input[name*=_authId]').val(versionCheckData.id);
+            var authenticationData = new Object();
+            authenticationData.status = 'undefined';
+            authenticationData.isthreedsone =  true;
+            $('#dwfrm_billing').submit();
+          } else if (versionCheckData.error) {
 
             } else {
-                $("#authId").val(versionCheckData.id);
+                $('input[name*=_authId]').val(versionCheckData.id);
                 try {
                     authenticationData = initiateAuthentication($('#initiationurl').val(), {
                         serverTransactionId: versionCheckData.serverTransactionId,
