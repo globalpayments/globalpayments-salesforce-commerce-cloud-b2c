@@ -138,10 +138,10 @@ function savePaymentInformation(req, basket, billingData) {
     paymentInformationID : paymentTokenID
   };
   var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
-  if (!empty(tokenization) && !empty(tokenization.id)) {
+  if (typeof tokenization !== 'undefined'&&tokenization.id!=null) {
     return tokenization.id;
   }else{
-    tokenization.error
+    return tokenization.error
   }
 
 }
@@ -285,14 +285,14 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
   var preferences = globalPayPreferences.getPreferences();
  
-   if(!empty(paymentInformation.isthreeds.value) && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED'){
+   if(typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED'){
       var threeDsStepTwo = {
         auth_id : paymentInformation.authId.value
       }
   
     var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
     
-    if (!empty(threeDsStepTwoResp) && !empty(threeDsStepTwoResp.success) && !threeDsStepTwoResp.success) {
+    if (typeof threeDsStepTwoResp !== 'undefined' && typeof threeDsStepTwoResp.success !== 'undefined' && !threeDsStepTwoResp.success) {
       var serverErrors = [];
       serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
       return { fieldErrors: [], serverErrors: serverErrors, error: true };
