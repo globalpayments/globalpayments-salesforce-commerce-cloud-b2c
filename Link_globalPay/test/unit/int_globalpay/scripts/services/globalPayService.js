@@ -15,6 +15,14 @@ function createService(serviceName, params) {
         this.params.filterLogMessage(msg);
         return {
             ok: true,
+            isOk : function (){},
+            getObject : function (){},
+            getError : function (){},
+            getMsg : function (){},
+            getDto :function() {},
+            getErrorMessage : function (){
+                return 'error';
+            },
             status: 'OK',
             object: 'some string'
         };
@@ -49,19 +57,34 @@ var requestObject = {
     },
 };
 
+
+var errorObject = {
+    error_code: 'GENERAL_ERROR',
+    getError : function (){
+        return 'detailed_error_code';
+    },
+    getMsg : function () {
+        return 'detailed_error_message';
+    },
+};
+
 var globalPayService = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/services/globalPayService', {
 
     'dw/svc/LocalServiceRegistry' : {
-        createService: (serviceName, params) => {
+        createService: function (serviceName, params) {
             return new createService(serviceName, params);
         }
         },
+    '*/cartridge/scripts/dtos/APIError' : {
+        Response : function (errorObject){
+            return errorObject;
+        }
+    },
     'dw/util/UUIDUtils' : {
         createUUID : function createUUID(){
             return;
         },
     },
-    '*/cartridge/scripts/helpers/globalPayHelper' : {},
 
     '*/cartridge/scripts/helpers/globalPayPreferences': {
         getPreferences: function () {
@@ -76,8 +99,8 @@ var globalPayService = proxyquire('../../../../../cartridges/int_globalpay/cartr
             captureMode: 'gp_captureMode',
             clientId: 'gp_clientID',
             env: 'gp_env',
-            threedsecureChallenge: 'gp_threedsecure_challengenotification', // http://testing.test/wc-api/globalpayments_threedsecure_challengenotification/
-            threedsecureMethod: 'gp_threedsecure_methodnotification', // http://testing.test/wc-api/globalpayments_threedsecure_methodnotification/
+            threedsecureChallenge: 'gp_threedsecure_challengenotification',
+            threedsecureMethod: 'gp_threedsecure_methodnotification',
             gpayMerchantId: 'gp_gpayMerchantId',
             gpayMerchantName: 'gp_gpayMerchantName',
             gpayEnv: 'gp_gpayEnv',
@@ -95,8 +118,8 @@ describe('globalPayService', function() {
      it('It should execute request', function () {
          var requestObject = {};
         var responseClass = {};
-        //var result = globalPayService.executeRequest(requestObject, responseClass);
-         //assert.isTrue(result.null);
+        var result = globalPayService.executeRequest(requestObject, responseClass);
+        assert.isFalse(result.success);
      });
 
 });

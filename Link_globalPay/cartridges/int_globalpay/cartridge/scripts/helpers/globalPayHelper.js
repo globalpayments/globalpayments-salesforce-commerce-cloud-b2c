@@ -314,10 +314,8 @@ function  threeDsStepone(data) {
   Generated the token with limited access
   */
   function getCheckoutToken(){
-  var CacheMgr = require('dw/system/CacheMgr');
-  var Site = require('dw/system/Site');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var accessToken ;
+    var accessToken;
     var preferences = globalPayPreferences.getPreferences();
     var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
 

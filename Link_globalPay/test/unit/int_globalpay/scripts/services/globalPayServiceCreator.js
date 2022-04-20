@@ -12,10 +12,32 @@ var ENDPOINT_INITIATE = 'authentications/:authId/initiate';
 
 var globalPayServiceCreator = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/services/globalPayServiceCreator', {
     'dw/svc/LocalServiceRegistry' : {
-        createService: (serviceName, params) => {
-            return new createService(serviceName, params);
-        }
+        prepareEndpoint :  function (endpoint, params ){
+            this.endpoint = endpoint;
+            this.params = params;
+                return {
+                    preparedEndpoint : 'preparedEndpoint'
+                };
         },
+        createService: function (serviceName, params) {
+            this.serviceName = serviceName;
+            this.params = params;
+                this.createRequest = function (svc,params){
+                this.params.setRequestMethod('POST');
+                this.params.setURL();
+                this.params.addHeader();
+                return {
+                    params: 'some string'
+                };
+            };
+            this.parseResponse = function(svc, response){
+                return 'text';
+            };
+            this.filterLogMessage = function (){
+                return 'msg';
+            };
+        },
+    },
         'dw/system/Site':{
             getCurrent : function(){
                 return;
@@ -23,24 +45,14 @@ var globalPayServiceCreator = proxyquire('../../../../../cartridges/int_globalpa
         },
 
 });
-function createService(serviceName, params) {
-    this.serviceName = serviceName;
-    this.params = params;
-    this.call = function () {
-        this.params.createRequest(svc,requestObject);
-        this.params.parseResponse(svc, response);
-        this.params.filterLogMessage(msg);
-        return {
-            ok: true,
-            status: 'OK',
-            object: 'some string'
-        };
-    };
-}
+
+var endpointParams = {};
+var serviceEndpoint = {};
+var token = 'token';
 
 describe('globalPayServiceCreator', function() {
     it('It should create service request', function () {
-        var result = globalPayServiceCreator.createService();
-         assert.equal(result.success);
+        var result = globalPayServiceCreator.createService(serviceEndpoint, token, endpointParams);
+        assert.equal(result, undefined);
      });
 });
