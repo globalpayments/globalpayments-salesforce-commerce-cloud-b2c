@@ -70,13 +70,12 @@ server.use('ThreeDSSecureChallenge', function (req, res, next) {
           next();
       });
       
-      server.use('ThreedsResp', function (req, res, next) {
-
-        var myreq = req;
-        var myParams = req.httpParameterMap;
-        res.json();
+server.use('ThreedsResp', function (req, res, next) {
+  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+        var authentication=creditCardUtils.authenticationResult(req, res);
+        res.json(authentication);
         return next();
-      });
+});
 /**
  * GlobalPay-ThreeDsMethod : The GlobalPay-Transactions endpoint invokes transaction call
  */

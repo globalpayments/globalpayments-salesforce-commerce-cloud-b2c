@@ -130,9 +130,32 @@ function initiationData(req,res) {
             }
                 return threeDSResponse;
     }
+    function authenticationResult(req,res)
+    {
+      var paRes=req.httpParameterMap.PaRes.value;
+      var authId=req.httpParameterMap.MD.value;
+      var authenticationData={
+        three_ds:
+        {
+          challengeResultValue:paRes
+        },
+        authId:authId
+      }
+      var authentication = globalPayHelper.authenticationResult(authenticationData);
+      if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
+        var serverErrors = [];
+        serverErrors.push(authentication.error.detailedErrorDescription);
+        res.renderJSON({
+          authentication: authentication,
+          serverErrors:serverErrors,
+          error: true
+        });
+       }
 
+      return authentication;
+    }
 module.exports = {
     authenticationData: authenticationData,
-    initiationData: initiationData
-
+    initiationData: initiationData,
+    authenticationResult:authenticationResult
   };

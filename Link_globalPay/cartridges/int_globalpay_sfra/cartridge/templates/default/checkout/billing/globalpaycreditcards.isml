@@ -77,9 +77,8 @@ cardForm.on("token-success", (resp) => {
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                        if(versionCheckData.enrolled == 'ENROLLED' ){
+                        if(versionCheckData.enrolled){
                                 $("#authId").val(versionCheckData.id);
-                debugger;
                var redirect = $('<form>')
                         .appendTo(document.body)
                         .attr({
@@ -104,12 +103,9 @@ cardForm.on("token-success", (resp) => {
                         .appendTo(redirect)
                         .attr({
                             name: 'MD',
-                            value: 'fsjdh43493aewrtfdssaSKJ...sdfk'
+                            value: versionCheckData.id
                         });
-
-                    redirect.submit();
-
-
+                        redirect.submit();
                         $( ".submit-payment" ).trigger( "click" );
                         } else if ( versionCheckData.error ) {
 

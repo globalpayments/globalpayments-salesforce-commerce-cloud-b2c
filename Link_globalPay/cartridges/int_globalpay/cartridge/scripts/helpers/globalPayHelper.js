@@ -61,6 +61,21 @@ function authenticate(data) {
 
   return result;
 }
+
+function authenticationResult(data)
+{
+  var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var authenticationRequest = new threeDsSteptwo.Request();
+  authenticationRequest.setToken(getAccessToken());
+  authenticationRequest.setAuthId(data.authId);
+  authenticationRequest.setThreeDs(data.three_ds);
+  var result = globalPayService.executeRequest(authenticationRequest, threeDsSteptwo.Response);
+    if (result.success) {
+        return result.response;
+    }
+    return result;
+}
 /**
  * Forms required data to be sent to service for tokenization
  * @params {data} - data required to form Tokenization request
@@ -355,5 +370,6 @@ module.exports = {
     threeDsStepone:threeDsStepone,
     threeDsSteptwo:threeDsSteptwo,
     payPalCapture: payPalCapture,
-    getCheckoutToken: getCheckoutToken
+    getCheckoutToken: getCheckoutToken,
+    authenticationResult:authenticationResult
 };
