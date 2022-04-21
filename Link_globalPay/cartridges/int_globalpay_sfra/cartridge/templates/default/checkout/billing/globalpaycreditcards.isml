@@ -77,10 +77,39 @@ cardForm.on("token-success", (resp) => {
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                        if(versionCheckData.enrolled == 'ENROLLED' &&
-                                versionCheckData.versions.directoryServer.start == '1.0.0'
-                                && versionCheckData.versions.directoryServer.end == '1.0.0' ){
+                        if(versionCheckData.enrolled == 'ENROLLED' ){
                                 $("#authId").val(versionCheckData.id);
+                debugger;
+               var redirect = $('<form>')
+                        .appendTo(document.body)
+                        .attr({
+                            method: 'POST',
+                            action: 'https://test.portal.gpwebpay.com/pay-sim-gpi/sim/pareq'
+                        });
+
+                    $('<input>')
+                        .appendTo(redirect)
+                        .attr({
+                            name: 'PaReq',
+                            value: versionCheckData.challengevalue
+                        });
+
+                    $('<input>')
+                        .appendTo(redirect)
+                        .attr({
+                            name: 'TermUrl',
+                            value: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsResp'
+                        });
+                $('<input>')
+                        .appendTo(redirect)
+                        .attr({
+                            name: 'MD',
+                            value: 'fsjdh43493aewrtfdssaSKJ...sdfk'
+                        });
+
+                    redirect.submit();
+
+
                         $( ".submit-payment" ).trigger( "click" );
                         } else if ( versionCheckData.error ) {
 
