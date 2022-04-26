@@ -135,7 +135,7 @@ function captureTransaction(){
                     transaction_id: ordertransactionid,  // Transaction ID
                     amount: amount //order.amount
             };
-                reverseresult = globalPayHelper.capture(transactionData);
+                reverseresult = globalPayHelper.cancel(transactionData);
                 var status = reverseresult;
                 if(reverseresult== undefined || reverseresult == null){
                     response.setStatus(400);
