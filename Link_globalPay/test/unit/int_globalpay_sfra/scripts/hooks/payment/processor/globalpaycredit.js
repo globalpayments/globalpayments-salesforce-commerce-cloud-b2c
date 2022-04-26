@@ -3,7 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-
+var ArrayList = require('../../../../../../mocks/dw.util.Collection');
 var paymentInstrument = {
     creditCardNumberLastDigits: '1111',
     creditCardHolder: 'The Muffin Man',
@@ -12,6 +12,9 @@ var paymentInstrument = {
     maskedCreditCardNumber: '************1111',
     paymentMethod: 'CREDIT_CARD',
     creditCardExpirationMonth: 1,
+    raw:{
+        creditCardToken:'token'
+    },
     paymentTransaction: {
         amount: {
             value: 0
@@ -24,8 +27,33 @@ gp_paymentmethodid: '11'
         setTransactionID(){
             '12345'
         },
-        setPaymentProcessor(){}
-    }
+        setPaymentProcessor(){} 
+    },
+        setCreditCardHolder(param){
+        return param;
+        },
+        setCreditCardType(){},
+        setCreditCardExpirationMonth(){},
+        setCreditCardNumber(){},
+        setCreditCardExpirationYear(){},
+        setCreditCardToken(){}
+};
+var basket = {
+    billingAddress:{
+        fullName:'someName'
+    },
+    allProductLineItems: new ArrayList([{
+        bonusProductLineItem: false,
+        gift: false,
+        UUID: 'some UUID',
+        adjustedPrice: {
+            value: 'some value',
+            currencyCode: 'US'
+        },
+        quantity: {
+            value: 1
+        }
+    }])
 };
 var paymentProcessor = {};
 var order = {
@@ -34,7 +62,116 @@ var order = {
     orderNo: '12345',
     customerName: 'test_user'
 };
+var paymentform={
+    paymentMethod: {
+        value: 'some value'
+    },
+    paymentId:{value:'some ID'
+    },
+    creditCardFields:{
+        cardType: {
+            value: 'some card type value',
+            htmlName: 'some card type html name'
+        },
+        cardNumber: {
+            value: 'some card number value',
+            htmlName: 'some card number html name'
+        },
+        securityCode: {
+            value: 'some card cvv value',
+            htmlName: 'some card cvv html name'
+        },
+        expirationMonth: {
+            selectedOption: '10',
+            htmlName: 'some card expiration month html name'
+        },
+        expirationYear: {
+            value: '2018',
+            htmlName: 'some card expiration year html name'
+        },
+        email: {
+            value: 'some email value'
+        },
+        phone: {
+            value: 'some phone value'
+        },
+        saveCard: {
+            checked: null
+        }
+    }
+}
+var formdata = {
+    paymentMethod: {
+        value: 'some value'
+    },
+    paymentId:{value:'some ID'
+    },
+    name:"some Name",
+        cardType: {
+            value: 'some card type value',
+            htmlName: 'some card type html name'
+        },
+        cardNumber: {
+            value: 'some card number value',
+            htmlName: 'some card number html name'
+        },
+        securityCode: {
+            value: 'some card cvv value',
+            htmlName: 'some card cvv html name'
+        },
+        expirationMonth: {
+            selectedOption: '10',
+            htmlName: 'some card expiration month html name'
+        },
+        expirationYear: {
+            value: '2018',
+            htmlName: 'some card expiration year html name'
+        },
+        email: {
+            value: 'some email value'
+        },
+        phone: {
+            value: 'some phone value'
+        },
+        saveCard: {
+            checked: null
+        },
+        isthreeds:{
+        value:false
+        },
+        authId:{
+            value:"someID"
+        }
+};
+var req = {
+    currentCustomer: {
+       wallet:{ 
+           paymentInstruments:{forEach (param){
+            return param;
+            }
+           }
+        },
+        profile: {
+            email: 'abc@test.com'
+        },
+        raw:
+        {
+            authenticated:true,
+            registered:true
+        },
+        addressBook: {
+            preferredAddress: {
+                address1: '5 Wall St.'
+            }
+        }
+    },
+    form:{
+        storedPaymentUUID:'someUUID'
+    }
+};
+var billingData={
 
+}
 
 describe('creditcard', function () {
     var orderNumber = '12345';
@@ -49,9 +186,21 @@ describe('creditcard', function () {
             }
         },
         'dw/order/PaymentInstrument':{},
+        '*/cartridge/scripts/util/array':{
+            find:function(param)
+            {
+                return paymentInstrument;
+            }
+        },
         'dw/order/PaymentStatusCodes':{},
         '*/cartridge/scripts/util/PaymentInstrumentUtils':
-        {},
+        {
+            RemoveExistingPaymentInstruments:function(param)
+            {
+                return  paymentInstrument ;
+            }
+        },
+        'dw/customer/CustomerMgr':{},
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
@@ -115,10 +264,20 @@ describe('creditcard', function () {
                     status: 'AUTHORIZED',
                     id:'12345'
                 }
+            },
+            updateTokenUsagemode:function(param)
+            {
+               return {id:'token',
+               success: true}
+            },
+            tokenize:function(param)
+            {
+                return {id:'token'}
             }
         },
         '*/cartridge/scripts/services/globalPayService': {}
     });
+    
     describe('Authorize', function () {
         it('Should process the creditcard with success result', function () {
             var result = creditCardProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
@@ -128,4 +287,42 @@ describe('creditcard', function () {
 
 
     });
+    describe('processForm', function () {
+        it('Should processForm', function () {
+           var  viewFormData={
+           }
+            var result = creditCardProcessor.processForm(req, paymentform, viewFormData);
+            assert.isFalse(result.error);
+        });
+
+
+    });
+    describe('savePaymentInformation', function () {
+        it('Should create and return token', function () {
+            var result = creditCardProcessor.savePaymentInformation(req, basket, billingData);           
+        });
+    });
+    
+    describe('Handle', function () {
+        it('Should update payment methods', function () {
+            var paymentMethodID='id';
+            var result = creditCardProcessor.Handle(basket, formdata, paymentMethodID, req);
+            assert.isFalse(result.error);
+        });
+    });
+    describe('CreateToken', function () {
+        it('Should create and return token', function () {
+            var result = creditCardProcessor.createToken(formdata);           
+            assert.equal(result.id, 'token');
+        });
+    });
+
+    describe('updateToken', function () {
+        it('Should return creditcard token', function () {
+            var paymentTokenID="token";
+            var result = creditCardProcessor.updateToken(paymentTokenID);
+            assert.equal(result, 'token');
+        });
+    });
+    
 });
