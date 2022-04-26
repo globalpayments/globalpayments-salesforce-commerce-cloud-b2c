@@ -118,4 +118,58 @@ function (req, res, next) {
   });
   next();
 });
+
+/**
+ * OrderTransactions-VoidTransaction : The OrderTransactions-CaptureTransaction endpoint will render the Capture API functionality from GP. Once a order is authorized and needs that amount to be captured.
+ * @name Base/OrderTransactions-CaptureTransaction
+ * @function
+ * @memberof CaptureTransaction
+ * @param {middleware} - server.middleware.https
+ * @param {serverfunction} - post
+ **/
+ server.post('CancelTransaction',
+ security.ValidateHeaders,
+ server.middleware.https,
+ function (req, res, next) {
+   var reverseresult;
+   if (!(res.viewData.securityErrorMessage)) {
+     var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+     var order = OrderMgr.getOrder(req.querystring.orderID);
+     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+     var amount = ((order.totalGrossPrice) * 100).toFixed();
+ 
+     if (order.getPaymentStatus() == 0) {
+        var transactionData = {
+          transaction_id: ordertransactionid,  // Transaction ID
+          amount: amount // order.amount
+        };
+       reverseresult = globalPayHelper.cancel(transactionData);
+       var status = reverseresult;
+      if (reverseresult == undefined || reverseresult == null) {
+        res.setStatusCode(400);
+      } else if (reverseresult.status) {
+        var canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
+        Transaction.wrap(function () {
+          OrderMgr.cancelOrder(order);
+          order.setCancelDescription(canceldescription);
+        });
+      } else {
+        res.setStatusCode(400);
+      }
+     } else {
+       res.setStatusCode(400);
+       reverseresult = {
+         error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
+       };
+     }
+   } else {
+     res.setStatusCode(400);
+   }
+   res.json({
+    reverseresult: reverseresult
+   });
+   next();
+ });
+
 module.exports = server.exports();
