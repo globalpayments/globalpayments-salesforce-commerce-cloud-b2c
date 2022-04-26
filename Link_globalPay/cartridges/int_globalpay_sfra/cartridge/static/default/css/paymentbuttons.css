@@ -1294,18 +1294,15 @@ opacity: 1;
             font-size: 11px;
         }
         .paypal-tab-img{
-            padding:0px;
-            width:85px;
-            height:45px;
-        }
-        .nav-item .paypal-tab{
-            padding:0px;
-            margin-top:2px;
+            height: 32px;
+            width: 49px;
+            margin-top: 0px;
         }
         .nav-link .paypal-tab{
             padding:0px;
         }
         
         .googlepay-tab-img{
-            height:33px;
+            height: 32px;
+            width: 49px;
         }
