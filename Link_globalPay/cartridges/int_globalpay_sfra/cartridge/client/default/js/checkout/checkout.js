@@ -369,7 +369,7 @@ var threeds = require('./threeds');
                             data: paymentForm,
                             success: function(data) {
                                 // enable the next:Place Order button here
-                                $('body').trigger('checkout:enableButton', '.next-step-button button');
+                               // $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 // look for field validation errors
                                 if (data.error) {
                                     $('a.nav-link.credit-card-tab').removeClass('disabled');
@@ -406,27 +406,7 @@ var threeds = require('./threeds');
                                         placeOrderSuccess(data); //populate order details
                                         defer.resolve(data);
                                     } else {
-                                        $('body').trigger('checkout:updateCheckoutView', {
-                                            order: data.order,
-                                            customer: data.customer
-                                        });
 
-                                        if (data.renderedPaymentInstruments) {
-                                            $('.stored-payments').empty().html(
-                                                data.renderedPaymentInstruments
-                                            );
-                                        }
-
-                                        if (data.customer.registeredUser &&
-                                            data.customer.customerPaymentInstruments.length
-                                        ) {
-                                            $('.cancel-new-payment').removeClass('checkout-hidden');
-                                        }
-                                        if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
-                                           // scrollAnimate();
-                                        }
-                                       
-                                        debugger;
                                         threeDFormRedirection(data);
                         defer.resolve(data);
                                       return true;

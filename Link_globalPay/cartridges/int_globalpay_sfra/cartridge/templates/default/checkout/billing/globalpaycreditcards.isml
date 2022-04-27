@@ -77,7 +77,6 @@ cardForm.on("token-success", (resp) => {
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                        debugger;
                         if(versionCheckData.enrolled=='ENROLLED'){
                                 $("#authId").val(versionCheckData.id);
                                  $("#paReq").val(versionCheckData.challengevalue);
