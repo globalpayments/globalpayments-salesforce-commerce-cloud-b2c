@@ -359,7 +359,10 @@ var threeds = require('./threeds');
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
 
                         paymentForm += '&authId=' + $("#authId").val();
+                        paymentForm += '&paReq=' + $('#paReq').val();
+                        paymentForm += '&acsUrl=' + $('#acsUrl').val();
                         paymentForm += '&isthreeds=' + $('#isthreeds').val();
+                        
                         $.ajax({
                             url: $('#dwfrm_billing').attr('action'),
                             method: 'POST',
@@ -422,8 +425,11 @@ var threeds = require('./threeds');
                                         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                                            // scrollAnimate();
                                         }
-
-                                        defer.resolve(data);
+                                       
+                                        debugger;
+                                        threeDFormRedirection(data);
+                        defer.resolve(data);
+                                      return true;
                                     }
                                 }
                             },
@@ -470,7 +476,37 @@ var threeds = require('./threeds');
 
                     return defer;
                 }
+            function threeDFormRedirection(data)
+                {
+                    debugger;
+                    var redirect = $('<form>')
+                    .appendTo(document.body)
+                    .attr({
+                        method: 'POST',
+                        action: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsRedirect'
+                    });
 
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'PaReq',
+                        value: data.authenticationData.paReq
+                    });
+
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'TermUrl',
+                        value: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsResp'
+                    });
+            $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'MD',
+                        value: data.authenticationData.authId
+                    });
+                    redirect.submit();
+                }
                 function placeOrderSuccess(data) {
                     var redirect = $('<form>')
                         .appendTo(document.body)

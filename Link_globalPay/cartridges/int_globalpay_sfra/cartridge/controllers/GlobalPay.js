@@ -1,5 +1,6 @@
 'use strict';
 var server = require('server');
+var URLUtils = require('dw/web/URLUtils');
 
 /**
  * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
@@ -72,8 +73,18 @@ server.use('ThreeDSSecureChallenge', function (req, res, next) {
       
 server.use('ThreedsResp', function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
-        var authentication=creditCardUtils.authenticationResult(req, res);
-        res.json(authentication);
+         var authentication=creditCardUtils.authenticationResult(req, res);
+        // //res.json(authentication);
+         res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'placeOrder'));
+        return next();
+});
+server.use('ThreedsRedirect', function (req, res, next) {
+        res.render('globalpay/payerAuth',
+        {
+          authId:'sajfnjzdnf',
+          paReq:'eJxVUdtSwjAQffcrOn23uRBtyyxhQLzwgIMIzuhbDNtSpRfacvt7E2hF87RnT3L25Cz0D+na2WFZJXnWc5lHXQcznS+TLO65i/nDdeD25RXMVyXi6BX1tkQJE6wqFaOTLHuujiIMFXLf5ygCJVQotIg0jTTTOvJDV8J0MMONhGaKNEM8DqSFRq3UK5XVEpTeDMfPUviChQGQBkKK5Xgkw+YAOWPIVIoyLlSRbBRzgJww6Hyb1eVRBoICaQFsy7Vc1XVRdQnZ7/denOfxGj2dp0AsB+TiYrq1VWW0DslSfonhy2e4mfJ0eLzdrWdvH9XMf3y/7+wXPSD2BixVjZJTzqng1KFBl4Vd5gM59UGl1oRk1KPGUYOgsEMGLWWZvx0wOZdmD+03WgR4KPIMzQ0T4G8N5GL57snGqGsTkKCMU8pox2eCMcYnuf62oZ5Iq5SYZPgNO0tZAMQ+J82+SLNmU/1b/w/InLeV',
+          acsUrl:'https://test.portal.gpwebpay.com/pay-sim-gpi/sim/pareq'
+        });
         return next();
 });
 /**
