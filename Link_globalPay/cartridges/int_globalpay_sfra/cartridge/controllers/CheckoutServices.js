@@ -446,9 +446,6 @@ server.prepend(
        
         var threeDRedirectUrl=  URLUtils.https('GlobalPay-ThreedsRedirect').toString();
         var authenticationData={
-          authId:req.form.authId,
-          paReq:req.form.paReq,
-          acsUrl:req.form.acsUrl,
           threeDRedirectUrl:threeDRedirectUrl
         };
 

@@ -464,26 +464,26 @@ var threeds = require('./threeds');
                     .attr({
                         method: 'POST',
                         action: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsRedirect'
+                       // action: data.authenticationData.threeDRedirectUrl
                     });
-
                 $('<input>')
                     .appendTo(redirect)
                     .attr({
                         name: 'PaReq',
-                        value: data.authenticationData.paReq
+                        value: $('#paReq').val()
                     });
 
                 $('<input>')
                     .appendTo(redirect)
                     .attr({
-                        name: 'TermUrl',
-                        value: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsResp'
+                        name: 'acsUrl',
+                        value: $('#acsUrl').val()
                     });
-            $('<input>')
+                $('<input>')
                     .appendTo(redirect)
                     .attr({
                         name: 'MD',
-                        value: data.authenticationData.authId
+                        value: $('#authId').val()
                     });
                     redirect.submit();
                 }
