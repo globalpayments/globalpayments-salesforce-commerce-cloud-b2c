@@ -7,7 +7,7 @@
 var page = module.superModule;
 var server = require('server');
 server.extend(page);
-server.append('Begin', function (req, res, next) {
+server.append('Begin', server.middleware.https,  function (req, res, next) {
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
     var gpayToken =  globalPayHelper.getCheckoutToken();
