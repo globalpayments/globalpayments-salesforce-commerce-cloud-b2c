@@ -7,7 +7,7 @@ var server = require('server');
  * @function
  * @memberof GlobalPay
  */
- server.post('Authorization', function (req, res) {
+ server.post('Authorization', server.middleware.https,  function (req, res) {
   //Returning Success in the basic Auth method
   return { success: true }
 });
@@ -21,7 +21,7 @@ var server = require('server');
  * @param {returns} - json
  * @param {serverfunction} - use
  */
-server.use('Authentication', function (req, res, next) {
+server.use('Authentication', server.middleware.https, function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var authentication = creditCardUtils.authenticationData(req, res);
   res.json(authentication);
@@ -37,7 +37,7 @@ server.use('Authentication', function (req, res, next) {
  * @param {returns} - json
  * @param {serverfunction} - use
  */
-server.use('Initiation', function (req, res, next) {
+server.use('Initiation', server.middleware.https,  function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var initiation = creditCardUtils.initiationData(req, res);
       res.json(initiation);
@@ -51,7 +51,7 @@ server.use('Initiation', function (req, res, next) {
  * @memberof GlobalPay
  * @param {serverfunction} - post
  */
-server.use('ThreeDSSecureChallenge', function (req, res, next) {
+server.use('ThreeDSSecureChallenge', server.middleware.https,  function (req, res, next) {
       var StringUtils = require('dw/util/StringUtils');
       var cresDecode = StringUtils.decodeBase64(req.form.cres);
       var cresJson = JSON.parse(cresDecode);
@@ -73,7 +73,7 @@ server.use('ThreeDSSecureChallenge', function (req, res, next) {
 /**
  * GlobalPay-ThreeDsMethod : The GlobalPay-Transactions endpoint invokes transaction call
  */
-  server.use('ThreeDsMethod', function (req, res, next) {
+  server.use('ThreeDsMethod', server.middleware.https,  function (req, res, next) {
     var StringUtils = require('dw/util/StringUtils');
     var decodedThreeDSMethodData = StringUtils.decodeBase64(req.form.threeDSMethodData);
     var decodedThreeDSMethodDataJSON = JSON.parse(decodedThreeDSMethodData);
