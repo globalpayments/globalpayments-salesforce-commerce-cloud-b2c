@@ -126,6 +126,7 @@ function captureTransaction(){
     var secureheaders = security.validateHeaders(request.httpHeaders.clientid);
         if(secureheaders){
             var order = OrderMgr.getOrder(req.orderID.stringValue);
+            if(!empty(order)){
                 var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
                 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
                 var amount = ((order.totalGrossPrice)*100).toFixed();
@@ -150,16 +151,26 @@ function captureTransaction(){
                     response.setStatus(400);
                 }
 
-            }else if(order.status==2){
+            }else if(order.getPaymentStatus()==2){
                 response.setStatus(400);
-                refundresult= Resource.msg('order.cancel.alreadypaid', 'globalpay', null);
+                reverseresult= Resource.msg('order.cancel.alreadypaid', 'globalpay', null);
 
-            }else{
+            }else if(order.status ==6){
                 response.setStatus(400);
-                refundresult = {
+                reverseresult = {
+                    error:  Resource.msg('order.cancel.error', 'globalpay', null)
+            }
+        }
+            else{
+                response.setStatus(400);
+                reverseresult = {
                     error:  Resource.msg('order.cancel.error', 'globalpay', null)
             }
             }
+        }
+    else{
+        response.setStatus(400);
+    }
         }else{
           response.setStatus(400);
     }
