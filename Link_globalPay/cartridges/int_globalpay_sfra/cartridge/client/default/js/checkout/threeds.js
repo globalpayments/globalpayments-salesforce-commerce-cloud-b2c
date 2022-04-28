@@ -4,7 +4,10 @@ var scrollAnimate = require('base/components/scrollAnimate');
 var handle = function (versionCheckData, authenticationData, paymentForm, defer) {
   // console.log('Authentication Data', authenticationData);
   // console.log(':::status:' + authenticationData.status);
-  $('#isthreeds').val(authenticationData.status);
+  if(!authenticationData.isthreedsone)
+  {
+    $('#isthreeds').val(authenticationData.status);
+  }
   console.log('::before calling to ajax:::');
   if (authenticationData.isthreedsone) {
     submitPaymentAajx(versionCheckData, authenticationData, paymentForm, defer);
