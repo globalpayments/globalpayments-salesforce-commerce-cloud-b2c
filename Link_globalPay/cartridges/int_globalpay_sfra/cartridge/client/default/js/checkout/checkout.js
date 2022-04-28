@@ -293,7 +293,7 @@ var threeds = require('./threeds');
                             }
                         });
                         var cartData = {
-                            amount: parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) * 100,
+                            amount: parseInt(parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) *100),
                             address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
                             city: $('input[name*="shippingAddress_addressFields_city"]').val(),
                             postalcode: $('input[name*="shippingAddress_addressFields_postalCode"]').val()
