@@ -2,7 +2,7 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-
+var ThreeDs = require('~/cartridge/scripts/dtos/nested/ThreeDs');
 /**
  * Forms all the fields required to send for Authentication request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
@@ -13,7 +13,8 @@ var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse')
                 authId: {
                     enumerable: true,
                     writable: true
-                }
+                },
+                threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Request),
             });
             this._super(requestObj);
         },
@@ -39,7 +40,12 @@ var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse')
             id: {
                 enumerable: true,
                 writable: true
-            }
+            },
+            status: {
+                enumerable: true,
+                writable: true
+              }, 
+              threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response),
         });
 
         this._super(responseObj);

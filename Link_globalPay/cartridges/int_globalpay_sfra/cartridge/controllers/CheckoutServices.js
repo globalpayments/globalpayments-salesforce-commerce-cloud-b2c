@@ -382,6 +382,7 @@ server.prepend(
             form: billingForm,
             fieldErrors: result.fieldErrors,
             serverErrors: result.serverErrors,
+            authenticationData:result.authenticationData,
             error: true
           });
           return;
@@ -442,14 +443,20 @@ server.prepend(
             );
 
         delete billingData.paymentInformation;
+       
+        var threeDRedirectUrl=  URLUtils.https('GlobalPay-ThreedsRedirect').toString();
+        var authenticationData={
+          threeDRedirectUrl:threeDRedirectUrl
+        };
 
-        res.json({
-          renderedPaymentInstruments: renderedStoredPaymentInstrument,
-          customer: accountModel,
-          order: basketModel,
-          form: billingForm,
-          error: false
-        });
+          res.json({
+            renderedPaymentInstruments: renderedStoredPaymentInstrument,
+            customer: accountModel,
+            order: basketModel,
+            form: billingForm,
+            error: false,
+            authenticationData:authenticationData
+          });
       });
       return next();
     }

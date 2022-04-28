@@ -98,6 +98,7 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                         // scrollAnimate();
         }
+        threeDFormRedirection(data);
         defer.resolve(data);
       }
     },
@@ -110,7 +111,35 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
     }
   });
 };
+var threeDFormRedirection=function (data)
+{
+    var redirect = $('<form>')
+    .appendTo(document.body)
+    .attr({
+        method: 'POST',
+        action: data.authenticationData.threeDRedirectUrl
+    });
+$('<input>')
+    .appendTo(redirect)
+    .attr({
+        name: 'PaReq',
+        value: $('#paReq').val()
+    });
 
+$('<input>')
+    .appendTo(redirect)
+    .attr({
+        name: 'acsUrl',
+        value: $('#acsUrl').val()
+    });
+$('<input>')
+    .appendTo(redirect)
+    .attr({
+        name: 'MD',
+        value: $('#authId').val()
+    });
+    redirect.submit();
+}
 
 module.exports = {
   handle: handle

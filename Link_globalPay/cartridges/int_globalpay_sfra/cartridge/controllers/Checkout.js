@@ -48,7 +48,9 @@ server.append('Begin', server.middleware.https,  function (req, res, next) {
             gatewayMerchantId:gatewayMerchantId,
             gpayenv:gpayEnv,
             myWallet:walletList,
-            walletJson : walletJson
+            walletJson : walletJson,
+            error:req.httpParameterMap.payerAuthError!=null&&req.httpParameterMap.payerAuthError!=""?true:false,
+            errorMsg:req.httpParameterMap.payerAuthError
         };
     res.setViewData(viewData);
     next();

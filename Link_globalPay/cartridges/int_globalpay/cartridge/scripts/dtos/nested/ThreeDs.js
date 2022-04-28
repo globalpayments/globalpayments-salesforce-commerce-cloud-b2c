@@ -18,6 +18,10 @@ var MethodData = require('~/cartridge/scripts/dtos/nested/MethodData');
       preference: {
         enumerable: true,
         writable: true
+      },
+      challengeResultValue:{
+        enumerable: true,
+        writable: true
       }
 
     });

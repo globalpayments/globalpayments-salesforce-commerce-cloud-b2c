@@ -318,6 +318,8 @@ var threeds = require('./threeds');
                             versionCheckData.versions.directoryServer.start == '1.0.0'
                             && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                             $("#authId").val(versionCheckData.id);
+                            $("#paReq").val(versionCheckData.challengevalue);
+                            $("#acsUrl").val(versionCheckData.acschallengerequesturl);                         
                             var authenticationData = new Object();
                             authenticationData.status = 'undefined';
                             authenticationData.isthreedsone =  true;
@@ -359,14 +361,17 @@ var threeds = require('./threeds');
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
 
                         paymentForm += '&authId=' + $("#authId").val();
+                        paymentForm += '&paReq=' + $('#paReq').val();
+                        paymentForm += '&acsUrl=' + $('#acsUrl').val();
                         paymentForm += '&isthreeds=' + $('#isthreeds').val();
+                        
                         $.ajax({
                             url: $('#dwfrm_billing').attr('action'),
                             method: 'POST',
                             data: paymentForm,
                             success: function(data) {
                                 // enable the next:Place Order button here
-                                $('body').trigger('checkout:enableButton', '.next-step-button button');
+                              $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 // look for field validation errors
                                 if (data.error) {
                                     $('a.nav-link.credit-card-tab').removeClass('disabled');
@@ -403,27 +408,10 @@ var threeds = require('./threeds');
                                         placeOrderSuccess(data); //populate order details
                                         defer.resolve(data);
                                     } else {
-                                        $('body').trigger('checkout:updateCheckoutView', {
-                                            order: data.order,
-                                            customer: data.customer
-                                        });
 
-                                        if (data.renderedPaymentInstruments) {
-                                            $('.stored-payments').empty().html(
-                                                data.renderedPaymentInstruments
-                                            );
-                                        }
-
-                                        if (data.customer.registeredUser &&
-                                            data.customer.customerPaymentInstruments.length
-                                        ) {
-                                            $('.cancel-new-payment').removeClass('checkout-hidden');
-                                        }
-                                        if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
-                                           // scrollAnimate();
-                                        }
-
+                                        threeDFormRedirection(data);
                                         defer.resolve(data);
+                                      return true;
                                     }
                                 }
                             },
@@ -470,7 +458,35 @@ var threeds = require('./threeds');
 
                     return defer;
                 }
+            function threeDFormRedirection(data)
+                {
+                    var redirect = $('<form>')
+                    .appendTo(document.body)
+                    .attr({
+                        method: 'POST',
+                        action: data.authenticationData.threeDRedirectUrl
+                    });
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'PaReq',
+                        value: $('#paReq').val()
+                    });
 
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'acsUrl',
+                        value: $('#acsUrl').val()
+                    });
+                $('<input>')
+                    .appendTo(redirect)
+                    .attr({
+                        name: 'MD',
+                        value: $('#authId').val()
+                    });
+                    redirect.submit();
+                }
                 function placeOrderSuccess(data) {
                     var redirect = $('<form>')
                         .appendTo(document.body)

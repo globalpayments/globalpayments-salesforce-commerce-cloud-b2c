@@ -69,7 +69,8 @@
 	<field formid="saveCard" label="creditcard.savecard" type="boolean" mandatory="false" default-value="true" />
 	<field formid="isthreeds"  type="string"  binding="isthreeds"/>
 	<field formid="authId"  type="string"  binding="authId"/>
-
+	<field formid="paReq"  type="string"  binding="paReq"/>
+	<field formid="acsUrl"  type="string"  binding="acsUrl"/>
 	<field formid="paymentId" label="creditcard.paymentId" type="string" mandatory="false" default-value="" />
 	<field formid="paymentToken" label="creditcard.paymentToken" type="string" mandatory="false" default-value="" />
 

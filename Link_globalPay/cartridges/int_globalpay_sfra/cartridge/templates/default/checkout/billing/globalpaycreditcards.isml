@@ -77,10 +77,12 @@ cardForm.on("token-success", (resp) => {
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                        if(versionCheckData.enrolled == 'ENROLLED' &&
-                                versionCheckData.versions.directoryServer.start == '1.0.0'
-                                && versionCheckData.versions.directoryServer.end == '1.0.0' ){
+                        if(versionCheckData.enrolled=='ENROLLED'){
                                 $("#authId").val(versionCheckData.id);
+                                 $("#paReq").val(versionCheckData.challengevalue);
+                                  $("#acsUrl").val(versionCheckData.acschallengerequesturl);
+                                
+                                
                         $( ".submit-payment" ).trigger( "click" );
                         } else if ( versionCheckData.error ) {
 

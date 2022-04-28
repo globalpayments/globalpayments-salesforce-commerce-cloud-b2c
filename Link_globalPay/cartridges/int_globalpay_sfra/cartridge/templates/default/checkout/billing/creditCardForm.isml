@@ -105,6 +105,13 @@
 <input type="hidden" class="form-control authId" id="authId"
             <isprint value=${creditFields.authId.attributes} encoding="off"/> />
 
+<input type="hidden" class="form-control paReq" id="paReq"
+            <isprint value=${creditFields.paReq.attributes} encoding="off"/> />
+      
+
+<input type="hidden" class="form-control acsUrl" id="acsUrl"
+            <isprint value=${creditFields.acsUrl.attributes} encoding="off"/> />
+
 <input type="hidden" class="form-control isthreeds" id="isthreeds"
             <isprint value=${creditFields.isthreeds.attributes} encoding="off"/> />
 

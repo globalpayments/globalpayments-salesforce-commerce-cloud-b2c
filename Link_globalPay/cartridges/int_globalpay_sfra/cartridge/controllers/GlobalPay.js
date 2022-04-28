@@ -1,6 +1,8 @@
 'use strict';
 var server = require('server');
-
+var URLUtils = require('dw/web/URLUtils');
+var Resource = require('dw/web/Resource');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 /**
  * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
  * @name Base/GlobalPay-Authorization
@@ -40,36 +42,64 @@ server.use('Authentication', server.middleware.https, function (req, res, next) 
 server.use('Initiation', server.middleware.https,  function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var initiation = creditCardUtils.initiationData(req, res);
-      res.json(initiation);
-      next();
-  });
+  res.json(initiation);
+  next();
+});
 
 
-    /**
- * GlobalPay-ThreeSecureChallange : The GlobalPay-Transactions endpoint invokes transaction call
-  * @function
- * @memberof GlobalPay
- * @param {serverfunction} - post
- */
+
+/**
+* GlobalPay-ThreeSecureChallange : The GlobalPay-Transactions endpoint invokes transaction call
+* @function
+* @memberof GlobalPay
+* @param {serverfunction} - post
+*/
 server.use('ThreeDSSecureChallenge', server.middleware.https,  function (req, res, next) {
-      var StringUtils = require('dw/util/StringUtils');
-      var cresDecode = StringUtils.decodeBase64(req.form.cres);
-      var cresJson = JSON.parse(cresDecode);
-      var reqEncodeFields = new Object();
-     
-      reqEncodeFields.serverTransID 	= cresJson.threeDSServerTransID;// // af65c369-59b9-4f8d-b2f6-7d7d5f5c69d5
-      reqEncodeFields.acsTransID 	= cresJson.acsTransID;//13c701a3-5a88-4c45-89e9-ef65e50a8bf9
-      reqEncodeFields.challengeCompletionInd 	=  cresJson.challengeCompletionInd; // Y
-      reqEncodeFields.messageType 		= cresJson.messageType; // Cres
-      reqEncodeFields.messageVersion 		= cresJson.messageVersion; // 2.1.0
-      reqEncodeFields.transStatus 		= cresJson.transStatus; // Y
-      res.render('globalpay/chalangenotification',
-          {
-            reqcresEnoded:JSON.stringify(reqEncodeFields)
-          }); 
-          next();
-      });
-      
+  var StringUtils = require('dw/util/StringUtils');
+  var cresDecode = StringUtils.decodeBase64(req.form.cres);
+  var cresJson = JSON.parse(cresDecode);
+  var reqEncodeFields = new Object();
+
+  reqEncodeFields.serverTransID = cresJson.threeDSServerTransID;// // af65c369-59b9-4f8d-b2f6-7d7d5f5c69d5
+  reqEncodeFields.acsTransID = cresJson.acsTransID;//13c701a3-5a88-4c45-89e9-ef65e50a8bf9
+  reqEncodeFields.challengeCompletionInd = cresJson.challengeCompletionInd; // Y
+  reqEncodeFields.messageType = cresJson.messageType; // Cres
+  reqEncodeFields.messageVersion = cresJson.messageVersion; // 2.1.0
+  reqEncodeFields.transStatus = cresJson.transStatus; // Y
+  res.render('globalpay/chalangenotification',
+    {
+      reqcresEnoded: JSON.stringify(reqEncodeFields)
+    });
+  next();
+});
+
+/**
+ * GlobalPay-ThreedsResp : Show response based on threeD authentication status
+ */
+server.use('ThreedsResp', server.middleware.https,  function (req, res, next) {
+  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var authentication = creditCardUtils.authenticationResult(req, res);
+  if (!empty(authentication) && ('status' in authentication) && authentication.status===globalpayconstants.AUTHRESPONSE) {
+    res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'placeOrder'));
+  }
+  else {
+    res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment', 'payerAuthError', Resource.msg('checkout.card.payerAuthError', 'globalpay', null)));
+  }
+  return next();
+});
+
+/**
+ * GlobalPay-ThreedsRedirect : Redirect to payer authentication page
+ */
+server.use('ThreedsRedirect', server.middleware.https, function (req, res, next) {
+  res.render('globalpay/payerAuth',
+    {
+      authId: req.form.MD,
+      paReq: req.form.PaReq,
+      acsUrl: req.form.acsUrl
+    });
+  return next();
+});
 /**
  * GlobalPay-ThreeDsMethod : The GlobalPay-Transactions endpoint invokes transaction call
  */
@@ -84,5 +114,7 @@ server.use('ThreeDSSecureChallenge', server.middleware.https,  function (req, re
         });
         next();
     });
+  next();
+});
 
 module.exports = server.exports();
