@@ -97,14 +97,19 @@ function ThreeDsMethod() {
         }).render('globalpay/methodnotification');
 };
 
+function ThreeDsOne() {
+  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var authentication = creditCardUtils.authenticationResult(request, response);
+  if (!empty(authentication) && ('status' in authentication)
+        && authentication.status === globalpayconstants.AUTHRESPONSE) {
+          app.getForm('billing').object.fulfilled.value = true;
+    response.redirect(require('dw/web/URLUtils').https('COSummary-Start'));
+  } else {
+    response.redirect(require('dw/web/URLUtils').https('COBilling-Start'));
+  }
+}
 
-/*
-* Module exports
-*/
 
-/*
-* Web exposed methods
-*/
  /* @see module:controllers/GlobalPay~Authentication */
  exports.Authentication = guard.ensure(['https'], Authentication);
  
@@ -117,5 +122,4 @@ function ThreeDsMethod() {
  /* @see module:controllers/GlobalPay~ThreeDsMethod */
  exports.ThreeDsMethod = guard.ensure(['https'], ThreeDsMethod);
 /* @see module:controllers/GlobalPay~ThreeDsMethod */
-  
- 
+exports.ThreeDsOne = guard.ensure(['https'], ThreeDsOne);

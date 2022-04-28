@@ -12,7 +12,6 @@
     <div id="credit-card"></div>
 </form>
 <isset name="Url" value="${require('dw/web/URLUtils').url('GlobalPay-Authentication').toString()}" scope="page"/>
-
 <!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
@@ -106,11 +105,17 @@ if($('[name$="_expiration_year"]').val())
                             cartData:cartData
                         },
                     }).then( function( versionCheckData ) {
-                       if(versionCheckData.enrolled == 'ENROLLED' &&
-                                versionCheckData.versions.directoryServer.start == '1.0.0'
+                       if(versionCheckData.versions.directoryServer.start == '1.0.0'
                                 && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                                 $('input[name*=_authId]').val(versionCheckData.id); 
-                        $('#dwfrm_billing').submit();
+                       // $('#dwfrm_billing').submit();
+                       placeOrderSuccess(versionCheckData);
+                       if(versionCheckData.enrolled == 'ENROLLED'){
+                        placeOrderSuccess(versionCheckData);
+                        } else {
+                            $('#dwfrm_billing').submit();
+                        }
+
                         } else  if ( versionCheckData.error ) {
 
                         }else{
