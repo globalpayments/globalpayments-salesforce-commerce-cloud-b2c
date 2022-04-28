@@ -98,7 +98,10 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                         // scrollAnimate();
         }
-        threeDFormRedirection(data);
+        if($("#isthreeds").val()==='threeDs1')
+        {
+            threeDFormRedirection(data);
+        }  
         defer.resolve(data);
       }
     },
