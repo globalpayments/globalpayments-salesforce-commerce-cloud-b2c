@@ -74,7 +74,11 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     Request : function(){
         return{
             setToken : function () {
-                return 'token';
+                return {
+                    getAccessToken : function (){
+                        return 'token';
+                    },
+                };
             },
             setusage_mode : function () {
                 return 'usage_mode';
@@ -345,6 +349,27 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
         }
     }
 },
+'*/cartridge/scripts/dtos/AccessToken' : {
+    Request : function(){
+        return {
+            setGrantType : function () {
+                return 'SetGrantType';
+            },
+            setAppId : function () {
+                return 'SetAppId';
+            },
+            setAppKey : function () {
+                return 'SetAppKey';
+            },
+            setNonce : function () {
+                return 'SetNonce';
+            },
+            setPermissions : function () {
+                return 'permissions';
+            },
+        }
+    }
+},
 
 '*/cartridge/scripts/services/globalPayService': {
 
@@ -494,6 +519,13 @@ describe('threeDsSteptwo', function(){
 describe('payPalCapture', function(){
     it('should get response from payPalCapture', function () {
     var result = globalpayHelper.payPalCapture(data);
+    assert.equal(result, null );
+    });
+});
+
+describe('getCheckoutToken', function(){
+    it('should get CheckoutToken', function () {
+    var result = globalpayHelper.getCheckoutToken();
     assert.equal(result, null );
     });
 });

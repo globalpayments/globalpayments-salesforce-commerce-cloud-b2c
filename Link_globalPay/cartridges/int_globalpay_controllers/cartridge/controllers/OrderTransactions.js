@@ -78,7 +78,7 @@ function captureTransaction(){
                  
              if(order.getPaymentStatus()==0){
                  var transactionData = {
-                     transaction_id: ordertransactionid,  // Transaction ID 
+                     transaction_id: ordertransactionid,  // Transaction ID
                      amount: amount, //order.amount
                      capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
                      total_capture_count: 0,
@@ -102,7 +102,7 @@ function captureTransaction(){
                      error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
                  }
              }
-         }else{ 
+         }else{
            response.setStatus(400);
      }
  
@@ -111,6 +111,74 @@ function captureTransaction(){
    });
 
  }
+
+/**
+ * OrderTransactions-cancelTransaction : The OrderTransactions-cancelTransaction endpoint will render the Capture API functionality from GP. Once a order is authorized and needs that amount to be captured.
+ * @name Base/OrderTransactions-cancelTransaction
+ * @function
+ * @memberof cancelTransaction
+ * @param {middleware} - server.middleware.https
+ * @param {serverfunction} - post
+ **/
+ function cancelTransaction(){
+    var reverseresult;
+    var req = request.httpParameterMap;
+    var secureheaders = security.validateHeaders(request.httpHeaders.clientid);
+        if(secureheaders){
+            var order = OrderMgr.getOrder(req.orderID.stringValue);
+            if(!empty(order)){
+                var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+                var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+                var amount = ((order.totalGrossPrice)*100).toFixed();
+
+            if (order.getPaymentStatus() == 0) {
+                var transactionData = {
+                    transaction_id: ordertransactionid,  // Transaction ID
+                    amount: amount //order.amount
+            };
+                reverseresult = globalPayHelper.cancel(transactionData);
+                var status = reverseresult;
+                if(reverseresult== undefined || reverseresult == null){
+                    response.setStatus(400);
+                }
+                else if(reverseresult.status){
+                    var canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
+                    Transaction.wrap(function () {
+                        OrderMgr.cancelOrder(order);
+                        order.setCancelDescription(canceldescription);
+                    });
+                }else{
+                    response.setStatus(400);
+                }
+
+            }else if(order.getPaymentStatus()==2){
+                response.setStatus(400);
+                reverseresult= Resource.msg('order.cancel.alreadypaid', 'globalpay', null);
+
+            }else if(order.status ==6){
+                response.setStatus(400);
+                reverseresult = {
+                    error:  Resource.msg('order.cancel.error', 'globalpay', null)
+            }
+        }
+            else{
+                response.setStatus(400);
+                reverseresult = {
+                    error:  Resource.msg('order.cancel.error', 'globalpay', null)
+            }
+            }
+        }
+    else{
+        response.setStatus(400);
+    }
+        }else{
+          response.setStatus(400);
+    }
+
+   responseUtils.renderJSON({
+     reverseresult: reverseresult
+   });
+}
 
 /*
 * Module exports
@@ -123,4 +191,6 @@ function captureTransaction(){
  exports.RefundTransaction = guard.ensure(['https'], refundTransaction);
  /* @see module:controllers/OrderTransaction~CaptureTransaction */
  exports.CaptureTransaction = guard.ensure(['https'], captureTransaction);
+  /* @see module:controllers/OrderTransaction~cancelTransaction */
+  exports.CancelTransaction = guard.ensure(['https'], cancelTransaction);
  

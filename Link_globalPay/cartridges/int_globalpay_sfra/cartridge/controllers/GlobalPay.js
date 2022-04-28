@@ -9,7 +9,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
  * @function
  * @memberof GlobalPay
  */
-server.post('Authorization', function (req, res) {
+ server.post('Authorization', server.middleware.https,  function (req, res) {
   //Returning Success in the basic Auth method
   return { success: true }
 });
@@ -23,7 +23,7 @@ server.post('Authorization', function (req, res) {
  * @param {returns} - json
  * @param {serverfunction} - use
  */
-server.use('Authentication', function (req, res, next) {
+server.use('Authentication', server.middleware.https, function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var authentication = creditCardUtils.authenticationData(req, res);
   res.json(authentication);
@@ -39,12 +39,13 @@ server.use('Authentication', function (req, res, next) {
  * @param {returns} - json
  * @param {serverfunction} - use
  */
-server.use('Initiation', function (req, res, next) {
+server.use('Initiation', server.middleware.https,  function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var initiation = creditCardUtils.initiationData(req, res);
   res.json(initiation);
   next();
 });
+
 
 
 /**
@@ -53,7 +54,7 @@ server.use('Initiation', function (req, res, next) {
 * @memberof GlobalPay
 * @param {serverfunction} - post
 */
-server.use('ThreeDSSecureChallenge', function (req, res, next) {
+server.use('ThreeDSSecureChallenge', server.middleware.https,  function (req, res, next) {
   var StringUtils = require('dw/util/StringUtils');
   var cresDecode = StringUtils.decodeBase64(req.form.cres);
   var cresJson = JSON.parse(cresDecode);
@@ -75,7 +76,7 @@ server.use('ThreeDSSecureChallenge', function (req, res, next) {
 /**
  * GlobalPay-ThreedsResp : Show response based on threeD authentication status
  */
-server.use('ThreedsResp', function (req, res, next) {
+server.use('ThreedsResp', server.middleware.https,  function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var authentication = creditCardUtils.authenticationResult(req, res);
   if (!empty(authentication) && ('status' in authentication) && authentication.status===globalpayconstants.AUTHRESPONSE) {
@@ -90,7 +91,7 @@ server.use('ThreedsResp', function (req, res, next) {
 /**
  * GlobalPay-ThreedsRedirect : Redirect to payer authentication page
  */
-server.use('ThreedsRedirect', function (req, res, next) {
+server.use('ThreedsRedirect', server.middleware.https, function (req, res, next) {
   res.render('globalpay/payerAuth',
     {
       authId: req.form.MD,
@@ -102,14 +103,16 @@ server.use('ThreedsRedirect', function (req, res, next) {
 /**
  * GlobalPay-ThreeDsMethod : The GlobalPay-Transactions endpoint invokes transaction call
  */
-server.use('ThreeDsMethod', function (req, res, next) {
-  var StringUtils = require('dw/util/StringUtils');
-  var decodedThreeDSMethodData = StringUtils.decodeBase64(req.form.threeDSMethodData);
-  var decodedThreeDSMethodDataJSON = JSON.parse(decodedThreeDSMethodData);
-  var serverTransID = decodedThreeDSMethodDataJSON.threeDSServerTransID;
-  res.render('globalpay/methodnotification',
-    {
-      serverTransID: serverTransID
+  server.use('ThreeDsMethod', server.middleware.https,  function (req, res, next) {
+    var StringUtils = require('dw/util/StringUtils');
+    var decodedThreeDSMethodData = StringUtils.decodeBase64(req.form.threeDSMethodData);
+    var decodedThreeDSMethodDataJSON = JSON.parse(decodedThreeDSMethodData);
+    var serverTransID = decodedThreeDSMethodDataJSON.threeDSServerTransID;
+        res.render('globalpay/methodnotification',
+        {
+          serverTransID: serverTransID
+        });
+        next();
     });
   next();
 });

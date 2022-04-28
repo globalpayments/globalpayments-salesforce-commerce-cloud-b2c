@@ -329,10 +329,8 @@ function  threeDsStepone(data) {
   Generated the token with limited access
   */
   function getCheckoutToken(){
-  var CacheMgr = require('dw/system/CacheMgr');
-  var Site = require('dw/system/Site');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var accessToken ;
+    var accessToken;
     var preferences = globalPayPreferences.getPreferences();
     var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
 
@@ -354,6 +352,23 @@ function  threeDsStepone(data) {
   return accessToken || null;
   }
 
+/**
+ * Forms required data to be sent to service to perform Reverse call.
+ * @params {data} - data required to form Reverse request
+ * @returns {result} - returns Reverse/Cancel response
+ */
+  function cancel(data) {
+    var Reverse = require('*/cartridge/scripts/dtos/Reverse');
+    var reverseRequest = new Reverse.Request();
+    reverseRequest.setToken(getAccessToken());
+    reverseRequest.setTransactionId(data.transaction_id);
+    reverseRequest.setAmount(data.amount);
+    var result = globalPayService.executeRequest(reverseRequest, Reverse.Response);
+    if (result.success) {
+      return result.response;
+    }
+    return result.error;
+  }
 
 module.exports = {
     getAccessToken: getAccessToken,
@@ -371,5 +386,6 @@ module.exports = {
     threeDsSteptwo:threeDsSteptwo,
     payPalCapture: payPalCapture,
     getCheckoutToken: getCheckoutToken,
-    authenticationResult:authenticationResult
+    authenticationResult:authenticationResult,
+    cancel: cancel
 };

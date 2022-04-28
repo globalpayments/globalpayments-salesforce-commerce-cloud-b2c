@@ -13,7 +13,6 @@ function getService() {
 
   return LocalServiceRegistry.createService(SERVICE_NAME, {
     createRequest: function (svc, requestObject) {
-      var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
       var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
       var accessToken = requestObject.getToken();
 
