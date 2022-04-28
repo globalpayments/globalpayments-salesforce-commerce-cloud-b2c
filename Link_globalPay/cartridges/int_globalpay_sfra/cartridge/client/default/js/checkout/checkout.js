@@ -318,6 +318,8 @@ var threeds = require('./threeds');
                             versionCheckData.versions.directoryServer.start == '1.0.0'
                             && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                             $("#authId").val(versionCheckData.id);
+                            $("#paReq").val(versionCheckData.challengevalue);
+                            $("#acsUrl").val(versionCheckData.acschallengerequesturl);                         
                             var authenticationData = new Object();
                             authenticationData.status = 'undefined';
                             authenticationData.isthreedsone =  true;
@@ -408,7 +410,7 @@ var threeds = require('./threeds');
                                     } else {
 
                                         threeDFormRedirection(data);
-                        defer.resolve(data);
+                                        defer.resolve(data);
                                       return true;
                                     }
                                 }

@@ -84,7 +84,7 @@ threeDsStepOne.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebK
 threeDsStepOne.timezone = '-1';
 
 globalpayConstants.threeDsStepOne = threeDsStepOne;
-globalpayConstants.AUTHRESPONSE='AUTHENTICATED';
+globalpayConstants.AUTHRESPONSE='SUCCESS_AUTHENTICATED';
 globalpayConstants.SG_CONTROLLER = 'app_storefront_controllers';
 globalpayConstants.GP_CONTROLLER = 'int_globalpay_controllers';
 globalpayConstants.GUARD = globalpayConstants.SG_CONTROLLER+'/cartridge/scripts/guard';
