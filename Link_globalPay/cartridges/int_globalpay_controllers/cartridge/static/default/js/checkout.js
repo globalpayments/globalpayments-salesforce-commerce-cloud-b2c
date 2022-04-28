@@ -45,6 +45,36 @@ function setCCFields(data) {
     $creditCard.find('input[name$="_cvn"]').val('').trigger('change');
 }
 
+function placeOrderSuccess(data) {
+    var redirect = $('<form>')
+        .appendTo(document.body)
+        .attr({
+            method: 'POST',
+            action: data.acschallengerequesturl
+        });
+
+    $('<input>')
+        .appendTo(redirect)
+        .attr({
+            name: 'PaReq',
+            value: data.challengevalue
+        });
+        $('<input>')
+        .appendTo(redirect)
+        .attr({
+            name: 'TermUrl',
+            value: $('#threedsoneUrl').val()
+        });
+        $('<input>')
+        .appendTo(redirect)
+        .attr({
+            name: 'MD',
+            value: data.id
+        });
+
+    redirect.submit();
+
+    }
 /**
  * @function
  * @description Updates the credit card form with the attributes of a given card
@@ -117,14 +147,20 @@ $('.button-fancy-large').on('click', function () {
                 cartData: cartData
             },
         }).then(function (versionCheckData) {
-            if(versionCheckData.enrolled == 'ENROLLED' &&
+
+            if(
             versionCheckData.versions.directoryServer.start == '1.0.0'
             && versionCheckData.versions.directoryServer.end == '1.0.0' ){
             $('input[name*=_authId]').val(versionCheckData.id);
             var authenticationData = new Object();
             authenticationData.status = 'undefined';
             authenticationData.isthreedsone =  true;
-            $('#dwfrm_billing').submit();
+          //  $('#dwfrm_billing').submit();
+          if(versionCheckData.enrolled == 'ENROLLED'){
+            placeOrderSuccess(versionCheckData);
+            } else {
+                $('#dwfrm_billing').submit();   
+            }
           } else if (versionCheckData.error) {
 
             } else {
