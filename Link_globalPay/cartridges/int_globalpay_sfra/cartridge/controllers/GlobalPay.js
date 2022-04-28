@@ -114,7 +114,6 @@ server.use('ThreedsRedirect', server.middleware.https, function (req, res, next)
         });
         next();
     });
-  next();
-});
+
 
 module.exports = server.exports();
