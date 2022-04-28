@@ -57,7 +57,7 @@ cardForm.on("token-success", (resp) => {
     var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
          if($('#isnewcard').val()){
         var cartData = {
-           amount : parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) * 100,
+           amount : parseInt(parseFloat($('.grand-total-sum').text().replace('$', '').replace(',', '')) *100),
            address1: $('input[name*="shippingAddress_addressFields_address1"]').val(),
            city: $('input[name*="shippingAddress_addressFields_city"]').val(),
            postalcode : $('input[name*="shippingAddress_addressFields_postalCode"]').val()
