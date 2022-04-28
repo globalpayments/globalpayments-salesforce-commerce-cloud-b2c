@@ -57,7 +57,12 @@
                 <div class="alert alert-danger error-message" role="alert">
                     <p class="error-message-text"></p>
                 </div>
-
+                
+                <isif condition="${pdict.error}">
+                <div class="alert alert-danger" role="alert">
+                    <p class="error-message-text">${pdict.errorMsg}</p>
+                </div>
+                </isif>
                 <!-- Step 1: Customer -->
                 <iscomment>We only allow edits for non-registered customers</iscomment>
                 <isif condition="${!pdict.customer.registeredUser}">

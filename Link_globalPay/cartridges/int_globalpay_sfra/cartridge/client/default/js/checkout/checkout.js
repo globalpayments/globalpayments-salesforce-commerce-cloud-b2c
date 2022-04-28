@@ -369,7 +369,7 @@ var threeds = require('./threeds');
                             data: paymentForm,
                             success: function(data) {
                                 // enable the next:Place Order button here
-                               // $('body').trigger('checkout:enableButton', '.next-step-button button');
+                              $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 // look for field validation errors
                                 if (data.error) {
                                     $('a.nav-link.credit-card-tab').removeClass('disabled');
@@ -463,8 +463,7 @@ var threeds = require('./threeds');
                     .appendTo(document.body)
                     .attr({
                         method: 'POST',
-                        action: 'https://zyem-004.sandbox.us01.dx.commercecloud.salesforce.com/on/demandware.store/Sites-RefArch-Site/en_US/GlobalPay-ThreedsRedirect'
-                       // action: data.authenticationData.threeDRedirectUrl
+                        action: data.authenticationData.threeDRedirectUrl
                     });
                 $('<input>')
                     .appendTo(redirect)
