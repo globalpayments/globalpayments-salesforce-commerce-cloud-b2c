@@ -319,7 +319,8 @@ var threeds = require('./threeds');
                             && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                             $("#authId").val(versionCheckData.id);
                             $("#paReq").val(versionCheckData.challengevalue);
-                            $("#acsUrl").val(versionCheckData.acschallengerequesturl);                         
+                            $("#acsUrl").val(versionCheckData.acschallengerequesturl);   
+                            $("#isthreeds").val('threeDs1');                      
                             var authenticationData = new Object();
                             authenticationData.status = 'undefined';
                             authenticationData.isthreedsone =  true;
@@ -408,10 +409,31 @@ var threeds = require('./threeds');
                                         placeOrderSuccess(data); //populate order details
                                         defer.resolve(data);
                                     } else {
+                                        $('body').trigger('checkout:updateCheckoutView', {
+                                            order: data.order,
+                                            customer: data.customer
+                                        });
 
-                                        threeDFormRedirection(data);
+                                        if (data.renderedPaymentInstruments) {
+                                            $('.stored-payments').empty().html(
+                                                data.renderedPaymentInstruments
+                                            );
+                                        }
+
+                                        if (data.customer.registeredUser &&
+                                            data.customer.customerPaymentInstruments.length
+                                        ) {
+                                            $('.cancel-new-payment').removeClass('checkout-hidden');
+                                        }
+                                        if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
+                                           // scrollAnimate();
+                                        }
+                                        if($("#isthreeds").val()==='threeDs1')
+                                        {
+                                            threeDFormRedirection(data);
+                                        }                                       
                                         defer.resolve(data);
-                                      return true;
+                                     
                                     }
                                 }
                             },
