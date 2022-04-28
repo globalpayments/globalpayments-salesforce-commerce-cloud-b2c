@@ -460,7 +460,6 @@ var threeds = require('./threeds');
                 }
             function threeDFormRedirection(data)
                 {
-                    debugger;
                     var redirect = $('<form>')
                     .appendTo(document.body)
                     .attr({

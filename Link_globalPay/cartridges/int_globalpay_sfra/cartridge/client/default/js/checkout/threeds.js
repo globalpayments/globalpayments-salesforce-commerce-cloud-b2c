@@ -113,7 +113,6 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
 };
 var threeDFormRedirection=function (data)
 {
-    debugger;
     var redirect = $('<form>')
     .appendTo(document.body)
     .attr({
