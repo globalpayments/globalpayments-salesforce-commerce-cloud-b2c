@@ -113,7 +113,7 @@ server.use('ThreedsRedirect', server.middleware.https, function (req, res, next)
           serverTransID: serverTransID
         });
         next();
-    });
+  });
 
 
 module.exports = server.exports();
