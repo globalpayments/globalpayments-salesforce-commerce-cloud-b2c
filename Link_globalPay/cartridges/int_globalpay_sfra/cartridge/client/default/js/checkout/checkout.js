@@ -314,16 +314,21 @@ var threeds = require('./threeds');
                                 cartData: cartData
                             },
                         }).then(function(versionCheckData) {
-                            if(versionCheckData.enrolled == 'ENROLLED' &&
-                            versionCheckData.versions.directoryServer.start == '1.0.0'
+                            if(versionCheckData.versions.directoryServer.start == '1.0.0'
                             && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                             $("#authId").val(versionCheckData.id);
+                           if(versionCheckData.enrolled == 'ENROLLED')
+                           {
                             $("#paReq").val(versionCheckData.challengevalue);
                             $("#acsUrl").val(versionCheckData.acschallengerequesturl);   
                             $("#isthreeds").val('threeDs1');                      
-                            var authenticationData = new Object();
-                            authenticationData.status = 'undefined';
-                            authenticationData.isthreedsone =  true;
+                           }
+                           else{
+                            $("#isthreeds").val(versionCheckData.serverTransactionId);
+                           }
+                           var authenticationData = new Object();
+                           authenticationData.status = 'undefined';
+                           authenticationData.isthreedsone =  true;
                             threeds.handle(versionCheckData, authenticationData ,paymentForm, defer);
                           } else if (versionCheckData.error) {
 
