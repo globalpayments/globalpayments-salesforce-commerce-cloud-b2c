@@ -78,8 +78,8 @@ cardForm.on("token-success", (resp) => {
                         },
                     }).then( function( versionCheckData ) {
                         if(versionCheckData.versions.directoryServer.start == '1.0.0'
-                            && versionCheckData.versions.directoryServer.end == '1.0.0'){
-                                if(versionCheckData.enrolled=='ENROLLED')
+                            && versionCheckData.versions.directoryServer.end == '1.0.0' ){
+                                if(versionCheckData.enrolled=='ENROLLED' )
                                 {
                                 $("#authId").val(versionCheckData.id);
                                 $("#paReq").val(versionCheckData.challengevalue);
@@ -87,6 +87,7 @@ cardForm.on("token-success", (resp) => {
                                 $("#isthreeds").val('threeDs1');
                                 }
                                 else{
+                                $("#authId").val(versionCheckData.id);
                                 $("#isthreeds").val(versionCheckData.serverTransactionId);
                                 }   
                         $( ".submit-payment" ).trigger( "click" );
