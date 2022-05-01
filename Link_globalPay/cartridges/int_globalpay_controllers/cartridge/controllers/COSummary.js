@@ -47,9 +47,12 @@ function start(context) {
                 COBilling.Start();
             }
         });
+        var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+        var gpapp = require(globalpayconstants.GPAPP);
 
         var viewContext = require('app_storefront_core/cartridge/scripts/common/extend').immutable(context, {
-            Basket: cart.object
+            Basket: cart.object,
+            globalpayData : gpapp.getForm('billing.paymentMethods.creditCard')
         });
         pageMeta.update({pageTitle: Resource.msg('summary.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')});
         app.getView(viewContext).render('checkout/summary/summary');

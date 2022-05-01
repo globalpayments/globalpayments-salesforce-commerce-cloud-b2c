@@ -201,6 +201,15 @@
 		<div class="d-none"> 
  <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentToken}" type="input"/>
  <div>
+ <div class="d-none">
+ <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.isThreedsone}" type="input"/>
+ <div>
+  <div class="d-none">
+ <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paReq}" type="input"/>
+ <div>
+  <div class="d-none">
+ <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.acsUrl}" type="input"/>
+ <div>
 	</fieldset>
 <iselse/>
 	<div class="gift-cert-used form-indent">

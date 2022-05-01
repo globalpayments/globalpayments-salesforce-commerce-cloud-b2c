@@ -109,9 +109,10 @@ if($('[name$="_expiration_year"]').val())
                                 && versionCheckData.versions.directoryServer.end == '1.0.0' ){
                                 $('input[name*=_authId]').val(versionCheckData.id); 
                        // $('#dwfrm_billing').submit();
-                       placeOrderSuccess(versionCheckData);
+                       //placeOrderSuccess(versionCheckData);
                        if(versionCheckData.enrolled == 'ENROLLED'){
                         placeOrderSuccess(versionCheckData);
+                         $('#dwfrm_billing').submit();
                         } else {
                             $('#dwfrm_billing').submit();
                         }

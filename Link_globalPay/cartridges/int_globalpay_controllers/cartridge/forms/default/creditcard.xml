@@ -73,7 +73,7 @@
 	<field formid="acsUrl"  type="string"  binding="acsUrl"/>
 	<field formid="paymentId" label="creditcard.paymentId" type="string" mandatory="false" default-value="" />
 	<field formid="paymentToken" label="creditcard.paymentToken" type="string" mandatory="false" default-value="" />
-
+	<field formid="isThreedsone"  type="string"  binding="isThreedsone"/>
 	<!-- confirm action to save the card details -->
     <action formid="confirm" valid-form="true"/>
 
