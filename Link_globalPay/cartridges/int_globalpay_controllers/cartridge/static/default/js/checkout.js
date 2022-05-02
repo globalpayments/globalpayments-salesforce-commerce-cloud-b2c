@@ -46,33 +46,10 @@ function setCCFields(data) {
 }
 
 function placeOrderSuccess(data) {
-    var redirect = $('<form>')
-        .appendTo(document.body)
-        .attr({
-            method: 'POST',
-            action: data.acschallengerequesturl
-        });
-
-    $('<input>')
-        .appendTo(redirect)
-        .attr({
-            name: 'PaReq',
-            value: data.challengevalue
-        });
-        $('<input>')
-        .appendTo(redirect)
-        .attr({
-            name: 'TermUrl',
-            value: $('#threedsoneUrl').val()
-        });
-        $('<input>')
-        .appendTo(redirect)
-        .attr({
-            name: 'MD',
-            value: data.id
-        });
-
-    redirect.submit();
+  
+    $('[name$="_paReq"]').val(data.challengevalue);
+    $('[name$="_acsUrl"]').val(data.acschallengerequesturl);
+    $('[name$="_isThreedsone"]').val(true);
 
     }
 /**
@@ -158,6 +135,7 @@ $('.button-fancy-large').on('click', function () {
           //  $('#dwfrm_billing').submit();
           if(versionCheckData.enrolled == 'ENROLLED'){
             placeOrderSuccess(versionCheckData);
+            $('#dwfrm_billing').submit();
             } else {
                 $('#dwfrm_billing').submit();   
             }

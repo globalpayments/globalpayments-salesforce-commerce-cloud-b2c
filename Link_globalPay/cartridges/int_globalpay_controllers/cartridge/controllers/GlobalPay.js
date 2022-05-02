@@ -99,10 +99,12 @@ function ThreeDsMethod() {
 
 function ThreeDsOne() {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
-  var authentication = creditCardUtils.authenticationResult(request, response);
+  var authentication = creditCardUtils.authenticationResult(request, response); 
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+  var gpapp = require(globalpayconstants.GPAPP);
+      gpapp.getForm('billing.paymentMethods.creditCard').object.isThreedsone.value =  false;
   if (!empty(authentication) && ('status' in authentication)
         && authentication.status === globalpayconstants.AUTHRESPONSE) {
-          app.getForm('billing').object.fulfilled.value = true;
     response.redirect(require('dw/web/URLUtils').https('COSummary-Start'));
   } else {
     response.redirect(require('dw/web/URLUtils').https('COBilling-Start'));
