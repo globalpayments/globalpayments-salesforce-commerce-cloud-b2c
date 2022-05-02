@@ -1,7 +1,6 @@
 'use strict';
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-var collections = require('*/cartridge/scripts/util/collections');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
@@ -9,6 +8,8 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstan
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
+var array = require('*/cartridge/scripts/util/array');
+var CustomerMgr = require('dw/customer/CustomerMgr');
 
 /**
  * Verifies the required information for billing form is provided.
@@ -18,8 +19,6 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrument
  * @returns {Object} an object that has error information or payment information
  */
 function processForm(req, paymentForm, viewFormData) {
-  var array = require('*/cartridge/scripts/util/array');
-
   var viewData = viewFormData;
   var creditCardErrors = {};
 
@@ -93,9 +92,7 @@ function processForm(req, paymentForm, viewFormData) {
  * @param {Object} billingData - payment information
  */
 function savePaymentInformation(req, basket, billingData) {
-  var CustomerMgr = require('dw/customer/CustomerMgr');
-
-  if ( req.currentCustomer.raw.authenticated
+  if (req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
         && billingData.saveCard
     ) {
@@ -129,21 +126,20 @@ function savePaymentInformation(req, basket, billingData) {
 }
 
 /**
- * Updates a token to usage mode Multiple. 
+ * Updates a token to usage mode Multiple.
  * @returns {string} a token
  */
- function updateToken(paymentTokenID) {
+function updateToken(paymentTokenID) {
   var tokenizeData = {
     usage_mode: globalpayconstants.authorizationData.usage_mode,
-    paymentInformationID : paymentTokenID
+    paymentInformationID: paymentTokenID
   };
   var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
-  if (typeof tokenization !== 'undefined'&&tokenization.id!=null) {
+  if (typeof tokenization !== 'undefined' && tokenization.id != null) {
     return tokenization.id;
-  }else{
-    return tokenization.error
+  } else {
+    return tokenization.error;
   }
-
 }
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
@@ -204,7 +200,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     channel: globalpayconstants.authorizationData.channel,
     capture_mode: captureMode.value,
     type: globalpayconstants.authorizationData.type,
-    amount: (order.totalGrossPrice.value * 100).toFixed(), 
+    amount: (order.totalGrossPrice.value * 100).toFixed(),
     currency: order.currencyCode,
     reference: orderNumber,
     country: Locale.getLocale(currentSite.defaultLocale).country,
@@ -216,22 +212,22 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
       }
     }
   };
-  //authorize payment
+  // authorize payment
   var authorization = globalPayHelper.authorize(authorizationData);
   if (typeof authorization !== 'undefined' && 'success' in authorization && !authorization.success) {
     var error = true;
     var serverErrors = [];
-    if ('error' in authorization) {serverErrors.push(authorization.error.detailedErrorDescription);}
+    if ('error' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
   } else {
-      if('status' in authorization && authorization.status == 'DECLINED'){
-        error = true;
-        serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
-        return {
-          fieldErrors: fieldErrors,
-          serverErrors: serverErrors,
-          error: error
-        };
-      }
+    if ('status' in authorization && authorization.status == 'DECLINED') {
+      error = true;
+      serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
+      return {
+        fieldErrors: fieldErrors,
+        serverErrors: serverErrors,
+        error: error
+      };
+    }
     try {
       Transaction.wrap(function () {
         paymentInstrument.custom.gp_transactionid = authorization.id;
@@ -240,18 +236,18 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
       });
     } catch (e) {
       error = true;
-      serverErrors.push( Resource.msg('error.technical', 'checkout', null) );
+      serverErrors.push(Resource.msg('error.technical', 'checkout', null));
     }
   }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
 /**
  * Update payment method and authentication for credit card payment also  handle 3d secured transaction
- * @param {*} basket 
- * @param {*} paymentInformation 
- * @param {*} paymentMethodID 
- * @param {*} req 
- * @returns 
+ * @param {*} basket
+ * @param {*} paymentInformation
+ * @param {*} paymentMethodID
+ * @param {*} req
+ * @returns
  */
 
 function Handle(basket, paymentInformation, paymentMethodID, req) {
@@ -284,28 +280,26 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   }
 
   var preferences = globalPayPreferences.getPreferences();
- 
-   if(typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED'){
-      var threeDsStepTwo = {
-        auth_id : paymentInformation.authId.value
-      }
-  
-    var threeDsStepTwoResp =  globalPayHelper.threeDsSteptwo(threeDsStepTwo);
-    
+
+  if (typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED') {
+    var threeDsStepTwo = {
+      auth_id: paymentInformation.authId.value
+    }
+
+    var threeDsStepTwoResp = globalPayHelper.threeDsSteptwo(threeDsStepTwo);
+
     if (typeof threeDsStepTwoResp !== 'undefined' && typeof threeDsStepTwoResp.success !== 'undefined' && !threeDsStepTwoResp.success) {
       var serverErrors = [];
       serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
       return { fieldErrors: [], serverErrors: serverErrors, error: true };
     }
-   }
- 
+  }
+
 
   Transaction.wrap(function () {
-    //clear previous payment instrument and update new selected payment instrument
+    // clear previous payment instrument and update new selected payment instrument
     var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
-    
     paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
-
     paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
     paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
     paymentInstrument.setCreditCardNumber(cardNumber);
@@ -318,9 +312,9 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 }
 /**
  * update payment tokenId to paymentInstruments
- * @param {*} req 
- * @param {*} uuidToken 
- * @returns 
+ * @param {*} req
+ * @param {*} uuidToken
+ * @returns
  */
 function getTokenbyUUID(req, uuidToken) {
   var testcust = req.currentCustomer;

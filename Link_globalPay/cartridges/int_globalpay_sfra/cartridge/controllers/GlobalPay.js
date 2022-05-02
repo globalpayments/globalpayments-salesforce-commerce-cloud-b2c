@@ -7,9 +7,9 @@ var server = require('server');
  * @function
  * @memberof GlobalPay
  */
- server.post('Authorization', server.middleware.https,  function (req, res) {
-  //Returning Success in the basic Auth method
-  return { success: true }
+server.post('Authorization', server.middleware.https, function (req, res) {
+  // Returning Success in the basic Auth method
+  return { success: true };
 });
 
 /**
@@ -37,12 +37,12 @@ server.use('Authentication', server.middleware.https, function (req, res, next) 
  * @param {returns} - json
  * @param {serverfunction} - use
  */
-server.use('Initiation', server.middleware.https,  function (req, res, next) {
+server.use('Initiation', server.middleware.https, function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var initiation = creditCardUtils.initiationData(req, res);
-      res.json(initiation);
-      next();
-  });
+  res.json(initiation);
+  next();
+});
 
 
     /**
@@ -51,38 +51,37 @@ server.use('Initiation', server.middleware.https,  function (req, res, next) {
  * @memberof GlobalPay
  * @param {serverfunction} - post
  */
-server.use('ThreeDSSecureChallenge', server.middleware.https,  function (req, res, next) {
-      var StringUtils = require('dw/util/StringUtils');
-      var cresDecode = StringUtils.decodeBase64(req.form.cres);
-      var cresJson = JSON.parse(cresDecode);
-      var reqEncodeFields = new Object();
-     
-      reqEncodeFields.serverTransID 	= cresJson.threeDSServerTransID;// // af65c369-59b9-4f8d-b2f6-7d7d5f5c69d5
-      reqEncodeFields.acsTransID 	= cresJson.acsTransID;//13c701a3-5a88-4c45-89e9-ef65e50a8bf9
-      reqEncodeFields.challengeCompletionInd 	=  cresJson.challengeCompletionInd; // Y
-      reqEncodeFields.messageType 		= cresJson.messageType; // Cres
-      reqEncodeFields.messageVersion 		= cresJson.messageVersion; // 2.1.0
-      reqEncodeFields.transStatus 		= cresJson.transStatus; // Y
-      res.render('globalpay/chalangenotification',
-          {
-            reqcresEnoded:JSON.stringify(reqEncodeFields)
-          }); 
-          next();
-      });
-      
+server.use('ThreeDSSecureChallenge', server.middleware.https, function (req, res, next) {
+  var StringUtils = require('dw/util/StringUtils');
+  var cresDecode = StringUtils.decodeBase64(req.form.cres);
+  var cresJson = JSON.parse(cresDecode);
+  var reqEncodeFields = new Object();
+  reqEncodeFields.serverTransID 	= cresJson.threeDSServerTransID;
+  reqEncodeFields.acsTransID 	= cresJson.acsTransID;
+  reqEncodeFields.challengeCompletionInd 	= cresJson.challengeCompletionInd;
+  reqEncodeFields.messageType 		= cresJson.messageType;
+  reqEncodeFields.messageVersion 		= cresJson.messageVersion;
+  reqEncodeFields.transStatus 		= cresJson.transStatus;
+  res.render('globalpay/chalangenotification',
+    {
+      reqcresEnoded: JSON.stringify(reqEncodeFields)
+    });
+  next();
+});
+
 /**
  * GlobalPay-ThreeDsMethod : The GlobalPay-Transactions endpoint invokes transaction call
  */
-  server.use('ThreeDsMethod', server.middleware.https,  function (req, res, next) {
-    var StringUtils = require('dw/util/StringUtils');
-    var decodedThreeDSMethodData = StringUtils.decodeBase64(req.form.threeDSMethodData);
-    var decodedThreeDSMethodDataJSON = JSON.parse(decodedThreeDSMethodData);
-    var serverTransID = decodedThreeDSMethodDataJSON.threeDSServerTransID;
-        res.render('globalpay/methodnotification',
-        {
-          serverTransID: serverTransID
-        });
-        next();
+server.use('ThreeDsMethod', server.middleware.https, function (req, res, next) {
+  var StringUtils = require('dw/util/StringUtils');
+  var decodedThreeDSMethodData = StringUtils.decodeBase64(req.form.threeDSMethodData);
+  var decodedThreeDSMethodDataJSON = JSON.parse(decodedThreeDSMethodData);
+  var serverTransID = decodedThreeDSMethodDataJSON.threeDSServerTransID;
+  res.render('globalpay/methodnotification',
+    {
+      serverTransID: serverTransID
     });
+  next();
+});
 
 module.exports = server.exports();

@@ -4,17 +4,16 @@ var orderUpdate = function (order) {
   var Transaction = require('dw/system/Transaction');
   var OrderMgr = require('dw/order/OrderMgr');
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-//update order status 
+// update order status
   Transaction.wrap(function () {
     var placeOrderStatus = OrderMgr.placeOrder(order);
-      if (captureMode.value == 'AUTO') {
-        order.setPaymentStatus(Order.PAYMENT_STATUS_PAID); 
-      } else if (captureMode.value == 'LATER') {
-        order.setPaymentStatus(Order.PAYMENT_STATUS_NOTPAID); 
-      } 
+    if (captureMode.value == 'AUTO') {
+      order.setPaymentStatus(Order.PAYMENT_STATUS_PAID);
+    } else if (captureMode.value == 'LATER') {
+      order.setPaymentStatus(Order.PAYMENT_STATUS_NOTPAID);
+    }
   });
 
   return;
