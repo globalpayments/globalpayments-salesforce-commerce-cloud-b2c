@@ -6,9 +6,10 @@
 
 var server = require('server');
 var page = module.superModule;
-server.extend(page);
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+server.extend(page);
+
 
  /* Route to handle payment submission. This route is called only when either
     PayPal Express or Googlepay or Applepay is called from either mini cart or cart page. */
@@ -23,6 +24,25 @@ function handlePayments(req, res, next) {
   var PaymentManager = require('dw/order/PaymentMgr');
   var HookManager = require('dw/system/HookMgr');
   var Resource = require('dw/web/Resource');
+  var currentBasket = BasketMgr.getCurrentBasket();
+  var billingAddress = currentBasket.billingAddress;
+  var billingForm = server.forms.getForm('billing');
+  var billingData;
+  var Locale = require('dw/util/Locale');
+  var OrderModel = require('*/cartridge/models/order');
+  var AccountModel = require('*/cartridge/models/account');
+  var usingMultiShipping;
+  var currentLocale = Locale.getLocale(req.locale.id);
+  var basketModel;
+  var accountModel;
+  var renderedStoredPaymentInstrument;
+  var paymentMethodIdValue;
+  var order;
+  var paymentProcessor;
+  var handlePaymentResult;
+  var gputil = require('*/cartridge/scripts/utils/gputil');
+  var URLUtils = require('dw/web/URLUtils');
+  var serverErrors = [];
   billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
   if (Object.keys(billingFormErrors).length) {
@@ -34,9 +54,6 @@ function handlePayments(req, res, next) {
       error: true
     });
   } else {
-    var currentBasket = BasketMgr.getCurrentBasket();
-    var billingAddress = currentBasket.billingAddress;
-    var billingForm = server.forms.getForm('billing');
     viewData.address = {
       firstName: { value: paymentForm.addressFields.firstName.value },
       lastName: { value: paymentForm.addressFields.lastName.value },
@@ -54,7 +71,7 @@ function handlePayments(req, res, next) {
       if (!billingAddress) {
         billingAddress = currentBasket.createBillingAddress();
       }
-      var billingData = res.getViewData();
+      billingData = res.getViewData();
       billingAddress.setFirstName(billingData.address.firstName.value);
       billingAddress.setLastName(billingData.address.lastName.value);
       billingAddress.setAddress1(billingData.address.address1.value);
@@ -66,27 +83,22 @@ function handlePayments(req, res, next) {
       }
       billingAddress.setCountryCode(billingData.address.countryCode.value);
     });
-    var Locale = require('dw/util/Locale');
-    var OrderModel = require('*/cartridge/models/order');
-    var AccountModel = require('*/cartridge/models/account');
-    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+    usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
     if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
       req.session.privacyCache.set('usingMultiShipping', false);
       usingMultiShipping = false;
     }
-    var currentLocale = Locale.getLocale(req.locale.id);
-    var basketModel = new OrderModel(currentBasket, { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' });
-    var accountModel = new AccountModel(req.currentCustomer);
-    var renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
+    basketModel = new OrderModel(currentBasket, { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' });
+    accountModel = new AccountModel(req.currentCustomer);
+    renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
             req,
             accountModel
         );
-    var paymentMethodIdValue = paymentForm.paymentMethod.value;
+    paymentMethodIdValue = paymentForm.paymentMethod.value;
 
-    var paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
-    var paymentFormResult;
+    paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
     if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-      paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
+      var paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                 'Handle',
                 currentBasket,
                 req
@@ -95,13 +107,12 @@ function handlePayments(req, res, next) {
       paymentFormResult = HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
     }
 
-
-    var order = COHelpers.createOrder(currentBasket);
+    order = COHelpers.createOrder(currentBasket);
 
          // Handles payment authorization
-    var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
+    handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
 
-    if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
+    if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
       res.json({
         renderedPaymentInstruments: renderedStoredPaymentInstrument,
         customer: accountModel,
@@ -110,12 +121,10 @@ function handlePayments(req, res, next) {
         error: false,
         paypalresp: handlePaymentResult.authorizationResult.paypalresp
       });
-    } else if(!handlePaymentResult.authorizationResult.error) {
+    } else if (!handlePaymentResult.authorizationResult.error) {
             // place and update order
-      var gputil = require('*/cartridge/scripts/utils/gputil');
       gputil.orderUpdate(order);
       COHelpers.sendConfirmationEmail(order, req.locale.id);
-      var URLUtils = require('dw/web/URLUtils');
             // redirect to Confirmation page
       res.json({
         error: false,
@@ -123,21 +132,17 @@ function handlePayments(req, res, next) {
         orderToken: order.orderToken,
         continueUrl: URLUtils.url('Order-Confirm').toString()
       });
-    }
-   else{
-    var URLUtils = require('dw/web/URLUtils');
-    var serverErrors = [];
-
-    serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
+    } else {
+      serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
     // redirect to Cart page if there is error
-    res.json({
-      error: true,
-      cartError: false,
-      fieldErrors: [],
-      serverErrors: serverErrors
-    });
-    return;
-   }
+      res.json({
+        error: true,
+        cartError: false,
+        fieldErrors: [],
+        serverErrors: serverErrors
+      });
+      return;
+    }
   }
 }
 
@@ -162,16 +167,21 @@ server.prepend(
       var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
       var viewData = {};
       var paymentForm = server.forms.getForm('billing');
+      var paymentFormResult;
+      var billingFormErrors;
+      var contactInfoFormErrors;
+      var formFieldErrors = [];
+      var paymentMethodIdValue;
+      var paymentProcessor;
 
-      if (paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value == Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
+      if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
         handlePayments(req, res, next);
         this.emit('route:Complete', req, res);
         return;
       }
         // verify billing form data
-      var billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
-      var contactInfoFormErrors = COHelpers.validateFields(paymentForm.contactInfoFields);
-      var formFieldErrors = [];
+      billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
+      contactInfoFormErrors = COHelpers.validateFields(paymentForm.contactInfoFields);
       if (Object.keys(billingFormErrors).length) {
         formFieldErrors.push(billingFormErrors);
       } else {
@@ -195,7 +205,7 @@ server.prepend(
       } else {
         viewData.phone = { value: paymentForm.contactInfoFields.phone.value };
       }
-      var paymentMethodIdValue = paymentForm.paymentMethod.value;
+      paymentMethodIdValue = paymentForm.paymentMethod.value;
       if (!PaymentManager.getPaymentMethod(paymentMethodIdValue).paymentProcessor) {
         throw new Error(Resource.msg(
                 'error.payment.processor.missing',
@@ -204,8 +214,7 @@ server.prepend(
             ));
       }
 
-      var paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
-      var paymentFormResult;
+      paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
       paymentForm.creditCardFields.securityCode.htmlValue = globalpayconstants.creditCardPay.securityCode;
       if (HookManager.hasHook('app.payment.globalpay.processor.' + paymentProcessor.ID.toLowerCase())) {
         paymentFormResult = HookManager.callHook('app.payment.globalpay.processor.' + paymentProcessor.ID.toLowerCase(),
@@ -275,10 +284,21 @@ server.prepend(
         var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
         var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
         var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
-
+        var validatedProducts;
+        var paymentMethodID;
+        var result;
+        var processor;
+        var calculatedPaymentTransaction;
+        var noPaymentMethod = {};
+        var usingMultiShipping;
         var currentBasket = BasketMgr.getCurrentBasket();
-
         var billingData = res.getViewData();
+        var billingAddress = currentBasket.billingAddress;
+        var billingForm = server.forms.getForm('billing');
+        var currentLocale = Locale.getLocale(req.locale.id);
+        var basketModel;
+        var accountModel;
+        var renderedStoredPaymentInstrument;
 
         if (!currentBasket) {
           delete billingData.paymentInformation;
@@ -293,7 +313,7 @@ server.prepend(
           return;
         }
 
-        var validatedProducts = validationHelpers.validateProducts(currentBasket);
+        validatedProducts = validationHelpers.validateProducts(currentBasket);
         if (validatedProducts.error) {
           delete billingData.paymentInformation;
 
@@ -307,10 +327,7 @@ server.prepend(
           return;
         }
 
-        var billingAddress = currentBasket.billingAddress;
-        var billingForm = server.forms.getForm('billing');
-        var paymentMethodID = billingData.paymentMethod.value;
-        var result;
+        paymentMethodID = billingData.paymentMethod.value;
 
         billingForm.creditCardFields.cardNumber.htmlValue = '';
         billingForm.creditCardFields.securityCode.htmlValue = '';
@@ -336,11 +353,8 @@ server.prepend(
 
             // if there is no selected payment option and balance is greater than zero
         if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
-          var noPaymentMethod = {};
-
           noPaymentMethod[billingData.paymentMethod.htmlName] =
                     Resource.msg('error.no.selected.payment.method', 'payment', null);
-
           delete billingData.paymentInformation;
 
           res.json({
@@ -352,7 +366,7 @@ server.prepend(
           return;
         }
 
-        var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
+        processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
 
             // check to make sure there is a payment processor
         if (!processor) {
@@ -406,12 +420,12 @@ server.prepend(
         });
 
             // Re-calculate the payments.
-        var calculatedPaymentTransaction = COHelpers.calculatePaymentTransaction(
+        calculatedPaymentTransaction = COHelpers.calculatePaymentTransaction(
                 currentBasket
             );
 
         if (calculatedPaymentTransaction.error) {
-          //returns error object
+          // returns error object
           res.json({
             form: paymentForm,
             fieldErrors: [],
@@ -421,7 +435,7 @@ server.prepend(
           return;
         }
 
-        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+        usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
         if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
           req.session.privacyCache.set('usingMultiShipping', false);
           usingMultiShipping = false;
@@ -429,15 +443,13 @@ server.prepend(
 
         hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, currentBasket.customerEmail], function () {});
 
-        var currentLocale = Locale.getLocale(req.locale.id);
-
-        var basketModel = new OrderModel(
+        basketModel = new OrderModel(
                 currentBasket,
                 { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
             );
 
-        var accountModel = new AccountModel(req.currentCustomer);
-        var renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
+        accountModel = new AccountModel(req.currentCustomer);
+        renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
                 req,
                 accountModel
             );
@@ -472,18 +484,18 @@ server.prepend(
  * @param {returns} - json
  * @param {serverfunction} - post
  */
-server.append('PlaceOrder', server.middleware.https, function (req, res, next) { 
-  var Resource = require('dw/web/Resource'); 
-  var viewData = res.getViewData(); 
-  if('authorizationResult' in viewData && viewData.authorizationResult.serverErrors.length > 0){
+server.append('PlaceOrder', server.middleware.https, function (req, res, next) {
+  var Resource = require('dw/web/Resource');
+  var viewData = res.getViewData();
+  if ('authorizationResult' in viewData && viewData.authorizationResult.serverErrors.length > 0) {
     res.json({
       error: true,
       errorMessage: Resource.msg('checkout.status.declined', 'globalpay', null)
-  });
+    });
   }
-    res.setViewData(viewData);
+  res.setViewData(viewData);
 
-   next();
+  next();
 });
 
 module.exports = server.exports();

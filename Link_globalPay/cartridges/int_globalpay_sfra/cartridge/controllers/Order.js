@@ -6,11 +6,24 @@
 
 var server = require('server');
 var page = module.superModule;
-server.extend(page);
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+var OrderMgr = require('dw/order/OrderMgr');
+var OrderModel = require('*/cartridge/models/order');
+var Locale = require('dw/util/Locale');
+var lastOrderID;
+var config = {
+  numberOfLineItems: '*'
+};
+var currentLocale;
+var orderModel;
+var passwordForm;
+var reportingURLs;
+
+server.extend(page);
 
 /**
  * Order-Confirm : This endpoint is invoked when the shopper's Order is Placed and Confirmed
@@ -31,13 +44,8 @@ server.append(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
-      var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
-      var OrderMgr = require('dw/order/OrderMgr');
-      var OrderModel = require('*/cartridge/models/order');
-      var Locale = require('dw/util/Locale');
-
       var order;
-      //When order form is empty
+      // When order form is empty
       if (!req.form.orderToken || !req.form.orderID) {
         res.render('/error', {
           message: Resource.msg('error.confirmation.error', 'confirmation', null)
@@ -47,24 +55,18 @@ server.append(
       }
 
       order = OrderMgr.getOrder(req.form.orderID, req.form.orderToken);
-      var lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
+      lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
       if (lastOrderID === req.querystring.ID) {
         res.redirect(URLUtils.url('Home-Show'));
         return next();
       }
+      currentLocale = Locale.getLocale(req.locale.id);
 
-      var config = {
-        numberOfLineItems: '*'
-      };
-
-      var currentLocale = Locale.getLocale(req.locale.id);
-
-      var orderModel = new OrderModel(
+      orderModel = new OrderModel(
             order,
             { config: config, countryCode: currentLocale.country, containerView: 'order' }
         );
-      var passwordForm;
-      var reportingURLs = reportingUrlsHelper.getOrderReportingURLs(order);
+      reportingURLs = reportingUrlsHelper.getOrderReportingURLs(order);
 
       if (!req.currentCustomer.profile) {
         passwordForm = server.forms.getForm('newPasswords');
@@ -75,7 +77,7 @@ server.append(
           passwordForm: passwordForm,
           reportingURLs: reportingURLs,
           orderUUID: order.getUUID(),
-          "paymentMode": order.paymentTransaction.paymentInstrument.paymentMethod 
+          paymentMode: order.paymentTransaction.paymentInstrument.paymentMethod
         });
       } else {
         res.render('checkout/confirmation/confirmation', {
@@ -83,10 +85,10 @@ server.append(
           returningCustomer: true,
           reportingURLs: reportingURLs,
           orderUUID: order.getUUID(),
-          "paymentMode": order.paymentTransaction.paymentInstrument.paymentMethod 
+          paymentMode: order.paymentTransaction.paymentInstrument.paymentMethod
         });
       }
-      req.session.raw.custom.orderID = req.querystring.ID; // eslint-disable-line no-param-reassign
+      req.session.raw.custom.orderID = req.querystring.ID;
       return next();
     }
 );

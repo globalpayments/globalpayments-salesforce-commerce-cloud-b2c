@@ -6,7 +6,6 @@
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
-var globalPayHelper = require('int_globalpay/cartridge/scripts/helpers/globalPayHelper');
 
 var page = module.superModule;
 var server = require('server');
@@ -38,6 +37,8 @@ function verifyCard(req, card, form) {
   var PaymentMgr = require('dw/order/PaymentMgr');
   var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
   var PaymentInstrument = require('dw/order/PaymentInstrument');
+  var expirationMonth = form.expirationMonth;
+  var expirationYear = form.expirationYear;
 
   var currentCustomer = req.currentCustomer.raw;
   var countryCode = req.geolocation.countryCode;
@@ -74,7 +75,7 @@ function verifyCard(req, card, form) {
     error = true;
   }
 
-  //check for credit card error status
+  // check for credit card error status
   if (creditCardStatus && creditCardStatus.error) {
     collections.forEach(creditCardStatus.items, function (item) {
       switch (item.code) {
@@ -86,8 +87,6 @@ function verifyCard(req, card, form) {
           break;
 
         case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
-          var expirationMonth = form.expirationMonth;
-          var expirationYear = form.expirationYear;
           expirationMonth.valid = false;
           expirationMonth.error =
                         Resource.msg('error.message.creditexpiration.expired', 'forms', null);
@@ -143,7 +142,8 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
   var PaymentMgr = require('dw/order/PaymentMgr');
   var dwOrderPaymentInstrument = require('dw/order/PaymentInstrument');
   var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
-
+  var processor;
+  var token;
   var paymentForm = server.forms.getForm('creditCard');
   var result = getDetailsObject(paymentForm);
 
@@ -167,8 +167,8 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
         paymentInstrument.setCreditCardType(formInfo.cardType);
         paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
         paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
-        var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
-        var token = HookMgr.callHook(
+        processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
+        token = HookMgr.callHook(
                     'app.payment.processor.' + processor.ID.toLowerCase(),
                     'createToken',
                     formInfo
@@ -212,6 +212,9 @@ server.replace('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req
   var HookMgr = require('dw/system/HookMgr');
   var PaymentMgr = require('dw/order/PaymentMgr');
   var dwOrderPaymentInstrument = require('dw/order/PaymentInstrument');
+  var UUID = req.querystring.UUID;
+  var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+  var paymentToDelete;
 
   var data = res.getViewData();
   if (data && !data.loggedin) {
@@ -219,9 +222,7 @@ server.replace('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req
     return next();
   }
 
-  var UUID = req.querystring.UUID;
-  var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-  var paymentToDelete = array.find(paymentInstruments, function (item) {
+  paymentToDelete = array.find(paymentInstruments, function (item) {
     return UUID === item.UUID;
   });
   res.setViewData(paymentToDelete);

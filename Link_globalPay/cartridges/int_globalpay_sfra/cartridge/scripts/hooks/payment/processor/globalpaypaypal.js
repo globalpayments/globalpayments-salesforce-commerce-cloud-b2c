@@ -1,7 +1,5 @@
 'use strict';
 
-var collections = require('*/cartridge/scripts/util/collections');
-var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
@@ -17,7 +15,7 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrument
  *      payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var URLUtils = require('dw/web/URLUtils');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
@@ -75,11 +73,10 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
  * @return {Object} returns an error object
  */
 function Handle(basket, req) {
-  var currentBasket = basket;
   var cardErrors = {};
   var serverErrors = [];
   Transaction.wrap(function () {
-    //clear previous payment instrument and update new selected payment instrument
+    // clear previous payment instrument and update new selected payment instrument
     var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode);
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
@@ -87,14 +84,14 @@ function Handle(basket, req) {
 
 /**
  * Capture the transaction id
- * @param {*} order 
- * @returns 
+ * @param {*} order
+ * @returns
  */
-function Capture(order){
+function Capture(order) {
   var payPalCapture = {
-    "transactionId":order.paymentInstrument.custom.gp_transactionid
+    "transactionId" : order.paymentInstrument.custom.gp_transactionid
   }
-  var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture); 
+  var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture);
   return payPalCaptureResp;
 }
 

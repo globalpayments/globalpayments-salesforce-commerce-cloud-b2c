@@ -1,5 +1,4 @@
 'use strict';
-var collections = require('*/cartridge/scripts/util/collections');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var server = require('server');
@@ -16,7 +15,7 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrument
  *      payment method
  * @return {Object} returns an error object
  */
-function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
+function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
   var Locale = require('dw/util/Locale');
@@ -39,17 +38,17 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
       digital_wallet: {
         provider: globalpayconstants.googlePay.provider,
         payment_token: {
-          signature:token.signature,
-          protocolVersion:token.protocolVersion,
-          signedMessage:token.signedMessage
-       } 
+          signature: token.signature,
+          protocolVersion: token.protocolVersion,
+          signedMessage: token.signedMessage
+        }
       }
     }
   };
 
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&(googlePayresp.status!= globalpayconstants.googlePay.captureStatus&&googlePayresp.status!= globalpayconstants.googlePay.authorizedStatus)) {
+  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp && (googlePayresp.status != globalpayconstants.googlePay.captureStatus && googlePayresp.status != globalpayconstants.googlePay.authorizedStatus)) {
     var error = true;
     if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {
@@ -77,10 +76,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor,  order) {
  * @return {Object} returns an error object
  */
 function Handle(basket, req) {
-  var currentBasket = basket;
   var cardErrors = {};
-  var Resource = require('dw/web/Resource');
-  var PaymentInstrument = require('dw/order/PaymentInstrument');
   var serverErrors = [];
   Transaction.wrap(function () {
     //clear previous payment instrument and update new selected payment instrument
