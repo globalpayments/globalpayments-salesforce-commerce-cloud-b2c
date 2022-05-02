@@ -135,6 +135,7 @@ $('.button-fancy-large').on('click', function () {
           //  $('#dwfrm_billing').submit();
           if(versionCheckData.enrolled == 'ENROLLED'){
             placeOrderSuccess(versionCheckData);
+            $('#dwfrm_billing').submit();
             } else {
                 $('#dwfrm_billing').submit();   
             }
