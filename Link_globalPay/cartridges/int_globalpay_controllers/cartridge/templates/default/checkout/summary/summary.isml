@@ -228,43 +228,6 @@
 			</form>
 
 		</div>
-!!!${pdict.globalpayData.object.isThreedsone.value}
-<isif condition="${pdict.globalpayData.object.isThreedsone.value}"> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
- function myfun(){ 
-	var redirect = $('<form>')
-			.appendTo(document.body)
-			.attr({
-				method: 'POST',
-				action: '${pdict.globalpayData.object.acsUrl.value}'
-			});
-
-		$('<input>')
-			.appendTo(redirect)
-			.attr({
-				name: 'PaReq',
-				value: '${pdict.globalpayData.object.paReq.value}'
-			});
-			$('<input>')
-			.appendTo(redirect)
-			.attr({
-				name: 'TermUrl',
-				value: '${require('dw/web/URLUtils').https('GlobalPay-ThreeDsOne')}'
-			});
-			$('<input>')
-			.appendTo(redirect)
-			.attr({
-				name: 'MD',
-				value:  '${pdict.globalpayData.object.authId.value}'//'fsjdh43493aewrtfdssaSKJsdfk'//data.id
-			});
-
-		redirect.submit();
-	}	
-	window.onload = myfun();
-});
-</script>
-</isif>
+<isinclude template="checkout/summary/threedsone"/>
 
 </isdecorate>
