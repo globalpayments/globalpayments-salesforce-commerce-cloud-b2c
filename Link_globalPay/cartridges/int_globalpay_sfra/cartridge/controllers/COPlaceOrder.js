@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 var server = require('server');
 
@@ -13,7 +14,7 @@ var fraudError;
 var orderPlacementStatus;
 var config = {
   numberOfLineItems: '*'
-  };
+};
 var orderModel;
 var passwordForm;
 

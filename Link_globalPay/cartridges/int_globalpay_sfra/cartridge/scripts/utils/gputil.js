@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 var orderUpdate = function (order) {
   var Order = require('dw/order/Order');

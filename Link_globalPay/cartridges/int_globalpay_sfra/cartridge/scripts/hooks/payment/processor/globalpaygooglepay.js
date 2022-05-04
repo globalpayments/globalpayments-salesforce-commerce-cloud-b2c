@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
@@ -79,7 +80,7 @@ function Handle(basket, req) {
   var cardErrors = {};
   var serverErrors = [];
   Transaction.wrap(function () {
-    //clear previous payment instrument and update new selected payment instrument
+    // clear previous payment instrument and update new selected payment instrument
     var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(Resource.msg('paymentmethodname.googlepay', 'globalpay', null));
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };

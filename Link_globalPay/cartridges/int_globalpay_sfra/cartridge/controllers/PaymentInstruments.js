@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable global-require */
 'use strict';
 
 /**

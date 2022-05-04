@@ -1,9 +1,9 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var server = require('server');
 var security = require('*/cartridge/scripts/middleware/security');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
-var Order = require('dw/order/Order');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
@@ -28,11 +28,11 @@ function (req, res, next) {
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
     var amount = ((order.totalGrossPrice) * 100).toFixed();
 
-    //check payment status
+    // check payment status
     if (order.getPaymentStatus() == 2) {
       var transactionData = {
-        transaction_id: ordertransactionid,  
-        amount: amount 
+        transaction_id: ordertransactionid,
+        amount: amount
       };
       refundresult = globalPayHelper.refund(transactionData);
       if (refundresult == undefined || refundresult == null) {
@@ -55,7 +55,7 @@ function (req, res, next) {
         error: Resource.msg('order.refund.error', 'globalpay', null)
       };
     }
-  } 
+  }
   res.json({
     refundresult: refundresult
   });
@@ -82,11 +82,11 @@ function (req, res, next) {
     var amount = ((order.totalGrossPrice) * 100).toFixed();
     var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
 
-    //check payment status
+    // check payment status
     if (order.getPaymentStatus() == 0) {
       var transactionData = {
-        transaction_id: ordertransactionid,  
-        amount: amount, 
+        transaction_id: ordertransactionid,
+        amount: amount,
         capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
         total_capture_count: 0,
         payment_method: {
@@ -127,7 +127,7 @@ function (req, res, next) {
  * @param {middleware} - server.middleware.https
  * @param {serverfunction} - post
  **/
- server.post('CancelTransaction',
+server.post('CancelTransaction',
  security.ValidateHeaders,
  server.middleware.https,
  function (req, res, next) {
@@ -138,25 +138,25 @@ function (req, res, next) {
      var order = OrderMgr.getOrder(req.querystring.orderID);
      var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
      var amount = ((order.totalGrossPrice) * 100).toFixed();
- 
+
      if (order.getPaymentStatus() == 0) {
-        var transactionData = {
-          transaction_id: ordertransactionid,  // Transaction ID
-          amount: amount // order.amount
-        };
+       var transactionData = {
+         transaction_id: ordertransactionid,  // Transaction ID
+         amount: amount // order.amount
+       };
        reverseresult = globalPayHelper.cancel(transactionData);
        var status = reverseresult;
-      if (reverseresult == undefined || reverseresult == null) {
-        res.setStatusCode(400);
-      } else if (reverseresult.status) {
-        var canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
-        Transaction.wrap(function () {
-          OrderMgr.cancelOrder(order);
-          order.setCancelDescription(canceldescription);
-        });
-      } else {
-        res.setStatusCode(400);
-      }
+       if (reverseresult == undefined || reverseresult == null) {
+         res.setStatusCode(400);
+       } else if (reverseresult.status) {
+         var canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
+         Transaction.wrap(function () {
+           OrderMgr.cancelOrder(order);
+           order.setCancelDescription(canceldescription);
+         });
+       } else {
+         res.setStatusCode(400);
+       }
      } else {
        res.setStatusCode(400);
        reverseresult = {
@@ -167,7 +167,7 @@ function (req, res, next) {
      res.setStatusCode(400);
    }
    res.json({
-    reverseresult: reverseresult
+     reverseresult: reverseresult
    });
    next();
  });

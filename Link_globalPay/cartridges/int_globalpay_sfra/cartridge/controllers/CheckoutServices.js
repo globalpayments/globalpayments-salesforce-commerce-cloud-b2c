@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable linebreak-style */
+/* eslint-disable global-require */
 'use strict';
 
 /**
@@ -396,7 +399,7 @@ server.prepend(
             form: billingForm,
             fieldErrors: result.fieldErrors,
             serverErrors: result.serverErrors,
-            authenticationData:result.authenticationData,
+            authenticationData: result.authenticationData,
             error: true
           });
           return;
@@ -455,20 +458,20 @@ server.prepend(
             );
 
         delete billingData.paymentInformation;
-       
-        var threeDRedirectUrl=  URLUtils.https('GlobalPay-ThreedsRedirect').toString();
-        var authenticationData={
-          threeDRedirectUrl:threeDRedirectUrl
+
+        var threeDRedirectUrl = URLUtils.https('GlobalPay-ThreedsRedirect').toString();
+        var authenticationData = {
+          threeDRedirectUrl: threeDRedirectUrl
         };
 
-          res.json({
-            renderedPaymentInstruments: renderedStoredPaymentInstrument,
-            customer: accountModel,
-            order: basketModel,
-            form: billingForm,
-            error: false,
-            authenticationData:authenticationData
-          });
+        res.json({
+          renderedPaymentInstruments: renderedStoredPaymentInstrument,
+          customer: accountModel,
+          order: basketModel,
+          form: billingForm,
+          error: false,
+          authenticationData: authenticationData
+        });
       });
       return next();
     }
