@@ -194,9 +194,9 @@ function changeOrderStatus(order)
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var preferences = globalPayPreferences.getPreferences();
     Transaction.wrap(function () {
-    if (preferences.captureMode.value == 'AUTO') {
+    if (preferences.captureMode.value === globalpayconstants.captureMode.auto) {
       order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
-    } else if (preferences.captureMode.value == 'LATER') {
+    } else if (preferences.captureMode.value === globalpayconstants.captureMode.later) {
       order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_NOTPAID);
     }
 });
