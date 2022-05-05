@@ -118,7 +118,7 @@ if($('[name$="_expiration_year"]').val())
                         }
 
                         } else  if ( versionCheckData.error ) {
-
+                         $('.gpayerror').text('Card got declined, please enter another card.');
                         }else{
                           console.log('::::'+versionCheckData.id);
                           $('input[name*=_authId]').val(versionCheckData.id);
