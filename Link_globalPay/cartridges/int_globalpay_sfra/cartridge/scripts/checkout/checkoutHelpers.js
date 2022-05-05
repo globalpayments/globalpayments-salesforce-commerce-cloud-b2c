@@ -84,9 +84,9 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
   return Transaction.wrap(function () {
       // create payment instrument for credit card
     var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
-
+    var cardOwner=billingData.paymentInformation.cardOwner.value?billingData.paymentInformation.cardOwner.value: currentBasket.billingAddress.fullName
     storedPaymentInstrument.setCreditCardHolder(
-          currentBasket.billingAddress.fullName
+     cardOwner
       );
     storedPaymentInstrument.setCreditCardNumber(
           billingData.paymentInformation.cardNumber.value

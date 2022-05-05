@@ -254,6 +254,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   var currentBasket = basket;
   var cardErrors = {};
   var cardNumber = paymentInformation.cardNumber.value;
+  var cardOwner=paymentInformation.cardOwner.value;
   var expirationMonth = paymentInformation.expirationMonth.value;
   var expirationYear = paymentInformation.expirationYear.value;
   var serverErrors = [];
@@ -299,7 +300,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
     var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
-    paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
+    paymentInstrument.setCreditCardHolder(cardOwner?cardOwner:currentBasket.billingAddress.fullName);
     paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
     paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
     paymentInstrument.setCreditCardNumber(cardNumber);
