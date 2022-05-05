@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
@@ -137,9 +138,8 @@ function updateToken(paymentTokenID) {
   var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
   if (typeof tokenization !== 'undefined' && tokenization.id != null) {
     return tokenization.id;
-  } else {
-    return tokenization.error;
   }
+  return tokenization.error;
 }
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
@@ -284,7 +284,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
   if (typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED') {
     var threeDsStepTwo = {
       auth_id: paymentInformation.authId.value
-    }
+    };
 
     var threeDsStepTwoResp = globalPayHelper.threeDsSteptwo(threeDsStepTwo);
 

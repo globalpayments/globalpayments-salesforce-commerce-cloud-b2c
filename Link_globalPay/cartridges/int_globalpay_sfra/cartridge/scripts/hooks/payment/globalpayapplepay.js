@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
@@ -44,7 +45,7 @@ function Authorize(order, paymentdata) {
         }
       }
     }
-  }
+  };
   var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
   var applePayresp = globalPayHelper.applePay(applePayData);
   var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);

@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable global-require */
 'use strict';
 var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
@@ -13,7 +15,6 @@ var OrderMgr = require('dw/order/OrderMgr');
  * @param {serverfunction} - post
  */
 server.use('PayPalReturn', function (req, res, next) {
-  var OrderMgr = require('dw/order/OrderMgr');
   var gputil = require('*/cartridge/scripts/utils/gputil');
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var Resource = require('dw/web/Resource');
@@ -89,8 +90,8 @@ function Handle(basket, req) {
  */
 function Capture(order) {
   var payPalCapture = {
-    "transactionId" : order.paymentInstrument.custom.gp_transactionid
-  }
+    transactionId: order.paymentInstrument.custom.gp_transactionid
+  };
   var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture);
   return payPalCaptureResp;
 }
