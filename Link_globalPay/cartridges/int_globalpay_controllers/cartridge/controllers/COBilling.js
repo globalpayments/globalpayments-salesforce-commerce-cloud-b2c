@@ -109,14 +109,18 @@ function returnToForm(cart, params) {
             preferences:preferences,
             gpayToken:gpayToken,
             country: countryCode,
-            ContinueURL: URLUtils.https('COBilling-Billing')
+            ContinueURL: URLUtils.https('COBilling-Billing'),
+            error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
+            errorMsg: request.httpParameterMap.payerAuthError
         })).render('checkout/billing/billing');
     } else {
         app.getView({
             Basket: cart.object,
             preferences:preferences,
             country: countryCode,
-            ContinueURL: URLUtils.https('COBilling-Billing')
+            ContinueURL: URLUtils.https('COBilling-Billing'),
+            error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
+            errorMsg: request.httpParameterMap.payerAuthError
         }).render('checkout/billing/billing');
     }
 }

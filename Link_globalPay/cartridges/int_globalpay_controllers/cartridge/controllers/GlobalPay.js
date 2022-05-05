@@ -102,12 +102,13 @@ function ThreeDsOne() {
   var authentication = creditCardUtils.authenticationResult(request, response); 
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var gpapp = require(globalpayconstants.GPAPP);
+  var Resource = require('dw/web/Resource');
       gpapp.getForm('billing.paymentMethods.creditCard').object.isThreedsone.value =  false;
   if (!empty(authentication) && ('status' in authentication)
         && authentication.status === globalpayconstants.AUTHRESPONSE) {
     response.redirect(require('dw/web/URLUtils').https('COSummary-Start'));
   } else {
-    response.redirect(require('dw/web/URLUtils').https('COBilling-Start'));
+    response.redirect(require('dw/web/URLUtils').https('COBilling-Start','payerAuthError',  Resource.msg('checkout.card.payerAuthError', 'globalpay', null)));
   }
 }
 
