@@ -88,6 +88,10 @@ threeDsStepOne.challenge_window_size = 'WINDOWED_500X600';
 threeDsStepOne.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36';
 threeDsStepOne.timezone = '-1';
 
+// site preferences
+globalpayConstants.gpApiVersion = '2021-03-22';
+globalpayConstants.gpGrantType = 'client_credentials';
+
 globalpayConstants.threeDsStepOne = threeDsStepOne;
 globalpayConstants.AUTHRESPONSE='SUCCESS_AUTHENTICATED';
 globalpayConstants.SG_CONTROLLER = 'app_storefront_controllers';
