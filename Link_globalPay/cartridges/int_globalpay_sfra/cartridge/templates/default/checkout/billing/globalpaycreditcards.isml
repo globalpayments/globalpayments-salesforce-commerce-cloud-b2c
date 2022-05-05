@@ -53,6 +53,7 @@ cardForm.on("token-success", (resp) => {
     $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
+    $("#cardOwner").val(resp.details.cardholderName?resp.details.cardholderName:$("#billingFirstName").val()); 
     if($("#expirationYear").val()){
     var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
          if($('#isnewcard').val()){

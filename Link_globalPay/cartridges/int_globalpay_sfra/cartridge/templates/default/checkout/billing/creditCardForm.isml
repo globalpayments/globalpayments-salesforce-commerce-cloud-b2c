@@ -99,6 +99,8 @@
     </div>
 </div>
 
+ <input type="hidden" class="form-control cardOwner" id="cardOwner"
+            <isprint value=${creditFields.cardOwner.attributes} encoding="off"/> />
  <input type="hidden" class="form-control paymentId" id="paymentId"
             <isprint value=${creditFields.paymentId.attributes} encoding="off"/> />
 

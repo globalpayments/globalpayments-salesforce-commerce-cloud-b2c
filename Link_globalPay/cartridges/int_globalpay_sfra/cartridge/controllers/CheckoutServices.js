@@ -269,7 +269,11 @@ server.prepend(
         value: req.form.isthreeds,
         htmlName: req.form.isthreeds
       };
-
+      viewData.paymentInformation.cardOwner = {
+        value: paymentForm.creditCardFields.cardOwner.value,
+        htmlName: paymentForm.creditCardFields.cardOwner.value
+      };
+      
       res.setViewData(viewData);
 
       this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
