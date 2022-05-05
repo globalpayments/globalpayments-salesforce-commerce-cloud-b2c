@@ -64,6 +64,11 @@ applePay.paymentTypeCode = 'GP_DW_APPLE_PAY';
 
 globalpayConstants.applePay = applePay;
 
+var captureMode = new Object();
+captureMode.auto = 'AUTO';
+captureMode.later = 'LATER';
+globalpayConstants.captureMode = captureMode;
+
 var threeDsStepOne = new Object();
 threeDsStepOne.account_name = 'transaction_processing';
 threeDsStepOne.source = 'BROWSER';
