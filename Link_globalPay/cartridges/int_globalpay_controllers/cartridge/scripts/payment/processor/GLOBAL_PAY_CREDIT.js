@@ -101,8 +101,8 @@ function Handle(args) {
       var paymentInstrument = currentBasket.createPaymentInstrument(
               PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
           );
-
-      paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
+    var cardHolderName=creditCardForm.get('owner').value()?creditCardForm.get('owner').value():currentBasket.billingAddress.fullName;
+      paymentInstrument.setCreditCardHolder(cardHolderName);
       paymentInstrument.custom.gp_authenticationid = authenticationId;
       paymentInstrument.custom.gp_paymentmethodid =  saveCard&&customer &&customer.registered ? getTokenbyUUID(request, paymentId.value) : paymentId.value;
       paymentInstrument.setCreditCardNumber(cardNumber);
