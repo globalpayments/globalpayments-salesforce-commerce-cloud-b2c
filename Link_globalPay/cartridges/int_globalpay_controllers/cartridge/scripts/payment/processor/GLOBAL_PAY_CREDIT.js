@@ -166,20 +166,15 @@ function Authorize(args) {
     if (!empty(authorization) && 'success' in authorization && !authorization.success) {  
     var error = true;
       var serverErrors = [];
-      if ('error' in authorization)
-      {
-        serverErrors.push(authorization.error.detailedErrorDescription);
-      }
-    else if (authorization.status==globalpayconstants.creditCardPay.declinedStatus)
-      {  
-        serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
-      }
-       else
-       {
         serverErrors.push(authorization.error.detailedErrorDescription); 
-       }
       }
   else {
+    if ('status' in authorization && authorization.status ==globalpayconstants.creditCardPay.declinedStatus) {
+      var error = true;
+      var serverErrors = [];
+      serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
+    }
+    else{
       try {
         Transaction.wrap(function () {
           paymentInstrument.custom.gp_transactionid = authorization.id;
@@ -192,6 +187,7 @@ function Authorize(args) {
                   Resource.msg('error.technical', 'checkout', null)
               );
       }
+    }
     }
     return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
