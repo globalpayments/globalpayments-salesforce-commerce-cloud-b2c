@@ -8,6 +8,11 @@
                value="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}"
         >
 <fieldset class="apple-pay-form">
+    <isif condition=${!pdict.isProd}>
+    	<span>
+        	${Resource.msg('payment.error.general', 'globalpay', null)}
+    	</span>
+    </isif>
             <isinclude template="checkout/billing/paymentOptions/applePayForm" />
         </fieldset>
         </fieldset>

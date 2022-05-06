@@ -1,14 +1,18 @@
 <div class="tab-pane google-pay-content" id="google-pay-content" role="tabpanel">
     <fieldset class="payment-form-fields">
-
         <!--- payment method is google Pay --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
                value="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}"
         >
 <fieldset class="google-pay-form">
-            <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
-        </fieldset>
-        </fieldset>
+    <isif condition=${!pdict.isProd}>
+    <span>
+        ${Resource.msg('payment.error.general', 'globalpay', null)}
+    </span>
+    </isif>
+    <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
+    </fieldset>
+</fieldset>
   </div>
 
