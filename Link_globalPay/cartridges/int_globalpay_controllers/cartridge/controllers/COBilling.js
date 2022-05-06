@@ -581,7 +581,14 @@ function billing() {
                   }
                else
                  {
+                    var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
+                    if(creditCardForm.object.isThreedsone.value)
+                    {
+                        app.getView({globalpayData : gpapp.getForm('billing.paymentMethods.creditCard')}).render('checkout/summary/threedsone');
+                    }
+                    else{
                     app.getController('COSummary').Start();
+                    }
                     return;
                  }
                 }

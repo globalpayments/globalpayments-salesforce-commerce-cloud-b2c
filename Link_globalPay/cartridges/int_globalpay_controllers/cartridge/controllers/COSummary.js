@@ -51,8 +51,7 @@ function start(context) {
         var gpapp = require(globalpayconstants.GPAPP);
 
         var viewContext = require('app_storefront_core/cartridge/scripts/common/extend').immutable(context, {
-            Basket: cart.object,
-            globalpayData : gpapp.getForm('billing.paymentMethods.creditCard')
+            Basket: cart.object
         });
         pageMeta.update({pageTitle: Resource.msg('summary.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')});
         app.getView(viewContext).render('checkout/summary/summary');
