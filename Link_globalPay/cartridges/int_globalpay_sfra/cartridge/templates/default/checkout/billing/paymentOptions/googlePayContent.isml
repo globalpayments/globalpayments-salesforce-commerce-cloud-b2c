@@ -7,9 +7,7 @@
         >
 <fieldset class="google-pay-form">
     <isif condition=${!pdict.isProd}>
-    <span>
-        ${Resource.msg('payment.error.general', 'globalpay', null)}
-    </span>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     </isif>
     <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
     </fieldset>

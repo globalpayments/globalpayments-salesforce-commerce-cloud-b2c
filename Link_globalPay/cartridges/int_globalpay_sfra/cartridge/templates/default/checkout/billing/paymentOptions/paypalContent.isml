@@ -8,9 +8,7 @@
         >
 <fieldset class="paypal-form">
 <isif condition=${!pdict.isProd}>
-    <span>
-        ${Resource.msg('payment.error.general', 'globalpay', null)}
-    </span>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
 </isif>
         <isinclude template="checkout/billing/paymentOptions/paypalForm" />
     </fieldset>
