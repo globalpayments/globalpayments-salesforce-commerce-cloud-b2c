@@ -180,9 +180,7 @@
 
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">
 		<isif condition=${!pdict.isProd}>
-    		<span>
-        		${Resource.msg('payment.error.general', 'globalpay', null)}
-    		</span>
+    		<div class="sandbox-warning" style="display: block; width: 100%; margin-bottom: 5px; color: rgb(255, 255, 255); background-color: rgb(119, 0, 0); padding: 8px 5px; font-family: Verdana; font-weight: 100; font-size: 12px; text-align: center; box-sizing: border-box;">This page is currently in sandbox/test mode. Do not use real/active card numbers.</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			  <isinclude template="checkout/billing/paymentOptions/paypalForm" />
@@ -193,9 +191,7 @@
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">
 		<isif condition=${!pdict.isProd}>
-    		<span>
-        		${Resource.msg('payment.error.general', 'globalpay', null)}
-    		</span>
+    		<div class="sandbox-warning" style="display: block; width: 100%; margin-bottom: 5px; color: rgb(255, 255, 255); background-color: rgb(119, 0, 0); padding: 8px 5px; font-family: Verdana; font-weight: 100; font-size: 12px; text-align: center; box-sizing: border-box;">This page is currently in sandbox/test mode. Do not use real/active card numbers.</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
@@ -206,9 +202,7 @@
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">
 		<isif condition=${!pdict.isProd}>
-    		<span>
-        		${Resource.msg('payment.error.general', 'globalpay', null)}
-    		</span>
+    		<div class="sandbox-warning" style="display: block; width: 100%; margin-bottom: 5px; color: rgb(255, 255, 255); background-color: rgb(119, 0, 0); padding: 8px 5px; font-family: Verdana; font-weight: 100; font-size: 12px; text-align: center; box-sizing: border-box;">This page is currently in sandbox/test mode. Do not use real/active card numbers.</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			<isinclude template="checkout/billing/applePayTab" />

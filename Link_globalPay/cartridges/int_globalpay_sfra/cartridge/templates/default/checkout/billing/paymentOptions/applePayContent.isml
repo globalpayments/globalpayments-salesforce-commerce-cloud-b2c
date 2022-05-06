@@ -9,9 +9,7 @@
         >
 <fieldset class="apple-pay-form">
     <isif condition=${!pdict.isProd}>
-    	<span>
-        	${Resource.msg('payment.error.general', 'globalpay', null)}
-    	</span>
+    	<div class="sandbox-warning" style="display: block; width: 100%; margin-bottom: 5px; color: rgb(255, 255, 255); background-color: rgb(119, 0, 0); padding: 8px 5px; font-family: Verdana; font-weight: 100; font-size: 12px; text-align: center; box-sizing: border-box;">This page is currently in sandbox/test mode. Do not use real/active card numbers.</div>
     </isif>
             <isinclude template="checkout/billing/paymentOptions/applePayForm" />
         </fieldset>
