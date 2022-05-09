@@ -414,6 +414,11 @@ var threeds = require('./threeds');
                                         placeOrderSuccess(data); //populate order details
                                         defer.resolve(data);
                                     } else {
+                                        if($("#isthreeds").val()==='threeDs1')
+                                        {
+                                            threeDFormRedirection(data);
+                                        }
+                                        else{
                                         $('body').trigger('checkout:updateCheckoutView', {
                                             order: data.order,
                                             customer: data.customer
@@ -433,12 +438,9 @@ var threeds = require('./threeds');
                                         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                                            // scrollAnimate();
                                         }
-                                        if($("#isthreeds").val()==='threeDs1')
-                                        {
-                                            threeDFormRedirection(data);
-                                        }                                       
+                                                                              
                                         defer.resolve(data);
-                                     
+                                        }
                                     }
                                 }
                             },

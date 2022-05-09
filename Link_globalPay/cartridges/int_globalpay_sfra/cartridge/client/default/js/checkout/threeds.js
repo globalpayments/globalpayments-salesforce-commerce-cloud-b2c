@@ -83,7 +83,11 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
         } //
                 // Populate the Address Summary
                 //
-
+        if($("#isthreeds").val()==='threeDs1')
+        {
+            threeDFormRedirection(data);
+        }  
+        else{
         $('body').trigger('checkout:updateCheckoutView', {
           order: data.order,
           customer: data.customer
@@ -101,11 +105,9 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                         // scrollAnimate();
         }
-        if($("#isthreeds").val()==='threeDs1')
-        {
-            threeDFormRedirection(data);
-        }  
+        
         defer.resolve(data);
+      }
       }
     },
     error: function (err) {
