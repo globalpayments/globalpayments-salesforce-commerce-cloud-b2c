@@ -8,6 +8,7 @@
 
 var page = module.superModule;
 var server = require('server');
+var Resource = require('dw/web/Resource');
 server.extend(page);
 server.append('Begin', server.middleware.https, function (req, res, next) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
@@ -24,6 +25,8 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   var gpayEnv = preferences.gpayEnv;
   var ArrayList = require('dw/util/ArrayList');
   var walletList = new ArrayList();
+  var system = require('dw/system/System');
+  var isProd = system.getInstanceType() === system.PRODUCTION_SYSTEM;
 
     // check if profile exists
   if (!empty(customer.profile)) {
@@ -52,7 +55,8 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
     myWallet: walletList,
     walletJson: walletJson,
     error: !!(req.httpParameterMap.payerAuthError != null && req.httpParameterMap.payerAuthError != ''),
-    errorMsg: req.httpParameterMap.payerAuthError
+    errorMsg: req.httpParameterMap.payerAuthError,
+    isProd: isProd
   };
   res.setViewData(viewData);
   next();

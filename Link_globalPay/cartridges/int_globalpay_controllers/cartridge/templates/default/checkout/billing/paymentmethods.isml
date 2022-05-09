@@ -179,6 +179,9 @@
 		</iscomment>
 
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">
+		<isif condition=${!pdict.isProd}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			  <isinclude template="checkout/billing/paymentOptions/paypalForm" />
 		</div>
@@ -187,6 +190,9 @@
 			--------------------------------------------------------------
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">
+		<isif condition=${!pdict.isProd}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
 		</div>
@@ -195,6 +201,9 @@
 			--------------------------------------------------------------
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">
+		<isif condition=${!pdict.isProd}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
 			<!-- Your custom payment method implementation goes here. -->
 			<isinclude template="checkout/billing/applePayTab" />
 		</div>
