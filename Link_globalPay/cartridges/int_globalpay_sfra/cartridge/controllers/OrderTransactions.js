@@ -25,6 +25,12 @@ function (req, res, next) {
   if (!(res.viewData.securityErrorMessage)) {
     var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
     var order = OrderMgr.getOrder(req.querystring.orderID);
+    if(!order)
+    {
+    res.setStatusCode(200);
+    refundresult = Resource.msg('order.invalididerror', 'globalpay', null)
+    }
+  else{
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
     var amount = ((order.totalGrossPrice) * 100).toFixed();
 
@@ -47,14 +53,15 @@ function (req, res, next) {
         res.setStatusCode(400);
       }
     } else if (order.status == 6) {
-      res.setStatusCode(400);
+      res.setStatusCode(200);
       refundresult = Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
     } else {
-      res.setStatusCode(400);
+      res.setStatusCode(200);
       refundresult = {
         error: Resource.msg('order.refund.error', 'globalpay', null)
       };
     }
+  }
   }
   res.json({
     refundresult: refundresult
@@ -78,6 +85,12 @@ function (req, res, next) {
   if (!(res.viewData.securityErrorMessage)) {
     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
     var order = OrderMgr.getOrder(req.querystring.orderID);
+    if(!order)
+    {
+    res.setStatusCode(200);
+    captureresult = Resource.msg('order.invalididerror', 'globalpay', null)
+    }
+    else{
     var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
     var amount = ((order.totalGrossPrice) * 100).toFixed();
     var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
@@ -104,11 +117,12 @@ function (req, res, next) {
         res.setStatusCode(400);
       }
     } else {
-      res.setStatusCode(400);
+      res.setStatusCode(200);
       captureresult = {
         error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
       };
     }
+  }
   } else {
     res.setStatusCode(400);
   }
@@ -136,6 +150,12 @@ server.post('CancelTransaction',
      var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
      var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
      var order = OrderMgr.getOrder(req.querystring.orderID);
+     if(!order)
+    {
+    res.setStatusCode(200);
+    reverseresult = Resource.msg('order.invalididerror', 'globalpay', null)
+    }
+    else{
      var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
      var amount = ((order.totalGrossPrice) * 100).toFixed();
 
@@ -158,10 +178,11 @@ server.post('CancelTransaction',
          res.setStatusCode(400);
        }
      } else {
-       res.setStatusCode(400);
+       res.setStatusCode(200);
        reverseresult = {
          error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
        };
+     }
      }
    } else {
      res.setStatusCode(400);
