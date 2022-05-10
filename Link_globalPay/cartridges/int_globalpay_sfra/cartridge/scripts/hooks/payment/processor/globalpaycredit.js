@@ -145,7 +145,7 @@ function updateToken(paymentTokenID) {
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
-function createToken(formdata) {
+function gpcreateToken(formdata) {
   var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
   var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
 
@@ -164,11 +164,15 @@ function createToken(formdata) {
   var tokenization = globalPayHelper.tokenize(tokenizeData);
   return tokenization;
 }
+
+function createToken1() {
+  return null;
+}
   /**
    * Removes token. This should be replaced by utilizing a tokenization provider
    * @returns {string} a detokenize result
    */
-function removeToken(creditcrdaToken) {
+function gpremoveToken(creditcrdaToken) {
   var tokenizeData = {
     id: creditcrdaToken // CreditcardToken
   };
@@ -333,6 +337,7 @@ exports.processForm = processForm;
 exports.savePaymentInformation = savePaymentInformation;
 exports.Authorize = Authorize;
 exports.updateToken = updateToken;
-exports.createToken = createToken;
-exports.removeToken = removeToken;
+exports.createToken1 = createToken1;
+exports.gpcreateToken = gpcreateToken;
+exports.gpremoveToken = gpremoveToken;
 exports.Handle = Handle;
