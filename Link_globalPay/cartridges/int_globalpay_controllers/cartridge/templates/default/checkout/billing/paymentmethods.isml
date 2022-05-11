@@ -12,7 +12,13 @@
 <input type="hidden" name="initiationurl" id="initiationurl" value="${require('dw/web/URLUtils').url('GlobalPay-Initiation').toString()}"/>
 <input type="hidden" name="threedsoneUrl" id="threedsoneUrl" value="${require('dw/web/URLUtils').abs('GlobalPay-ThreeDsOne').toString()}"/>
 
-<isprint value="${pdict.errorMsg}" encoding="off"/>
+<isset name="isSandbox" value="false" scope="page"/>
+<isif condition="${require('dw/system/Site').getCurrent().getCustomPreferenceValue('gp_env') == 'SANDBOX'}">
+<isset name="isSandbox" value="true" scope="page"/>
+</isif>
+<isif condition="${pdict.errorMsg}">
+<div class="gpayerror"><isprint value="${pdict.errorMsg}" encoding="off"/></div>
+</isif>
 <isif condition="${pdict.OrderTotal > 0}">
 	<fieldset>
 		<legend>
@@ -179,7 +185,7 @@
 		</iscomment>
 
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.paypal', 'globalpay', null)}">
-		<isif condition=${!pdict.isProd}>
+		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
@@ -190,7 +196,7 @@
 			--------------------------------------------------------------
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}">
-		<isif condition=${!pdict.isProd}>
+		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
@@ -201,7 +207,7 @@
 			--------------------------------------------------------------
 		</iscomment>
 		<div class="payment-method <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}">
-		<isif condition=${!pdict.isProd}>
+		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
 			<!-- Your custom payment method implementation goes here. -->
