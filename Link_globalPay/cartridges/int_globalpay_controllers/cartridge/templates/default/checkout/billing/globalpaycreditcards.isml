@@ -90,7 +90,7 @@ if($('[name$="_expiration_year"]').val())
            city: $('input[name*="_addressFields_city"]').val(),
            postalcode : $('input[name*="_addressFields_postal"]').val()
          };
-
+        $('[name$="_isThreedsone"]').val(false);
           const {
                 checkVersion,
                 getBrowserData,
