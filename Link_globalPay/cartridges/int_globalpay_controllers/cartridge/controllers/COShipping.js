@@ -218,8 +218,6 @@ function updateAddressDetails() {
  */
 function singleShipping() {
   var singleShippingForm = app.getForm('singleshipping');
-  var system = require('dw/system/System');
-  var isProd = system.getInstanceType() === system.PRODUCTION_SYSTEM;
   singleShippingForm.handleAction({
     save: function () {
       var cart = app.getModel('Cart').get();
@@ -257,7 +255,6 @@ function singleShipping() {
       });
       app.getView({
         ContinueURL: URLUtils.https('COShipping-SingleShipping'),
-        isProd: isProd
       }).render('checkout/shipping/singleshipping');
     },
     shipToMultiple: app.getController('COShippingMultiple').Start,
