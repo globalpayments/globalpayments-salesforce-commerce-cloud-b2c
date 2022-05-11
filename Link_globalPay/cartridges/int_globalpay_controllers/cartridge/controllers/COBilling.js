@@ -582,7 +582,7 @@ function billing() {
                else
                  {
                     var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
-                    if(creditCardForm.object.isThreedsone.value)
+                    if(creditCardForm.object.isThreedsone.value == 'true')
                     {
                         app.getView({globalpayData : gpapp.getForm('billing.paymentMethods.creditCard')}).render('checkout/summary/threedsone');
                     }
