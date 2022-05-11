@@ -24,9 +24,15 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   var gatewayMerchantId = preferences.gatewayMerchantId;
   var gpayEnv = preferences.gpayEnv;
   var ArrayList = require('dw/util/ArrayList');
+  var Site = require('dw/system/Site');
   var walletList = new ArrayList();
   var system = require('dw/system/System');
-  var isProd = system.getInstanceType() === system.PRODUCTION_SYSTEM;
+  var isSandbox = 'false';
+  var isTestEnv = Site.getCurrent().getCustomPreferenceValue('gp_env');
+  if(isTestEnv == 'SANDBOX')
+  {
+    isSandbox = 'true';
+  }
 
     // check if profile exists
   if (!empty(customer.profile)) {
@@ -56,7 +62,7 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
     walletJson: walletJson,
     error: !!(req.httpParameterMap.payerAuthError != null && req.httpParameterMap.payerAuthError != ''),
     errorMsg: req.httpParameterMap.payerAuthError,
-    isProd: isProd
+    isSandbox: isSandbox
   };
   res.setViewData(viewData);
   next();

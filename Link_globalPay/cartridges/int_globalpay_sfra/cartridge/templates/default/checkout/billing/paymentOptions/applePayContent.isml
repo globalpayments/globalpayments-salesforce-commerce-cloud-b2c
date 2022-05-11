@@ -8,7 +8,7 @@
                value="${Resource.msg('paymentmethodname.applepay', 'globalpay', null)}"
         >
 <fieldset class="apple-pay-form">
-    <isif condition=${!pdict.isProd}>
+    <isif condition=${pdict.isSandbox=='true'}>
     	<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     </isif>
             <isinclude template="checkout/billing/paymentOptions/applePayForm" />

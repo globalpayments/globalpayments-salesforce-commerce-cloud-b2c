@@ -1,3 +1,6 @@
+<isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+</isif>
 <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopState">
     <isset name="currenetToken" value="" scope="page"/>
       <isloop items="${pdict.myWallet}" var="eachWallet">
