@@ -138,7 +138,7 @@ function getDetailsObject(paymentForm) {
  * @param {returns} - json
  * @param {serverfunction} - post
  */
-server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
+server.append('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
   var formErrors = require('*/cartridge/scripts/formErrors');
   var HookMgr = require('dw/system/HookMgr');
   var PaymentMgr = require('dw/order/PaymentMgr');
@@ -155,6 +155,7 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
       var URLUtils = require('dw/web/URLUtils');
       var CustomerMgr = require('dw/customer/CustomerMgr');
       var Transaction = require('dw/system/Transaction');
+      var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils')
 
       var formInfo = res.getViewData();
       var customer = CustomerMgr.getCustomerByCustomerNumber(
@@ -163,6 +164,7 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
       var wallet = customer.getProfile().getWallet();
 
       Transaction.wrap(function () {
+        PaymentInstrumentUtils.removeDuplicates(formInfo);
         var paymentInstrument = wallet.createPaymentInstrument(dwOrderPaymentInstrument.METHOD_CREDIT_CARD);
         paymentInstrument.setCreditCardHolder(formInfo.name);
         paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
@@ -172,7 +174,7 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
         processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         token = HookMgr.callHook(
                     'app.payment.processor.' + processor.ID.toLowerCase(),
-                    'createToken',
+                    'gpcreateToken',
                     formInfo
                 );
         if (!empty(token) && !empty(token.id)) {
@@ -208,7 +210,7 @@ server.replace('SavePayment', csrfProtection.validateAjaxRequest, function (req,
  * @param {returns} - json
  * @param {serverfunction} - get
  */
-server.replace('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+server.append('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
   var array = require('*/cartridge/scripts/util/array');
   var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
   var HookMgr = require('dw/system/HookMgr');
@@ -242,7 +244,7 @@ server.replace('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req
     var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
     var result = HookMgr.callHook(
             'app.payment.processor.' + processor.ID.toLowerCase(),
-            'removeToken',
+            'gpremoveToken',
             payment.raw.creditCardToken
         );
     Transaction.wrap(function () {

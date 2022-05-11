@@ -39,7 +39,32 @@ function ApplePaymentOrderUpdate(order, serviceResponse) {
   }
 }
 
+function removeDuplicates(formInfo) {
+  // eslint-disable-next-line
+  var wallet = customer.getProfile().getWallet();
+  // eslint-disable-next-line
+  var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD).toArray().sort(function (a, b) {
+      return b.getCreationDate() - a.getCreationDate();
+  });
+  var ccNumber = formInfo.cardNumber;
+  var isDuplicateCard = false;
+  var oldCard;
+  for (var i = 0; i < paymentInstruments.length; i += 1) {
+      var card = paymentInstruments[i];
+      if (card.creditCardExpirationMonth === formInfo.expirationMonth && card.creditCardExpirationYear === formInfo.expirationYear
+          && card.creditCardType === formInfo.cardType && (card.getCreditCardNumber().indexOf(ccNumber.substring(ccNumber.length - 4)) > 0)) {
+          isDuplicateCard = true;
+          oldCard = card;
+          break;
+      }
+  }
+  if (isDuplicateCard) {
+      wallet.removePaymentInstrument(oldCard);
+  }
+}
+
 
 module.exports = {
-  ApplePaymentOrderUpdate: ApplePaymentOrderUpdate
+  ApplePaymentOrderUpdate: ApplePaymentOrderUpdate,
+  removeDuplicates: removeDuplicates
 };
