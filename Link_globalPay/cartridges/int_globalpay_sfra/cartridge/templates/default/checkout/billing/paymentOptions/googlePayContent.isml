@@ -6,7 +6,6 @@
                value="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}"
         >
 <fieldset class="google-pay-form">
-${pdict.isSandbox=='true'}
     <isif condition=${pdict.isSandbox=='true'}>
     <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     </isif>
