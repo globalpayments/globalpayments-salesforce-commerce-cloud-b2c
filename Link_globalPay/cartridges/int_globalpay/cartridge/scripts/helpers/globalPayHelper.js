@@ -20,7 +20,7 @@ function getAccessToken() {
     accessTokenRequest.setGrantType(preferences.grantType);
     accessTokenRequest.setAppId(preferences.appId);
     accessTokenRequest.setAppKey(preferences.appKey);
-    accessTokenRequest.setNonce(Date.now());
+    accessTokenRequest.setNonce(Date.now().toString());
 
     var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
 
@@ -339,9 +339,8 @@ function  threeDsStepone(data) {
     accessTokenRequest.setGrantType(preferences.grantType);
     accessTokenRequest.setAppId(preferences.appId);
     accessTokenRequest.setAppKey(preferences.appKey);
-    accessTokenRequest.setNonce(Date.now());
+    accessTokenRequest.setNonce(Date.now().toString());
     var permissions = ["PMT_POST_Create_Single"];
-
     accessTokenRequest.setPermissions(permissions);
 
     var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
