@@ -63,16 +63,14 @@ cardForm.on("token-success", (resp) => {
            city: $('input[name*="shippingAddress_addressFields_city"]').val(),
            postalcode : $('input[name*="shippingAddress_addressFields_postalCode"]').val()
          };
-
           const {
                 checkVersion,
                 getBrowserData,
                 initiateAuthentication,
                 ChallengeWindowSize,
             } = GlobalPayments.ThreeDSecure;
-
             try {
-                    checkVersion('GlobalPay-Authentication', {
+                 checkVersion('GlobalPay-Authentication', {
                         card: {
                             reference: pmttoken,
                             cartData:cartData
@@ -90,7 +88,7 @@ cardForm.on("token-success", (resp) => {
                                 else{
                                 $("#authId").val(versionCheckData.id);
                                 $("#isthreeds").val(versionCheckData.serverTransactionId);
-                                }   
+                                }
                         $( ".submit-payment" ).trigger( "click" );
                         } else if ( versionCheckData.error ) {
 
@@ -98,8 +96,6 @@ cardForm.on("token-success", (resp) => {
                           console.log('::::'+versionCheckData.id);
                          $("#authId").val(versionCheckData.id);
                         
-                           // setTimeout(Initate,1000)
-                       // function Initate(){
                                 try {
                                     authenticationData = initiateAuthentication('GlobalPay-Initiation', {
                                     serverTransactionId: versionCheckData.serverTransactionId,
@@ -150,20 +146,22 @@ cardForm.on("token-success", (resp) => {
                                          $('.gpayerror').text('Card got declined, please enter another card.');
                                     }
 
-                                })
+                                }).catch(function(error){
+                                   $('.gpayerror').text('Unable to process your request, please try again or use another card.');
+                                 });
                                
                                 }
                                 catch(e){
                                 }
-                            //}
                         }
+                    }).catch(function(error){
+                         $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                     });
                  }
                  catch (e) {
                     // TODO: add your error handling here
                  }
          }
-    
     form.appendChild(token);
     form.submit();
     }
