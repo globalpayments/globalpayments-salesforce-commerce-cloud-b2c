@@ -29,17 +29,16 @@ function authenticationData(req, res) {
   };
 
   var authentication = globalPayHelper.authenticate(authenticationData);
+  var reqAuthfields = new Object();
   if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
     var serverErrors = [];
     serverErrors.push(authentication.error.detailedErrorDescription);
-    res.renderJSON({
-      authentication: authentication,
-      serverErrors: serverErrors,
-      error: true
-    });
+    reqAuthfields.error = true;
+    reqAuthfields.authentication = authentication;
   }
 
-  var reqAuthfields = new Object();
+  if(!reqAuthfields.error){
+  reqAuthfields.error = false;
   reqAuthfields.enrolled = !empty(authentication.threeDs.enrolledStatus) ? authentication.threeDs.enrolledStatus : '';
   reqAuthfields.methodData = authentication.threeDs.methodData.encodedMethodData;
   reqAuthfields.methodUrl = authentication.threeDs.methodUrl;
@@ -54,6 +53,8 @@ function authenticationData(req, res) {
   reqAuthfields.versions.directoryServer.start = authentication.threeDs.dsProtocolVersionStart;
   reqAuthfields.versions.directoryServer.end = authentication.threeDs.dsProtocolVersionEnd;
   reqAuthfields.id = authentication.id;
+  }
+  
 
   return reqAuthfields;
 

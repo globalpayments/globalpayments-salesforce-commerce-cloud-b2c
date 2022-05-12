@@ -140,7 +140,7 @@ if($('[name$="_expiration_year"]').val())
                                     }
                                     // order: {}, // optional if data available on client-side
                                     // payer: {}, // optional if data available on client-side
-                                }).then(function(authenticationData){ 
+                                }).then(function(authenticationData){
                                    $('input[name*=_isthreeds]').val(authenticationData.status);
                                    $('input[name*=_authId]').val(versionCheckData.id); 
                                     
@@ -169,14 +169,18 @@ if($('[name$="_expiration_year"]').val())
                                     else{
                                         $('.gpayerror').text('Card got declined, please enter another card.');
                                     }
-                                  });
+                                  }).catch(function(error){
+                                    $('.gpayerror').text('Unable to process your request, please try again or use another card.');
+                                });
                                 console.log('Authentication Data', authenticationData);
                                 }
                                 catch(e){
                                 }
                             //}
                         }
-                    });
+                    }).catch(function(error){
+                        $('.gpayerror').text('Unable to process your request, please try again or use another card.');
+                      });
             
                  }
 
@@ -184,7 +188,7 @@ if($('[name$="_expiration_year"]').val())
                     // TODO: add your error handling here
                  }
 
-
+    
     form.appendChild(token);
     form.submit();
 }
