@@ -7,7 +7,7 @@
                value="${Resource.msg('paymentmethodname.paypal', 'globalpay', null)}"
         >
 <fieldset class="paypal-form">
-<isif condition=${!pdict.isProd}>
+<isif condition=${pdict.isSandbox=='true'}>
     <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
 </isif>
         <isinclude template="checkout/billing/paymentOptions/paypalForm" />

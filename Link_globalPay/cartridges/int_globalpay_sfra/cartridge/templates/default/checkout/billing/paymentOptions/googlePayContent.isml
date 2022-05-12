@@ -6,7 +6,8 @@
                value="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}"
         >
 <fieldset class="google-pay-form">
-    <isif condition=${!pdict.isProd}>
+${pdict.isSandbox=='true'}
+    <isif condition=${pdict.isSandbox=='true'}>
     <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     </isif>
     <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
