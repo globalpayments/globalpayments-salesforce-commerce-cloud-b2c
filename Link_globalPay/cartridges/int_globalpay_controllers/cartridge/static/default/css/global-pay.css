@@ -11,11 +11,18 @@
 {
     display:none;
 }
-.default-creditcard .gpayerror
+.default-creditcard .gpayerror .authError
 {
     margin-left: 10%;
 }
 .gpayerror
+{
+    margin-left: 10%;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+.authError
 {
     margin-left: 10%;
     color: red;
