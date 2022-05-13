@@ -29,19 +29,26 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
  */
  server.append('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var viewData = res.getViewData();
-    var result = viewData.result;
-    if (result.apiProductSearch.category
-        && result.apiProductSearch.category.template
-        && result.apiProductSearch.categoryID == "apple-developer-merchantid-domain-association") {
-        template = result.apiProductSearch.category.template;
-        result.category = result.apiProductSearch.category;
+    var apiProductSearch = viewData.apiProductSearch;
+    var template = 'search/searchResults';
+    if (apiProductSearch.category
+        && apiProductSearch.category.template
+        && apiProductSearch.categoryID == "apple-developer-merchantid-domain-association") {
+        template = apiProductSearch.category.template;
     }
 
-    viewData = {
-        result = result;
-    };
-    res.setViewData(viewData);
-    next();
+    res.render(template, {
+        productSearch: viewData.productSearch,
+        maxSlots: viewData.maxSlots,
+        reportingURLs: viewData.reportingURLs,
+        refineurl: viewData.refineurl,
+        category: apiProductSearch.category ? apiProductSearch.category : null,
+        canonicalUrl: viewData.canonicalUrl,
+        schemaData: viewData.schemaData,
+        apiProductSearch: viewData.apiProductSearch
+    });
+
+    return next();
 }, pageMetaData.computedPageMetaData);
 
 
