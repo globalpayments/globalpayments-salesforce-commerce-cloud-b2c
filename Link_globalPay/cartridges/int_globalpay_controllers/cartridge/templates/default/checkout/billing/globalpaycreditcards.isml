@@ -1,7 +1,7 @@
   <isscript>
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
-    var gpayToken =  globalPayHelper.getAccessToken();
+    var gpayToken =  globalPayHelper.getCheckoutToken();
     var preferences = globalPayPreferences.getPreferences();
   </isscript>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
