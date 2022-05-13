@@ -357,13 +357,17 @@ var threeds = require('./threeds');
                                     }).then(function(authenticationData) {
                                         // invoking ajax
                                        threeds.handle(versionCheckData, authenticationData,paymentForm, defer);
-                                    });
+                                    }).catch(function(error){
+                                        $('.gpayerror').text('Unable to process your request, please try again or use another card.');
+                                   });
                                 } catch (e) {
                                     console.log('e:::' + e);
                                 }
                                 //}
                             }
-                        });
+                        }).catch(function(error){
+                            $('.gpayerror').text('Unable to process your request, please try again or use another card.');
+                       });
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
 
                         paymentForm += '&authId=' + $("#authId").val();
