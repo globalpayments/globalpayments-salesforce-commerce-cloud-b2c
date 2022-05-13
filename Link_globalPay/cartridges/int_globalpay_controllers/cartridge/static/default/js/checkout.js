@@ -76,7 +76,7 @@ function populateCreditCardForm(cardID) {
 // select credit card from list
 $('.GPcreditCardList').on('change', function () {
     var cardUUID = $(this).val();
-    $('.gpayerror').text(''); 
+    $('#errormsg').addClass('sandbox-warning').text('This page is currently in sandbox/test mode. Do not use real/active card numbers.'); 
     if (cardUUID) {
         $('.default-creditcard').removeClass('d-none');
         $('.button-fancy-large').css('display', 'inline-block');
@@ -87,6 +87,7 @@ $('.GPcreditCardList').on('change', function () {
         populateCreditCardForm(cardUUID);
     }
     else {
+        $('#errormsg').removeClass('sandbox-warning').text(''); 
         $('.default-creditcard').addClass('d-none');
         $('.GP-creditcard-iframe').removeClass('d-none');
         $('.save-card').removeClass('d-none');
