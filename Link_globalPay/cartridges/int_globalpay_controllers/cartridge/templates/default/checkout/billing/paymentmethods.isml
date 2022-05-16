@@ -13,7 +13,7 @@
 <input type="hidden" name="threedsoneUrl" id="threedsoneUrl" value="${require('dw/web/URLUtils').abs('GlobalPay-ThreeDsOne').toString()}"/>
 
 <isset name="isSandbox" value="false" scope="page"/>
-<isif condition="${require('dw/system/Site').getCurrent().getCustomPreferenceValue('gp_env') == 'Sandbox'}">
+<isif condition="${require('dw/system/Site').getCurrent().getCustomPreferenceValue('gp_env') == 'sandbox'}">
 <isset name="isSandbox" value="true" scope="page"/>
 </isif>
 <isif condition="${pdict.errorMsg}">
