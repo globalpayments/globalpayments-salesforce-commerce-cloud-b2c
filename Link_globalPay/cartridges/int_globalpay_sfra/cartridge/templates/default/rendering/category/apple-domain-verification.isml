@@ -1,5 +1,0 @@
-
-<iscomment>  <isinclude template="/components/modules" sf-toolkit="off" />
-    <iscontentasset aid="apple-developer-merchantid-domain-association">
-</iscomment>
-    <isprint value="${pdict.category.custom.headerMenuBanner}" encoding="off"/>

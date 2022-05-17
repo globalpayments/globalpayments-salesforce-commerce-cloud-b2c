@@ -1,4 +1,0 @@
-<div class="paypal-type"> 
-    <span>${Resource.msg('msg.payment.type.paypal', 'globalpay', null)}</span>
-</div>
-
