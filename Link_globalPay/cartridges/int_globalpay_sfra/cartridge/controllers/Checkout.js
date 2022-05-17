@@ -29,7 +29,7 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   var system = require('dw/system/System');
   var isSandbox = 'false';
   var isTestEnv = Site.getCurrent().getCustomPreferenceValue('gp_env');
-  if(isTestEnv == 'Sandbox')
+  if(isTestEnv == 'sandbox')
   {
     isSandbox = 'true';
   }
