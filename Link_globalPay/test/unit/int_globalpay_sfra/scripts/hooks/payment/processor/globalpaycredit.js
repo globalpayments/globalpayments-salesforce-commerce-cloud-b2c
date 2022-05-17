@@ -111,6 +111,10 @@ var formdata = {
             value: 'some card type value',
             htmlName: 'some card type html name'
         },
+        cardOwner:{
+            value: 'card Owner name',
+            htmlName: 'card Owner name'
+        },
         cardNumber: {
             value: 'some card number value',
             htmlName: 'some card number html name'
@@ -312,8 +316,8 @@ describe('creditcard', function () {
     });
     describe('CreateToken', function () {
         it('Should create and return token', function () {
-            var result = creditCardProcessor.createToken(formdata);           
-            assert.equal(result.id, 'token');
+            var result = creditCardProcessor.createToken1(formdata);           
+            assert.equal(result, null);
         });
     });
 
