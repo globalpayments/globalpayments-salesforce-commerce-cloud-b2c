@@ -113,13 +113,13 @@ function initiationData(req, res) {
   }
 
   var threeDsStepOneResp = globalPayHelper.threeDsStepone(threeDsStepOne);
-  var threeDSResponse = new Object();
+  var threeDSResponse = {};
   if (!empty(threeDsStepOneResp)) {
     threeDSResponse.acsTransactionId = threeDsStepOneResp.threeDs.acsTransRef;
     threeDSResponse.authenticationSource = threeDsStepOneResp.threeDs.authenticationSource;
     threeDSResponse.authenticationRequestType = threeDsStepOneResp.threeDs.messageCategory;
     threeDSResponse.cardholderResponseInfo = threeDsStepOneResp.threeDs.cardholderResponseInfo;
-    threeDSResponse.challenge = new Object();
+    threeDSResponse.challenge = {};
     threeDSResponse.challenge.encodedChallengeRequest = threeDsStepOneResp.threeDs.challengeValue;
     threeDSResponse.challenge.requestUrl = threeDsStepOneResp.threeDs.redirectUrl;
     threeDSResponse.challengeMandated = threeDsStepOneResp.threeDs.challengeStatus;
@@ -128,7 +128,7 @@ function initiationData(req, res) {
     threeDSResponse.messageCategory = threeDsStepOneResp.messageCategory;
     threeDSResponse.messageExtension = threeDsStepOneResp.threeDs.authenticationSource;
     threeDSResponse.messageVersion = threeDsStepOneResp.threeDs.messageVersion;
-    threeDSResponse.mpi = new Object();
+    threeDSResponse.mpi = {};
     threeDSResponse.mpi.authenticationValue = threeDsStepOneResp.threeDs.authenticationValue;
     threeDSResponse.mpi.eci = threeDsStepOneResp.threeDs.eci;
     threeDSResponse.serverTransactionId = threeDsStepOneResp.threeDs.serverTransRef;
