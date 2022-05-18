@@ -14,7 +14,7 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
  * @return {Object} returns an error object
  */
 function Authorize(order, paymentdata) {
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
     var URLUtils = require('dw/web/URLUtils');
 
     var countryCode = Countries.getCurrent({

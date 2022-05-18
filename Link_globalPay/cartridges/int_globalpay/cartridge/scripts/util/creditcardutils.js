@@ -1,14 +1,21 @@
 'use strict';
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var BasketMgr = require('dw/order/BasketMgr');
 var basket = BasketMgr.getCurrentOrNewBasket();
 var Locale = require('dw/util/Locale');
 var URLUtils = require('dw/web/URLUtils');
 var currentBasket = BasketMgr.getCurrentBasket();
-var myreq = request.httpParameterMap.requestBodyAsString;
 
+
+/**
+ * for authenticating the given pmt_token.
+ * @param req -- request object
+ * @param res -- resp object
+ * @return Object -- authentication object
+ */
 function authenticationData(req, res) {
+  var myreq = req.httpParameterMap.requestBodyAsString;
   var body = JSON.parse(myreq);
 
   var authenticationData = {
@@ -29,7 +36,7 @@ function authenticationData(req, res) {
   };
 
   var authentication = globalPayHelper.authenticate(authenticationData);
-  var reqAuthfields = new Object();
+  var reqAuthfields = {};
   if (!empty(authentication) && !empty(authentication.success) && !authentication.success) {
     var serverErrors = [];
     serverErrors.push(authentication.error.detailedErrorDescription);
@@ -45,22 +52,22 @@ function authenticationData(req, res) {
   reqAuthfields.serverTransactionId = authentication.threeDs.serverTransRef;
   reqAuthfields.challengevalue = authentication.threeDs.challengeValue;
   reqAuthfields.acschallengerequesturl = authentication.threeDs.acsChallengeRequestUrl;
-  reqAuthfields.versions = new Object();
-  reqAuthfields.versions.accessControlServer = new Object();
+  reqAuthfields.versions = {};
+  reqAuthfields.versions.accessControlServer = {};
   reqAuthfields.versions.accessControlServer.start = authentication.threeDs.acsProtocolVersionStart;
   reqAuthfields.versions.accessControlServer.end = authentication.threeDs.acsProtocolVersionEnd;
-  reqAuthfields.versions.directoryServer = new Object();
+  reqAuthfields.versions.directoryServer = {};
   reqAuthfields.versions.directoryServer.start = authentication.threeDs.dsProtocolVersionStart;
   reqAuthfields.versions.directoryServer.end = authentication.threeDs.dsProtocolVersionEnd;
   reqAuthfields.id = authentication.id;
   }
-  
 
   return reqAuthfields;
 
 }
 
 function initiationData(req, res) {
+  var myreq = req.httpParameterMap.requestBodyAsString;
   var body = JSON.parse(myreq);
   var browserData = JSON.parse(myreq).browserData;
   var challengeWindow = JSON.parse(myreq).challengeWindow;
@@ -132,7 +139,7 @@ function initiationData(req, res) {
   return threeDSResponse;
 }
 //get threeD secure one card authentication status
-function authenticationResult(req, res) {
+function getAuthenticationResult(req, res) {
   var paRes = req.httpParameterMap.PaRes.value;
   var authId = req.httpParameterMap.MD.value;
   var authenticationData = {
@@ -142,11 +149,11 @@ function authenticationResult(req, res) {
     },
     authId: authId
   }
-  var authentication = globalPayHelper.authenticationResult(authenticationData);
+  var authentication = globalPayHelper.getAuthenticationResult(authenticationData);
   return authentication;
 }
 module.exports = {
   authenticationData: authenticationData,
   initiationData: initiationData,
-  authenticationResult: authenticationResult
+  getAuthenticationResult: getAuthenticationResult
 };

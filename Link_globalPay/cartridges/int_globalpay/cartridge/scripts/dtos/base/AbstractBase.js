@@ -26,9 +26,9 @@ var AbstractBase = Class.extend({
       if (command === 'set' || command === 'get') {
         var propertyName = methodName.slice(3);
         propertyName = propertyName.charAt(0).toLowerCase() + propertyName.slice(1);
-        var myflag = this.hasOwnProperty(propertyName);
+        var hasOwnProperty = this.hasOwnProperty(propertyName);
 
-        if (myflag) {
+        if (hasOwnProperty) {
           if (command === 'set') {
             this[propertyName] = methodArgs.pop();
             return this;

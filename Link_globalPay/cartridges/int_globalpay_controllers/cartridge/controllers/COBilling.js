@@ -94,7 +94,7 @@ function returnToForm(cart, params) {
         pageTitle: Resource.msg('billing.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')
     });
     var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
     var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
     var countryCode = Countries.getCurrent({
         CurrentRequest: {

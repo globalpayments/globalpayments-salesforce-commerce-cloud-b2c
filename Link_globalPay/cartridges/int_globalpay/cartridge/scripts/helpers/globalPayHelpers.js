@@ -62,7 +62,7 @@ function authenticate(data) {
   return result;
 }
 
-function authenticationResult(data)
+function getAuthenticationResult(data)
 {
   var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
@@ -103,7 +103,7 @@ function tokenize(data) {
  * @params {data} - data required to form Tokenization request
  * @returns {result} - returns Tokenize response
  */
- function updateTokenUsagemode(data) {
+ function updateTokenUsageMode(data) {
   var UpdateTokenMode = require('*/cartridge/scripts/dtos/paymentMethods/UpdatePaymentTokenizationMode');
   var tokenupdateRequest = new UpdateTokenMode.Request();
   tokenupdateRequest.setToken(getAccessToken());
@@ -279,7 +279,7 @@ function applePay(data)
 }
 
 function  threeDsStepone(data) {
-  var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDsStepone');
+  var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDSecure');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var threeDsSteponeReq = new threeDsStepone.Request();
       threeDsSteponeReq.setToken(getAccessToken());
@@ -377,7 +377,7 @@ module.exports = {
     refund:refund,
     paypal: paypal,
     gpay:gpay,
-    updateTokenUsagemode:updateTokenUsagemode,
+    updateTokenUsageMode:updateTokenUsageMode,
     tokenize:tokenize,
     detokenize:detokenize,
     applePay:applePay,
@@ -385,6 +385,6 @@ module.exports = {
     threeDsSteptwo:threeDsSteptwo,
     payPalCapture: payPalCapture,
     getCheckoutToken: getCheckoutToken,
-    authenticationResult:authenticationResult,
+    getAuthenticationResult:getAuthenticationResult,
     cancel: cancel
 };

@@ -3,7 +3,7 @@
 
 var server = require('server');
 var security = require('*/cartridge/scripts/middleware/security');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');

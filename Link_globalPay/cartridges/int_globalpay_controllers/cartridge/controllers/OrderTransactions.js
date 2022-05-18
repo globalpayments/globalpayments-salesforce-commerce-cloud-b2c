@@ -4,7 +4,7 @@
  * OrderTransactions-RefundTransaction : The OrderTransactions-RefundTransaction endpoint will render the refund APi functionality from GP. Once a order is completed and needs order to be refunded.
  *
  **/
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var security = require('*/cartridge/scripts/models/SecurityModel');
 var Resource = require('dw/web/Resource');

@@ -2,7 +2,7 @@
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
 var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var HeaderRequest = require('~/cartridge/scripts/dtos/nested/ApplepaytokenHeader');
+var HeaderRequest = require('~/cartridge/scripts/dtos/nested/ApplePayTokenHeader');
 
 
 

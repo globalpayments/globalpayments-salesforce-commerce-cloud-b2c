@@ -278,10 +278,7 @@ var threeds = require('./threeds');
                     }
                     // disable the next:Place Order button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
-
-                    console.log('::before calling to ajax::: saved cards:::');
-
-                    if ($('#isnewcard').val() == 'false' &&
+                 if ($('#isnewcard').val() == 'false' &&
                         $('.saved-payment-instrument' + '.selected-payment').data('pmt') !== undefined &&
                         ($('.tab-pane.active').attr('id') == 'credit-card-content')) {
                         var selectedUUID = $('.saved-payment-instrument' + '.selected-payment').data('uuid');
@@ -299,8 +296,6 @@ var threeds = require('./threeds');
                             postalcode: $('input[name*="shippingAddress_addressFields_postalCode"]').val()
                         };
 
-                        console.log('::before invoking :::GlobalPay-Authentication::');
-                        // started here
                         const {
                             checkVersion,
                             getBrowserData,
@@ -333,8 +328,6 @@ var threeds = require('./threeds');
                           } else if (versionCheckData.error) {
 
                             } else {
-                                console.log('::::in chekcout::' + versionCheckData.id);
-                                console.log('::::in serverTransactionId::' + versionCheckData.serverTransactionId);
                                 $("#authId").val(versionCheckData.id);
                                 $("#isthreeds").val(versionCheckData.serverTransactionId);
                                 // function Initate(){
@@ -651,7 +644,7 @@ var threeds = require('./threeds');
                     members.nextStage();
                 });
                 $('body').on('submit:googlepay', function(e, data) {
-                    console.log(data);
+                   // console.log(data);
                     $('#paymentToken').val(data.paymentToken);
                     members.nextStage();
                 });

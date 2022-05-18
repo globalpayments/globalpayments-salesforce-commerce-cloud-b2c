@@ -7,7 +7,7 @@ var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var Resource = require('dw/web/Resource');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 /**
  * This is where additional PayPal integration would go. The current implementation simply creates a PaymentInstrument and
  * returns 'success'.

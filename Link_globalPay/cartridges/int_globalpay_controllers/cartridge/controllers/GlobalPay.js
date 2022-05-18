@@ -99,7 +99,7 @@ function ThreeDsMethod() {
 
 function ThreeDsOne() {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
-  var authentication = creditCardUtils.authenticationResult(request, response); 
+  var authentication = creditCardUtils.getAuthenticationResult(request, response); 
   var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
   var gpapp = require(globalpayconstants.GPAPP);
   var Resource = require('dw/web/Resource');

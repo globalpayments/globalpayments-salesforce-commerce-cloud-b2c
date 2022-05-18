@@ -8,7 +8,7 @@ var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var gpapp=require(globalpayconstants.GPAPP);
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 /**
  * This is where additional googlepay integration would go. The current implementation simply creates a PaymentInstrument and
  * returns 'success'.

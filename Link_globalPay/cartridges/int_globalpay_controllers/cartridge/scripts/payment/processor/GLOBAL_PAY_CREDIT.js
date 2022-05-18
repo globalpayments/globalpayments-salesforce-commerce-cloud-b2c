@@ -8,7 +8,7 @@ var Resource = require('dw/web/Resource');
 
 /* Script Modules */
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var app = require(globalpayconstants.APP);
 var gpapp=require(globalpayconstants.GPAPP);
@@ -268,7 +268,7 @@ function Authorize(args) {
     usage_mode: globalpayconstants.authorizationData.usage_mode,
     paymentInformationID : paymentData.paymentTokenID
   };
-  var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
+  var tokenization = globalPayHelper.updateTokenUsageMode(tokenizeData);
   if (!empty(tokenization) && !empty(tokenization.id)) {
     return tokenization;
   }else{

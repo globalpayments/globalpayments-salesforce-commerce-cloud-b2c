@@ -8,11 +8,10 @@
 
 var page = module.superModule;
 var server = require('server');
-var Resource = require('dw/web/Resource');
 server.extend(page);
 server.append('Begin', server.middleware.https, function (req, res, next) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
   var gpayToken = globalPayHelper.getCheckoutToken();
   var BasketMgr = require('dw/order/BasketMgr');
   var currentBasket = BasketMgr.getCurrentBasket();
@@ -26,7 +25,6 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   var ArrayList = require('dw/util/ArrayList');
   var Site = require('dw/system/Site');
   var walletList = new ArrayList();
-  var system = require('dw/system/System');
   var isSandbox = 'false';
   var isTestEnv = Site.getCurrent().getCustomPreferenceValue('gp_env');
   if(isTestEnv == 'sandbox')

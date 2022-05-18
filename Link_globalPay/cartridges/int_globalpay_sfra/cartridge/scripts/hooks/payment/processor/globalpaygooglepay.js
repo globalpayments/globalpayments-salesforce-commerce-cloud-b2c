@@ -5,7 +5,7 @@ var Transaction = require('dw/system/Transaction');
 var server = require('server');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom

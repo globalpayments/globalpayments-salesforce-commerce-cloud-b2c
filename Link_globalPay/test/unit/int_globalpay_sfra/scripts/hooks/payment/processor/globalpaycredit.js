@@ -265,7 +265,7 @@ describe('creditcard', function () {
                     id:'12345'
                 }
             },
-            updateTokenUsagemode:function(param)
+            updateTokenUsageMode:function(param)
             {
                return {id:'token',
                success: true}

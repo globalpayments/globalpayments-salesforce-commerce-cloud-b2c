@@ -14,8 +14,7 @@ function ApplePaymentOrderUpdate(order, serviceResponse) {
 	//Update Service Response to the customer  paymentinstrument Object
 	//UpdateMobilePaymentTransactionCardAuthorize(CardHelper.getNonGCPaymemtInstument(order), serviceResponse);
 	var OrderMgr = require('dw/order/OrderMgr');
-	var Status = require('dw/system/Status');
-	var error;
+	var Status = require('dw/system/Status'); 
 	if (serviceResponse.success) {
 		var orderPlacementStatus = Transaction.wrap(function () {
 			if (OrderMgr.placeOrder(order) === Status.ERROR) {
@@ -73,15 +72,15 @@ function RemoveExistingPaymentInstruments(paymentType) {
 	});
   
   
-	if (paymentType == PaymentInstrument.METHOD_CREDIT_CARD) {
+	if (paymentType === PaymentInstrument.METHOD_CREDIT_CARD) {
 	  paymentInstrument = currentBasket.createPaymentInstrument(
 		  PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
 	  );
-	} else if (paymentType == Resource.msg('paymentmethodname.googlepay', 'globalpay', null)) {
+	} else if (paymentType === Resource.msg('paymentmethodname.googlepay', 'globalpay', null)) {
 	  paymentInstrument = currentBasket.createPaymentInstrument(
 		  Resource.msg('paymentmethodname.googlepay', 'globalpay', null), currentBasket.totalGrossPrice
 	  );
-	} else if (paymentType == Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
+	} else if (paymentType === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
 	  paymentInstrument = currentBasket.createPaymentInstrument(
 		  Resource.msg('paymentmethodname.paypal', 'globalpay', null), currentBasket.totalGrossPrice
 			);

@@ -446,9 +446,9 @@ describe('tokenize', function(){
     });
 });
 
-describe('updateTokenUsagemode', function(){
+describe('updateTokenUsageMode', function(){
     it('Should return updated token usage response for the given data', function () {
-    var result = globalpayHelper.updateTokenUsagemode(data);
+    var result = globalpayHelper.updateTokenUsageMode(data);
     assert.equal(result,'success');
     });
 });

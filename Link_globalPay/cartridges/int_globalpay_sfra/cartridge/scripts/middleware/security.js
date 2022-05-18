@@ -12,7 +12,7 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
  */
 function ValidateHeaders(req, res, next) {
   var clientid = globalPayPreferences.getPreferences().clientId;
-  if (req.httpHeaders.clientid == clientid) {
+  if (req.httpHeaders.clientid === clientid) {
     res.setStatusCode(200);
   } else {
     res.setStatusCode(401);

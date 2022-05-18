@@ -3,15 +3,12 @@
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 /**
  * Authorizes a payment using a apple pay.
- * @param {number} orderNumber - The current order'\
- * s number
- * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
- * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
- *      payment method
- * @return {Object} returns an error object
+ * @param {dw.order.order}  -  order data.
+ * @param {paymentdata}  -  payment data
+ * @return {Object} returns an object in case of success else error object.
  */
 function Authorize(order, paymentdata) {
   var preferences = globalPayPreferences.getPreferences();

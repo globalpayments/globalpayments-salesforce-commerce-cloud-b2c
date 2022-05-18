@@ -1,6 +1,6 @@
   <isscript>
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper'); 
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers'); 
     var gpayToken =  globalPayHelper.getCheckoutToken();
     var preferences = globalPayPreferences.getPreferences();
   </isscript>

@@ -1,13 +1,13 @@
 'use strict';
 function globalpayConstants() {}
-var authenticationData = new Object();
+var authenticationData = {};
 authenticationData.account_name = 'transaction_processing';
 authenticationData.channel = 'CNP';
 authenticationData.source = 'BROWSER';
 globalpayConstants.authenticationData = authenticationData;
 
 
-var authorizationData = new Object();
+var authorizationData = {};
 authorizationData.account_name = 'transaction_processing';
 authorizationData.channel = 'CNP';
 authorizationData.source = 'BROWSER';
@@ -17,7 +17,7 @@ authorizationData.reference = '93459c79-f3f9-427d-84d9-ca0584bb55bf';
 authorizationData.usage_mode = 'MULTIPLE';
 globalpayConstants.authorizationData = authorizationData;
 
-var paypalData = new Object();
+var paypalData = {};
 paypalData.account_name = 'transaction_processing';
 paypalData.channel = 'CNP';
 paypalData.source = 'BROWSER';
@@ -29,7 +29,7 @@ paypalData.captureStatus = 'CAPTURED';
 paypalData.authorizedStatus = 'PREAUTHORIZED';
 globalpayConstants.paypalData = paypalData;
 
-var googlePay = new Object();
+var googlePay = {};
 googlePay.account_name = 'transaction_processing';
 googlePay.channel = 'CNP';
 googlePay.type = 'SALE';
@@ -40,7 +40,7 @@ googlePay.captureStatus = 'CAPTURED';
 googlePay.authorizedStatus = 'PREAUTHORIZED';
 globalpayConstants.googlePay = googlePay;
 
-var creditCardPay = new Object();
+var creditCardPay = {};
 creditCardPay.securityCode = '121';
 creditCardPay.creditCardNumber = 'creditCardNumber';
 creditCardPay.entry_mode = 'ECOM';
@@ -49,12 +49,12 @@ creditCardPay.captureStatus = 'CAPTURED';
 creditCardPay.declinedStatus ='DECLINED';
 globalpayConstants.creditCardPay = creditCardPay;
 
-var captureTransaction = new Object();
+var captureTransaction = {};
 captureTransaction.capture_sequence = 'FIRST';
 captureTransaction.entry_mode = 'ECOM';
 globalpayConstants.captureTransaction = captureTransaction;
 
-var applePay = new Object();
+var applePay = {};
 applePay.account_name = 'transaction_processing';
 applePay.channel = 'CNP';
 applePay.type = 'SALE';
@@ -64,12 +64,12 @@ applePay.paymentTypeCode = 'GP_DW_APPLE_PAY';
 
 globalpayConstants.applePay = applePay;
 
-var captureMode = new Object();
+var captureMode = {};
 captureMode.auto = 'AUTO';
 captureMode.later = 'LATER';
 globalpayConstants.captureMode = captureMode;
 
-var threeDsStepOne = new Object();
+var threeDsStepOne = {};
 threeDsStepOne.account_name = 'transaction_processing';
 threeDsStepOne.source = 'BROWSER';
 threeDsStepOne.preference = 'NO_PREFERENCE';

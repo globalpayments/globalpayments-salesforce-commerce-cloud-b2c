@@ -6,7 +6,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelper');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
 var array = require('*/cartridge/scripts/util/array');
@@ -135,7 +135,7 @@ function updateToken(paymentTokenID) {
     usage_mode: globalpayconstants.authorizationData.usage_mode,
     paymentInformationID: paymentTokenID
   };
-  var tokenization = globalPayHelper.updateTokenUsagemode(tokenizeData);
+  var tokenization = globalPayHelper.updateTokenUsageMode(tokenizeData);
   if (typeof tokenization !== 'undefined' && tokenization.id != null) {
     return tokenization.id;
   }
@@ -223,7 +223,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var serverErrors = [];
     if ('error' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
   } else {
-    if ('status' in authorization && authorization.status == 'DECLINED') {
+    if ('status' in authorization && authorization.status === 'DECLINED') {
       error = true;
       serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
       return {
@@ -325,7 +325,7 @@ function getTokenbyUUID(req, uuidToken) {
   var testcust = req.currentCustomer;
   var creditCardToken;
   testcust.wallet.paymentInstruments.forEach(function (each) {
-    if (each.UUID == uuidToken) {
+    if (each.UUID === uuidToken) {
       creditCardToken = each.raw.creditCardToken;
       return creditCardToken;
     }

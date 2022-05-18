@@ -79,7 +79,7 @@ server.use('ThreeDSSecureChallenge', server.middleware.https, function (req, res
  */
 server.use('ThreedsResp', server.middleware.https, function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
-  var authentication = creditCardUtils.authenticationResult(req, res);
+  var authentication = creditCardUtils.getAuthenticationResult(req, res);
   if (!empty(authentication) && ('status' in authentication) && authentication.status === globalpayconstants.AUTHRESPONSE) {
     res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'placeOrder'));
   } else {
