@@ -12,6 +12,16 @@
         <password masked="true">********</password>
     </service-credential>
 
+    <service-profile service-profile-id="CybersourceProfile">
+        <timeout-millis>30000</timeout-millis>
+        <rate-limit-enabled>false</rate-limit-enabled>
+        <rate-limit-calls>0</rate-limit-calls>
+        <rate-limit-millis>0</rate-limit-millis>
+        <cb-enabled>false</cb-enabled>
+        <cb-calls>0</cb-calls>
+        <cb-millis>0</cb-millis>
+    </service-profile>
+
     <service-profile service-profile-id="GlobalPay">
         <timeout-millis>0</timeout-millis>
         <rate-limit-enabled>false</rate-limit-enabled>
