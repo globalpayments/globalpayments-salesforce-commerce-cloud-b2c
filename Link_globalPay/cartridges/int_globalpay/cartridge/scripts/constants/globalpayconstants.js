@@ -1,92 +1,109 @@
 'use strict';
 function globalpayConstants() {}
-var authenticationData = {};
-authenticationData.account_name = 'transaction_processing';
-authenticationData.channel = 'CNP';
-authenticationData.source = 'BROWSER';
+var authenticationData = {
+account_name:'transaction_processing',
+channel:'CNP',
+source:'BROWSER'
+};
 globalpayConstants.authenticationData = authenticationData;
 
 
-var authorizationData = {};
-authorizationData.account_name = 'transaction_processing';
-authorizationData.channel = 'CNP';
-authorizationData.source = 'BROWSER';
-authorizationData.type = 'SALE';
-authorizationData.entrymode = 'ECOM';
-authorizationData.reference = '93459c79-f3f9-427d-84d9-ca0584bb55bf';
-authorizationData.usage_mode = 'MULTIPLE';
+var authorizationData = {
+account_name :'transaction_processing',
+channel : 'CNP',
+source : 'BROWSER',
+type : 'SALE',
+entrymode : 'ECOM',
+reference : '93459c79-f3f9-427d-84d9-ca0584bb55bf',
+usage_mode : 'MULTIPLE'
+};
+
 globalpayConstants.authorizationData = authorizationData;
 
-var paypalData = {};
-paypalData.account_name = 'transaction_processing';
-paypalData.channel = 'CNP';
-paypalData.source = 'BROWSER';
-paypalData.type = 'SALE';
-paypalData.paypal = 'paypal';
-paypalData.entryMode = 'paypal';
-paypalData.paymentTypeCode = 'GP_DW_PAYPAL';
-paypalData.captureStatus = 'CAPTURED';
-paypalData.authorizedStatus = 'PREAUTHORIZED';
+var paypalData = {
+account_name : 'transaction_processing',
+channel : 'CNP',
+source : 'BROWSER',
+type : 'SALE',
+paypal : 'paypal',
+entryMode : 'paypal',
+paymentTypeCode : 'GP_DW_PAYPAL',
+captureStatus : 'CAPTURED',
+authorizedStatus : 'PREAUTHORIZED',
+};
+
 globalpayConstants.paypalData = paypalData;
 
-var googlePay = {};
-googlePay.account_name = 'transaction_processing';
-googlePay.channel = 'CNP';
-googlePay.type = 'SALE';
-googlePay.entryMode = 'ECOM';
-googlePay.provider = 'PAY_BY_GOOGLE';
-googlePay.paymentTypeCode = 'GP_DW_GOOGLE_PAY';
-googlePay.captureStatus = 'CAPTURED';
-googlePay.authorizedStatus = 'PREAUTHORIZED';
+var googlePay = {
+account_name : 'transaction_processing',
+channel : 'CNP',
+type : 'SALE',
+entryMode : 'ECOM',
+provider : 'PAY_BY_GOOGLE',
+paymentTypeCode : 'GP_DW_GOOGLE_PAY',
+captureStatus  :'CAPTURED',
+authorizedStatus : 'PREAUTHORIZED'
+};
+
 globalpayConstants.googlePay = googlePay;
 
-var creditCardPay = {};
-creditCardPay.securityCode = '121';
-creditCardPay.creditCardNumber = 'creditCardNumber';
-creditCardPay.entry_mode = 'ECOM';
-creditCardPay.paymentMethod = 'CREDIT_CARD';
-creditCardPay.captureStatus = 'CAPTURED';
-creditCardPay.declinedStatus ='DECLINED';
+var creditCardPay = {
+securityCode : '121',
+creditCardNumber : 'creditCardNumber',
+entry_mode : 'ECOM',
+paymentMethod : 'CREDIT_CARD',
+captureStatus : 'CAPTURED',
+declinedStatus :'DECLINED'
+};
+
 globalpayConstants.creditCardPay = creditCardPay;
 
-var captureTransaction = {};
-captureTransaction.capture_sequence = 'FIRST';
-captureTransaction.entry_mode = 'ECOM';
+var captureTransaction = {
+capture_sequence : 'FIRST',
+entry_mode : 'ECOM'
+};
+
 globalpayConstants.captureTransaction = captureTransaction;
 
-var applePay = {};
-applePay.account_name = 'transaction_processing';
-applePay.channel = 'CNP';
-applePay.type = 'SALE';
-applePay.entryMode = 'ECOM';
-applePay.provider = 'APPLEPAY';
-applePay.paymentTypeCode = 'GP_DW_APPLE_PAY';
+var applePay = {
+account_name : 'transaction_processing',
+channel : 'CNP',
+type : 'SALE',
+entryMode : 'ECOM',
+provider : 'APPLEPAY',
+paymentTypeCode : 'GP_DW_APPLE_PAY'
+};
+
 
 globalpayConstants.applePay = applePay;
 
-var captureMode = {};
-captureMode.auto = 'AUTO';
-captureMode.later = 'LATER';
+var captureMode = {
+auto : 'AUTO',
+later : 'LATER'
+};
+
 globalpayConstants.captureMode = captureMode;
 
-var threeDsStepOne = {};
-threeDsStepOne.account_name = 'transaction_processing';
-threeDsStepOne.source = 'BROWSER';
-threeDsStepOne.preference = 'NO_PREFERENCE';
-threeDsStepOne.method_url_completion_status = 'YES';
-threeDsStepOne.merchant_contact_url = 'http://www.vacationtoplan.in/shopping/contact/';
-threeDsStepOne.time_created_reference = '2022-01-23T22:17:11.000000Z';
-threeDsStepOne.address_match_indicator = true
-threeDsStepOne.accept_header = '*/*';
-threeDsStepOne.color_depth = 'TWENTY_FOUR_BITS';
-threeDsStepOne.ip = '82.217.170.253';
-threeDsStepOne.java_enabled = false;
-threeDsStepOne.javascript_enabled = true;
-threeDsStepOne.screen_height = 864;
-threeDsStepOne.screen_width = 1536;
-threeDsStepOne.challenge_window_size = 'WINDOWED_500X600';
-threeDsStepOne.user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36';
-threeDsStepOne.timezone = '-1';
+var threeDsStepOne = {
+account_name : 'transaction_processing',
+source : 'BROWSER',
+preference : 'NO_PREFERENCE',
+method_url_completion_status : 'YES',
+merchant_contact_url : 'http://www.vacationtoplan.in/shopping/contact/',
+time_created_reference : '2022-01-23T22:17:11.000000Z',
+address_match_indicator : true,
+accept_header : '*/*',
+color_depth : 'TWENTY_FOUR_BITS',
+ip : '82.217.170.253',
+java_enabled : false,
+javascript_enabled : true,
+screen_height : 864,
+screen_width : 1536,
+challenge_window_size : 'WINDOWED_500X600',
+user_agent : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36',
+timezone : '-1'
+};
+
 
 // site preferences
 globalpayConstants.gpApiVersion = '2021-03-22';
