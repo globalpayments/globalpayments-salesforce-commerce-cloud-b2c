@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
-    <payment-method method-id="GP_DW_GOOGLE_PAY">
-        <name xml:lang="x-default">Google Pay</name>
-        <enabled-flag>true</enabled-flag>
-        <processor-id>GOOGLE_PAY</processor-id>
+    <payment-method method-id="PayPal">
+        <name xml:lang="x-default">Pay Pal</name>
+        <name xml:lang="fr-FR">Pay Pal</name>
+        <name xml:lang="it-IT">PayPal</name>
+        <name xml:lang="ja-JP">PayPal</name>
+        <name xml:lang="zh-CN">PayPal</name>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>PAYPAL_EXPRESS</processor-id>
     </payment-method>
 
-    <payment-method method-id="GP_DW_PAYPAL">
-        <name xml:lang="x-default">PayPal</name>
-        <enabled-flag>true</enabled-flag>
-        <processor-id>GLOBALPAY_PAYPAL</processor-id>
-    </payment-method>
-
-    <payment-method method-id="GP_DW_APPLE_PAY">
+    <payment-method method-id="DW_APPLE_PAY">
         <name xml:lang="x-default">Apple Pay</name>
         <enabled-flag>true</enabled-flag>
-        <processor-id>APPLE_PAY</processor-id>
+        <processor-id>gp_applepay</processor-id>
+    </payment-method>
+
+    <payment-method method-id="DW_ANDROID_PAY">
+        <name xml:lang="x-default">Android Pay</name>
+        <enabled-flag>false</enabled-flag>
+    </payment-method>
+
+    <payment-method method-id="BANK_TRANSFER">
+        <name xml:lang="x-default">Bank Transfer</name>
+        <name xml:lang="fr-FR">Virement bancaire</name>
+        <name xml:lang="it-IT">Bonifico</name>
+        <name xml:lang="ja-JP">銀行間振替</name>
+        <name xml:lang="zh-CN">银行转账</name>
+        <enabled-flag>false</enabled-flag>
+    </payment-method>
+
+    <payment-method method-id="GIFT_CERTIFICATE">
+        <name xml:lang="x-default">Gift Certificate</name>
+        <name xml:lang="fr-FR">Chèque-cadeau</name>
+        <name xml:lang="it-IT">Certificato regalo</name>
+        <name xml:lang="ja-JP">ギフト券</name>
+        <name xml:lang="zh-CN">礼券</name>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>BASIC_GIFT_CERTIFICATE</processor-id>
     </payment-method>
 
     <payment-method method-id="CREDIT_CARD">
@@ -28,13 +50,46 @@
         <processor-id>GLOBALPAY_CREDITCARD</processor-id>
     </payment-method>
 
+    <payment-method method-id="BML">
+        <name xml:lang="x-default">Bill Me Later</name>
+        <name xml:lang="fr-FR">Bill Me Later</name>
+        <name xml:lang="it-IT">Bill Me Later</name>
+        <name xml:lang="ja-JP">Bill Me Later</name>
+        <name xml:lang="zh-CN">给我发送账单</name>
+        <enabled-flag>false</enabled-flag>
+        <processor-id>CYBERSOURCE_BML</processor-id>
+    </payment-method>
+
+    <payment-method method-id="GP_DW_CREDIT_CARD">
+        <name xml:lang="x-default">Credit Card</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>GLOBALPAY_CREDITCARD</processor-id>
+    </payment-method>
+
+    <payment-method method-id="GP_DW_PAYPAL">
+        <name xml:lang="x-default">GP_DW_PAYPAL</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>GLOBALPAY_PAYPAL</processor-id>
+    </payment-method>
+
+    <payment-method method-id="GP_DW_APPLE_PAY">
+        <name xml:lang="x-default">GP_DW_APPLE_PAY</name>
+        <enabled-flag>true</enabled-flag>
+    </payment-method>
+
+    <payment-method method-id="GP_DW_GOOGLE_PAY">
+        <name xml:lang="x-default">GP_DW_GOOGLE_PAY</name>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>GOOGLE_PAY</processor-id>
+    </payment-method>
+
     <payment-card card-type="Master">
         <name xml:lang="x-default">Master Card</name>
         <name xml:lang="fr-FR">Master Card</name>
         <name xml:lang="it-IT">Master Card</name>
         <name xml:lang="ja-JP">Master Card</name>
         <name xml:lang="zh-CN">Master Card（万事达卡）</name>
-        <enabled-flag>false</enabled-flag>
+        <enabled-flag>true</enabled-flag>
         <card-number-settings>
             <enable-checksum-verification>true</enable-checksum-verification>
             <number-length>
@@ -137,7 +192,7 @@
         <name xml:lang="it-IT">Diners Club International</name>
         <name xml:lang="ja-JP">Diners Club International</name>
         <name xml:lang="zh-CN">Diners Club（大莱卡）</name>
-        <enabled-flag>false</enabled-flag>
+        <enabled-flag>true</enabled-flag>
         <card-number-settings>
             <enable-checksum-verification>true</enable-checksum-verification>
             <number-length>
@@ -148,6 +203,28 @@
                 <prefix>36</prefix>
                 <prefix>38</prefix>
             </number-prefix>
+        </card-number-settings>
+        <security-code-length>3</security-code-length>
+    </payment-card>
+
+    <payment-card card-type="UATP">
+        <name xml:lang="x-default">UATP</name>
+        <enabled-flag>true</enabled-flag>
+        <card-number-settings>
+            <enable-checksum-verification>true</enable-checksum-verification>
+            <number-length/>
+            <number-prefix/>
+        </card-number-settings>
+        <security-code-length>0</security-code-length>
+    </payment-card>
+
+    <payment-card card-type="JCB">
+        <name xml:lang="x-default">JCB</name>
+        <enabled-flag>true</enabled-flag>
+        <card-number-settings>
+            <enable-checksum-verification>true</enable-checksum-verification>
+            <number-length/>
+            <number-prefix/>
         </card-number-settings>
         <security-code-length>3</security-code-length>
     </payment-card>

@@ -2,4 +2,4 @@
 # Generated file, do not edit.
 # Copyright (c) 2022 by Demandware, Inc.
 ###########################################
-22.2.1
+22.6.0
