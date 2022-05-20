@@ -14,6 +14,7 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrument
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
  *      payment method
+ * @param {dw.order.Order} order - the order object
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {

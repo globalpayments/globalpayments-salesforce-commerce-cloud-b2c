@@ -71,20 +71,10 @@ function RemoveExistingPaymentInstruments(paymentType) {
 	  currentBasket.removePaymentInstrument(item);
 	});
   
-  
-	if (paymentType === PaymentInstrument.METHOD_CREDIT_CARD) {
-	  paymentInstrument = currentBasket.createPaymentInstrument(
-		  PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
+	 if (paymentType === PaymentInstrument.METHOD_CREDIT_CARD || paymentType === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentType === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
+	  paymentInstrument = currentBasket.createPaymentInstrument(paymentType, currentBasket.totalGrossPrice
 	  );
-	} else if (paymentType === Resource.msg('paymentmethodname.googlepay', 'globalpay', null)) {
-	  paymentInstrument = currentBasket.createPaymentInstrument(
-		  Resource.msg('paymentmethodname.googlepay', 'globalpay', null), currentBasket.totalGrossPrice
-	  );
-	} else if (paymentType === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
-	  paymentInstrument = currentBasket.createPaymentInstrument(
-		  Resource.msg('paymentmethodname.paypal', 'globalpay', null), currentBasket.totalGrossPrice
-			);
-	}
+	} 
   
 	return paymentInstrument;
   }

@@ -286,7 +286,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
   var preferences = globalPayPreferences.getPreferences();
 
-  if (typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value == 'CHALLENGE_REQUIRED') {
+  if (typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value === 'CHALLENGE_REQUIRED') {
     var threeDsStepTwo = {
       auth_id: paymentInformation.authId.value
     };

@@ -27,7 +27,7 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   var walletList = new ArrayList();
   var isSandbox = 'false';
   var isTestEnv = Site.getCurrent().getCustomPreferenceValue('gp_env');
-  if(isTestEnv == 'sandbox')
+  if(isTestEnv === 'sandbox')
   {
     isSandbox = 'true';
   }
