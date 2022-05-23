@@ -94,7 +94,6 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
           $('.cancel-new-payment').removeClass('checkout-hidden');
         }
         if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
-                        // scrollAnimate();
         }
         
         defer.resolve(data);

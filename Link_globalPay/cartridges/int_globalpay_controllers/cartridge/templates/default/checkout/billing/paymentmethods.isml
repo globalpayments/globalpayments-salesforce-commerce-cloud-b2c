@@ -201,7 +201,6 @@
 		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
-			<!-- Your custom payment method implementation goes here. -->
 			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
 		</div>
 		<iscomment>
@@ -212,7 +211,6 @@
 		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
-			<!-- Your custom payment method implementation goes here. -->
 			<isinclude template="checkout/billing/applePayTab" />
 		</div>
 		<div class="d-none"> 

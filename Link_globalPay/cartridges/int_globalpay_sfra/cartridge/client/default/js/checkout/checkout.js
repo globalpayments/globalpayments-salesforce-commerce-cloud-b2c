@@ -329,7 +329,6 @@ var threeds = require('./threeds');
                             } else {
                                 $("#authId").val(versionCheckData.id);
                                 $("#isthreeds").val(versionCheckData.serverTransactionId);
-                                // function Initate(){
                                 try {
                                     authenticationData = initiateAuthentication('GlobalPay-Initiation', {
                                         serverTransactionId: versionCheckData.serverTransactionId,
@@ -343,9 +342,7 @@ var threeds = require('./threeds');
                                         challengeWindow: {
                                             windowSize: ChallengeWindowSize.Windowed600x400,
                                             displayMode: 'lightbox',
-                                        }
-                                        // order: {}, // optional if data available on client-side
-                                        // payer: {}, // optional if data available on client-side
+                                        }                               
                                     }).then(function(authenticationData) {
                                         // invoking ajax
                                        threeds.handle(versionCheckData, authenticationData,paymentForm, defer);

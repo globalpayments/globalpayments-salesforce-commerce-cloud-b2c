@@ -101,10 +101,6 @@ function Capture(order){
 /*
  * Module exports
  */
-
-/*
- * Local methods
- */
 exports.Handle = Handle;
 exports.Authorize = Authorize;
 exports.Capture = Capture;
