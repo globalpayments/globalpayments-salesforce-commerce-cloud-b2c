@@ -1,7 +1,7 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
 
 /**
  * Forms all the fields required to send for Authentication request.

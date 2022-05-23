@@ -1,8 +1,8 @@
 'use strict';
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var Action = require('~/cartridge/scripts/dtos/nested/Action');
-var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var Action = require('*/cartridge/scripts/dtos/nested/Action');
+var PaymentMethod = require('*/cartridge/scripts/dtos/nested/PaymentMethod');
 
 var AuthorizeRequest = AbstractRequest.extend({
     init: function (requestObj) {

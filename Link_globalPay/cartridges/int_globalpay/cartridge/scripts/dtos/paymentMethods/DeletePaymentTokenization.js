@@ -1,8 +1,8 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var Action = require('~/cartridge/scripts/dtos/nested/Action');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var Action = require('*/cartridge/scripts/dtos/nested/Action');
 
 var createSetter = function (fieldName) {
   return function (val) {

@@ -1,9 +1,9 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var Card = require('~/cartridge/scripts/dtos/paymentMethods/Card');
-var Action = require('~/cartridge/scripts/dtos/nested/Action');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var Card = require('*/cartridge/scripts/dtos/paymentMethods/Card');
+var Action = require('*/cartridge/scripts/dtos/nested/Action');
 
 var createSetter = function (fieldName) {
   return function (val) {

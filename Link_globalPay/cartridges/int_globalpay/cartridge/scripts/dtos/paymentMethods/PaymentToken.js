@@ -1,8 +1,8 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var HeaderRequest = require('~/cartridge/scripts/dtos/nested/ApplePayTokenHeaders');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var HeaderRequest = require('*/cartridge/scripts/dtos/nested/ApplePayTokenHeaders');
 
 
 

@@ -1,11 +1,11 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var ThreeDs = require('~/cartridge/scripts/dtos/nested/ThreeDs');
-var Order = require('~/cartridge/scripts/dtos/nested/Order');
-var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
-var BrowserData = require('~/cartridge/scripts/dtos/nested/BrowserData');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var ThreeDs = require('*/cartridge/scripts/dtos/nested/ThreeDs');
+var Order = require('*/cartridge/scripts/dtos/nested/Order');
+var PaymentMethod = require('*/cartridge/scripts/dtos/nested/PaymentMethod');
+var BrowserData = require('*/cartridge/scripts/dtos/nested/BrowserData');
 /**
  * Forms all the fields required to send for Authentication request.
  * @param {obj} requestObj - object that contains fields for request to be sent.

@@ -1,10 +1,10 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse');
-var Action = require('~/cartridge/scripts/dtos/nested/Action');
-var PaymentMethod = require('~/cartridge/scripts/dtos/nested/PaymentMethod');
-var Notifications = require('~/cartridge/scripts/dtos/nested/Notifications');
+var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dtos/base/AbstractResponse');
+var Action = require('*/cartridge/scripts/dtos/nested/Action');
+var PaymentMethod = require('*/cartridge/scripts/dtos/nested/PaymentMethod');
+var Notifications = require('*/cartridge/scripts/dtos/nested/Notifications');
 /**
  * Forms all the fields required to send for paypal request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
