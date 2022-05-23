@@ -120,7 +120,6 @@ if($('[name$="_expiration_year"]').val())
                         } else  if ( versionCheckData.error ) {
                          $('.gpayerror').text('Card got declined, please enter another card.');
                         }else{
-                          console.log('::::'+versionCheckData.id);
                           $('input[name*=_authId]').val(versionCheckData.id);
                            // setTimeout(Initate,1000)
                        // function Initate(){
@@ -151,17 +150,13 @@ if($('[name$="_expiration_year"]').val())
                                         if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
                                             $('#dwfrm_billing').submit();
                                         } else {
-                                                console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
-                                                console.log("ECI: ", eci);
                                                  $('.gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }// Challenge Flow
                                     else {
                                         if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
-                                            console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
                                             $('#dwfrm_billing').submit();
                                         } else {
-                                            console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
                                              $('.gpayerror').text('Card got declined, please enter another card.');
                                         }
                                     }
@@ -172,7 +167,6 @@ if($('[name$="_expiration_year"]').val())
                                   }).catch(function(error){
                                     $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                                 });
-                                console.log('Authentication Data', authenticationData);
                                 }
                                 catch(e){
                                 }

@@ -2,8 +2,6 @@
 var formHelpers = require('base/checkout/formErrors');
 var scrollAnimate = require('base/components/scrollAnimate');
 var handle = function (versionCheckData, authenticationData, paymentForm, defer) {
-  // console.log('Authentication Data', authenticationData);
-  // console.log(':::status:' + authenticationData.status);
   if(!authenticationData.isthreedsone)
   {
     $('#isthreeds').val(authenticationData.status);
@@ -15,22 +13,15 @@ var handle = function (versionCheckData, authenticationData, paymentForm, defer)
     var eci = authenticationData.mpi.eci;
     if (authenticationData.status != 'CHALLENGE_REQUIRED') {
       if (eci == '05' || eci == '06' || eci == '01' || eci == '02') {
-       // console.log('Frictionless Issuer Authentication Success, Recommend proceed to auth');
-        //console.log('ECI: ', eci);
         submitPaymentAajx(versionCheckData, authenticationData, paymentForm, defer);
       } else {
-        //console.log('Frictionless Issuer Authentication Failed, Recommend decline auth!');
-        //console.log('ECI: ', eci);
         $('#gpayerror').text('Card got declined, Please enter another card.');
       }
     }// Challenge Flow
     else {
-      //console.log(':::' + JSON.parse(authenticationData.challenge.response.data).transStatus);
       if (JSON.parse(authenticationData.challenge.response.data).transStatus == 'Y') {
-       // console.log('Challenge Issuer Authentication Success, Recommend proceed to auth');
         submitPaymentAajx(versionCheckData, authenticationData, paymentForm, defer);
       } else {
-       // console.log('Challenge Issuer Authentication Failed, Recommend decline auth!');
         $('#gpayerror').text('Card got declined, Please enter another card.');
       }
     }

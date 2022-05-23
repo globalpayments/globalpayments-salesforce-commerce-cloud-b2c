@@ -24,7 +24,6 @@ var threeds = require('./threeds');
 (function($) {
     $.fn.checkout = function() { // eslint-disable-line
         var plugin = this;
-        // console.log('testing....');
         //
         // Collect form data from user input
         //
@@ -354,7 +353,7 @@ var threeds = require('./threeds');
                                         $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                                    });
                                 } catch (e) {
-                                    console.log('e:::' + e);
+                                   
                                 }
                                 //}
                             }
@@ -644,7 +643,6 @@ var threeds = require('./threeds');
                     members.nextStage();
                 });
                 $('body').on('submit:googlepay', function(e, data) {
-                   // console.log(data);
                     $('#paymentToken').val(data.paymentToken);
                     members.nextStage();
                 });
