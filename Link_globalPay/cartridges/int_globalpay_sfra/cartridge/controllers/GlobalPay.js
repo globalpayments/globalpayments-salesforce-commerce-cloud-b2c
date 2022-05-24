@@ -59,14 +59,16 @@ server.use('ThreeDSSecureChallenge', server.middleware.https, function (req, res
   var StringUtils = require('dw/util/StringUtils');
   var cresDecode = StringUtils.decodeBase64(req.form.cres);
   var cresJson = JSON.parse(cresDecode);
-  var reqEncodeFields = new Object();
+  var reqEncodeFields = {
+    serverTransID: cresJson.threeDSServerTransID,
+    acsTransID: cresJson.acsTransID,
+    challengeCompletionInd: cresJson.challengeCompletionInd,
+    messageType: cresJson.messageType,
+    messageVersion: cresJson.messageVersion,
+    transStatus: cresJson.transStatus
+  };
 
-  reqEncodeFields.serverTransID = cresJson.threeDSServerTransID;
-  reqEncodeFields.acsTransID = cresJson.acsTransID;
-  reqEncodeFields.challengeCompletionInd = cresJson.challengeCompletionInd;
-  reqEncodeFields.messageType = cresJson.messageType;
-  reqEncodeFields.messageVersion = cresJson.messageVersion;
-  reqEncodeFields.transStatus = cresJson.transStatus;
+
   res.render('globalpay/chalangenotification',
     {
       reqcresEnoded: JSON.stringify(reqEncodeFields)

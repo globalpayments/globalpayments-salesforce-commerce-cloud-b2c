@@ -45,23 +45,27 @@ function authenticationData(req, res) {
   }
 
   if(!reqAuthfields.error){
-  reqAuthfields.error = false;
-  reqAuthfields.enrolled = !empty(authentication.threeDs.enrolledStatus) ? authentication.threeDs.enrolledStatus : '';
-  reqAuthfields.methodData = authentication.threeDs.methodData.encodedMethodData;
-  reqAuthfields.methodUrl = authentication.threeDs.methodUrl;
-  reqAuthfields.serverTransactionId = authentication.threeDs.serverTransRef;
-  reqAuthfields.challengevalue = authentication.threeDs.challengeValue;
-  reqAuthfields.acschallengerequesturl = authentication.threeDs.acsChallengeRequestUrl;
-  reqAuthfields.versions = {};
-  reqAuthfields.versions.accessControlServer = {};
-  reqAuthfields.versions.accessControlServer.start = authentication.threeDs.acsProtocolVersionStart;
-  reqAuthfields.versions.accessControlServer.end = authentication.threeDs.acsProtocolVersionEnd;
-  reqAuthfields.versions.directoryServer = {};
-  reqAuthfields.versions.directoryServer.start = authentication.threeDs.dsProtocolVersionStart;
-  reqAuthfields.versions.directoryServer.end = authentication.threeDs.dsProtocolVersionEnd;
-  reqAuthfields.id = authentication.id;
+  reqAuthfields={
+  error : false,
+  enrolled : !empty(authentication.threeDs.enrolledStatus) ? authentication.threeDs.enrolledStatus : '',
+  methodData : authentication.threeDs.methodData.encodedMethodData,
+  methodUrl : authentication.threeDs.methodUrl,
+  serverTransactionId : authentication.threeDs.serverTransRef,
+  challengevalue : authentication.threeDs.challengeValue,
+  acschallengerequesturl : authentication.threeDs.acsChallengeRequestUrl,
+  versions : {
+  accessControlServer : {
+  start : authentication.threeDs.acsProtocolVersionStart,
+  end : authentication.threeDs.acsProtocolVersionEnd
+  },
+  directoryServer : {
+  start : authentication.threeDs.dsProtocolVersionStart,
+  end : authentication.threeDs.dsProtocolVersionEnd,
   }
-
+  },
+  id : authentication.id
+  }
+  }
   return reqAuthfields;
 
 }
@@ -115,26 +119,30 @@ function initiationData(req, res) {
   var threeDsStepOneResp = globalPayHelper.threeDsStepone(threeDsStepOne);
   var threeDSResponse = {};
   if (!empty(threeDsStepOneResp)) {
-    threeDSResponse.acsTransactionId = threeDsStepOneResp.threeDs.acsTransRef;
-    threeDSResponse.authenticationSource = threeDsStepOneResp.threeDs.authenticationSource;
-    threeDSResponse.authenticationRequestType = threeDsStepOneResp.threeDs.messageCategory;
-    threeDSResponse.cardholderResponseInfo = threeDsStepOneResp.threeDs.cardholderResponseInfo;
-    threeDSResponse.challenge = {};
-    threeDSResponse.challenge.encodedChallengeRequest = threeDsStepOneResp.threeDs.challengeValue;
-    threeDSResponse.challenge.requestUrl = threeDsStepOneResp.threeDs.redirectUrl;
-    threeDSResponse.challengeMandated = threeDsStepOneResp.threeDs.challengeStatus;
-    threeDSResponse.deviceRenderOptions = threeDsStepOneResp.threeDs.authenticationSource;
-    threeDSResponse.dsTransactionId = threeDsStepOneResp.threeDs.dsTransRef;
-    threeDSResponse.messageCategory = threeDsStepOneResp.messageCategory;
-    threeDSResponse.messageExtension = threeDsStepOneResp.threeDs.authenticationSource;
-    threeDSResponse.messageVersion = threeDsStepOneResp.threeDs.messageVersion;
-    threeDSResponse.mpi = {};
-    threeDSResponse.mpi.authenticationValue = threeDsStepOneResp.threeDs.authenticationValue;
-    threeDSResponse.mpi.eci = threeDsStepOneResp.threeDs.eci;
-    threeDSResponse.serverTransactionId = threeDsStepOneResp.threeDs.serverTransRef;
-    threeDSResponse.status = threeDsStepOneResp.threeDs.status;
-    threeDSResponse.statusReason = threeDsStepOneResp.threeDs.statusReason;
-    threeDSResponse.authID = threeDsStepOneResp.id;
+    threeDSResponse={
+    acsTransactionId : threeDsStepOneResp.threeDs.acsTransRef,
+    authenticationSource : threeDsStepOneResp.threeDs.authenticationSource,
+    authenticationRequestType : threeDsStepOneResp.threeDs.messageCategory,
+    cardholderResponseInfo : threeDsStepOneResp.threeDs.cardholderResponseInfo,
+    challenge : {
+    encodedChallengeRequest : threeDsStepOneResp.threeDs.challengeValue,
+    requestUrl : threeDsStepOneResp.threeDs.redirectUrl,
+    },
+    challengeMandated : threeDsStepOneResp.threeDs.challengeStatus,
+    deviceRenderOptions : threeDsStepOneResp.threeDs.authenticationSource,
+    dsTransactionId : threeDsStepOneResp.threeDs.dsTransRef,
+    messageCategory : threeDsStepOneResp.messageCategory,
+    messageExtension : threeDsStepOneResp.threeDs.authenticationSource,
+    messageVersion : threeDsStepOneResp.threeDs.messageVersion,
+    mpi : {
+    authenticationValue : threeDsStepOneResp.threeDs.authenticationValue,
+    eci : threeDsStepOneResp.threeDs.eci,
+    },
+    serverTransactionId : threeDsStepOneResp.threeDs.serverTransRef,
+    status : threeDsStepOneResp.threeDs.status,
+    statusReason : threeDsStepOneResp.threeDs.statusReason,
+    authID : threeDsStepOneResp.id,
+  }
   }
   return threeDSResponse;
 }
