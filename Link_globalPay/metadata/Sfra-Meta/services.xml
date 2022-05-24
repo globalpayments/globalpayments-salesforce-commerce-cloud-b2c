@@ -3,13 +3,11 @@
     <service-credential service-credential-id="GlobalPay">
         <url>https://apis.sandbox.globalpay.com/ucp</url>
         <user-id/>
-        <password masked="true">********</password>
     </service-credential>
 
     <service-credential service-credential-id="int_globalpay.http.generic">
         <url>https://apis.sandbox.globalpay.com/ucp</url>
         <user-id/>
-        <password masked="true">********</password>
     </service-credential>
 
     <service-profile service-profile-id="CybersourceProfile">
@@ -46,7 +44,7 @@
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>GlobalPay</log-prefix>
-        <comm-log-enabled>true</comm-log-enabled>
+        <comm-log-enabled>false</comm-log-enabled>
         <force-prd-enabled>true</force-prd-enabled>
         <mock-mode-enabled>false</mock-mode-enabled>
         <profile-id>GlobalPay</profile-id>
@@ -57,7 +55,7 @@
         <service-type>HTTP</service-type>
         <enabled>true</enabled>
         <log-prefix>GlobalPay</log-prefix>
-        <comm-log-enabled>true</comm-log-enabled>
+        <comm-log-enabled>false</comm-log-enabled>
         <force-prd-enabled>true</force-prd-enabled>
         <mock-mode-enabled>false</mock-mode-enabled>
         <profile-id>int_globalpay.http.generic</profile-id>
