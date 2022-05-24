@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
@@ -7,7 +8,7 @@ var ShippingAddress = require('~/cartridge/scripts/dtos/nested/ShippingAddress')
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var OrderRequest = AbstractRequest.extend({
+var OrderRequest = AbstractRequest.extend({
   init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:
@@ -27,7 +28,7 @@ var ShippingAddress = require('~/cartridge/scripts/dtos/nested/ShippingAddress')
         enumerable: true,
         writable: true
       },
-      shippingAddress : AbstractResponse.getAccessorDescriptorWithConstructor(ShippingAddress.Request),
+      shippingAddress: AbstractResponse.getAccessorDescriptorWithConstructor(ShippingAddress.Request)
 
     });
 

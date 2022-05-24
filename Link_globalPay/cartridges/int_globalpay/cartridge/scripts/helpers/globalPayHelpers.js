@@ -1,5 +1,5 @@
+/* eslint-disable linebreak-style */
 'use strict';
-
 var globalPayService = require('*/cartridge/scripts/services/globalPayService');
 /**
  *  Returns access token upon invoking this function
@@ -62,8 +62,7 @@ function authenticate(data) {
   return result;
 }
 
-function getAuthenticationResult(data)
-{
+function getAuthenticationResult(data) {
   var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var authenticationRequest = new threeDsSteptwo.Request();
@@ -71,10 +70,10 @@ function getAuthenticationResult(data)
   authenticationRequest.setAuthId(data.authId);
   authenticationRequest.setThreeDs(data.three_ds);
   var result = globalPayService.executeRequest(authenticationRequest, threeDsSteptwo.Response);
-    if (result.success) {
-        return result.response;
-    }
-    return result;
+  if (result.success) {
+    return result.response;
+  }
+  return result;
 }
 /**
  * Forms required data to be sent to service for tokenization
@@ -103,7 +102,7 @@ function tokenize(data) {
  * @params {data} - data required to form Tokenization request
  * @returns {result} - returns Tokenize response
  */
- function updateTokenUsageMode(data) {
+function updateTokenUsageMode(data) {
   var UpdateTokenMode = require('*/cartridge/scripts/dtos/paymentMethods/UpdatePaymentTokenizationMode');
   var tokenupdateRequest = new UpdateTokenMode.Request();
   tokenupdateRequest.setToken(getAccessToken());
@@ -178,7 +177,7 @@ function refund(data) {
     return result.response;
   }
 
-    return result;
+  return result;
 }
 /**
  * Forms required data to be sent to service to perform capture call.
@@ -255,136 +254,135 @@ function gpay(data) {
   }
   return null;
 }
-function applePay(data)
-{
-    var applePay = require('*/cartridge/scripts/dtos/ApplePay');
-    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
-    var applePayRequest = new applePay.Request();
-    applePayRequest.setToken(getAccessToken());
-    applePayRequest.setAccountName(data.account_name);
-    applePayRequest.setChannel(data.channel);
-    applePayRequest.setCaptureMode(data.capture_mode);
-    applePayRequest.setType(data.type);
-    applePayRequest.setAmount(data.amount);
-    applePayRequest.setCurrency(data.currency);
-    applePayRequest.setReference(data.reference);
-    applePayRequest.setCountry(data.country);
-    applePayRequest.setPaymentMethod(data.payment_method);
-  
-    var result = globalPayService.executeRequest(applePayRequest, applePay.Response);
-    if (result.success) {
-        return result.response;
-    } 
+function applePay(data) {
+  var applePay = require('*/cartridge/scripts/dtos/ApplePay');
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var applePayRequest = new applePay.Request();
+  applePayRequest.setToken(getAccessToken());
+  applePayRequest.setAccountName(data.account_name);
+  applePayRequest.setChannel(data.channel);
+  applePayRequest.setCaptureMode(data.capture_mode);
+  applePayRequest.setType(data.type);
+  applePayRequest.setAmount(data.amount);
+  applePayRequest.setCurrency(data.currency);
+  applePayRequest.setReference(data.reference);
+  applePayRequest.setCountry(data.country);
+  applePayRequest.setPaymentMethod(data.payment_method);
+
+  var result = globalPayService.executeRequest(applePayRequest, applePay.Response);
+  if (result.success) {
+    return result.response;
+  }
   return result;
 }
 
-function  threeDsStepone(data) {
+function threeDsStepone(data) {
   var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDSecure');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var threeDsSteponeReq = new threeDsStepone.Request();
-      threeDsSteponeReq.setToken(getAccessToken());
-      threeDsSteponeReq.setThreeDs(data.three_ds);
-      threeDsSteponeReq.setAuthId(data.auth_id);
-      threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
-      threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
-      threeDsSteponeReq.setOrder(data.order);
-      threeDsSteponeReq.setPaymentMethod(data.payment_method);
-      threeDsSteponeReq.setBrowserData(data.browser_data);
+  threeDsSteponeReq.setToken(getAccessToken());
+  threeDsSteponeReq.setThreeDs(data.three_ds);
+  threeDsSteponeReq.setAuthId(data.auth_id);
+  threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
+  threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
+  threeDsSteponeReq.setOrder(data.order);
+  threeDsSteponeReq.setPaymentMethod(data.payment_method);
+  threeDsSteponeReq.setBrowserData(data.browser_data);
 
-    var result = globalPayService.executeRequest(threeDsSteponeReq, threeDsStepone.Response);
-      if (result.success) {
-          return result.response;
-      }
-      return null;
+  var result = globalPayService.executeRequest(threeDsSteponeReq, threeDsStepone.Response);
+  if (result.success) {
+    return result.response;
   }
+  return null;
+}
 
-  function threeDsSteptwo(data){
-    var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
-    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
-    var threeDsSteptwoReq = new threeDsSteptwo.Request();
-        threeDsSteptwoReq.setToken(getAccessToken());
-        threeDsSteptwoReq.setAuthId(data.auth_id);
-    var result = globalPayService.executeRequest(threeDsSteptwoReq, threeDsSteptwo.Response);
-      if (result.success) {
-          return result.response;
-      }
-      return null;
+function threeDsSteptwo(data) {
+  var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var threeDsSteptwoReq = new threeDsSteptwo.Request();
+  threeDsSteptwoReq.setToken(getAccessToken());
+  threeDsSteptwoReq.setAuthId(data.auth_id);
+  var result = globalPayService.executeRequest(threeDsSteptwoReq, threeDsSteptwo.Response);
+  if (result.success) {
+    return result.response;
   }
+  return null;
+}
 
 
-  function payPalCapture(data){
-    var payPalCapture = require('*/cartridge/scripts/dtos/PayPalCapture');
-    var globalPayService = require('*/cartridge/scripts/services/globalPayService');
-    var payPalCaptureRequest = new payPalCapture.Request();
-        payPalCaptureRequest.setToken(getAccessToken());
-        payPalCaptureRequest.setTransactionId(data.transactionId);
-        var result = globalPayService.executeRequest(payPalCaptureRequest, payPalCapture.Response);
-        if (result.success) {
-            return result.response;
-        }
-        return null;
+function payPalCapture(data) {
+  var payPalCapture = require('*/cartridge/scripts/dtos/PayPalCapture');
+  var globalPayService = require('*/cartridge/scripts/services/globalPayService');
+  var payPalCaptureRequest = new payPalCapture.Request();
+  payPalCaptureRequest.setToken(getAccessToken());
+  payPalCaptureRequest.setTransactionId(data.transactionId);
+  var result = globalPayService.executeRequest(payPalCaptureRequest, payPalCapture.Response);
+  if (result.success) {
+    return result.response;
   }
+  return null;
+}
 
   /*
   Generated the token with limited access
   */
-  function getCheckoutToken(){
+function getCheckoutToken() {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var accessToken;
-    var preferences = globalPayPreferences.getPreferences();
-    var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
+  var accessToken;
+  var preferences = globalPayPreferences.getPreferences();
+  var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
 
-    var accessTokenRequest = new AccessToken.Request();
+  var accessTokenRequest = new AccessToken.Request();
 
-    accessTokenRequest.setGrantType(preferences.grantType);
-    accessTokenRequest.setAppId(preferences.appId);
-    accessTokenRequest.setAppKey(preferences.appKey);
-    accessTokenRequest.setNonce(Date.now().toString());
-    var permissions = ["PMT_POST_Create_Single"];
-    accessTokenRequest.setPermissions(permissions);
+  accessTokenRequest.setGrantType(preferences.grantType);
+  accessTokenRequest.setAppId(preferences.appId);
+  accessTokenRequest.setAppKey(preferences.appKey);
+  accessTokenRequest.setNonce(Date.now().toString());
+  var permissions = ['PMT_POST_Create_Single'];
+  accessTokenRequest.setPermissions(permissions);
 
-    var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
+  var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
 
-    if (result.success) {
-      return result.response.getToken();
-    }
-  return accessToken || null;
+  if (result.success) {
+    return result.response.getToken();
   }
+  return accessToken || null;
+}
 
 /**
  * Forms required data to be sent to service to perform Reverse call.
  * @params {data} - data required to form Reverse request
  * @returns {result} - returns Reverse/Cancel response
  */
-  function cancel(data) {
-    var Reverse = require('*/cartridge/scripts/dtos/Reverse');
-    var reverseRequest = new Reverse.Request();
-    reverseRequest.setToken(getAccessToken());
-    reverseRequest.setTransactionId(data.transaction_id);
-    reverseRequest.setAmount(data.amount);
-    var result = globalPayService.executeRequest(reverseRequest, Reverse.Response);
-    if (result.success) {
-      return result.response;
-    }
-    return result.error;
+function cancel(data) {
+  var Reverse = require('*/cartridge/scripts/dtos/Reverse');
+  var reverseRequest = new Reverse.Request();
+  reverseRequest.setToken(getAccessToken());
+  reverseRequest.setTransactionId(data.transaction_id);
+  reverseRequest.setAmount(data.amount);
+  var result = globalPayService.executeRequest(reverseRequest, Reverse.Response);
+  if (result.success) {
+    return result.response;
   }
+  return result.error;
+}
 
 module.exports = {
-    getAccessToken: getAccessToken,
-    authenticate: authenticate,
-    authorize: authorize,
-    capture: capture,
-    refund:refund,
-    paypal: paypal,
-    gpay:gpay,
-    updateTokenUsageMode:updateTokenUsageMode,
-    tokenize:tokenize,
-    detokenize:detokenize,
-    applePay:applePay,
-    threeDsStepone:threeDsStepone,
-    threeDsSteptwo:threeDsSteptwo,
-    payPalCapture: payPalCapture,
-    getCheckoutToken: getCheckoutToken,
-    getAuthenticationResult:getAuthenticationResult,
-    cancel: cancel
+  getAccessToken: getAccessToken,
+  authenticate: authenticate,
+  authorize: authorize,
+  capture: capture,
+  refund: refund,
+  paypal: paypal,
+  gpay: gpay,
+  updateTokenUsageMode: updateTokenUsageMode,
+  tokenize: tokenize,
+  detokenize: detokenize,
+  applePay: applePay,
+  threeDsStepone: threeDsStepone,
+  threeDsSteptwo: threeDsSteptwo,
+  payPalCapture: payPalCapture,
+  getCheckoutToken: getCheckoutToken,
+  getAuthenticationResult: getAuthenticationResult,
+  cancel: cancel
 };

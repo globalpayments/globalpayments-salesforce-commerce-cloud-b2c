@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var MessageDigest = require('dw/crypto/MessageDigest');
@@ -43,7 +44,7 @@ var AccessTokenRequest = AbstractRequest.extend({
           return Encoding.toHex(digest.digestBytes(new Bytes(this.nonce + this.appKey)));
         }
       },
-      permissions : {
+      permissions: {
         enumerable: true,
         writable: true
       }

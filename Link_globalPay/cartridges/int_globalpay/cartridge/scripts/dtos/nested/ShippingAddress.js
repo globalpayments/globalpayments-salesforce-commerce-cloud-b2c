@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractRequest = require('~/cartridge/scripts/dtos/base/AbstractRequest');
@@ -7,26 +8,26 @@ var AbstractResponse = require('~/cartridge/scripts/dtos/base/AbstractResponse')
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var ShippingAddressRequest = AbstractRequest.extend({
+var ShippingAddressRequest = AbstractRequest.extend({
   init: function (requestObj) {
-    Object.defineProperties(this, {  
+    Object.defineProperties(this, {
         // add more fields as per the Model here:
-        line1: {
+      line1: {
         enumerable: true,
         writable: true
-        },
-        city: {
-            enumerable: true,
-            writable: true
-        },
-        postalCode: {
-            enumerable: true,
-            writable: true
-        },
-        country: {
-            enumerable: true,
-            writable: true
-        }
+      },
+      city: {
+        enumerable: true,
+        writable: true
+      },
+      postalCode: {
+        enumerable: true,
+        writable: true
+      },
+      country: {
+        enumerable: true,
+        writable: true
+      }
     });
 
     this._super(requestObj);

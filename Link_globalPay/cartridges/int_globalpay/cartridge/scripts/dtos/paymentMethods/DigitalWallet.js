@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractRequest = require('*/cartridge/scripts/dtos/base/AbstractRequest');
