@@ -146,7 +146,6 @@ cardForm.on("token-success", (resp) => {
                     });
                  }
                  catch (e) {
-                    // TODO: add your error handling here
                  }
          }
     form.appendChild(token);

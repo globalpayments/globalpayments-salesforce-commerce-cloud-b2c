@@ -200,6 +200,5 @@ $('.button-fancy-large').on('click', function () {
     }
 
     catch (e) {
-        // TODO: add your error handling here
     }
 });

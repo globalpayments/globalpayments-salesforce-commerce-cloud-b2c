@@ -352,7 +352,6 @@ var threeds = require('./threeds');
                                 } catch (e) {
                                    
                                 }
-                                //}
                             }
                         }).catch(function(error){
                             $('.gpayerror').text('Unable to process your request, please try again or use another card.');
