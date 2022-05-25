@@ -10,7 +10,7 @@
 var server = require('server');
 var page = module.superModule;
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 server.extend(page);
 
 

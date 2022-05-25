@@ -75,7 +75,7 @@ var globalPayService = proxyquire('../../../../../cartridges/int_globalpay/cartr
             return new createService(serviceName, params);
         }
         },
-    '*/cartridge/scripts/dtos/APIError' : {
+    '*/cartridge/scripts/dto/apiErrors' : {
         Response : function (errorObject){
             return errorObject;
         }

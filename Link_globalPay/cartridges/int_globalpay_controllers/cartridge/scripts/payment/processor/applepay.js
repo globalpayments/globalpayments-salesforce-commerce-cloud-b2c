@@ -3,7 +3,7 @@
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var ApplePayHookResult = require('dw/extensions/applepay/ApplePayHookResult');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 
 var paymentMethodID = globalpayconstants.applePay.paymentTypeCode;
 

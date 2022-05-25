@@ -3,10 +3,10 @@
 
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtil');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.

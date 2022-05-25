@@ -4,7 +4,7 @@
 var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 /**
  * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
  * @name Base/GlobalPay-Authorization

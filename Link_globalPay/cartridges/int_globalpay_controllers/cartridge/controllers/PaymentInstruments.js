@@ -16,7 +16,7 @@ var URLUtils = require('dw/web/URLUtils');
 
 /* Script Modules */
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
 var pageMeta=require(globalpayconstants.SGPAGEMETA);

@@ -19,7 +19,7 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
 var gpapp = require(globalpayconstants.GPAPP);

@@ -175,7 +175,7 @@ var billingData={
 
 describe('creditcard', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
 
     var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaycredit', {
         '*/cartridge/scripts/util/collections': {},
@@ -193,7 +193,7 @@ describe('creditcard', function () {
             }
         },
         'dw/order/PaymentStatusCodes':{},
-        '*/cartridge/scripts/util/PaymentInstrumentUtils':
+        '*/cartridge/scripts/util/paymentInstrumentUtil':
         {
             RemoveExistingPaymentInstruments:function(param)
             {
@@ -223,7 +223,7 @@ describe('creditcard', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+        '*/cartridge/scripts/constants/globalpayConstant': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;

@@ -31,7 +31,7 @@ var serviceResponse = {
 };
 
 describe('paymentInstrumentUtils', function () {
-  var PaymentInstrumentUtils = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/util/PaymentInstrumentUtils', {
+  var PaymentInstrumentUtils = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/util/paymentInstrumentUtil', {
     'dw/web/Resource': {
       msg: function (param) {
         return param;

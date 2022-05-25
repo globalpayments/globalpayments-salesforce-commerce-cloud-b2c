@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 'use strict';
 var Resource = require('dw/web/Resource');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 /**
@@ -43,7 +43,7 @@ function Authorize(order, paymentdata) {
       }
     }
   };
-  var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
+  var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtil');
   var applePayresp = globalPayHelper.applePay(applePayData);
   var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
   if (!orderUpdateResult) {

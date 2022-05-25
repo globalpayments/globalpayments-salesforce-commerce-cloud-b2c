@@ -83,7 +83,7 @@ server.middleware.https,
 function (req, res, next) {
   var captureresult;
   if (!(res.viewData.securityErrorMessage)) {
-    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+    var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
     var order = OrderMgr.getOrder(req.querystring.orderID);
     if(!order)
     {
@@ -148,7 +148,7 @@ server.post('CancelTransaction',
    var reverseresult;
    if (!(res.viewData.securityErrorMessage)) {
      var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
-     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+     var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
      var order = OrderMgr.getOrder(req.querystring.orderID);
      if(!order)
     {

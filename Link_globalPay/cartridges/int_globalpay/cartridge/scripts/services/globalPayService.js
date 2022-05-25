@@ -68,7 +68,7 @@ function executeRequest(requestObject, responseClass) {
   };
 
   if (serviceResult.getErrorMessage()) {
-    var APIError = require('*/cartridge/scripts/dtos/APIError');
+    var APIError = require('*/cartridge/scripts/dto/apiErrors');
 
     try {
       errorObject = JSON.parse(serviceResult.getErrorMessage());

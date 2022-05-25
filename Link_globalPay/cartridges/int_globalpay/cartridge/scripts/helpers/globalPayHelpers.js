@@ -13,7 +13,7 @@ function getAccessToken() {
   var tokenCache = CacheMgr.getCache('GlobalPayAccessToken');
   var accessToken = tokenCache.get('accessToken:' + Site.getCurrent().ID, function () {
     var preferences = globalPayPreferences.getPreferences();
-    var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
+    var AccessToken = require('*/cartridge/scripts/dto/accessToken');
 
     var accessTokenRequest = new AccessToken.Request();
 
@@ -38,7 +38,7 @@ function getAccessToken() {
  * @returns {result} - returns authentication response
  */
 function authenticate(data) {
-  var Authentication = require('*/cartridge/scripts/dtos/Authentication');
+  var Authentication = require('*/cartridge/scripts/dto/authentication');
 
   var authenticationRequest = new Authentication.Request();
   authenticationRequest.setToken(getAccessToken());
@@ -64,7 +64,7 @@ function authenticate(data) {
 
 function getAuthenticationResult(data)
 {
-  var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
+  var threeDsSteptwo = require('*/cartridge/scripts/dto/3dsStepTwo');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var authenticationRequest = new threeDsSteptwo.Request();
   authenticationRequest.setToken(getAccessToken());
@@ -82,7 +82,7 @@ function getAuthenticationResult(data)
  * @returns {result} - returns Tokenize response
  */
 function tokenize(data) {
-  var Tokenize = require('*/cartridge/scripts/dtos/paymentMethods/PaymentTokenization');
+  var Tokenize = require('*/cartridge/scripts/dto/paymentMethods/paymentTokenization');
   var tokenizeRequest = new Tokenize.Request();
   tokenizeRequest.setToken(getAccessToken());
   tokenizeRequest.setusage_mode(data.usage_mode);
@@ -104,7 +104,7 @@ function tokenize(data) {
  * @returns {result} - returns Tokenize response
  */
  function updateTokenUsageMode(data) {
-  var UpdateTokenMode = require('*/cartridge/scripts/dtos/paymentMethods/UpdatePaymentTokenizationMode');
+  var UpdateTokenMode = require('*/cartridge/scripts/dto/paymentMethods/updatePaymentTokenizationMode');
   var tokenupdateRequest = new UpdateTokenMode.Request();
   tokenupdateRequest.setToken(getAccessToken());
   tokenupdateRequest.setusage_mode(data.usage_mode);
@@ -122,7 +122,7 @@ function tokenize(data) {
  * @returns {result} - returns Tokenize response
  */
 function detokenize(data) {
-  var DeleteTokenize = require('*/cartridge/scripts/dtos/paymentMethods/DeletePaymentTokenization');
+  var DeleteTokenize = require('*/cartridge/scripts/dto/paymentMethods/deletePaymentTokenization');
 
   var deletetokenizeRequest = new DeleteTokenize.Request();
   deletetokenizeRequest.setToken(getAccessToken());
@@ -139,7 +139,7 @@ function detokenize(data) {
  * @returns {result} - returns authorize response
  */
 function authorize(data) {
-  var Authorize = require('*/cartridge/scripts/dtos/Authorize');
+  var Authorize = require('*/cartridge/scripts/dto/authorize');
 
   var authorizeRequest = new Authorize.Request();
   authorizeRequest.setToken(getAccessToken());
@@ -165,7 +165,7 @@ function authorize(data) {
  * @returns {result} - returns refund response
  */
 function refund(data) {
-  var Refund = require('*/cartridge/scripts/dtos/Refund');
+  var Refund = require('*/cartridge/scripts/dto/refund');
 
   var refundRequest = new Refund.Request();
   refundRequest.setToken(getAccessToken());
@@ -186,7 +186,7 @@ function refund(data) {
  * @returns {result} - returns capture response
  */
 function capture(data) {
-  var Capture = require('*/cartridge/scripts/dtos/Capture');
+  var Capture = require('*/cartridge/scripts/dto/capture');
 
   var captureRequest = new Capture.Request();
   captureRequest.setToken(getAccessToken());
@@ -210,7 +210,7 @@ function capture(data) {
  * @returns {result} - returns paypal response
  */
 function paypal(data) {
-  var Paypal = require('*/cartridge/scripts/dtos/Paypal');
+  var Paypal = require('*/cartridge/scripts/dto/paypal');
   var paypalRequest = new Paypal.Request();
   paypalRequest.setToken(getAccessToken());
   paypalRequest.setAccountName(data.account_name);
@@ -236,7 +236,7 @@ function paypal(data) {
  * @returns {result} - returns googlepay response
  */
 function gpay(data) {
-  var Gpay = require('*/cartridge/scripts/dtos/GooglePay');
+  var Gpay = require('*/cartridge/scripts/dto/googlePay');
   var gpayRequest = new Gpay.Request();
   gpayRequest.setToken(getAccessToken());
   gpayRequest.setAccountName(data.account_name);
@@ -257,7 +257,7 @@ function gpay(data) {
 }
 function applePay(data)
 {
-    var applePay = require('*/cartridge/scripts/dtos/ApplePay');
+    var applePay = require('*/cartridge/scripts/dto/applePay');
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
     var applePayRequest = new applePay.Request();
     applePayRequest.setToken(getAccessToken());
@@ -279,7 +279,7 @@ function applePay(data)
 }
 
 function  threeDsStepone(data) {
-  var threeDsStepone = require('*/cartridge/scripts/dtos/ThreeDSecure');
+  var threeDsStepone = require('*/cartridge/scripts/dto/3dsSecure');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var threeDsSteponeReq = new threeDsStepone.Request();
       threeDsSteponeReq.setToken(getAccessToken());
@@ -299,7 +299,7 @@ function  threeDsStepone(data) {
   }
 
   function threeDsSteptwo(data){
-    var threeDsSteptwo = require('*/cartridge/scripts/dtos/ThreeDsSteptwo');
+    var threeDsSteptwo = require('*/cartridge/scripts/dto/3dsStepTwo');
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
     var threeDsSteptwoReq = new threeDsSteptwo.Request();
         threeDsSteptwoReq.setToken(getAccessToken());
@@ -313,7 +313,7 @@ function  threeDsStepone(data) {
 
 
   function payPalCapture(data){
-    var payPalCapture = require('*/cartridge/scripts/dtos/PayPalCapture');
+    var payPalCapture = require('*/cartridge/scripts/dto/paypalCaptures');
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
     var payPalCaptureRequest = new payPalCapture.Request();
         payPalCaptureRequest.setToken(getAccessToken());
@@ -332,7 +332,7 @@ function  threeDsStepone(data) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var accessToken;
     var preferences = globalPayPreferences.getPreferences();
-    var AccessToken = require('*/cartridge/scripts/dtos/AccessToken');
+    var AccessToken = require('*/cartridge/scripts/dto/accessToken');
 
     var accessTokenRequest = new AccessToken.Request();
 
@@ -357,7 +357,7 @@ function  threeDsStepone(data) {
  * @returns {result} - returns Reverse/Cancel response
  */
   function cancel(data) {
-    var Reverse = require('*/cartridge/scripts/dtos/Reverse');
+    var Reverse = require('*/cartridge/scripts/dto/reverse');
     var reverseRequest = new Reverse.Request();
     reverseRequest.setToken(getAccessToken());
     reverseRequest.setTransactionId(data.transaction_id);

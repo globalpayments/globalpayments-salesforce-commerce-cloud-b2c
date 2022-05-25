@@ -38,7 +38,7 @@ var paymentdata = {
 
 describe('apple pay', function () {
   var orderNumber = '12345';
-  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
 //   var gpPaymentUtils = proxyquire(gpPaymentUtilsObj, {
 //      'dw/system/Transaction': {
 //          wrap: function (arg) { arg(); }
@@ -55,7 +55,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
   var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
     '*/cartridge/scripts/util/collections': {},
     'dw/order/PaymentMgr': {},
-    '*/cartridge/scripts/utils/PaymentInstrumentUtils':{
+    '*/cartridge/scripts/utils/paymentInstrumentUtil':{
         ApplePaymentOrderUpdate: function (param) {
             return {
                 success: true,
@@ -92,7 +92,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
       }
     },
     'dw/util/StringUtils': {},
-    '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+    '*/cartridge/scripts/constants/globalpayConstant': gpconst,
     'dw/util/Locale': {
       getLocale: function (param) {
         return param;

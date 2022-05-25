@@ -5,10 +5,10 @@ var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-var PaymentInstrumentUtils = require('*/cartridge/scripts/util/PaymentInstrumentUtils');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtil');
 var array = require('*/cartridge/scripts/util/array');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 

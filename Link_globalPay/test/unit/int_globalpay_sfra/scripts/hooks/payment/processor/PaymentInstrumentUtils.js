@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-var son = require('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/PaymentInstrumentUtils');
 
 var order = {
   totalGrossPrice: 10.00,

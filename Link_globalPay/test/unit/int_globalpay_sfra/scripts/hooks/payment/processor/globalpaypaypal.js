@@ -28,11 +28,11 @@ var order = {
 
 describe('paypal', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
 
     var paypalProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaypaypal', {
         '*/cartridge/scripts/util/collections': {},
-        '*/cartridge/scripts/util/PaymentInstrumentUtils':{},
+        '*/cartridge/scripts/util/paymentInstrumentUtil':{},
         'dw/order/PaymentInstrument': {},
         'dw/order/PaymentMgr': {},
         'dw/order/PaymentStatusCodes': {},
@@ -64,7 +64,7 @@ describe('paypal', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+        '*/cartridge/scripts/constants/globalpayConstant': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;
