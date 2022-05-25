@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
+    <standard-preferences>
+        <all-instances>
+            <preference preference-id="AccountNumberRetentionDays">0</preference>
+            <preference preference-id="AddProductToBasketBehavior">IncrementQuantities</preference>
+            <preference preference-id="CouponGeneratorIncludeDashes">true</preference>
+            <preference preference-id="CouponGeneratorIncludeVowels">true</preference>
+            <preference preference-id="EnableSiteOrderNumbers">false</preference>
+            <preference preference-id="IntegrationOrderCenterIncludeSite">true</preference>
+            <preference preference-id="OrderEditExportDelay">30</preference>
+            <preference preference-id="OrderExportDelay">30</preference>
+            <preference preference-id="OrderIPLoggingEnabled">true</preference>
+            <preference preference-id="OrderLifetime">0</preference>
+            <preference preference-id="SiteCatalog">storefront-catalog-m-en</preference>
+            <preference preference-id="SiteCurrencies">USD:EUR:JPY:CNY</preference>
+            <preference preference-id="SiteCustomerList">RefArch</preference>
+            <preference preference-id="SiteDefaultLocale">en_US</preference>
+            <preference preference-id="SiteInventoryList">inventory_m</preference>
+            <preference preference-id="SiteLibrary">RefArchSharedLibrary</preference>
+            <preference preference-id="SiteLocales">default:en_US</preference>
+            <preference preference-id="SitePriceBooks">cny-m-list-prices:cny-m-sale-prices:eur-m-list-prices:eur-m-sale-prices:jpy-m-list-prices:jpy-m-sale-prices:usd-m-list-prices:usd-m-sale-prices</preference>
+            <preference preference-id="SiteTimezone">Etc/UTC</preference>
+            <preference preference-id="StorefrontURLsEnabled">true</preference>
+        </all-instances>
+        <development>
+            <preference preference-id="AvailabilityFiltering">Disabled</preference>
+            <preference preference-id="AvailabilityLowRankingThreshold">0.0</preference>
+            <preference preference-id="ExternallyPublishProductIndex">false</preference>
+            <preference preference-id="IncludePromotionIDInProductIndex">true</preference>
+            <preference preference-id="MergedVariationGroupsDisplayMode">false</preference>
+            <preference preference-id="RobotsTxtContent"/>
+            <preference preference-id="RobotsTxtMode">Cartridge</preference>
+            <preference preference-id="SearchSuggestions">Disabled</preference>
+        </development>
+        <staging>
+            <preference preference-id="AvailabilityFiltering">Disabled</preference>
+            <preference preference-id="AvailabilityLowRankingThreshold">0.0</preference>
+            <preference preference-id="ExternallyPublishProductIndex">false</preference>
+            <preference preference-id="IncludePromotionIDInProductIndex">true</preference>
+            <preference preference-id="MergedVariationGroupsDisplayMode">false</preference>
+            <preference preference-id="RobotsTxtContent"/>
+            <preference preference-id="RobotsTxtMode">Cartridge</preference>
+            <preference preference-id="SearchSuggestions">Enabled</preference>
+        </staging>
+        <production>
+            <preference preference-id="AvailabilityFiltering">Disabled</preference>
+            <preference preference-id="AvailabilityLowRankingThreshold">0.0</preference>
+            <preference preference-id="ExternallyPublishProductIndex">false</preference>
+            <preference preference-id="IncludePromotionIDInProductIndex">true</preference>
+            <preference preference-id="MergedVariationGroupsDisplayMode">false</preference>
+            <preference preference-id="RobotsTxtContent"/>
+            <preference preference-id="RobotsTxtMode">Cartridge</preference>
+            <preference preference-id="SearchSuggestions">Disabled</preference>
+        </production>
+    </standard-preferences>
+    <custom-preferences>
+        <all-instances/>
+        <development>
+            <preference preference-id="gp_app_id">6N2pxX3SVk3eqy49kARXhPUnbubneuhr</preference>
+            <preference preference-id="gp_app_key">DeLqgkOVn+Pw4G9rKe4cs0qiv33SNs1EFs3pxJFwUYWxLAJ9Knv5yx0XXh4cjD/Q</preference>
+            <preference preference-id="gp_captureMode">AUTO</preference>
+            <preference preference-id="gp_clientID">4230946d-3f35-4e91-8303-a51720ba7a5b</preference>
+            <preference preference-id="gp_enable_applepay">true</preference>
+            <preference preference-id="gp_enable_googlepay">true</preference>
+            <preference preference-id="gp_enable_paypal">true</preference>
+            <preference preference-id="gp_env">sandbox</preference>
+            <preference preference-id="gp_gatewayMerchantId">gpapiqa1</preference>
+            <preference preference-id="gp_gpayEnv">TEST</preference>
+            <preference preference-id="gp_gpayMerchantId">MER_7e3e2c7df34f42819b3edee31022ee3f</preference>
+            <preference preference-id="gp_gpayMerchantName">globalpayments</preference>
+        </development>
+        <staging/>
+        <production/>
+    </custom-preferences>
+</preferences>
+
