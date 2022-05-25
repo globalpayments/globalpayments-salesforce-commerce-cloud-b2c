@@ -1,9 +1,0 @@
-<li class="nav-item paypal-tab" data-method-id="${paymentOption.ID}">
-    <a class="nav-link paypal-tab" data-toggle="tab" href="#paypal-content" role="tab">
-        <img class="paypal-tab-img paypal-tab"
-                src="${URLUtils.staticURL('/images/paypal.png')}"
-                alt="${Resource.msg('msg.payment.type.paypal', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.paypal', 'globalpay', null)}"
-        />
-    </a>
-</li>

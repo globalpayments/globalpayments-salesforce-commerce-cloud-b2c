@@ -1,4 +1,0 @@
-<script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
-<script>
-GlobalPayments.ThreeDSecure.handleChallengeNotification('<isprint value=${pdict.reqcresEnoded} encoding="off"/>');
-</script>

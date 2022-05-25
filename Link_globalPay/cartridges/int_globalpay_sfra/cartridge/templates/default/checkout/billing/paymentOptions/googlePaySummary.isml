@@ -1,4 +1,0 @@
-<div class="google-pay-type"> 
-    <span>${Resource.msg('msg.payment.type.googlepay', 'globalpay', null)}</span>
-</div>
-
