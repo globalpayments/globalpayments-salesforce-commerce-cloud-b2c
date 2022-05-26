@@ -22,7 +22,7 @@ var URLUtils = require('dw/web/URLUtils');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 
 var PaymentProcessor =require('*/cartridge/scripts/models/PaymentProcessorModel');
 var guard = require(globalpayconstants.GUARD);

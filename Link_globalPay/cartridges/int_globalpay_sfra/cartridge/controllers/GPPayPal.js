@@ -16,7 +16,7 @@ var OrderMgr = require('dw/order/OrderMgr');
  */
 server.use('PayPalReturn', function (req, res, next) {
   var gputil = require('*/cartridge/scripts/utils/gputil');
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
   var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
   var HookManager = require('dw/system/HookMgr');
   var paymentFormResult;

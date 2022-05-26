@@ -5,7 +5,7 @@
  *
  **/
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var security = require('*/cartridge/scripts/models/SecurityModel');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
@@ -89,7 +89,7 @@ function captureTransaction(){
                  }
              }else{
                  var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-                 var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+                 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
                  var amount = ((order.totalGrossPrice)*100).toFixed();
                  var paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
                  
@@ -146,7 +146,7 @@ function captureTransaction(){
             var order = OrderMgr.getOrder(req.orderID.stringValue);
             if(!empty(order)){
                 var ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-                var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+                var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
                 var amount = ((order.totalGrossPrice)*100).toFixed();
 
             if (order.getPaymentStatus() == 0) {

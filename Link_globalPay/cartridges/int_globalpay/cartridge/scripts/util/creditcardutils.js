@@ -1,6 +1,6 @@
 'use strict';
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var BasketMgr = require('dw/order/BasketMgr');
 var basket = BasketMgr.getCurrentOrNewBasket();
 var Locale = require('dw/util/Locale');

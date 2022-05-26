@@ -1,7 +1,7 @@
 'use strict';
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 
 
 var guard = require(globalpayconstants.GUARD);
@@ -100,7 +100,7 @@ function ThreeDsMethod() {
 function ThreeDsOne() {
   var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
   var authentication = creditCardUtils.getAuthenticationResult(request, response); 
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
   var gpapp = require(globalpayconstants.GPAPP);
   var Resource = require('dw/web/Resource');
       gpapp.getForm('billing.paymentMethods.creditCard').object.isThreedsone.value =  false;

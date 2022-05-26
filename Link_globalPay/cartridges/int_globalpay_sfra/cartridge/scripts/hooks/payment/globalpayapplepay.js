@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 'use strict';
 var Resource = require('dw/web/Resource');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 /**

@@ -7,7 +7,7 @@ var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var Resource = require('dw/web/Resource');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var app = require(globalpayconstants.APP);

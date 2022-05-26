@@ -1,7 +1,7 @@
 'use strict';
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 
 /**
  * Verifies the required information for billing form is provided.

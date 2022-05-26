@@ -7,7 +7,7 @@
  */
 function getPreferences(site) {
   var Site = require('dw/system/Site');
-  var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+  var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
   var currentSite = site instanceof Site ? site : Site.getCurrent();
   return {
     appId: currentSite.getCustomPreferenceValue('gp_app_id'),

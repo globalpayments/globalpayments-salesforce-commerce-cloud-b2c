@@ -1,6 +1,6 @@
 'use strict';
 var Resource = require('dw/web/Resource');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 

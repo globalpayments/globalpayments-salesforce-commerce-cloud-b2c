@@ -15,7 +15,7 @@ var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
 var gpapp = require(globalpayconstants.GPAPP);
@@ -47,7 +47,7 @@ function start(context) {
                 COBilling.Start();
             }
         });
-        var globalpayconstants = require('*/cartridge/scripts/constants/globalpayConstant');
+        var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
         var gpapp = require(globalpayconstants.GPAPP);
 
         var viewContext = require('app_storefront_core/cartridge/scripts/common/extend').immutable(context, {
