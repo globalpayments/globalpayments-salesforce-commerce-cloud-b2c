@@ -8,7 +8,7 @@ var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtil');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var array = require('*/cartridge/scripts/util/array');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 

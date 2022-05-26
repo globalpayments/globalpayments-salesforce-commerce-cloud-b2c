@@ -26,7 +26,7 @@ server.post('Authorization', server.middleware.https, function (req, res) {
  * @param {serverfunction} - use
  */
 server.use('Authentication', server.middleware.https, function (req, res, next) {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var authentication = creditCardUtils.authenticationData(req, res);
   res.json(authentication);
   next();
@@ -42,7 +42,7 @@ server.use('Authentication', server.middleware.https, function (req, res, next) 
  * @param {serverfunction} - use
  */
 server.use('Initiation', server.middleware.https, function (req, res, next) {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var initiation = creditCardUtils.initiationData(req, res);
   res.json(initiation);
   next();
@@ -80,7 +80,7 @@ server.use('ThreeDSSecureChallenge', server.middleware.https, function (req, res
  * GlobalPay-ThreedsResp : Show response based on threeD authentication status
  */
 server.use('ThreedsResp', server.middleware.https, function (req, res, next) {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var authentication = creditCardUtils.getAuthenticationResult(req, res);
   if (!empty(authentication) && ('status' in authentication) && authentication.status === globalpayconstants.AUTHRESPONSE) {
     res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'placeOrder'));

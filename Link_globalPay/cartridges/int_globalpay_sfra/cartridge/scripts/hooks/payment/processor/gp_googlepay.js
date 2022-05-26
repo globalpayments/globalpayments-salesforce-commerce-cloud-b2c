@@ -6,7 +6,7 @@ var server = require('server');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtil');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.

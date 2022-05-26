@@ -39,7 +39,6 @@ function getService() {
       try {
         serviceResponse = JSON.parse(response.text);
       } catch (e) {
-                // TODO add error handling
       }
 
       return serviceResponse;
@@ -74,9 +73,6 @@ function executeRequest(requestObject, responseClass) {
       errorObject = JSON.parse(serviceResult.getErrorMessage());
     } catch (e) {}
   }
-
-        // TODO add retry mechanism for expired/invalid access token with max retries = 3 // https://developer.globalpay.com/authentication
-        // 40001/40002
 
   return {
     success: false,

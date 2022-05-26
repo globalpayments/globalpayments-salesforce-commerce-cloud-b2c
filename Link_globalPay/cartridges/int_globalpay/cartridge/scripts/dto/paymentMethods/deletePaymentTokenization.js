@@ -2,7 +2,7 @@
 
 var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
 var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
-var Action = require('*/cartridge/scripts/dtonested/action');
+var Action = require('*/cartridge/scripts/dto/nested/action');
 
 var createSetter = function (fieldName) {
   return function (val) {

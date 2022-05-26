@@ -155,7 +155,7 @@ server.append('SavePayment', csrfProtection.validateAjaxRequest, function (req, 
       var URLUtils = require('dw/web/URLUtils');
       var CustomerMgr = require('dw/customer/CustomerMgr');
       var Transaction = require('dw/system/Transaction');
-      var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtil')
+      var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
 
       var formInfo = res.getViewData();
       var customer = CustomerMgr.getCustomerByCustomerNumber(

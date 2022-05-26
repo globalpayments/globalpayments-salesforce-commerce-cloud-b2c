@@ -32,7 +32,7 @@ function Authorization() {
  * @param {serverfunction} - post
  */
 function Authentication() {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var authentication = creditCardUtils.authenticationData(request, responseUtils);
           responseUtils.renderJSON(
             authentication
@@ -48,7 +48,7 @@ function Authentication() {
  * @param {serverfunction} - post
  */
 function Initiation() {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var initiation = creditCardUtils.initiationData(request, responseUtils);
           responseUtils.renderJSON(
             initiation
@@ -98,7 +98,7 @@ function ThreeDsMethod() {
 };
 
 function ThreeDsOne() {
-  var creditCardUtils = require('*/cartridge/scripts/util/creditcardutils');
+  var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var authentication = creditCardUtils.getAuthenticationResult(request, response); 
   var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
   var gpapp = require(globalpayconstants.GPAPP);

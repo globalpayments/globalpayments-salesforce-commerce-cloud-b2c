@@ -43,7 +43,7 @@ function Authorize(order, paymentdata) {
       }
     }
   };
-  var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtil');
+  var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtils');
   var applePayresp = globalPayHelper.applePay(applePayData);
   var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
   if (!orderUpdateResult) {
