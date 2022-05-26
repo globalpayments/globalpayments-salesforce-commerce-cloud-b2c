@@ -4,9 +4,9 @@ var MessageDigest = require('dw/crypto/MessageDigest');
 var Encoding = require('dw/crypto/Encoding');
 var Bytes = require('dw/util/Bytes');
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var Scope = require('~/cartridge/scripts/dto/nested/scope');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var Scope = require('*/cartridge/scripts/dto/nested/scope');
 
 /**
  * Forms the request passing required headers and data for AccessToken request.

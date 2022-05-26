@@ -1,7 +1,7 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 
 /**
  * Forms all the fields required to send for payment method request.

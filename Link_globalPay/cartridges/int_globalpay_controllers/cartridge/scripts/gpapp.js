@@ -49,5 +49,5 @@ exports.getModel = function (modelName) {
  * Returns the controller with the given name.
  */
  exports.getController = function (controllerName) {
-    return require('~/cartridge/controllers/' + controllerName);
+    return require('*/cartridge/controllers/' + controllerName);
 };

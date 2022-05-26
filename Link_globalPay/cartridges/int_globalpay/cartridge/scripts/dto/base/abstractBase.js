@@ -5,7 +5,7 @@
 
 var Logger = require('dw/system/Logger');
 
-var Class = require('~/cartridge/scripts/util/Class').Class;
+var Class = require('*/cartridge/scripts/util/Class').Class;
 
 /**
  * AbstractBase class

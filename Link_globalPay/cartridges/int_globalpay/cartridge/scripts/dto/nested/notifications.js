@@ -1,7 +1,7 @@
 'use strict';
 
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
 /**
  * Forms all the fields required to send for request.
  * @param {obj} requestObj - object that contains fields for Notification request.

@@ -726,7 +726,7 @@ function editBillingAddress() {
  */
 function getGiftCertificateBalance() {
     var giftCertificate = GiftCertificateMgr.getGiftCertificateByCode(request.httpParameterMap.giftCertificateID.value);
-    var responseUtils = require('~/cartridge/scripts/util/Response');
+    var responseUtils = require('*/cartridge/scripts/util/Response');
 
     if (giftCertificate && giftCertificate.isEnabled()) {
         responseUtils.renderJSON({

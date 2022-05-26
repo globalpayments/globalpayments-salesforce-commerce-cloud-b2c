@@ -1,7 +1,7 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 
 var createSetter = function (fieldName) {
     return function (val) {

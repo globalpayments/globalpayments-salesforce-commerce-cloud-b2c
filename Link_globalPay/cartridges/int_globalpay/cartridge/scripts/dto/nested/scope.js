@@ -1,6 +1,6 @@
 'use strict';
 
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 /**
  * Forms all the fields to be returned as part of Scope response.
  * @param {obj} responseObj - object that contains response.

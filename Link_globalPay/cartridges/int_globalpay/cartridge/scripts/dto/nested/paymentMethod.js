@@ -1,11 +1,11 @@
 'use strict';
 
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var Card = require('~/cartridge/scripts/dto/paymentMethods/card');
-var Authentication = require('~/cartridge/scripts/dto/paymentMethods/authentication');
-var Apm = require('~/cartridge/scripts/dto/paymentMethods/apm');
-var DigitalWallet = require('~/cartridge/scripts/dto/paymentMethods/digitalWallet');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var Card = require('*/cartridge/scripts/dto/paymentMethods/card');
+var Authentication = require('*/cartridge/scripts/dto/paymentMethods/authentication');
+var Apm = require('*/cartridge/scripts/dto/paymentMethods/apm');
+var DigitalWallet = require('*/cartridge/scripts/dto/paymentMethods/digitalWallet');
 
 /**
  * Forms all the fields required to send for payment method request.

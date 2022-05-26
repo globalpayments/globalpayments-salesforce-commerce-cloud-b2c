@@ -1,6 +1,6 @@
 'use strict';
 
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 /**
  * Returns all the fields spefied as part of action response.
  * @param {obj} responseObj - object that contains Action response.

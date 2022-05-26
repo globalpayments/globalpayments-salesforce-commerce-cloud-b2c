@@ -1,8 +1,8 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var HeaderRequest = require('~/cartridge/scripts/dto/nested/applePayTokenHeaders');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var HeaderRequest = require('*/cartridge/scripts/dto/nested/applePayTokenHeaders');
 
 
 

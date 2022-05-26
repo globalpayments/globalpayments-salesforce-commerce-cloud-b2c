@@ -1,8 +1,8 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var MethodData = require('~/cartridge/scripts/dto/nested/methodData');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var MethodData = require('*/cartridge/scripts/dto/nested/methodData');
 /**
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.

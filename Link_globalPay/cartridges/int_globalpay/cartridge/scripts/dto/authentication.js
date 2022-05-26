@@ -1,11 +1,11 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var Action = require('~/cartridge/scripts/dto/nested/action');
-var PaymentMethod = require('~/cartridge/scripts/dto/nested/paymentMethod');
-var ThreeDs = require('~/cartridge/scripts/dto/nested/threeDs');
-var Notifications = require('~/cartridge/scripts/dto/nested/notifications');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var Action = require('*/cartridge/scripts/dto/nested/action');
+var PaymentMethod = require('*/cartridge/scripts/dto/nested/paymentMethod');
+var ThreeDs = require('*/cartridge/scripts/dto/nested/threeDs');
+var Notifications = require('*/cartridge/scripts/dto/nested/notifications');
 
 /**
  * Forms all the fields required to send for Authentication request.

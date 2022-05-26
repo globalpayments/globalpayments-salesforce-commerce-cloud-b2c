@@ -3,7 +3,7 @@
  * @module dtos/base/abstractResponse
  */
 
-var AbstractBase = require('~/cartridge/scripts/dto/base/abstractBase');
+var AbstractBase = require('*/cartridge/scripts/dto/base/abstractBase');
 
 /**
  * AbstractResponse class

@@ -1,8 +1,8 @@
 'use strict';
 
-var AbstractRequest = require('~/cartridge/scripts/dto/base/abstractRequest');
-var AbstractResponse = require('~/cartridge/scripts/dto/base/abstractResponse');
-var PaymentToken = require('~/cartridge/scripts/dto/paymentMethods/paymentToken');
+var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
+var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
+var PaymentToken = require('*/cartridge/scripts/dto/paymentMethods/paymentToken');
 var createSetter = function (fieldName) {
   return function (val) {
     this.__[fieldName] = val;
