@@ -15,8 +15,8 @@ var currentBasket = BasketMgr.getCurrentBasket();
  * @return Object -- authentication object
  */
 function authenticationData(req, res) {
-  var myreq = req.httpParameterMap.requestBodyAsString;
-  var body = JSON.parse(myreq);
+  var requestBodyAsString  = req.httpParameterMap.requestBodyAsString;
+  var body = JSON.parse(requestBodyAsString );
 
   var authenticationData = {
     account_name: globalpayconstants.authenticationData.account_name,
@@ -27,7 +27,7 @@ function authenticationData(req, res) {
     currency: currentBasket.currencyCode,
     source: globalpayconstants.authenticationData.source,
     payment_method: {
-      id: JSON.parse(myreq).card.reference
+      id: JSON.parse(requestBodyAsString ).card.reference
     },
     notifications: {
       challenge_return_url: URLUtils.abs('GlobalPay-ThreeDSSecureChallenge').toString(),
@@ -71,17 +71,17 @@ function authenticationData(req, res) {
 }
 
 function initiationData(req, res) {
-  var myreq = req.httpParameterMap.requestBodyAsString;
-  var body = JSON.parse(myreq);
-  var browserData = JSON.parse(myreq).browserData;
-  var challengeWindow = JSON.parse(myreq).challengeWindow;
+  var requestBodyAsString  = req.httpParameterMap.requestBodyAsString;
+  var body = JSON.parse(requestBodyAsString );
+  var browserData = JSON.parse(requestBodyAsString ).browserData;
+  var challengeWindow = JSON.parse(requestBodyAsString ).challengeWindow;
   var threeDsStepOne =
   {
     three_ds: {
       source: globalpayconstants.threeDsStepOne.source,
       preference: globalpayconstants.threeDsStepOne.preference,
     },
-    auth_id: JSON.parse(myreq).authId,
+    auth_id: JSON.parse(requestBodyAsString).authId,
     method_url_completion_status: globalpayconstants.threeDsStepOne.method_url_completion_status,
     merchant_contact_url: globalpayconstants.threeDsStepOne.merchant_contact_url,
     order: {
@@ -97,7 +97,7 @@ function initiationData(req, res) {
       }
     },
     payment_method: {
-      id: JSON.parse(myreq).card.reference
+      id: JSON.parse(requestBodyAsString).card.reference
     },
 
     browser_data: {

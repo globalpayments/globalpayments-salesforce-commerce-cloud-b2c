@@ -18,7 +18,7 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
                 enumerable: true,
                 writable: true
               },
-              authId: {
+              authId: { 
                 enumerable: true,
                 writable: true
               },

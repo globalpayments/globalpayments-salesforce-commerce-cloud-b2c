@@ -11,7 +11,7 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
  var ThreeDsStepOneRequest = AbstractRequest.extend({
-    init: function (requestObj) {
+    init: function (requestObj) { 
         Object.defineProperties(this, {
             threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Request),
             methodUrlCompletionStatus: {
