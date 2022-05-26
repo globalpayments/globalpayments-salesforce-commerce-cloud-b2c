@@ -10,7 +10,7 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
  * Forms all the fields required to send for Authentication request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var ThreeDsSteponeRequest = AbstractRequest.extend({
+ var ThreeDsStepOneRequest = AbstractRequest.extend({
     init: function (requestObj) {
         Object.defineProperties(this, {
             threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Request),
@@ -54,7 +54,7 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
  * Forms all the fields to be returned as part of Authentication response.
  * @param {obj} responseObj - object that contains fields from response.
  */
-var ThreeDsSteponeResponse = AbstractResponse.extend({
+var ThreeDsStepOneResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
             id: {
@@ -84,6 +84,6 @@ var ThreeDsSteponeResponse = AbstractResponse.extend({
     }
 });
 module.exports = {
-    Request: ThreeDsSteponeRequest,
-    Response: ThreeDsSteponeResponse
+    Request: ThreeDsStepOneRequest,
+    Response: ThreeDsStepOneResponse
 };
