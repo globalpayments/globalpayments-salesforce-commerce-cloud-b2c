@@ -133,7 +133,6 @@ $('.button-fancy-large').on('click', function () {
             var authenticationData = new Object();
             authenticationData.status = 'undefined';
             authenticationData.isthreedsone =  true;
-          //  $('#dwfrm_billing').submit();
           if(versionCheckData.enrolled == 'ENROLLED'){
             placeOrderSuccess(versionCheckData);
             $('#dwfrm_billing').submit();
@@ -179,10 +178,8 @@ $('.button-fancy-large').on('click', function () {
                         else {
                             
                             if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
-                                console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
                                 $('#dwfrm_billing').submit();
                             } else {
-                                console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
                                 $('.gpayerror').text('Card got declined, please enter another card.');
                             }
                         }
