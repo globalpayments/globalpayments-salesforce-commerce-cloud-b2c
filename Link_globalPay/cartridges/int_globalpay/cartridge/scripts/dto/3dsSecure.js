@@ -30,26 +30,26 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
               paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
               browserData: AbstractResponse.getAccessorDescriptorWithConstructor(BrowserData.Request),
 
-        });
+    });
 
-        this._super(requestObj);
-    },
-    getEndpoint: function () {
-        return this.prepareEndpoint(
+    this._super(requestObj);
+  },
+  getEndpoint: function () {
+    return this.prepareEndpoint(
                 'authentications/:authId/initiate',
                 { authId: this.authId }
             );
-        },
-    getHttpMethod: function () {
-        return 'POST';
-    }
+  },
+  getHttpMethod: function () {
+    return 'POST';
+  }
 });
 
 /**
  * Forms all the fields to be returned as part of Authentication response.
  * @param {obj} responseObj - object that contains fields from response.
  */
- 
+
 /**
  * Forms all the fields to be returned as part of Authentication response.
  * @param {obj} responseObj - object that contains fields from response.
@@ -80,8 +80,8 @@ var ThreeDsStepOneResponse = AbstractResponse.extend({
               threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response),
              });
 
-        this._super(responseObj);
-    }
+    this._super(responseObj);
+  }
 });
 module.exports = {
     Request: ThreeDsStepOneRequest,

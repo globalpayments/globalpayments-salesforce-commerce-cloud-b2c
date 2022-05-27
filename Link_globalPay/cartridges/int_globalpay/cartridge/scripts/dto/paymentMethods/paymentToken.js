@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
@@ -22,20 +23,20 @@ var PaymentTokenRequest = AbstractRequest.extend({
         enumerable: true,
         writable: true
       },
-      signedMessage:{
+      signedMessage: {
         enumerable: true,
         writable: true
       },
-      version:{
+      version: {
         enumerable: true,
         writable: true
       },
-      data:{
+      data: {
         enumerable: true,
         writable: true
       },
       header: AbstractResponse.getAccessorDescriptorWithConstructor(HeaderRequest.Request)
-      //signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
+      // signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
     //  add more here later as per model
     });
 
@@ -58,7 +59,7 @@ var PaymentTokenResponse = AbstractResponse.extend({
         enumerable: true,
         writable: true
       },
-      signedMessage:{
+      signedMessage: {
         enumerable: true,
         writable: true
       },

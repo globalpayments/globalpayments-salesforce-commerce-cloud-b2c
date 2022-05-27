@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
@@ -6,7 +7,7 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
  * Forms all the fields required to send for payment method request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
- var BrowserDataRequest = AbstractRequest.extend({
+var BrowserDataRequest = AbstractRequest.extend({
   init: function (requestObj) {
     Object.defineProperties(this, {
       // add more fields as per the Model here:

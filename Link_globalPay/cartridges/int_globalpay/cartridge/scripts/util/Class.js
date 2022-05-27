@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /**
  *
  * <p>This script provides inheritance support and is inspired by base2 and Prototype</p>

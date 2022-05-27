@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 'use strict';
 
 var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
@@ -20,10 +21,12 @@ var MethodResponse = AbstractResponse.extend({
       encodedMethodData: {
         enumerable: true,
         writable: true
-      },methodUrl: {
+      },
+      methodUrl: {
         enumerable: true,
         writable: true
-      },serverTransRef: {
+      },
+      serverTransRef: {
         enumerable: true,
         writable: true
       }

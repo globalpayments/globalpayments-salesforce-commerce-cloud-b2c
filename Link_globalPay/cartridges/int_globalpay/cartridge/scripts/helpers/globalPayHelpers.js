@@ -1,5 +1,5 @@
+/* eslint-disable linebreak-style */
 'use strict';
-
 var globalPayService = require('*/cartridge/scripts/services/globalPayService');
 /**
  *  Returns access token upon invoking this function
@@ -71,10 +71,10 @@ function getAuthenticationResult(data)
   authenticationRequest.setAuthId(data.authId);
   authenticationRequest.setThreeDs(data.three_ds);
   var result = globalPayService.executeRequest(authenticationRequest, threeDsSteptwo.Response);
-    if (result.success) {
-        return result.response;
-    }
-    return result;
+  if (result.success) {
+    return result.response;
+  }
+  return result;
 }
 /**
  * Forms required data to be sent to service for tokenization
@@ -178,7 +178,7 @@ function refund(data) {
     return result.response;
   }
 
-    return result;
+  return result;
 }
 /**
  * Forms required data to be sent to service to perform capture call.
@@ -282,21 +282,21 @@ function  threeDsStepone(data) {
   var threeDsStepone = require('*/cartridge/scripts/dto/3dsSecure');
   var globalPayService = require('*/cartridge/scripts/services/globalPayService');
   var threeDsSteponeReq = new threeDsStepone.Request();
-      threeDsSteponeReq.setToken(getAccessToken());
-      threeDsSteponeReq.setThreeDs(data.three_ds);
-      threeDsSteponeReq.setAuthId(data.auth_id);
-      threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
-      threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
-      threeDsSteponeReq.setOrder(data.order);
-      threeDsSteponeReq.setPaymentMethod(data.payment_method);
-      threeDsSteponeReq.setBrowserData(data.browser_data);
+  threeDsSteponeReq.setToken(getAccessToken());
+  threeDsSteponeReq.setThreeDs(data.three_ds);
+  threeDsSteponeReq.setAuthId(data.auth_id);
+  threeDsSteponeReq.setMethodUrlCompletionStatus(data.method_url_completion_status);
+  threeDsSteponeReq.setMerchantContactUrl(data.merchant_contact_url);
+  threeDsSteponeReq.setOrder(data.order);
+  threeDsSteponeReq.setPaymentMethod(data.payment_method);
+  threeDsSteponeReq.setBrowserData(data.browser_data);
 
-    var result = globalPayService.executeRequest(threeDsSteponeReq, threeDsStepone.Response);
-      if (result.success) {
-          return result.response;
-      }
-      return null;
+  var result = globalPayService.executeRequest(threeDsSteponeReq, threeDsStepone.Response);
+  if (result.success) {
+    return result.response;
   }
+  return null;
+}
 
   function threeDsSteptwo(data){
     var threeDsSteptwo = require('*/cartridge/scripts/dto/3dsStepTwo');
@@ -310,6 +310,7 @@ function  threeDsStepone(data) {
       }
       return null;
   }
+ 
 
 
   function payPalCapture(data){
@@ -324,32 +325,33 @@ function  threeDsStepone(data) {
         }
         return null;
   }
+ 
 
   /*
   Generated the token with limited access
   */
-  function getCheckoutToken(){
+function getCheckoutToken() {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
     var accessToken;
     var preferences = globalPayPreferences.getPreferences();
     var AccessToken = require('*/cartridge/scripts/dto/accessToken');
 
-    var accessTokenRequest = new AccessToken.Request();
+  var accessTokenRequest = new AccessToken.Request();
 
-    accessTokenRequest.setGrantType(preferences.grantType);
-    accessTokenRequest.setAppId(preferences.appId);
-    accessTokenRequest.setAppKey(preferences.appKey);
-    accessTokenRequest.setNonce(Date.now().toString());
-    var permissions = ["PMT_POST_Create_Single"];
-    accessTokenRequest.setPermissions(permissions);
+  accessTokenRequest.setGrantType(preferences.grantType);
+  accessTokenRequest.setAppId(preferences.appId);
+  accessTokenRequest.setAppKey(preferences.appKey);
+  accessTokenRequest.setNonce(Date.now().toString());
+  var permissions = ['PMT_POST_Create_Single'];
+  accessTokenRequest.setPermissions(permissions);
 
-    var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
+  var result = globalPayService.executeRequest(accessTokenRequest, AccessToken.Response);
 
-    if (result.success) {
-      return result.response.getToken();
-    }
-  return accessToken || null;
+  if (result.success) {
+    return result.response.getToken();
   }
+  return accessToken || null;
+}
 
 /**
  * Forms required data to be sent to service to perform Reverse call.
@@ -369,22 +371,23 @@ function  threeDsStepone(data) {
     return result.error;
   }
 
+
 module.exports = {
-    getAccessToken: getAccessToken,
-    authenticate: authenticate,
-    authorize: authorize,
-    capture: capture,
-    refund:refund,
-    paypal: paypal,
-    gpay:gpay,
-    updateTokenUsageMode:updateTokenUsageMode,
-    tokenize:tokenize,
-    detokenize:detokenize,
-    applePay:applePay,
-    threeDsStepone:threeDsStepone,
-    threeDsSteptwo:threeDsSteptwo,
-    payPalCapture: payPalCapture,
-    getCheckoutToken: getCheckoutToken,
-    getAuthenticationResult:getAuthenticationResult,
-    cancel: cancel
+  getAccessToken: getAccessToken,
+  authenticate: authenticate,
+  authorize: authorize,
+  capture: capture,
+  refund: refund,
+  paypal: paypal,
+  gpay: gpay,
+  updateTokenUsageMode: updateTokenUsageMode,
+  tokenize: tokenize,
+  detokenize: detokenize,
+  applePay: applePay,
+  threeDsStepone: threeDsStepone,
+  threeDsSteptwo: threeDsSteptwo,
+  payPalCapture: payPalCapture,
+  getCheckoutToken: getCheckoutToken,
+  getAuthenticationResult: getAuthenticationResult,
+  cancel: cancel
 };
