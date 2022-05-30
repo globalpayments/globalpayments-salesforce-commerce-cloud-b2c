@@ -24,6 +24,7 @@ var APIErrorResponse = AbstractResponse.extend({
       }
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     this._super(responseObj);
   }
 });

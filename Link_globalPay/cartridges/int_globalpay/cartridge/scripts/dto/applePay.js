@@ -43,6 +43,7 @@ var AuthorizeRequest = AbstractRequest.extend({
       paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request)
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     this._super(requestObj);
   },
 
@@ -74,6 +75,7 @@ var AuthorizeResponse = AbstractResponse.extend({
       paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     this._super(responseObj);
   }
 });
