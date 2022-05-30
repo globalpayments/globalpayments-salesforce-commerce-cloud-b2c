@@ -74,12 +74,12 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
  * @param {Object} req - The request object
  * @return {Object} returns an error object
  */
-function Handle(basket, req) {
+function Handle() {
   var cardErrors = {};
   var serverErrors = [];
   Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode);
+    var paymentInstrument = PaymentInstrumentUtils.removeExistingPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode);
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }

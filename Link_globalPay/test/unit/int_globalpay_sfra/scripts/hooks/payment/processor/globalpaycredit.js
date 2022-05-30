@@ -195,7 +195,7 @@ describe('creditcard', function () {
         'dw/order/PaymentStatusCodes':{},
         '*/cartridge/scripts/util/paymentInstrumentUtil':
         {
-            RemoveExistingPaymentInstruments:function(param)
+            removeExistingPaymentInstruments:function(param)
             {
                 return  paymentInstrument ;
             }

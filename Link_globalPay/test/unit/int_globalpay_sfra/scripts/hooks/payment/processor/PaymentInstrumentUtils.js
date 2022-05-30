@@ -35,9 +35,9 @@ var paymentUtilProcessor = proxyquire('../../../../../../../cartridges/int_globa
       }
 });
 
-  describe('ApplePaymentOrderUpdate', function () {
+  describe('applePaymentOrderUpdate', function () {
     it('Should process the PaymentInstrumentUtils with success result', function () {
-      var result = paymentUtilProcessor.ApplePaymentOrderUpdate(order, serviceResponse);
+      var result = paymentUtilProcessor.applePaymentOrderUpdate(order, serviceResponse);
       assert.isTrue(result);
     });
   });

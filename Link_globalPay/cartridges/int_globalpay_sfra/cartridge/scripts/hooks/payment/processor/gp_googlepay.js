@@ -7,12 +7,14 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
+var Locale = require('dw/util/Locale');
+var Site = require('dw/system/Site');
 /**
  * Authorizes a payment using a credit card. Customizations may use other processors and custom
  *      logic to authorize credit card payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
- * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current 
+ * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
  * payment method
  * @param {dw.order.Order} order - the order object
  * @return {Object} returns an error object
@@ -20,11 +22,10 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrument
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-  var Locale = require('dw/util/Locale');
   var paymentForm = server.forms.getForm('billing');
   var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
-  var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
+  var error = true;
   var googlePayData = {
     account_name: globalpayconstants.googlePay.account_name,
     channel: globalpayconstants.googlePay.channel,
@@ -50,21 +51,22 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
 
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp && (googlePayresp.status != globalpayconstants.googlePay.captureStatus && googlePayresp.status != globalpayconstants.googlePay.authorizedStatus)) {
-    var error = true;
+  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&
+  (googlePayresp.status !== globalpayconstants.googlePay.captureStatus
+    && googlePayresp.status !== globalpayconstants.googlePay.authorizedStatus)) {
+    error = true;
     if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {
     try {
       Transaction.wrap(function () {
+        // eslint-disable-next-line no-param-reassign
         paymentInstrument.custom.gp_transactionid = googlePayresp.id;
         paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
         paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
       });
     } catch (e) {
       error = true;
-      serverErrors.push(
-                        Resource.msg('error.technical', 'checkout', null)
-                    );
+      serverErrors.push(Resource.msg('error.technical', 'checkout', null));
     }
   }
 
@@ -77,12 +79,13 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
  * @param {Object} req - The request object
  * @return {Object} returns an error object
  */
-function Handle(basket, req) {
+function Handle() {
   var cardErrors = {};
   var serverErrors = [];
   Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(Resource.msg('paymentmethodname.googlepay', 'globalpay', null));
+    PaymentInstrumentUtils.removeExistingPaymentInstruments(
+      Resource.msg('paymentmethodname.googlepay', 'globalpay', null));
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
