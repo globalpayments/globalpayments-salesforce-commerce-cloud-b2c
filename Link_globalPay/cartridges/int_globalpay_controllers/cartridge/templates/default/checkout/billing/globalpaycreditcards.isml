@@ -1,14 +1,12 @@
   <isscript>
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers'); 
+    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
     var gpayToken =  globalPayHelper.getCheckoutToken();
     var preferences = globalPayPreferences.getPreferences();
   </isscript>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
  <div class="gpayerror"></div>
  <form id="payment-form" action="/Payment/Charge" method="post">
-    <!-- Other input fields to capture relevant data -->
-    <!-- Target for the credit card form -->
     <div id="credit-card"></div>
 </form>
 <isset name="Url" value="${require('dw/web/URLUtils').url('GlobalPay-Authentication').toString()}" scope="page"/>
@@ -71,8 +69,8 @@ cardForm.on("token-success", (resp) => {
     const token = document.createElement("input");
     token.type = "hidden";
     token.name = "payment_token";
-    token.value = resp.paymentReference; 
-    $('.gpayerror').text(''); 
+    token.value = resp.paymentReference;
+    $('.gpayerror').text('');
     $('input[name*="_creditCard_owner"]').val(resp.details.cardholderName?resp.details.cardholderName:$('input[name*=_firstName]').val()).trigger('change');
     $('select[name$="_creditCard_type"]').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length)).trigger('change');
     $('input[name*="_creditCard_number"]').val(resp.details.cardNumber).trigger('change');
@@ -106,7 +104,7 @@ if($('[name$="_expiration_year"]').val())
                     }).then( function( versionCheckData ) {
                        if(versionCheckData.versions.directoryServer.start == '1.0.0'
                                 && versionCheckData.versions.directoryServer.end == '1.0.0' ){
-                                $('input[name*=_authId]').val(versionCheckData.id); 
+                                $('input[name*=_authId]').val(versionCheckData.id);
                        if(versionCheckData.enrolled == 'ENROLLED'){
                         placeOrderSuccess(versionCheckData);
                          $('#dwfrm_billing').submit();
@@ -134,7 +132,7 @@ if($('[name$="_expiration_year"]').val())
                                     }
                                 }).then(function(authenticationData){
                                    $('input[name*=_isthreeds]').val(authenticationData.status);
-                                   $('input[name*=_authId]').val(versionCheckData.id); 
+                                   $('input[name*=_authId]').val(versionCheckData.id);
                                     
                                     
                                     if (authenticationData&&authenticationData.mpi != undefined){
@@ -181,13 +179,13 @@ if($('[name$="_expiration_year"]').val())
 }
 else
 {
-    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.');
 }
 
 });
 
 cardForm.on("token-error", (resp) => {
     // show error to the consumer
-    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.');
 });
 </script>
