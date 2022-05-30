@@ -1,7 +1,7 @@
 'use strict';
 
-/*
-    This line has to be updated to reference checkoutHelpers.js from the site cartridge's checkoutHelpers.js
+/* This line has to be updated to reference checkoutHelpers.js from the site
+* cartridge's checkoutHelpers.js
 */
 
 var base = module.superModule;
@@ -12,6 +12,10 @@ var Transaction = require('dw/system/Transaction');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site');
+var OrderModel = require('*/cartridge/models/order');
+var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+var Locale = require('dw/util/Locale');
+var gputil = require('*/cartridge/scripts/utils/gputil');
 var result = {};
 var paymentInstruments;
 var authorizationResult;
@@ -83,8 +87,10 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
 
   return Transaction.wrap(function () {
       // create payment instrument for credit card
-    var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
-    var cardOwner=billingData.paymentInformation.cardOwner.value?billingData.paymentInformation.cardOwner.value: currentBasket.billingAddress.fullName
+    var storedPaymentInstrument = wallet.createPaymentInstrument(
+      PaymentInstrument.METHOD_CREDIT_CARD);
+    var cardOwner = billingData.paymentInformation.cardOwner.value ?
+    billingData.paymentInformation.cardOwner.value : currentBasket.billingAddress.fullName
     storedPaymentInstrument.setCreditCardHolder(
      cardOwner
       );
@@ -114,21 +120,22 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
  * @returns {void}
  */
 function sendConfirmationEmail(order, locale) {
-  var OrderModel = require('*/cartridge/models/order');
-  var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
-  var Locale = require('dw/util/Locale');
-  var gputil = require('*/cartridge/scripts/utils/gputil');
+  var currentLocale;
+  var orderModel;
+  var orderObject;
+  var emailObj;
+
   gputil.orderUpdate(order);
-  var currentLocale = Locale.getLocale(locale);
+  currentLocale = Locale.getLocale(locale);
+  orderModel = new OrderModel(order, { countryCode: currentLocale.country,
+    containerView: 'order' });
 
-  var orderModel = new OrderModel(order, { countryCode: currentLocale.country, containerView: 'order' });
-
-  var orderObject = { order: orderModel };
-
-  var emailObj = {
+  orderObject = { order: orderModel };
+  emailObj = {
     to: order.customerEmail,
     subject: Resource.msg('subject.order.confirmation.email', 'order', null),
-    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
+    from: Site.current.getCustomPreferenceValue('customerServiceEmail') ||
+     'no-reply@testorganization.com',
     type: emailHelpers.emailTypes.orderConfirmation,
     paymentMethod: order.paymentInstruments[0].paymentMethod
   };
