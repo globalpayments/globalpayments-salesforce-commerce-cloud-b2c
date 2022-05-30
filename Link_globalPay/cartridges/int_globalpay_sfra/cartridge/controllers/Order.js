@@ -56,7 +56,8 @@ server.append(
       }
 
       order = OrderMgr.getOrder(req.form.orderID, req.form.orderToken);
-      lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
+      lastOrderID = Object.prototype.hasOwnProperty.call(
+        req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
       if (lastOrderID === req.querystring.ID) {
         res.redirect(URLUtils.url('Home-Show'));
         return next();

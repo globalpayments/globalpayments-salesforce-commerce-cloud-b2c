@@ -25,7 +25,8 @@ server.post('Submit', csrfProtection.generateToken, function (req, res, next) {
     return next(new Error('Order token does not match'));
   }
 
-  fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', order, require('*/cartridge/scripts/hooks/fraudDetection').fraudDetection);
+  fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', order, 
+  require('*/cartridge/scripts/hooks/fraudDetection').fraudDetection);
   if (fraudDetectionStatus.status === 'fail') {
     Transaction.wrap(function () { OrderMgr.failOrder(order); });
 

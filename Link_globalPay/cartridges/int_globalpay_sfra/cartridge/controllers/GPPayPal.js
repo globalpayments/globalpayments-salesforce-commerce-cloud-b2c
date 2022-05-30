@@ -50,11 +50,14 @@ server.use('PayPalReturn', function (req, res, next) {
  * @param {serverfunction} - post
  */
 server.use('PayPalCancel', function (req, res, next) {
+  var orderId;
+  var order;
   res.render('globalpay/threeds');
-  var orderId = req.httpParameterMap.id.toString().split('_')[2];
-  var order = OrderMgr.getOrder(orderId);
+  orderId = req.httpParameterMap.id.toString().split('_')[2];
+  order = OrderMgr.getOrder(orderId);
   Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
-  res.redirect(URLUtils.https('Checkout-Begin', 'orderID', order.orderNo, 'orderToken', order.orderToken));
+  res.redirect(URLUtils.https('Checkout-Begin', 'orderID', order.orderNo,
+  'orderToken', order.orderToken));
 
   return next();
 });
