@@ -1,0 +1,16 @@
+<div class="tab-pane apm-pay-content" id="apm-pay-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+        <!--- payment method is Alternative payment method --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="${Resource.msg('paymentmethodname.googlepay', 'globalpay', null)}"
+        >
+<fieldset class="apm-pay-form">
+    <isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    </isif>
+    <isinclude template="checkout/billing/paymentOptions/apmPayForm" />
+    </fieldset>
+</fieldset>
+  </div>
+

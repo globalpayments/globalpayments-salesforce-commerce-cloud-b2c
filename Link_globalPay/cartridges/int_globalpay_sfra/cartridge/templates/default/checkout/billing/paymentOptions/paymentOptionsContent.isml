@@ -11,4 +11,7 @@
     <isif condition="${paymentOption.ID === 'GP_DW_GOOGLE_PAY'}">
         <isinclude template="checkout/billing/paymentOptions/googlePayContent" />
     </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_APM_PAY'}">
+        <isinclude template="checkout/billing/paymentOptions/apmPayContent" />
+    </isif>
 </isloop>

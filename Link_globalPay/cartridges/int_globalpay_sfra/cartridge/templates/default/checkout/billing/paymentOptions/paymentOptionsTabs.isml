@@ -16,4 +16,8 @@
         <isinclude template="checkout/billing/paymentOptions/googlePayTab" />
     </isif>
 
+    <isif condition="${paymentOption.ID === 'GP_DW_APM_PAY'&& dw.system.Site.getCurrent().getCustomPreferenceValue('gp_enable_apm')}">
+        <isinclude template="checkout/billing/paymentOptions/apmPayTab" />
+    </isif>
+
 </isloop>

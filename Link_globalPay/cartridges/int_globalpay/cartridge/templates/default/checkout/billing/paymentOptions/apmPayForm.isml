@@ -1,0 +1,8 @@
+<!---Displaying dropdown for APM--->
+<fieldset class="payment-form-fields">
+<p> List of Alternative payment methods </p>
+<select class="form-control">
+    <option>Phone pay</option>
+    <option>Astro pay</option>
+</select>
+</fieldset>

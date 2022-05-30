@@ -1306,3 +1306,11 @@ opacity: 1;
             height: 32px;
             width: 49px;
         }
+
+    .apm-btn{
+        padding: 2px;
+        width: 68px;
+        border-radius: 5px;
+        border: 2px solid #a19c9c;
+        font-size: 16px;
+    }
