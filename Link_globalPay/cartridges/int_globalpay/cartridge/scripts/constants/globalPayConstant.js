@@ -79,7 +79,7 @@ var applePay = {
 globalPayConstants.applePay = applePay;
 
 var eciData = {
-  five: '01',
+  five: '05',
   six: '06',
   one: '01',
   two: '02'
