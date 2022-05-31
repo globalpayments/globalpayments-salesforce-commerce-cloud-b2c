@@ -167,12 +167,8 @@ $('.button-fancy-large').on('click', function () {
                             var eci = authenticationData.mpi.eci;
                         if (authenticationData.status != "CHALLENGE_REQUIRED") {
                             if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {
-                                console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
-                                console.log("ECI: ", eci);
                                 $('#dwfrm_billing').submit();
                             } else {
-                                console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
-                                console.log("ECI: ", eci);
                                 $('.gpayerror').text('Card got declined, please enter another card.');
                             }
                         }// Challenge Flow
