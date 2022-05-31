@@ -7,6 +7,7 @@
 <input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.gpayenv}"/>
+<input type="hidden" name="eciData" id="eciData" value="${JSON.stringify(pdict.eciData)}"/>
 <input type="hidden" name="isnewcard" id="isnewcard" value=${!empty(pdict.customer) && !empty(pdict.customer.customerPaymentInstruments) && pdict.customer.customerPaymentInstruments.length > 0? false : true}>
 <input type="hidden" name="pmttokes" id="pmttokes" value="${JSON.stringify(pdict.walletJson)}"/>
 

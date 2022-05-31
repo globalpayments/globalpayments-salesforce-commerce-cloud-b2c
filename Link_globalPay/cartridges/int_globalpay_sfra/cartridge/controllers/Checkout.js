@@ -11,6 +11,7 @@ var server = require('server');
 server.extend(page);
 server.append('Begin', server.middleware.https, function (req, res, next) {
   var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+  var globalPayConstant = require('*/cartridge/scripts/constants/globalPayConstant');
   var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
   var gpayToken = globalPayHelper.getCheckoutToken();
   var BasketMgr = require('dw/order/BasketMgr');
@@ -60,7 +61,8 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
     walletJson: walletJson,
     error: !!(req.httpParameterMap.payerAuthError != null && req.httpParameterMap.payerAuthError != ''),
     errorMsg: req.httpParameterMap.payerAuthError,
-    isSandbox: isSandbox
+    isSandbox: isSandbox,
+    eciData: globalPayConstant.eciData
   };
   res.setViewData(viewData);
   next();

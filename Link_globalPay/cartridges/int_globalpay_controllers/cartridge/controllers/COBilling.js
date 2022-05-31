@@ -111,7 +111,8 @@ function returnToForm(cart, params) {
             country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing'),
             error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
-            errorMsg: request.httpParameterMap.payerAuthError
+            errorMsg: request.httpParameterMap.payerAuthError,
+            eciData: globalpayconstants.eciData
         })).render('checkout/billing/billing');
     } else {
         app.getView({
@@ -120,7 +121,8 @@ function returnToForm(cart, params) {
             country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing'),
             error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
-            errorMsg: request.httpParameterMap.payerAuthError
+            errorMsg: request.httpParameterMap.payerAuthError,
+            eciData: globalpayconstants.eciData
         }).render('checkout/billing/billing');
     }
 }
