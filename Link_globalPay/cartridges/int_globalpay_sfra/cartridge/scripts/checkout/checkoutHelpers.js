@@ -127,7 +127,7 @@ function sendConfirmationEmail(order, locale) {
   var orderModel;
   var currentLocale = Locale.getLocale(locale);
   var orderObject;
-  var emailObj
+  var emailObj;
   gputil.orderUpdate(order);
   orderModel = new OrderModel(order, {
     countryCode: currentLocale.country, containerView: 'order' });
