@@ -103,7 +103,8 @@ $('.GPcreditCardList').on('change', function () {
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
     var pmttoken = $('#savedPaymentToken').val();
-    $('.gpayerror').text(''); 
+    $('.gpayerror').text('');
+    var eciData = JSON.parse($('#eciData').val());
     var cartData = {
         amount: parseFloat($('.order-total .order-value').text().replace('$', '').replace(/,/g, '')) * 100,
         address1: $('input[name*="_addressFields_address1"]').val(),
@@ -165,7 +166,7 @@ $('.button-fancy-large').on('click', function () {
                         if (authenticationData.mpi != undefined){
                             var eci = authenticationData.mpi.eci;
                         if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                            if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
+                            if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {
                                 console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
                                 console.log("ECI: ", eci);
                                 $('#dwfrm_billing').submit();

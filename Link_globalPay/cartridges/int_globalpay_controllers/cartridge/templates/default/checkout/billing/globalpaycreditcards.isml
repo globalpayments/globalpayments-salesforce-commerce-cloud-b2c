@@ -31,7 +31,6 @@ GlobalPayments.configure({
 const cardForm = GlobalPayments.creditCard.form("#credit-card", { style: "local-gp-default" });
 
 
-
 const cvvList = document.querySelectorAll("#saved-payment-security-code");
 if (cvvList.length) {
   for (let i = 0; i < cvvList.length; i++) {
@@ -120,7 +119,7 @@ if($('[name$="_expiration_year"]').val())
                                     if (authenticationData&&authenticationData.mpi != undefined){
                                         var eci = authenticationData.mpi.eci;
                                     if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                                        if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
+                                        if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {
                                             $('#dwfrm_billing').submit();
                                         } else {
                                                  $('.gpayerror').text('Card got declined, please enter another card.');

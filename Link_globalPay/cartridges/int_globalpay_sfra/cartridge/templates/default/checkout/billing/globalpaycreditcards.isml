@@ -50,6 +50,7 @@ cardForm.on("token-success", (resp) => {
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
     $("#cardOwner").val(resp.details.cardholderName?resp.details.cardholderName:$("#billingFirstName").val());
+    var eciData = JSON.parse($('#eciData').val());
     if($("#expirationYear").val()){
     var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
          if($('#isnewcard').val()){
@@ -109,7 +110,7 @@ cardForm.on("token-success", (resp) => {
                                     if (authenticationData.mpi != undefined){
                                     var eci = authenticationData.mpi.eci;
                                       if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                                            if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
+                                            if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {                                            
                                                 $( ".submit-payment" ).trigger( "click" );
                                             } else {
                                                  $('.gpayerror').text('Card got declined, please enter another card.');

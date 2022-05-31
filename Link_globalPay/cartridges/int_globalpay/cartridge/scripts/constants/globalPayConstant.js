@@ -78,6 +78,15 @@ var applePay = {
 
 globalPayConstants.applePay = applePay;
 
+var eciData = {
+  five: '01',
+  six: '06',
+  one: '01',
+  two: '02'
+};
+
+globalPayConstants.eciData = eciData;
+
 var captureMode = {
   auto: 'AUTO',
   later: 'LATER'
