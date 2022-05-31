@@ -56,7 +56,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
     '*/cartridge/scripts/util/collections': {},
     'dw/order/PaymentMgr': {},
     '*/cartridge/scripts/utils/paymentInstrumentUtil':{
-        ApplePaymentOrderUpdate: function (param) {
+        applePaymentOrderUpdate: function (param) {
             return {
                 success: true,
               };

@@ -82,10 +82,12 @@ server.use('ThreeDSSecureChallenge', server.middleware.https, function (req, res
 server.use('ThreedsResp', server.middleware.https, function (req, res, next) {
   var creditCardUtils = require('*/cartridge/scripts/util/creditCardUtils');
   var authentication = creditCardUtils.getAuthenticationResult(req, res);
-  if (!empty(authentication) && ('status' in authentication) && authentication.status === globalpayconstants.AUTHRESPONSE) {
+  if (!empty(authentication) && ('status' in authentication) &&
+  authentication.status === globalpayconstants.AUTHRESPONSE) {
     res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'placeOrder'));
   } else {
-    res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment', 'payerAuthError', Resource.msg('checkout.card.payerAuthError', 'globalpay', null)));
+    res.redirect(URLUtils.https('Checkout-Begin', 'stage', 'payment',
+    'payerAuthError', Resource.msg('checkout.card.payerAuthError', 'globalpay', null)));
   }
   return next();
 });

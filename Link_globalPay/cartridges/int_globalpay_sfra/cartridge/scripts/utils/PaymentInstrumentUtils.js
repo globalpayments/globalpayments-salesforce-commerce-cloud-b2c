@@ -7,7 +7,7 @@
  */
 
 
-function ApplePaymentOrderUpdate(order, serviceResponse) {
+function applePaymentOrderUpdate(order, serviceResponse) {
 	// Update Service Response to the customer  paymentinstrument Object
   var OrderMgr = require('dw/order/OrderMgr');
   var Status = require('dw/system/Status');
@@ -65,6 +65,6 @@ function removeDuplicates(formInfo) {
 
 
 module.exports = {
-  ApplePaymentOrderUpdate: ApplePaymentOrderUpdate,
+  applePaymentOrderUpdate: applePaymentOrderUpdate,
   removeDuplicates: removeDuplicates
 };

@@ -303,7 +303,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
 
   Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    var paymentInstrument = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
+    var paymentInstrument = PaymentInstrumentUtils.removeExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
     paymentInstrument.setCreditCardHolder(cardOwner?cardOwner:currentBasket.billingAddress.fullName);
     paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
     paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;

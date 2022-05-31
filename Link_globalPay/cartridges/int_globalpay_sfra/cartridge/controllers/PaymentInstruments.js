@@ -120,19 +120,27 @@ function getDetailsObject(paymentForm) {
 }
 
 /**
- * PaymentInstruments-SavePayment : The PaymentInstruments-SavePayment endpoint is the endpoit responsible for saving a shopper's payment to their account
+ * PaymentInstruments-SavePayment : The PaymentInstruments-SavePayment
+ * endpoint is the endpoit responsible for saving a shopper's payment to their account
  * @name Base/PaymentInstruments-SavePayment
  * @function
  * @memberof PaymentInstruments
  * @param {middleware} - csrfProtection.validateAjaxRequest
- * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument
+ * @param {querystringparameter} - UUID - the universally unique identifier of
+ *  the payment instrument
  * @param {httpparameter} - dwfrm_creditCard_cardType - Input field credit card type (example visa)
- * @param {httpparameter} - paymentOption-Credit - Radio button, They payment instrument type (credit card is the only one subborted OOB with SFRA)
+ * @param {httpparameter} - paymentOption-Credit - Radio button,
+ * They payment instrument type (credit card
+ * is the only one subborted OOB with SFRA)
  * @param {httpparameter} - dwfrm_creditCard_cardOwner -  Input field, the name on the credit card
  * @param {httpparameter} - dwfrm_creditCard_cardNumber -  Input field, the credit card number
- * @param {httpparameter} - dwfrm_creditCard_expirationMonth -  Input field, the credit card's expiration month
- * @param {httpparameter} - dwfrm_creditCard_expirationYear -  Input field, the credit card's expiration year
- * @param {httpparameter} - makeDefaultPayment - Checkbox for whether or not a shopper wants to enbale the payment instrument as the default (This feature does not exist in SFRA OOB)
+ * @param {httpparameter} - dwfrm_creditCard_expirationMonth -  Input field,
+ * the credit card's expiration month
+ * @param {httpparameter} - dwfrm_creditCard_expirationYear -  Input field,
+ * the credit card's expiration year
+ * @param {httpparameter} - makeDefaultPayment - Checkbox for
+ * whether or not a shopper wants to enbale the payment instrument as the
+ * default (This feature does not exist in SFRA OOB)
  * @param {httpparameter} - csrf_token - hidden input field CSRF token
  * @param {category} - sensitive
  * @param {returns} - json
@@ -162,16 +170,18 @@ server.append('SavePayment', csrfProtection.validateAjaxRequest, function (req, 
                 req.currentCustomer.profile.customerNo
             );
       var wallet = customer.getProfile().getWallet();
-
+      var paymentInstrument;
       Transaction.wrap(function () {
         PaymentInstrumentUtils.removeDuplicates(formInfo);
-        var paymentInstrument = wallet.createPaymentInstrument(dwOrderPaymentInstrument.METHOD_CREDIT_CARD);
+        paymentInstrument = wallet.createPaymentInstrument(
+          dwOrderPaymentInstrument.METHOD_CREDIT_CARD);
         paymentInstrument.setCreditCardHolder(formInfo.name);
         paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
         paymentInstrument.setCreditCardType(formInfo.cardType);
         paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
         paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
-        processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
+        processor = PaymentMgr.getPaymentMethod(
+          dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         token = HookMgr.callHook(
                     'app.payment.processor.' + processor.ID.toLowerCase(),
                     'gpcreateToken',
@@ -200,12 +210,14 @@ server.append('SavePayment', csrfProtection.validateAjaxRequest, function (req, 
   return next();
 });
 /**
- * PaymentInstruments-DeletePayment : The PaymentInstruments-DeletePayment is the endpoint responsible for deleting a shopper's saved payment instrument from their account
+ * PaymentInstruments-DeletePayment : The PaymentInstruments-DeletePayment
+ * is the endpoint responsible for deleting a shopper's saved payment instrument from their account
  * @name Base/PaymentInstruments-DeletePayment
  * @function
  * @memberof PaymentInstruments
  * @param {middleware} - userLoggedIn.validateLoggedInAjax
- * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument to be removed from the shopper's account
+ * @param {querystringparameter} - UUID - the universally unique identifier
+ * of the payment instrument to be removed from the shopper's account
  * @param {category} - sensitive
  * @param {returns} - json
  * @param {serverfunction} - get

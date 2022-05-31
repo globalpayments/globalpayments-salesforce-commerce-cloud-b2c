@@ -45,7 +45,7 @@ function Authorize(order, paymentdata) {
   };
   var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtils');
   var applePayresp = globalPayHelper.applePay(applePayData);
-  var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
+  var orderUpdateResult = PaymentInstrumentUtils.applePaymentOrderUpdate(order, applePayresp);
   if (!orderUpdateResult) {
     serverErrors.push(
                  Resource.msg('error.technical', 'checkout', null)

@@ -53,7 +53,7 @@ function Authorize(order, paymentdata) {
     }
     var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
     var applePayresp = globalPayHelper.applePay(applePayData);
-    var orderUpdateResult = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, applePayresp);
+    var orderUpdateResult = PaymentInstrumentUtils.applePaymentOrderUpdate(order, applePayresp);
     if (!orderUpdateResult) {
         var error = true;
              serverErrors.push(
