@@ -1,7 +1,9 @@
+/* eslint-disable global-require */
 'use strict';
 
-/* This line has to be updated to reference checkoutHelpers.js from the site
-* cartridge's checkoutHelpers.js
+/*
+* This line has to be updated to reference checkoutHelpers.js from the site cartridge's
+* checkoutHelpers.js
 */
 
 var base = module.superModule;
@@ -12,10 +14,6 @@ var Transaction = require('dw/system/Transaction');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site');
-var OrderModel = require('*/cartridge/models/order');
-var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
-var Locale = require('dw/util/Locale');
-var gputil = require('*/cartridge/scripts/utils/gputil');
 var result = {};
 var paymentInstruments;
 var authorizationResult;
@@ -26,7 +24,9 @@ var authorizationResult;
  * @returns {Object} an error object
  */
 function handlePayments(order, orderNumber) {
-
+  var i = 0;
+  var paymentInstrument;
+  var paymentProcessor;
   if (order.totalNetPrice !== 0.00) {
     paymentInstruments = order.paymentInstruments;
 
@@ -36,9 +36,9 @@ function handlePayments(order, orderNumber) {
     }
 
     if (!result.error) {
-      for (var i = 0; i < paymentInstruments.length; i++) {
-        var paymentInstrument = paymentInstruments[i];
-        var paymentProcessor = PaymentMgr
+      for (i = 0; i < paymentInstruments.length; i++) {
+        paymentInstrument = paymentInstruments[i];
+        paymentProcessor = PaymentMgr
                     .getPaymentMethod(paymentInstrument.paymentMethod)
                     .paymentProcessor;
         if (paymentProcessor === null) {
@@ -90,7 +90,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
     var storedPaymentInstrument = wallet.createPaymentInstrument(
       PaymentInstrument.METHOD_CREDIT_CARD);
     var cardOwner = billingData.paymentInformation.cardOwner.value ?
-    billingData.paymentInformation.cardOwner.value : currentBasket.billingAddress.fullName
+    billingData.paymentInformation.cardOwner.value : currentBasket.billingAddress.fullName;
     storedPaymentInstrument.setCreditCardHolder(
      cardOwner
       );
@@ -120,22 +120,25 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
  * @returns {void}
  */
 function sendConfirmationEmail(order, locale) {
-  var currentLocale;
+  var OrderModel = require('*/cartridge/models/order');
+  var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+  var Locale = require('dw/util/Locale');
+  var gputil = require('*/cartridge/scripts/utils/gputil');
   var orderModel;
+  var currentLocale = Locale.getLocale(locale);
   var orderObject;
-  var emailObj;
-
+  var emailObj
   gputil.orderUpdate(order);
-  currentLocale = Locale.getLocale(locale);
-  orderModel = new OrderModel(order, { countryCode: currentLocale.country,
-    containerView: 'order' });
+  orderModel = new OrderModel(order, {
+    countryCode: currentLocale.country, containerView: 'order' });
 
   orderObject = { order: orderModel };
+
   emailObj = {
     to: order.customerEmail,
     subject: Resource.msg('subject.order.confirmation.email', 'order', null),
     from: Site.current.getCustomPreferenceValue('customerServiceEmail') ||
-     'no-reply@testorganization.com',
+    'no-reply@testorganization.com',
     type: emailHelpers.emailTypes.orderConfirmation,
     paymentMethod: order.paymentInstruments[0].paymentMethod
   };
