@@ -46,6 +46,8 @@ function handlePayments(req, res, next) {
   var gputil = require('*/cartridge/scripts/utils/gputil');
   var URLUtils = require('dw/web/URLUtils');
   var serverErrors = [];
+  var formFieldErrors = [];
+  var paymentFormResult;
   billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
   if (Object.keys(billingFormErrors).length) {
@@ -100,8 +102,9 @@ function handlePayments(req, res, next) {
     paymentMethodIdValue = paymentForm.paymentMethod.value;
 
     paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
+
     if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-      var paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
+      paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                 'Handle',
                 currentBasket,
                 req
@@ -109,13 +112,12 @@ function handlePayments(req, res, next) {
     } else {
       paymentFormResult = HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
     }
-
     order = COHelpers.createOrder(currentBasket);
 
          // Handles payment authorization
     handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
 
-    if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
+    if (handlePaymentResult.error && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
       res.json({
         renderedPaymentInstruments: renderedStoredPaymentInstrument,
         customer: accountModel,
@@ -276,7 +278,7 @@ server.prepend(
         value: paymentForm.creditCardFields.cardOwner.value,
         htmlName: paymentForm.creditCardFields.cardOwner.value
       };
-      
+
       res.setViewData(viewData);
 
       this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
@@ -306,6 +308,8 @@ server.prepend(
         var basketModel;
         var accountModel;
         var renderedStoredPaymentInstrument;
+        var threeDRedirectUrl;
+        var authenticationData;
 
         if (!currentBasket) {
           delete billingData.paymentInformation;
@@ -463,8 +467,8 @@ server.prepend(
 
         delete billingData.paymentInformation;
 
-        var threeDRedirectUrl = URLUtils.https('GlobalPay-ThreedsRedirect').toString();
-        var authenticationData = {
+        threeDRedirectUrl = URLUtils.https('GlobalPay-ThreedsRedirect').toString();
+        authenticationData = {
           threeDRedirectUrl: threeDRedirectUrl
         };
 
