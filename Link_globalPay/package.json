@@ -34,6 +34,11 @@
     "ie >= 10"
   ],
   "paths": {
-    "base": "../../storefront-reference-architecture-master/cartridges/app_storefront_base/"
+    "base": "../../sfra-base/cartridges/app_storefront_base/"
+  },
+  "dependencies": {
+    "chai-subset": "^1.6.0",
+    "nyc": "^15.1.0",
+    "request-promise": "^4.2.6"
   }
 }
