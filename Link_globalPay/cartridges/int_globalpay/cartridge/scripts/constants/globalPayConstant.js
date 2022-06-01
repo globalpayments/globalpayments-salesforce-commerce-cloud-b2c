@@ -1,12 +1,11 @@
-
+/* eslint-disable linebreak-style */
 'use strict';
-function globalPayConstants() {}
+
 var authenticationData = {
   account_name: 'transaction_processing',
   channel: 'CNP',
   source: 'BROWSER'
 };
-globalPayConstants.authenticationData = authenticationData;
 
 
 var authorizationData = {
@@ -19,7 +18,6 @@ var authorizationData = {
   usage_mode: 'MULTIPLE'
 };
 
-globalPayConstants.authorizationData = authorizationData;
 
 var paypalData = {
   account_name: 'transaction_processing',
@@ -33,8 +31,6 @@ var paypalData = {
   authorizedStatus: 'PREAUTHORIZED'
 };
 
-globalPayConstants.paypalData = paypalData;
-
 var googlePay = {
   account_name: 'transaction_processing',
   channel: 'CNP',
@@ -46,8 +42,6 @@ var googlePay = {
   authorizedStatus: 'PREAUTHORIZED'
 };
 
-globalPayConstants.googlePay = googlePay;
-
 var creditCardPay = {
   securityCode: '121',
   creditCardNumber: 'creditCardNumber',
@@ -57,14 +51,12 @@ var creditCardPay = {
   declinedStatus: 'DECLINED'
 };
 
-globalPayConstants.creditCardPay = creditCardPay;
 
 var captureTransaction = {
   capture_sequence: 'FIRST',
   entry_mode: 'ECOM'
 };
 
-globalPayConstants.captureTransaction = captureTransaction;
 
 var applePay = {
   account_name: 'transaction_processing',
@@ -76,8 +68,6 @@ var applePay = {
 };
 
 
-globalPayConstants.applePay = applePay;
-
 var eciData = {
   five: '05',
   six: '06',
@@ -85,14 +75,12 @@ var eciData = {
   two: '02'
 };
 
-globalPayConstants.eciData = eciData;
 
 var captureMode = {
   auto: 'AUTO',
   later: 'LATER'
 };
 
-globalPayConstants.captureMode = captureMode;
 
 var threeDsStepOne = {
   account_name: 'transaction_processing',
@@ -114,6 +102,16 @@ var threeDsStepOne = {
   timezone: '-1'
 };
 
+function globalPayConstants() {}
+globalPayConstants.authenticationData = authenticationData;
+globalPayConstants.authorizationData = authorizationData;
+globalPayConstants.paypalData = paypalData;
+globalPayConstants.googlePay = googlePay;
+globalPayConstants.creditCardPay = creditCardPay;
+globalPayConstants.captureTransaction = captureTransaction;
+globalPayConstants.applePay = applePay;
+globalPayConstants.eciData = eciData;
+globalPayConstants.captureMode = captureMode;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

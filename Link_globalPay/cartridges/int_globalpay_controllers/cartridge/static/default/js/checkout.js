@@ -165,8 +165,8 @@ $('.button-fancy-large').on('click', function () {
                         
                         if (authenticationData.mpi != undefined){
                             var eci = authenticationData.mpi.eci;
-                        if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                            if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {
+                        if (authenticationData.status !== "CHALLENGE_REQUIRED") {
+                            if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {
                                 $('#dwfrm_billing').submit();
                             } else {
                                 $('.gpayerror').text('Card got declined, please enter another card.');
@@ -174,7 +174,7 @@ $('.button-fancy-large').on('click', function () {
                         }// Challenge Flow
                         else {
                             
-                            if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
+                            if (JSON.parse(authenticationData.challenge.response.data).transStatus === "Y") {
                                 $('#dwfrm_billing').submit();
                             } else {
                                 $('.gpayerror').text('Card got declined, please enter another card.');

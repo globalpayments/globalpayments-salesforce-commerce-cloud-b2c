@@ -109,15 +109,15 @@ cardForm.on("token-success", (resp) => {
                                     $("#isthreeds").val(authenticationData.status);
                                     if (authenticationData.mpi != undefined){
                                     var eci = authenticationData.mpi.eci;
-                                      if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                                            if (eci == eciData.five || eci == eciData.six || eci == eciData.one || eci == eciData.two) {                                            
+                                      if (authenticationData.status !== "CHALLENGE_REQUIRED") {
+                                            if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {                                            
                                                 $( ".submit-payment" ).trigger( "click" );
                                             } else {
                                                  $('.gpayerror').text('Card got declined, please enter another card.');
                                             }
                                     }
                                     else {
-                                        if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
+                                        if (JSON.parse(authenticationData.challenge.response.data).transStatus === "Y") {
                                            $( ".submit-payment" ).trigger( "click" );
                                         } else {
                                             

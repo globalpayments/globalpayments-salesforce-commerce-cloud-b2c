@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 var formHelpers = require('base/checkout/formErrors');
 var scrollAnimate = require('base/components/scrollAnimate');
@@ -68,7 +69,7 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
 
         defer.reject();
       } else {
-        if ($('.tab-pane.active').attr('id') == 'paypal-content') {
+        if ($('.tab-pane.active').attr('id') === 'paypal-content') {
           window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;
         }
                 // Populate the Address Summary
@@ -122,7 +123,7 @@ var handle = function (versionCheckData, authenticationData, paymentForm, defer)
         $('#gpayerror').text('Card got declined, Please enter another card.');
       }
     } // Challenge Flow
-    else if (JSON.parse(authenticationData.challenge.response.data).transStatus == 'Y') {
+    else if (JSON.parse(authenticationData.challenge.response.data).transStatus === 'Y') {
       submitPaymentAajx(versionCheckData, authenticationData, paymentForm, defer);
     } else {
       $('#gpayerror').text('Card got declined, Please enter another card.');
