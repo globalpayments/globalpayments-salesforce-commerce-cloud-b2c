@@ -60,6 +60,7 @@ cardForm.on("token-success", (resp) => {
     $('[name$="_expiration_year"]').val(resp.details.expiryYear).trigger('change');
     $('input[name*="_cvn"]').val(resp.details.cardSecurityCode).trigger('change');
     $('input[name*=creditCard_paymentId]').val(JSON.stringify(resp));
+    var eciData = JSON.parse($('#eciData').val());
 if($('[name$="_expiration_year"]').val())
 {
          var cartData = {
