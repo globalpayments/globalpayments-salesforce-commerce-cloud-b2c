@@ -49,7 +49,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var serverErrors = [];
   if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
     var error = true;
-    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+    if ('detailedErrorDescription' in paypalresp) { serverErrors.push(paypalresp.error.detailedErrorDescription); }
   } else {
     try {
       Transaction.wrap(function () {

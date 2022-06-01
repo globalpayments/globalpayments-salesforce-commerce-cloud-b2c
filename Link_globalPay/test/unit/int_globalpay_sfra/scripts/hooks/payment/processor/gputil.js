@@ -16,10 +16,12 @@ var order = {
 
 
 describe('gputil', function () {
+  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
 var gpUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/gputil', {
     'dw/system/Transaction': {
         wrap: function (arg) { arg(); return true; }
-      },      
+      },    
+      '*/cartridge/scripts/constants/globalpayconstants': gpconst,  
       'dw/order/Order': {},
       '*/cartridge/scripts/helpers/globalPayPreferences':{
         getPreferences: function () {
