@@ -11,6 +11,9 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var array = require('*/cartridge/scripts/util/array');
 var CustomerMgr = require('dw/customer/CustomerMgr');
+var Site = require('dw/system/Site');
+var Locale = require('dw/util/Locale');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
 
 /**
  * Verifies the required information for billing form is provided.
@@ -22,6 +25,8 @@ var CustomerMgr = require('dw/customer/CustomerMgr');
 function processForm(req, paymentForm, viewFormData) {
   var viewData = viewFormData;
   var creditCardErrors = {};
+  var paymentInstruments;
+  var paymentInstrument;
 
   if (Object.keys(creditCardErrors).length) {
     return {
@@ -68,8 +73,8 @@ function processForm(req, paymentForm, viewFormData) {
         && req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
     ) {
-    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentInstrument = array.find(paymentInstruments, function (item) {
+    paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+    paymentInstrument = array.find(paymentInstruments, function (item) {
       return viewData.storedPaymentUUID === item.UUID;
     });
 
@@ -87,21 +92,40 @@ function processForm(req, paymentForm, viewFormData) {
 }
 
 /**
+ * Updates a token to usage mode Multiple.
+ * @returns {string} a token
+ */
+function updateToken(paymentTokenID) {
+  var tokenizeData = {
+    usage_mode: globalpayconstants.authorizationData.usage_mode,
+    paymentInformationID: paymentTokenID
+  };
+  var tokenization = globalPayHelper.updateTokenUsageMode(tokenizeData);
+  if (typeof tokenization !== 'undefined' && tokenization.id != null) {
+    return tokenization.id;
+  }
+  return tokenization.error;
+}
+
+/**
  * Save the credit card information to login account if save card option is selected
  * @param {Object} req - The request object
  * @param {dw.order.Basket} basket - The current basket
  * @param {Object} billingData - payment information
  */
 function savePaymentInformation(req, basket, billingData) {
+  var customer;
+  var token;
+  var saveCardResult;
   if (req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
         && billingData.saveCard
     ) {
-    var customer = CustomerMgr.getCustomerByCustomerNumber(
+    customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
         );
-    var token = updateToken(billingData.paymentInformation.paymentId.value);
-    var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
+    token = updateToken(billingData.paymentInformation.paymentId.value);
+    saveCardResult = COHelpers.savePaymentInstrumentToWallet(
             billingData,
             basket,
             customer,
@@ -126,28 +150,16 @@ function savePaymentInformation(req, basket, billingData) {
   }
 }
 
-/**
- * Updates a token to usage mode Multiple.
- * @returns {string} a token
- */
-function updateToken(paymentTokenID) {
-  var tokenizeData = {
-    usage_mode: globalpayconstants.authorizationData.usage_mode,
-    paymentInformationID: paymentTokenID
-  };
-  var tokenization = globalPayHelper.updateTokenUsageMode(tokenizeData);
-  if (typeof tokenization !== 'undefined' && tokenization.id != null) {
-    return tokenization.id;
-  }
-  return tokenization.error;
-}
+
 /**
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
 function gpcreateToken(formdata) {
-  var expirymonth = formdata.expirationMonth >= 10 ? formdata.expirationMonth : '0' + formdata.expirationMonth;
-  var expiryyear = formdata.expirationYear.toString().split('')[2] + formdata.expirationYear.toString().split('')[3];
+  var expirymonth = formdata.expirationMonth >= 10 ?
+   formdata.expirationMonth : '0' + formdata.expirationMonth;
+  var expiryyear = formdata.expirationYear.toString().split('')[2]
+   + formdata.expirationYear.toString().split('')[3];
 
   var tokenizeData = {
     usage_mode: globalpayconstants.authorizationData.usage_mode,
@@ -191,9 +203,7 @@ function gpremoveToken(creditcrdaToken) {
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
-  var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
-  var Locale = require('dw/util/Locale');
   var serverErrors = [];
   var fieldErrors = {};
   var error = false;
@@ -218,10 +228,13 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   };
   // authorize payment
   var authorization = globalPayHelper.authorize(authorizationData);
-  if (typeof authorization !== 'undefined' && 'success' in authorization && !authorization.success) {
-    var error = true;
-    var serverErrors = [];
-    if ('error' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+  if (typeof authorization !== 'undefined' &&
+   'success' in authorization && !authorization.success) {
+    error = true;
+    serverErrors = [];
+    if ('error' in authorization) {
+      serverErrors.push(authorization.error.detailedErrorDescription);
+    }
   } else {
     if ('status' in authorization && authorization.status === 'DECLINED') {
       error = true;
@@ -245,76 +258,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   }
   return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
 }
-/**
- * Update payment method and authentication for credit card payment also  handle 3d secured transaction
- * @param {*} basket
- * @param {*} paymentInformation
- * @param {*} paymentMethodID
- * @param {*} req
- * @returns
- */
 
-function Handle(basket, paymentInformation, paymentMethodID, req) {
-  var currentBasket = basket;
-  var cardErrors = {};
-  var cardNumber = paymentInformation.cardNumber.value;
-  var cardOwner=paymentInformation.cardOwner.value;
-  var expirationMonth = paymentInformation.expirationMonth.value;
-  var expirationYear = paymentInformation.expirationYear.value;
-  var serverErrors = [];
-  var cardType = paymentInformation.cardType.value;
-  var PaymentInstrument = require('dw/order/PaymentInstrument');
-
-
-    // Validate payment instrument
-  if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
-    var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
-    var paymentCardValue = PaymentMgr.getPaymentCard(cardType);
-
-    var applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
-            req.currentCustomer.raw,
-            req.geolocation.countryCode,
-            null
-        );
-
-    if (!applicablePaymentCards.contains(paymentCardValue)) {
-            // Invalid Payment Instrument
-      var invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
-      return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
-    }
-  }
-
-  var preferences = globalPayPreferences.getPreferences();
-
-  if (typeof paymentInformation.isthreeds.value !== 'undefined' && paymentInformation.isthreeds.value === 'CHALLENGE_REQUIRED') {
-    var threeDsStepTwo = {
-      auth_id: paymentInformation.authId.value
-    };
-
-    var threeDsStepTwoResp = globalPayHelper.threeDsSteptwo(threeDsStepTwo);
-
-    if (typeof threeDsStepTwoResp !== 'undefined' && typeof threeDsStepTwoResp.success !== 'undefined' && !threeDsStepTwoResp.success) {
-      var serverErrors = [];
-      serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
-      return { fieldErrors: [], serverErrors: serverErrors, error: true };
-    }
-  }
-
-
-  Transaction.wrap(function () {
-    // clear previous payment instrument and update new selected payment instrument
-    var paymentInstrument = PaymentInstrumentUtils.removeExistingPaymentInstruments(PaymentInstrument.METHOD_CREDIT_CARD);
-    paymentInstrument.setCreditCardHolder(cardOwner?cardOwner:currentBasket.billingAddress.fullName);
-    paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
-    paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ? getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
-    paymentInstrument.setCreditCardNumber(cardNumber);
-    paymentInstrument.setCreditCardType(cardType);
-    paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
-    paymentInstrument.setCreditCardExpirationYear(expirationYear);
-    paymentInstrument.setCreditCardToken(paymentInformation.authId.value);
-  });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false, threeDsStepTwoResp: threeDsStepTwoResp };
-}
 /**
  * update payment tokenId to paymentInstruments
  * @param {*} req
@@ -332,6 +276,88 @@ function getTokenbyUUID(req, uuidToken) {
   });
   return creditCardToken;
 }
+
+/**
+ * Update payment method and authentication for credit card payment
+ * also  handle 3d secured transaction
+ * @param {*} basket
+ * @param {*} paymentInformation
+ * @param {*} paymentMethodID
+ * @param {*} req
+ * @returns
+ */
+
+function Handle(basket, paymentInformation, paymentMethodID, req) {
+  var currentBasket = basket;
+  var cardErrors = {};
+  var cardNumber = paymentInformation.cardNumber.value;
+  var cardOwner = paymentInformation.cardOwner.value;
+  var expirationMonth = paymentInformation.expirationMonth.value;
+  var expirationYear = paymentInformation.expirationYear.value;
+  var serverErrors = [];
+  var cardType = paymentInformation.cardType.value;
+  var creditCardPaymentMethod;
+  var paymentCardValue;
+  var applicablePaymentCards;
+  var invalidPaymentMethod;
+  var threeDsStepTwo;
+  var threeDsStepTwoResp;
+    // Validate payment instrument
+  if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
+    creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
+    paymentCardValue = PaymentMgr.getPaymentCard(cardType);
+
+    applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
+            req.currentCustomer.raw,
+            req.geolocation.countryCode,
+            null
+        );
+
+    if (!applicablePaymentCards.contains(paymentCardValue)) {
+            // Invalid Payment Instrument
+      invalidPaymentMethod = Resource.msg('error.show.valid.payments', 'globalpay', null);
+      return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
+    }
+  }
+
+  if (typeof paymentInformation.isthreeds.value !== 'undefined' &&
+   paymentInformation.isthreeds.value === 'CHALLENGE_REQUIRED') {
+    threeDsStepTwo = {
+      auth_id: paymentInformation.authId.value
+    };
+
+    threeDsStepTwoResp = globalPayHelper.threeDsSteptwo(threeDsStepTwo);
+
+    if (typeof threeDsStepTwoResp !== 'undefined' &&
+     typeof threeDsStepTwoResp.success !== 'undefined' && !threeDsStepTwoResp.success) {
+      serverErrors = [];
+      serverErrors.push(threeDsStepTwoResp.error.detailedErrorDescription);
+      return { fieldErrors: [], serverErrors: serverErrors, error: true };
+    }
+  }
+
+
+  Transaction.wrap(function () {
+    // clear previous payment instrument and update new selected payment instrument
+    var paymentInstrument = PaymentInstrumentUtils.removeExistingPaymentInstruments(
+      PaymentInstrument.METHOD_CREDIT_CARD);
+    paymentInstrument.setCreditCardHolder(cardOwner || currentBasket.billingAddress.fullName);
+    paymentInstrument.custom.gp_authenticationid = paymentInformation.authId.value;
+    paymentInstrument.custom.gp_paymentmethodid = req.form.storedPaymentUUID &&
+    req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered ?
+     getTokenbyUUID(req, paymentInformation.paymentId.value) : paymentInformation.paymentId.value;
+    paymentInstrument.setCreditCardNumber(cardNumber);
+    paymentInstrument.setCreditCardType(cardType);
+    paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
+    paymentInstrument.setCreditCardExpirationYear(expirationYear);
+    paymentInstrument.setCreditCardToken(paymentInformation.authId.value);
+  });
+  return { fieldErrors: cardErrors,
+    serverErrors: serverErrors,
+    error: false,
+    threeDsStepTwoResp: threeDsStepTwoResp };
+}
+
 
 exports.processForm = processForm;
 exports.savePaymentInformation = savePaymentInformation;
