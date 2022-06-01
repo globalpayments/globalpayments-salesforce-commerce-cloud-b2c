@@ -1,0 +1,8 @@
+cartridges/int_globalpay/cartridge/static/
+cartridges/int_globalpay_sfra/cartridge/static/
+cartridges/int_globalpay_controllers/cartridge/static/
+coverage/
+doc/
+bin/
+codecept.conf.js
+test/
