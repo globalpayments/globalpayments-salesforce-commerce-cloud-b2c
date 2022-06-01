@@ -15,7 +15,7 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumen
  */
 function authorize(order, paymentdata) {
   var preferences = globalPayPreferences.getPreferences();
-  var captureMode = preferences.captureMode;  
+  var captureMode = preferences.captureMode;
   var currentSite = Site.getCurrent();
   var serverErrors = [];
   var applePayData = {

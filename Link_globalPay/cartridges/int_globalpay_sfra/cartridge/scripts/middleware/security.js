@@ -1,6 +1,5 @@
 'use strict';
 
-var URLUtils = require('dw/web/URLUtils');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 
 /**

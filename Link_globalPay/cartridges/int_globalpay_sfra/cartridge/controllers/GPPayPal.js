@@ -28,7 +28,9 @@ server.use('PayPalReturn', function (req, res, next) {
                 order
             );
   }
-  if (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.paypalData.captureStatus || paymentFormResult.status === globalpayconstants.paypalData.authorizedStatus)) {
+  if (!empty(paymentFormResult) &&
+  (paymentFormResult.status === globalpayconstants.paypalData.captureStatus ||
+    paymentFormResult.status === globalpayconstants.paypalData.authorizedStatus)) {
     gputil.orderUpdate(order);
     COHelpers.sendConfirmationEmail(order, req.locale.id);
   }

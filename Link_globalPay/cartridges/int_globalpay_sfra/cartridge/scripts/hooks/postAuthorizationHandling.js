@@ -6,7 +6,7 @@
 */
 
 var base = module.superModule;
-
+var output = {};
 /**
  * This function is to handle the post payment authorization customizations
  * @param {Object} result - Authorization Result
@@ -20,8 +20,6 @@ function postAuthorization(result) { // eslint-disable-line no-unused-vars
   }
 }
 
-
-var output = {};
 Object.keys(base).forEach(function (key) {
   output[key] = base[key];
 });

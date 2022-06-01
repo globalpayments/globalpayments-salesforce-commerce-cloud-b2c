@@ -254,7 +254,7 @@ server.append('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req,
     var wallet = customer.getProfile().getWallet();
 
     var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
-    var result = HookMgr.callHook(
+    HookMgr.callHook(
             'app.payment.processor.' + processor.ID.toLowerCase(),
             'gpremoveToken',
             payment.raw.creditCardToken
