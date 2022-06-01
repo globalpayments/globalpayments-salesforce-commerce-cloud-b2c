@@ -9,6 +9,7 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+var fraudDetection = require('*/cartridge/scripts/hooks/fraudDetection');
 var fraudDetectionStatus;
 var fraudError;
 var orderPlacementStatus;
@@ -25,8 +26,8 @@ server.post('Submit', csrfProtection.generateToken, function (req, res, next) {
     return next(new Error('Order token does not match'));
   }
 
-  fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', order, 
-  require('*/cartridge/scripts/hooks/fraudDetection').fraudDetection);
+  fraudDetectionStatus = hooksHelper('app.fraud.detection', 'fraudDetection', order,
+  fraudDetection.fraudDetection);
   if (fraudDetectionStatus.status === 'fail') {
     Transaction.wrap(function () { OrderMgr.failOrder(order); });
 

@@ -6,12 +6,13 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 /**
- * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes authorization call from applepay
+ * GlobalPay-Authorization : The GlobalPay-Authorization endpoint invokes
+ * authorization call from applepay
  * @name Base/GlobalPay-Authorization
  * @function
  * @memberof GlobalPay
  */
-server.post('Authorization', server.middleware.https, function (req, res) {
+server.post('Authorization', server.middleware.https, function () {
   // Returning Success in the basic Auth method
   return { success: true };
 });
