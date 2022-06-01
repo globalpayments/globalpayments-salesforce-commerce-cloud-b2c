@@ -2,7 +2,8 @@
 'use strict';
 
 /*
-    This line has to be updated to reference checkoutHelpers.js from the site cartridge's checkoutHelpers.js
+* This line has to be updated to reference checkoutHelpers.js
+* from the site cartridge's checkoutHelpers.js
 */
 
 var base = module.superModule;
@@ -12,12 +13,10 @@ var base = module.superModule;
  * @param {Object} result - Authorization Result
  */
 function postAuthorization(result) { // eslint-disable-line no-unused-vars
-  var serviceResult = result;
   if ('error' in result && result.error) {
     return result;
-  } else {
-    return;
   }
+  return;
 }
 
 

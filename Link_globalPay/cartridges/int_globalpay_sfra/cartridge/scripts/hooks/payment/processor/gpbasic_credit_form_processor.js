@@ -2,7 +2,8 @@
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
-
+var array = require('*/cartridge/scripts/util/array');
+var CustomerMgr = require('dw/customer/CustomerMgr');
 /**
  * Verifies the required information for billing form is provided.
  * @param {Object} req - The request object
@@ -11,10 +12,10 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
  * @returns {Object} an object that has error information or payment information
  */
 function processForm(req, paymentForm, viewFormData) {
-  var array = require('*/cartridge/scripts/util/array');
-
   var viewData = viewFormData;
   var creditCardErrors = {};
+  var paymentInstruments;
+  var paymentInstrument;
 
   if (!req.form.storedPaymentUUID) {
         // verify credit card form data
@@ -66,8 +67,8 @@ function processForm(req, paymentForm, viewFormData) {
         && req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
     ) {
-    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentInstrument = array.find(paymentInstruments, function (item) {
+    paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+    paymentInstrument = array.find(paymentInstruments, function (item) {
       return viewData.storedPaymentUUID === item.UUID;
     });
 
@@ -91,19 +92,19 @@ function processForm(req, paymentForm, viewFormData) {
  * @param {Object} billingData - payment information
  */
 function savePaymentInformation(req, basket, billingData) {
-  var CustomerMgr = require('dw/customer/CustomerMgr');
-
+  var customer;
+  var saveCardResult;
   if (!billingData.storedPaymentUUID
         && req.currentCustomer.raw.authenticated
         && req.currentCustomer.raw.registered
         && billingData.saveCard
         && (billingData.paymentMethod.value === globalpayconstants.creditCardPay.paymentMethod)
     ) {
-    var customer = CustomerMgr.getCustomerByCustomerNumber(
+    customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
         );
 
-    var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
+    saveCardResult = COHelpers.savePaymentInstrumentToWallet(
             billingData,
             basket,
             customer
