@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable linebreak-style */
 'use strict';
 
@@ -7,9 +8,13 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
+var URLUtils = require('dw/web/URLUtils');
+var Locale = require('dw/util/Locale');
+var Site = require('dw/system/Site');
 /**
- * Authorizes a payment using a credit card. Customizations may use other processors and custom
- *      logic to authorize credit card payment.
+ * Authorizes a payment using a credit card.
+ * Customizations may use other processors and custom
+ * logic to authorize credit card payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
@@ -18,12 +23,10 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrument
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
-  var URLUtils = require('dw/web/URLUtils');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
-  var Locale = require('dw/util/Locale');
-  var Site = require('dw/system/Site');
   var currentSite = Site.getCurrent();
+  var error;
   var paypalData = {
     account_name: globalpayconstants.paypalData.account_name,
     channel: globalpayconstants.paypalData.channel,
@@ -48,8 +51,10 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
   var paypalresp = globalPayHelper.paypal(paypalData);
   var serverErrors = [];
   if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
-    var error = true;
-    if ('detailedErrorDescription' in authorization) { serverErrors.push(authorization.error.detailedErrorDescription); }
+    error = true;
+    if ('detailedErrorDescription' in paypalresp) {
+      serverErrors.push(paypalresp.error.detailedErrorDescription);
+    }
   } else {
     try {
       Transaction.wrap(function () {
@@ -79,7 +84,8 @@ function Handle() {
   var serverErrors = [];
   Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    var paymentInstrument = PaymentInstrumentUtils.removeExistingPaymentInstruments(globalpayconstants.paypalData.paymentTypeCode);
+    PaymentInstrumentUtils.removeExistingPaymentInstruments(
+      globalpayconstants.paypalData.paymentTypeCode);
   });
   return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
