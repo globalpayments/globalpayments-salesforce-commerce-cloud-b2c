@@ -137,7 +137,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
   });
   describe('Authorize', function () {
     it('Should process the apple pay with success result', function () {
-      var result = gpapplepayProcessor.Authorize(order, paymentdata);
+      var result = gpapplepayProcessor.authorize(order, paymentdata);
       var applePayresp = result.success;
       assert.isTrue(result.success);
     });

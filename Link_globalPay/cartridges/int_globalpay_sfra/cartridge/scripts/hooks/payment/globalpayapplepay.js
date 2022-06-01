@@ -4,17 +4,18 @@ var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
+var Locale = require('dw/util/Locale');
+var Site = require('dw/system/Site');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtils');
 /**
  * Authorizes a payment using a apple pay.
  * @param {dw.order.order}  -  order data.
  * @param {paymentdata}  -  payment data
  * @return {Object} returns an object in case of success else error object.
  */
-function Authorize(order, paymentdata) {
+function authorize(order, paymentdata) {
   var preferences = globalPayPreferences.getPreferences();
-  var captureMode = preferences.captureMode;
-  var Locale = require('dw/util/Locale');
-  var Site = require('dw/system/Site');
+  var captureMode = preferences.captureMode;  
   var currentSite = Site.getCurrent();
   var serverErrors = [];
   var applePayData = {
@@ -43,7 +44,7 @@ function Authorize(order, paymentdata) {
       }
     }
   };
-  var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtils');
+
   var applePayresp = globalPayHelper.applePay(applePayData);
   var orderUpdateResult = PaymentInstrumentUtils.applePaymentOrderUpdate(order, applePayresp);
   if (!orderUpdateResult) {
@@ -54,5 +55,5 @@ function Authorize(order, paymentdata) {
   return orderUpdateResult;
 }
 
-exports.Authorize = Authorize;
+exports.authorize = authorize;
 
