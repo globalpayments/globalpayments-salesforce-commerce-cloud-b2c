@@ -9,6 +9,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var gpapp = require(globalpayconstants.GPAPP);
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 /**
  * This is where additional googlepay integration would go.
  * The current implementation simply creates a PaymentInstrument and
@@ -26,13 +27,12 @@ function Handle(args) {
 }
 
 /**
- * Authorizes a payment using a googlepay. The payment is authorized by using the Gaagle_pay processor only
- * and setting the order no as the transaction ID. Customizations may use other processors and custom logic to
- * authorize payment.
+ * Authorizes a payment using a googlepay. The payment is authorized by using
+ * the Gaagle_pay processor only and setting the order no as the transaction ID.
+ * Customizations may use other processors and custom logic to authorize payment.
  */
 function Authorize(args) {
   var order = args.Order;
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
   var preferences = globalPayPreferences.getPreferences();
   var captureMode = preferences.captureMode;
 
@@ -70,7 +70,7 @@ function Authorize(args) {
   var paymentProcessor = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor();
   var googlePayresp = globalPayHelper.gpay(googlePayData);
   var serverErrors = [];
-  if (!empty(googlePayresp) && 'status' in googlePayresp && (googlePayresp.status != globalpayconstants.googlePay.captureStatus && googlePayresp.status != globalpayconstants.googlePay.authorizedStatus)) {
+  if (!empty(googlePayresp) && 'status' in googlePayresp && (googlePayresp.status !== globalpayconstants.googlePay.captureStatus && googlePayresp.status !== globalpayconstants.googlePay.authorizedStatus)) {
     var error = true;
     if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
   } else {
@@ -88,7 +88,10 @@ function Authorize(args) {
     }
   }
 
-  return { authorized: true, serverErrors: serverErrors, error: error, googlePayresp: googlePayresp };
+  return { authorized: true,
+    serverErrors: serverErrors,
+    error: error,
+    googlePayresp: googlePayresp };
 }
 
 /*

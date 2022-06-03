@@ -3,6 +3,8 @@ var Resource = require('dw/web/Resource');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
+var error;
 
 /**
  * Authorizes a payment using a apple pay.
@@ -14,8 +16,6 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
  * @return {Object} returns an error object
  */
 function Authorize(order, paymentdata) {
-  var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-
   var countryCode = Countries.getCurrent({
     CurrentRequest: {
       locale: request.locale
@@ -54,7 +54,7 @@ function Authorize(order, paymentdata) {
   var applePayresp = globalPayHelper.applePay(applePayData);
   var orderUpdateResult = PaymentInstrumentUtils.applePaymentOrderUpdate(order, applePayresp);
   if (!orderUpdateResult) {
-    var error = true;
+    error = true;
     serverErrors.push(
                  Resource.msg('error.technical', 'checkout', null)
              );

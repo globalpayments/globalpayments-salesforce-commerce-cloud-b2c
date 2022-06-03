@@ -47,7 +47,7 @@ function (req, res, next) {
           amount: amount
         };
         refundresult = globalPayHelper.refund(transactionData);
-        if (refundresult == undefined || refundresult == null) {
+        if (refundresult === undefined || refundresult == null) {
           res.setStatusCode(400);
         } else if (refundresult.status) {
           canceldescription = Resource.msg('order.refund.canceldecsription', 'globalpay', null);
@@ -177,7 +177,7 @@ server.post('CancelTransaction',
            amount: amount
          };
          reverseresult = globalPayHelper.cancel(transactionData);
-         if (reverseresult == undefined || reverseresult == null) {
+         if (reverseresult === undefined || reverseresult == null) {
            res.setStatusCode(400);
          } else if (reverseresult.status) {
            canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
