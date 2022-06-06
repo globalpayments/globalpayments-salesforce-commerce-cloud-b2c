@@ -33,7 +33,7 @@ function ApplePaymentOrderUpdate(order, serviceResponse) {
 		}
 	}else{
 		var serverErrors = [];
-		error = true;
+		var error = true;
 		serverErrors.push(
 			Resource.msg('error.technical', 'checkout', null)
 		);

@@ -258,9 +258,10 @@ server.prepend(
           htmlName: viewData.storedPaymentUUID
         };
       } else {
+        var paymentReference = paymentForm.creditCardFields.paymentId != null ? JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference:"";
         viewData.paymentInformation.paymentId = {
-          value: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
-          htmlName: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+          value: paymentReference,
+          htmlName: paymentReference
         };
       }
 

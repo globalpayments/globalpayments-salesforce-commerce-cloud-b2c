@@ -261,7 +261,7 @@ describe('creditcard', function () {
                 };
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
+        '*/cartridge/scripts/helpers/globalPayHelpers': {
             authorize: function () {
                 return {
                     success: true,

@@ -104,7 +104,7 @@ describe('paypal', function () {
                 };
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
+        '*/cartridge/scripts/helpers/globalPayHelpers': {
             paypal:paypal 
         },
         '*/cartridge/scripts/services/globalPayService': {}

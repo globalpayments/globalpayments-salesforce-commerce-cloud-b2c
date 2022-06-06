@@ -96,7 +96,7 @@ describe('apple pay', function () {
         };
       }
     },
-    '*/cartridge/scripts/helpers/globalPayHelper': {
+    '*/cartridge/scripts/helpers/globalPayHelpers': {
       applePay: function () {
         return {
           success: true,

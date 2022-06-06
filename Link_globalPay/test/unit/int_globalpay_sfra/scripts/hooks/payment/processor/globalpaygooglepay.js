@@ -88,7 +88,7 @@ describe('google pay', function () {
                 }
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': { gpay: gpay },
+        '*/cartridge/scripts/helpers/globalPayHelpers': { gpay: gpay },
         '*/cartridge/scripts/services/globalPayService': {}
     });
     describe('Authorize', function () {
