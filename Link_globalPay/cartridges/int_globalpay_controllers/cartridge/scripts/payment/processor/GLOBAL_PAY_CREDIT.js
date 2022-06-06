@@ -1,3 +1,9 @@
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
+/* eslint-disable no-use-before-define */
+/* eslint-disable block-scoped-var */
+/* eslint-disable vars-on-top */
+/* eslint-disable global-require */
 'use strict';
 
 /* API Includes */
@@ -26,7 +32,6 @@ var countryCode = Countries.getCurrent({
 function Handle(args) {
   var currentBasket = Cart.get(args.Basket);
   var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
-  var cardErrors = {};
   var cardNumber = creditCardForm.get('number').value();
   var expirationMonth = creditCardForm.get('expiration.month').value();
   var expirationYear = creditCardForm.get('expiration.year').value();

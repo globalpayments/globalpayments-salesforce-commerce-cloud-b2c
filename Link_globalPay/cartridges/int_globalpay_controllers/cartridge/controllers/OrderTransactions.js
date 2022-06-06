@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-undef */
 'use strict';
 
 /**
