@@ -60,8 +60,11 @@ function prepareShipments() {
 }
 
 /**
- * Starting point for the single shipping scenario. Prepares a shipment by removing gift certificate and in-store pickup line items from the shipment.
- * Redirects to multishipping scenario if more than one physical shipment is required and redirects to billing if all line items do not require
+ * Starting point for the single shipping scenario.
+ * Prepares a shipment by removing gift certificate and
+ * in-store pickup line items from the shipment.
+ * Redirects to multishipping scenario if more than one physical shipment
+ * is required and redirects to billing if all line items do not require
  * shipping.
  *
  * @transactional
@@ -75,15 +78,17 @@ function start() {
     app.getController('Cart').Show();
     return;
   }
-    // Redirects to multishipping scenario if more than one physical shipment is contained in the basket.
+    // Redirects to multishipping scenario if more than one
+    // physical shipment is contained in the basket.
   physicalShipments = cart.getPhysicalShipments();
   if (Site.getCurrent().getCustomPreferenceValue('enableMultiShipping') && physicalShipments && physicalShipments.size() > 1) {
     app.getController('COShippingMultiple').Start();
     return;
   }
 
-    // Initializes the singleshipping form and prepopulates it with the shipping address of the default
-    // shipment if the address exists, otherwise it preselects the default shipping method in the form.
+    // Initializes the singleshipping form and prepopulates it
+    // with the shipping address of the default shipment if the address exists,
+    // otherwise it preselects the default shipping method in the form.
   if (cart.getDefaultShipment().getShippingAddress()) {
     app.getForm('singleshipping.shippingAddress.addressFields').copyFrom(cart.getDefaultShipment().getShippingAddress());
     app.getForm('singleshipping.shippingAddress.addressFields.states').copyFrom(cart.getDefaultShipment().getShippingAddress());

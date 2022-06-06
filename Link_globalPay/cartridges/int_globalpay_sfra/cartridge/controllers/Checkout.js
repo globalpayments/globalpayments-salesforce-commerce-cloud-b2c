@@ -40,7 +40,7 @@ server.append('Begin', server.middleware.https, function (req, res, next) {
   // eslint-disable-next-line no-undef
   if (!empty(customer.profile)) {
     wallet = require('dw/customer/CustomerMgr').getCustomerByCustomerNumber(customer.profile.customerNo).getProfile().getWallet();
-    
+
     walletJson.pmt = [];
     // eslint-disable-next-line vars-on-top
     for (var c = 0; c < wallet.paymentInstruments.length; c++) {
