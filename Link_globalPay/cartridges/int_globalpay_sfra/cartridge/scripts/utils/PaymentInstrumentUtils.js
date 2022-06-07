@@ -5,7 +5,6 @@ var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var Order = require('dw/order/Order');
 var Resource = require('dw/web/Resource');
-var customer = require('dw/system/Customer');
 /**
  * Update the order payment instrument when card capture response arrived.
  * @param Order
