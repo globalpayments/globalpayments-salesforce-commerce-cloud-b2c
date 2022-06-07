@@ -46,7 +46,6 @@ function handlePayments(req, res, next) {
   var gputil = require('*/cartridge/scripts/utils/gputil');
   var URLUtils = require('dw/web/URLUtils');
   var serverErrors = [];
-  var formFieldErrors = [];
   var paymentFormResult;
   billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
@@ -178,6 +177,7 @@ server.prepend(
       var formFieldErrors = [];
       var paymentMethodIdValue;
       var paymentProcessor;
+      var paymentReference;
 
       if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
         handlePayments(req, res, next);
@@ -260,9 +260,10 @@ server.prepend(
           htmlName: viewData.storedPaymentUUID
         };
       } else {
+        paymentReference = paymentForm.creditCardFields.paymentId != null ? JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference : '';
         viewData.paymentInformation.paymentId = {
-          value: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
-          htmlName: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+          value: paymentReference,
+          htmlName: paymentReference
         };
       }
 

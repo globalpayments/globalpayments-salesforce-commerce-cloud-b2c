@@ -111,6 +111,10 @@ var formdata = {
             value: 'some card type value',
             htmlName: 'some card type html name'
         },
+        cardOwner:{
+            value: 'card Owner name',
+            htmlName: 'card Owner name'
+        },
         cardNumber: {
             value: 'some card number value',
             htmlName: 'some card number html name'
@@ -175,7 +179,7 @@ var billingData={
 
 describe('creditcard', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
 
     var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaycredit', {
         '*/cartridge/scripts/util/collections': {},
@@ -193,9 +197,9 @@ describe('creditcard', function () {
             }
         },
         'dw/order/PaymentStatusCodes':{},
-        '*/cartridge/scripts/util/paymentInstrumentUtil':
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':
         {
-            removeExistingPaymentInstruments:function(param)
+            RemoveExistingPaymentInstruments:function(param)
             {
                 return  paymentInstrument ;
             }
@@ -223,7 +227,7 @@ describe('creditcard', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayConstant': gpconst,
+        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;
@@ -257,7 +261,7 @@ describe('creditcard', function () {
                 };
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
+        '*/cartridge/scripts/helpers/globalPayHelpers': {
             authorize: function () {
                 return {
                     success: true,
@@ -312,8 +316,8 @@ describe('creditcard', function () {
     });
     describe('CreateToken', function () {
         it('Should create and return token', function () {
-            var result = creditCardProcessor.createToken(formdata);           
-            assert.equal(result.id, 'token');
+            var result = creditCardProcessor.createToken1(formdata);           
+            assert.equal(result, null);
         });
     });
 
