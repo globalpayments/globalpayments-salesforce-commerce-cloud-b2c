@@ -29,10 +29,10 @@ var order = {
 
 describe('google pay', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
     var googlepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaygooglepay', {
         '*/cartridge/scripts/util/collections': {},
-        '*/cartridge/scripts/util/paymentInstrumentUtil':{},
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':{},
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
@@ -55,7 +55,7 @@ describe('google pay', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayConstant': gpconst,
+        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;
@@ -88,7 +88,7 @@ describe('google pay', function () {
                 }
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': { gpay: gpay },
+        '*/cartridge/scripts/helpers/globalPayHelpers': { gpay: gpay },
         '*/cartridge/scripts/services/globalPayService': {}
     });
     describe('Authorize', function () {
