@@ -17,73 +17,73 @@ function applePaymentOrderUpdate(order, serviceResponse) {
 	/* Update Service Response to the customer  paymentinstrument Object
 	 UpdateMobilePaymentTransactionCardAuthorize(CardHelper.getNonGCPaymemtInstument(order), serviceResponse);
 	 */
-  var serverErrors = [];
-  var orderPlacementStatus;
-  if (serviceResponse.success) {
-    orderPlacementStatus = Transaction.wrap(function () {
-      if (OrderMgr.placeOrder(order) === Status.ERROR) {
-        OrderMgr.failOrder(order);
-        return false;
-      }
+    var serverErrors = [];
+    var orderPlacementStatus;
+    if (serviceResponse.success) {
+        orderPlacementStatus = Transaction.wrap(function () {
+            if (OrderMgr.placeOrder(order) === Status.ERROR) {
+                OrderMgr.failOrder(order);
+                return false;
+            }
 
-      order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
-      return true;
-    });
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+            return true;
+        });
 
-    if (orderPlacementStatus === Status.ERROR) {
-      return false;
+        if (orderPlacementStatus === Status.ERROR) {
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
 
-  serverErrors.push(
+    serverErrors.push(
 			Resource.msg('error.technical', 'checkout', null)
 		);
-  return false;
+    return false;
 }
 
 function removeExistingPaymentInstruments(paymentType) {
-  var paymentInstrument;
-  var paymentInstruments;
-  var currentBasket = BasketMgr.getCurrentBasket();
+    var paymentInstrument;
+    var paymentInstruments;
+    var currentBasket = BasketMgr.getCurrentBasket();
 
-  paymentInstruments = currentBasket.getPaymentInstruments(
+    paymentInstruments = currentBasket.getPaymentInstruments(
 				PaymentInstrument.METHOD_CREDIT_CARD
 			);
 
-  collections.forEach(paymentInstruments, function (item) {
-    currentBasket.removePaymentInstrument(item);
-  });
+    collections.forEach(paymentInstruments, function (item) {
+        currentBasket.removePaymentInstrument(item);
+    });
 
-  paymentInstruments = currentBasket.getPaymentInstruments(
+    paymentInstruments = currentBasket.getPaymentInstruments(
 				Resource.msg('paymentmethodname.googlepay', 'globalpay', null)
 			);
 
-  collections.forEach(paymentInstruments, function (item) {
-    currentBasket.removePaymentInstrument(item);
-  });
+    collections.forEach(paymentInstruments, function (item) {
+        currentBasket.removePaymentInstrument(item);
+    });
 
-  paymentInstruments = currentBasket.getPaymentInstruments(
+    paymentInstruments = currentBasket.getPaymentInstruments(
 				Resource.msg('paymentmethodname.paypal', 'globalpay', null)
 			);
 
-  collections.forEach(paymentInstruments, function (item) {
-    currentBasket.removePaymentInstrument(item);
-  });
+    collections.forEach(paymentInstruments, function (item) {
+        currentBasket.removePaymentInstrument(item);
+    });
 
-  if (paymentType === PaymentInstrument.METHOD_CREDIT_CARD ||
+    if (paymentType === PaymentInstrument.METHOD_CREDIT_CARD ||
 	paymentType === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) ||
 	paymentType === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
-    paymentInstrument = currentBasket.createPaymentInstrument(
+        paymentInstrument = currentBasket.createPaymentInstrument(
 		paymentType, currentBasket.totalGrossPrice
 			);
-  }
+    }
 
-  return paymentInstrument;
+    return paymentInstrument;
 }
 
 
 module.exports = {
-  applePaymentOrderUpdate: applePaymentOrderUpdate,
-  removeExistingPaymentInstruments: removeExistingPaymentInstruments
+    applePaymentOrderUpdate: applePaymentOrderUpdate,
+    removeExistingPaymentInstruments: removeExistingPaymentInstruments
 };

@@ -32,18 +32,18 @@ var pageMeta = require(globalpayconstants.SGPAGEMETA);
  * customer (account/payment/paymentinstrumentlist template).
  */
 function list() {
-  var wallet = customer.getProfile().getWallet();
-  var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
-  var paymentForm = app.getForm('paymentinstruments');
+    var wallet = customer.getProfile().getWallet();
+    var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
+    var paymentForm = app.getForm('paymentinstruments');
 
-  paymentForm.clear();
-  paymentForm.get('creditcards.storedcards').copyFrom(paymentInstruments);
+    paymentForm.clear();
+    paymentForm.get('creditcards.storedcards').copyFrom(paymentInstruments);
 
-  pageMeta.update(dw.content.ContentMgr.getContent('myaccount-paymentsettings'));
+    pageMeta.update(dw.content.ContentMgr.getContent('myaccount-paymentsettings'));
 
-  app.getView({
-    PaymentInstruments: paymentInstruments
-  }).render('account/payment/paymentinstrumentlist');
+    app.getView({
+        PaymentInstruments: paymentInstruments
+    }).render('account/payment/paymentinstrumentlist');
 }
 
 
@@ -58,17 +58,17 @@ function list() {
  * false skips it
  */
 function add(clearForm) {
-  var paymentForm = app.getForm('paymentinstruments');
+    var paymentForm = app.getForm('paymentinstruments');
 
-  if (clearForm !== false) {
-    paymentForm.clear();
-  }
-  paymentForm.get('creditcards.newcreditcard.type').setOptions(dw.order.PaymentMgr
+    if (clearForm !== false) {
+        paymentForm.clear();
+    }
+    paymentForm.get('creditcards.newcreditcard.type').setOptions(dw.order.PaymentMgr
         .getPaymentMethod(dw.order.PaymentInstrument.METHOD_CREDIT_CARD).activePaymentCards.iterator());
 
-  app.getView({
-    ContinueURL: URLUtils.https('PaymentInstruments-PaymentForm')
-  }).render('account/payment/paymentinstrumentdetails');
+    app.getView({
+        ContinueURL: URLUtils.https('PaymentInstruments-PaymentForm')
+    }).render('account/payment/paymentinstrumentdetails');
 }
 
 /**
@@ -82,19 +82,19 @@ function add(clearForm) {
  * function with a clearform value of false.
  */
 function handlePaymentForm() {
-  var paymentForm = app.getForm('paymentinstruments');
-  paymentForm.handleAction({
-    create: function () {
-      if (!create()) {
-        add(false);
-        return;
-      }
-      response.redirect(URLUtils.https('PaymentInstruments-List'));
-    },
-    error: function () {
-      add(false);
-    }
-  });
+    var paymentForm = app.getForm('paymentinstruments');
+    paymentForm.handleAction({
+        create: function () {
+            if (!create()) {
+                add(false);
+                return;
+            }
+            response.redirect(URLUtils.https('PaymentInstruments-List'));
+        },
+        error: function () {
+            add(false);
+        }
+    });
 }
 /**
  * Saves a  customer credit card payment instrument.
@@ -103,11 +103,11 @@ function handlePaymentForm() {
  * @param {dw.web.FormGroup} params.CreditCardFormFields - new credit card form.
  */
 function save(params) {
-  var saveCustomerCreditCard = require('app_storefront_core/cartridge/scripts/checkout/SaveCustomerCreditCard');
-  var result = saveCustomerCreditCard.save(params);
-  if (result === PIPELET_ERROR) {
-    throw new Error('Problem saving credit card');
-  }
+    var saveCustomerCreditCard = require('app_storefront_core/cartridge/scripts/checkout/SaveCustomerCreditCard');
+    var result = saveCustomerCreditCard.save(params);
+    if (result === PIPELET_ERROR) {
+        throw new Error('Problem saving credit card');
+    }
 }
 /**
  * create and update creditcard token in payment instrument.
@@ -115,28 +115,28 @@ function save(params) {
  * @returns
  */
 function updateCardToken(params) {
-  var HookMgr = require('dw/system/HookMgr');
-  var creditCardFields = params.CreditCardFormFields;
-  var paymentInstr = params.PaymentInstrument;
-  var formdata = {
-    name: creditCardFields.owner.value,
-    cardNumber: creditCardFields.number.value,
-    cardType: creditCardFields.type.value,
-    expirationMonth: creditCardFields.expiration.month.value,
-    expirationYear: creditCardFields.expiration.year.value,
-    paymentForm: creditCardFields
-  };
-  var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
+    var HookMgr = require('dw/system/HookMgr');
+    var creditCardFields = params.CreditCardFormFields;
+    var paymentInstr = params.PaymentInstrument;
+    var formdata = {
+        name: creditCardFields.owner.value,
+        cardNumber: creditCardFields.number.value,
+        cardType: creditCardFields.type.value,
+        expirationMonth: creditCardFields.expiration.month.value,
+        expirationYear: creditCardFields.expiration.year.value,
+        paymentForm: creditCardFields
+    };
+    var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
 
-  var token = HookMgr.callHook('app.payment.processor.' + processor.ID, 'CreateToken',
+    var token = HookMgr.callHook('app.payment.processor.' + processor.ID, 'CreateToken',
             formdata
         );
-  if (!empty(token) && !empty(token.id)) {
-    paymentInstr.setCreditCardToken(token.id);
-  } else if (!empty(token) && empty(token.error)) {
-    throw new Error('Problem saving credit card');
-  }
-  return paymentInstr;
+    if (!empty(token) && !empty(token.id)) {
+        paymentInstr.setCreditCardToken(token.id);
+    } else if (!empty(token) && empty(token.error)) {
+        throw new Error('Problem saving credit card');
+    }
+    return paymentInstr;
 }
 
 /**
@@ -151,55 +151,55 @@ function updateCardToken(params) {
  * @return {boolean} true if the credit card can be verified, false otherwise
  */
 function create() {
-  if (!verifyCreditCard()) {
-    return false;
-  }
-
-  var paymentForm = app.getForm('paymentinstruments');
-  var newCreditCardForm = paymentForm.get('creditcards.newcreditcard');
-  var ccNumber = newCreditCardForm.get('number').value();
-
-  var wallet = customer.getProfile().getWallet();
-  var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
-
-  var isDuplicateCard = false;
-  var oldCard;
-
-  for (var i = 0; i < paymentInstruments.length; i++) {
-    var card = paymentInstruments[i];
-    if (card.creditCardNumber === ccNumber) {
-      isDuplicateCard = true;
-      oldCard = card;
-      break;
+    if (!verifyCreditCard()) {
+        return false;
     }
-  }
 
-  Transaction.begin();
-  var paymentInstrument = wallet.createPaymentInstrument(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
+    var paymentForm = app.getForm('paymentinstruments');
+    var newCreditCardForm = paymentForm.get('creditcards.newcreditcard');
+    var ccNumber = newCreditCardForm.get('number').value();
 
-  try {
-    save({
-      PaymentInstrument: paymentInstrument,
-      CreditCardFormFields: newCreditCardForm.object
-    });
-    updateCardToken({
-      PaymentInstrument: paymentInstrument,
-      CreditCardFormFields: newCreditCardForm.object
-    });
-  } catch (err) {
-    Transaction.rollback();
-    return false;
-  }
+    var wallet = customer.getProfile().getWallet();
+    var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
 
-  if (isDuplicateCard) {
-    wallet.removePaymentInstrument(oldCard);
-  }
+    var isDuplicateCard = false;
+    var oldCard;
 
-  Transaction.commit();
+    for (var i = 0; i < paymentInstruments.length; i++) {
+        var card = paymentInstruments[i];
+        if (card.creditCardNumber === ccNumber) {
+            isDuplicateCard = true;
+            oldCard = card;
+            break;
+        }
+    }
 
-  paymentForm.clear();
+    Transaction.begin();
+    var paymentInstrument = wallet.createPaymentInstrument(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
 
-  return true;
+    try {
+        save({
+            PaymentInstrument: paymentInstrument,
+            CreditCardFormFields: newCreditCardForm.object
+        });
+        updateCardToken({
+            PaymentInstrument: paymentInstrument,
+            CreditCardFormFields: newCreditCardForm.object
+        });
+    } catch (err) {
+        Transaction.rollback();
+        return false;
+    }
+
+    if (isDuplicateCard) {
+        wallet.removePaymentInstrument(oldCard);
+    }
+
+    Transaction.commit();
+
+    paymentForm.clear();
+
+    return true;
 }
 
 
@@ -216,20 +216,20 @@ function create() {
  * @FIXME Inner method should be lowercase.error action should do something
  */
 function Delete() {
-  var paymentForm = app.getForm('paymentinstruments');
-  paymentForm.handleAction({
-    remove: function (formGroup, action) {
-      Transaction.wrap(function () {
-        var wallet = customer.getProfile().getWallet();
-        wallet.removePaymentInstrument(action.object);
-      });
-    },
-    error: function () {
+    var paymentForm = app.getForm('paymentinstruments');
+    paymentForm.handleAction({
+        remove: function (formGroup, action) {
+            Transaction.wrap(function () {
+                var wallet = customer.getProfile().getWallet();
+                wallet.removePaymentInstrument(action.object);
+            });
+        },
+        error: function () {
             // @TODO When could this happen
-    }
-  });
+        }
+    });
 
-  response.redirect(URLUtils.https('PaymentInstruments-List'));
+    response.redirect(URLUtils.https('PaymentInstruments-List'));
 }
 
 
@@ -243,36 +243,36 @@ function Delete() {
  * @returns {boolean} true in case of success, otherwise false.
  */
 function verifyCreditCard() {
-  var newCreditCardForm = app.getForm('paymentinstruments.creditcards.newcreditcard');
+    var newCreditCardForm = app.getForm('paymentinstruments.creditcards.newcreditcard');
 
-  var expirationMonth = newCreditCardForm.get('expiration.month').value();
-  var expirationYear = newCreditCardForm.get('expiration.year').value();
-  var cardNumber = newCreditCardForm.get('number').value();
-  var paymentCard = PaymentMgr.getPaymentCard(newCreditCardForm.get('type').value());
-  var verifyPaymentCardResult = paymentCard.verify(expirationMonth, expirationYear, cardNumber);
+    var expirationMonth = newCreditCardForm.get('expiration.month').value();
+    var expirationYear = newCreditCardForm.get('expiration.year').value();
+    var cardNumber = newCreditCardForm.get('number').value();
+    var paymentCard = PaymentMgr.getPaymentCard(newCreditCardForm.get('type').value());
+    var verifyPaymentCardResult = paymentCard.verify(expirationMonth, expirationYear, cardNumber);
 
-  if (verifyPaymentCardResult.error === true) {
-    if (!newCreditCardForm.isValid()) {
-      return false;
-    }
+    if (verifyPaymentCardResult.error === true) {
+        if (!newCreditCardForm.isValid()) {
+            return false;
+        }
 
-    if (verifyPaymentCardResult.code === Status.OK) {
-      return true;
-    }
+        if (verifyPaymentCardResult.code === Status.OK) {
+            return true;
+        }
 
         // Invalidate the payment card form elements.
-    for (var i = 0; i < verifyPaymentCardResult.items.length; i++) {
-      if (verifyPaymentCardResult.items[i].code === PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER) {
-        newCreditCardForm.get('number').invalidate();
-      } else if (verifyPaymentCardResult.items[i].code === PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE) {
-        newCreditCardForm.get('expiration.month').invalidate();
-        newCreditCardForm.get('expiration.year').invalidate();
-      }
+        for (var i = 0; i < verifyPaymentCardResult.items.length; i++) {
+            if (verifyPaymentCardResult.items[i].code === PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER) {
+                newCreditCardForm.get('number').invalidate();
+            } else if (verifyPaymentCardResult.items[i].code === PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE) {
+                newCreditCardForm.get('expiration.month').invalidate();
+                newCreditCardForm.get('expiration.year').invalidate();
+            }
+        }
+        return false;
     }
-    return false;
-  }
 
-  return true;
+    return true;
 }
 
 /*

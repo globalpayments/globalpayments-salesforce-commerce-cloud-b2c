@@ -7,35 +7,35 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
  * @param {obj} responseObj - object that contains Action response.
  */
 var MethodResponse = AbstractResponse.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
+    init: function (requestObj) {
+        Object.defineProperties(this, {
       // add more fields as per the Model here:
-      threeDsServerTransId: {
-        enumerable: true,
-        writable: true
-      },
-      threeDsMethodReturnUrl: {
-        enumerable: true,
-        writable: true
-      },
-      encodedMethodData: {
-        enumerable: true,
-        writable: true
-      },
-      methodUrl: {
-        enumerable: true,
-        writable: true
-      },
-      serverTransRef: {
-        enumerable: true,
-        writable: true
-      }
-    });
+            threeDsServerTransId: {
+                enumerable: true,
+                writable: true
+            },
+            threeDsMethodReturnUrl: {
+                enumerable: true,
+                writable: true
+            },
+            encodedMethodData: {
+                enumerable: true,
+                writable: true
+            },
+            methodUrl: {
+                enumerable: true,
+                writable: true
+            },
+            serverTransRef: {
+                enumerable: true,
+                writable: true
+            }
+        });
 
-    this._super(requestObj);
-  }
+        this._super(requestObj);
+    }
 });
 
 module.exports = {
-  Response: MethodResponse
+    Response: MethodResponse
 };

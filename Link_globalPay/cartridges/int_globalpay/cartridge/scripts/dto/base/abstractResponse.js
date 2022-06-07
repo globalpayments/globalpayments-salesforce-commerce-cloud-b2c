@@ -15,40 +15,40 @@ var AbstractBase = require('*/cartridge/scripts/dto/base/abstractBase');
  * @returns {module:dtos/base/abstractResponse~AbstractResponse}
  */
 var AbstractResponse = AbstractBase.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-      __: {
-        enumerable: false,
-        writable: true,
-        value: {}
-      }
-    });
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+            __: {
+                enumerable: false,
+                writable: true,
+                value: {}
+            }
+        });
 
-    if (!empty(responseObj)) {
-      Object.keys(this)
-            .filter(function (key) { return key !== '_super'; })
+        if (!empty(responseObj)) {
+            Object.keys(this)
+            .filter(function (key) {return key !== '_super';})
             .forEach(function (key) {
-              this[key] = responseObj[AbstractBase.camelToSnakeCase(key)];
+                this[key] = responseObj[AbstractBase.camelToSnakeCase(key)];
             }.bind(this));
-    }
+        }
 
-    this._super();
-  }
+        this._super();
+    }
 });
 
 AbstractResponse.getAccessorDescriptorWithConstructor = function (constructorFn) {
-  var UUIDUtils = require('dw/util/UUIDUtils');
-  var uniqueInternalProperty = UUIDUtils.createUUID();
+    var UUIDUtils = require('dw/util/UUIDUtils');
+    var uniqueInternalProperty = UUIDUtils.createUUID();
 
-  return {
-    enumerable: true,
-    set: function (val) {
-      this.__[uniqueInternalProperty] = new constructorFn(val);
-    },
-    get: function () {
-      return this.__[uniqueInternalProperty];
-    }
-  };
+    return {
+        enumerable: true,
+        set: function (val) {
+            this.__[uniqueInternalProperty] = new constructorFn(val);
+        },
+        get: function () {
+            return this.__[uniqueInternalProperty];
+        }
+    };
 };
 
 /** @type {module:dtos/base/abstractResponse~AbstractResponse.prototype} */

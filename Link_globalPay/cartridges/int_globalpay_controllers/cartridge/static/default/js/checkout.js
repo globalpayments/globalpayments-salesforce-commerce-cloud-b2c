@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var util = {
@@ -51,7 +52,7 @@ function placeOrderSuccess(data) {
     $('[name$="_acsUrl"]').val(data.acschallengerequesturl);
     $('[name$="_isThreedsone"]').val(true);
 
-    }
+}
 /**
  * @function
  * @description Updates the credit card form with the attributes of a given card
@@ -129,18 +130,18 @@ $('.button-fancy-large').on('click', function () {
 
             if(
             versionCheckData.versions.directoryServer.start == '1.0.0'
-            && versionCheckData.versions.directoryServer.end == '1.0.0' ){
-            $('input[name*=_authId]').val(versionCheckData.id);
-            var authenticationData = new Object();
-            authenticationData.status = 'undefined';
-            authenticationData.isthreedsone =  true;
-          if(versionCheckData.enrolled == 'ENROLLED'){
-            placeOrderSuccess(versionCheckData);
-            $('#dwfrm_billing').submit();
-            } else {
-                $('#dwfrm_billing').submit();   
-            }
-          } else if (versionCheckData.error) {
+            && versionCheckData.versions.directoryServer.end == '1.0.0'){
+                $('input[name*=_authId]').val(versionCheckData.id);
+                var authenticationData = new Object();
+                authenticationData.status = 'undefined';
+                authenticationData.isthreedsone =  true;
+                if(versionCheckData.enrolled == 'ENROLLED'){
+                    placeOrderSuccess(versionCheckData);
+                    $('#dwfrm_billing').submit();
+                } else {
+                    $('#dwfrm_billing').submit();
+                }
+            } else if (versionCheckData.error) {
 
             } else {
                 $('input[name*=_authId]').val(versionCheckData.id);
@@ -159,31 +160,31 @@ $('.button-fancy-large').on('click', function () {
                             displayMode: 'lightbox',
                         }
                     }).then(function (authenticationData) {
-                        $("#isthreeds").val(authenticationData.status);
+                        $('#isthreeds').val(authenticationData.status);
                         $('input[name*=_isthreeds]').val(authenticationData.status);
                         $('input[name*=_authId]').val(versionCheckData.id);
                         
                         if (authenticationData.mpi != undefined){
                             var eci = authenticationData.mpi.eci;
-                        if (authenticationData.status !== "CHALLENGE_REQUIRED") {
-                            if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {
-                                $('#dwfrm_billing').submit();
-                            } else {
-                                $('.gpayerror').text('Card got declined, please enter another card.');
-                            }
-                        }// Challenge Flow
-                        else {
+                            if (authenticationData.status !== 'CHALLENGE_REQUIRED') {
+                                if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {
+                                    $('#dwfrm_billing').submit();
+                                } else {
+                                    $('.gpayerror').text('Card got declined, please enter another card.');
+                                }
+                            }// Challenge Flow
+                            else {
                             
-                            if (JSON.parse(authenticationData.challenge.response.data).transStatus === "Y") {
-                                $('#dwfrm_billing').submit();
-                            } else {
-                                $('.gpayerror').text('Card got declined, please enter another card.');
+                                if (JSON.parse(authenticationData.challenge.response.data).transStatus === 'Y') {
+                                    $('#dwfrm_billing').submit();
+                                } else {
+                                    $('.gpayerror').text('Card got declined, please enter another card.');
+                                }
                             }
                         }
-                    }
-                    else{
-                        $('.gpayerror').text('Card got declined, please enter another card.');
-                    }
+                        else{
+                            $('.gpayerror').text('Card got declined, please enter another card.');
+                        }
                     })
                 }
                 catch (e) {

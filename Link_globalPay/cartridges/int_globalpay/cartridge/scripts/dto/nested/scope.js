@@ -7,27 +7,27 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
  * @param {obj} responseObj - object that contains response.
  */
 var ScopeResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
+    init: function (responseObj) {
+        Object.defineProperties(this, {
       // add more fields as per the Model here:
-      merchantId: {
-        enumerable: true,
-        writable: true
-      },
-      merchantName: {
-        enumerable: true,
-        writable: true
-      },
-      accounts: {
-        enumerable: true,
-        writable: true
-      }
-    });
+            merchantId: {
+                enumerable: true,
+                writable: true
+            },
+            merchantName: {
+                enumerable: true,
+                writable: true
+            },
+            accounts: {
+                enumerable: true,
+                writable: true
+            }
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Response: ScopeResponse
+    Response: ScopeResponse
 };

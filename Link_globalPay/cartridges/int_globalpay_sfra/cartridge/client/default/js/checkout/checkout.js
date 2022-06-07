@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var customerHelpers = require('base/checkout/customer');
@@ -277,7 +278,7 @@ var threeds = require('./threeds');
                     }
                     // disable the next:Place Order button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
-                 if ($('#isnewcard').val() == 'false' &&
+                    if ($('#isnewcard').val() == 'false' &&
                         $('.saved-payment-instrument' + '.selected-payment').data('pmt') !== undefined &&
                         ($('.tab-pane.active').attr('id') == 'credit-card-content')) {
                         var selectedUUID = $('.saved-payment-instrument' + '.selected-payment').data('uuid');
@@ -309,26 +310,26 @@ var threeds = require('./threeds');
                             },
                         }).then(function(versionCheckData) {
                             if(versionCheckData.versions.directoryServer.start == '1.0.0'
-                            && versionCheckData.versions.directoryServer.end == '1.0.0' ){
-                            $("#authId").val(versionCheckData.id);
-                           if(versionCheckData.enrolled == 'ENROLLED')
+                            && versionCheckData.versions.directoryServer.end == '1.0.0'){
+                                $('#authId').val(versionCheckData.id);
+                                if(versionCheckData.enrolled == 'ENROLLED')
                            {
-                            $("#paReq").val(versionCheckData.challengevalue);
-                            $("#acsUrl").val(versionCheckData.acschallengerequesturl);   
-                            $("#isthreeds").val('threeDs1');                      
-                           }
-                           else{
-                            $("#isthreeds").val(versionCheckData.serverTransactionId);
-                           }
-                           var authenticationData = new Object();
-                           authenticationData.status = 'undefined';
-                           authenticationData.isthreedsone =  true;
-                            threeds.handle(versionCheckData, authenticationData ,paymentForm, defer);
-                          } else if (versionCheckData.error) {
+                                    $('#paReq').val(versionCheckData.challengevalue);
+                                    $('#acsUrl').val(versionCheckData.acschallengerequesturl);   
+                                    $('#isthreeds').val('threeDs1');                      
+                                }
+                                else{
+                                    $('#isthreeds').val(versionCheckData.serverTransactionId);
+                                }
+                                var authenticationData = new Object();
+                                authenticationData.status = 'undefined';
+                                authenticationData.isthreedsone =  true;
+                                threeds.handle(versionCheckData, authenticationData ,paymentForm, defer);
+                            } else if (versionCheckData.error) {
 
                             } else {
-                                $("#authId").val(versionCheckData.id);
-                                $("#isthreeds").val(versionCheckData.serverTransactionId);
+                                $('#authId').val(versionCheckData.id);
+                                $('#isthreeds').val(versionCheckData.serverTransactionId);
                                 try {
                                     authenticationData = initiateAuthentication('GlobalPay-Initiation', {
                                         serverTransactionId: versionCheckData.serverTransactionId,
@@ -345,20 +346,20 @@ var threeds = require('./threeds');
                                         }                               
                                     }).then(function(authenticationData) {
                                         // invoking ajax
-                                       threeds.handle(versionCheckData, authenticationData,paymentForm, defer);
+                                        threeds.handle(versionCheckData, authenticationData,paymentForm, defer);
                                     }).catch(function(error){
                                         $('.gpayerror').text('Unable to process your request, please try again or use another card.');
-                                   });
+                                    });
                                 } catch (e) {
                                    
                                 }
                             }
                         }).catch(function(error){
                             $('.gpayerror').text('Unable to process your request, please try again or use another card.');
-                       });
+                        });
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
 
-                        paymentForm += '&authId=' + $("#authId").val();
+                        paymentForm += '&authId=' + $('#authId').val();
                         paymentForm += '&paReq=' + $('#paReq').val();
                         paymentForm += '&acsUrl=' + $('#acsUrl').val();
                         paymentForm += '&isthreeds=' + $('#isthreeds').val();
@@ -369,7 +370,7 @@ var threeds = require('./threeds');
                             data: paymentForm,
                             success: function(data) {
                                 // enable the next:Place Order button here
-                              $('body').trigger('checkout:enableButton', '.next-step-button button');
+                                $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 // look for field validation errors
                                 if (data.error) {
                                     $('a.nav-link.credit-card-tab').removeClass('disabled');
@@ -406,32 +407,32 @@ var threeds = require('./threeds');
                                         placeOrderSuccess(data); //populate order details
                                         defer.resolve(data);
                                     } else {
-                                        if($("#isthreeds").val()==='threeDs1')
+                                        if($('#isthreeds').val()==='threeDs1')
                                         {
                                             threeDFormRedirection(data);
                                         }
                                         else{
-                                        $('body').trigger('checkout:updateCheckoutView', {
-                                            order: data.order,
-                                            customer: data.customer
-                                        });
+                                            $('body').trigger('checkout:updateCheckoutView', {
+                                                order: data.order,
+                                                customer: data.customer
+                                            });
 
-                                        if (data.renderedPaymentInstruments) {
-                                            $('.stored-payments').empty().html(
+                                            if (data.renderedPaymentInstruments) {
+                                                $('.stored-payments').empty().html(
                                                 data.renderedPaymentInstruments
                                             );
-                                        }
+                                            }
 
-                                        if (data.customer.registeredUser &&
+                                            if (data.customer.registeredUser &&
                                             data.customer.customerPaymentInstruments.length
                                         ) {
-                                            $('.cancel-new-payment').removeClass('checkout-hidden');
-                                        }
-                                        if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
+                                                $('.cancel-new-payment').removeClass('checkout-hidden');
+                                            }
+                                            if ($('.tab-pane.active').attr('id') !== 'paypal-content') {
                                            // scrollAnimate();
-                                        }
+                                            }
                                                                               
-                                        defer.resolve(data);
+                                            defer.resolve(data);
                                         }
                                     }
                                 }
@@ -479,7 +480,7 @@ var threeds = require('./threeds');
 
                     return defer;
                 }
-            function threeDFormRedirection(data)
+                function threeDFormRedirection(data)
                 {
                     var redirect = $('<form>')
                     .appendTo(document.body)
@@ -487,20 +488,20 @@ var threeds = require('./threeds');
                         method: 'POST',
                         action: data.authenticationData.threeDRedirectUrl
                     });
-                $('<input>')
+                    $('<input>')
                     .appendTo(redirect)
                     .attr({
                         name: 'PaReq',
                         value: $('#paReq').val()
                     });
 
-                $('<input>')
+                    $('<input>')
                     .appendTo(redirect)
                     .attr({
                         name: 'acsUrl',
                         value: $('#acsUrl').val()
                     });
-                $('<input>')
+                    $('<input>')
                     .appendTo(redirect)
                     .attr({
                         name: 'MD',
@@ -633,9 +634,9 @@ var threeds = require('./threeds');
                 });
                 // On button click disable other payment tabs
                 $('.btn-paypal-button', plugin).on('click', function() {
-                    $('a.nav-link.credit-card-tab').addClass("disabled");
-                    $('a.nav-link.google-pay-tab').addClass("disabled");
-                    $('a.nav-link.apple-pay-tab').addClass("disabled");
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
                 });
                 $('body').on('submit:googlepay', function(e, data) {
@@ -773,7 +774,7 @@ var exports = {
     updateCheckoutView: function() {
         $('body').on('checkout:updateCheckoutView', function(e, data) {
             if (data.csrfToken) {
-                $("input[name*='csrf_token']").val(data.csrfToken);
+                $('input[name*=\'csrf_token\']').val(data.csrfToken);
             }
             customerHelpers.methods.updateCustomerInformation(data.customer, data.order);
             shippingHelpers.methods.updateMultiShipInformation(data.order);

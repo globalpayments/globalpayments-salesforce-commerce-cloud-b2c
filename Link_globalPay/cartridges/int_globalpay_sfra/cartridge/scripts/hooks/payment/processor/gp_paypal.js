@@ -23,54 +23,54 @@ var Site = require('dw/system/Site');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
-  var preferences = globalPayPreferences.getPreferences();
-  var captureMode = preferences.captureMode;
-  var currentSite = Site.getCurrent();
-  var error;
-  var paypalData = {
-    account_name: globalpayconstants.paypalData.account_name,
-    channel: globalpayconstants.paypalData.channel,
-    capture_mode: captureMode.value,
-    type: globalpayconstants.paypalData.type,
-    amount: (order.totalGrossPrice.value * 100).toFixed(),
-    currency: order.currencyCode,
-    reference: order.orderNo,
-    country: Locale.getLocale(currentSite.defaultLocale).country,
-    payment_method: {
-      entry_mode: globalpayconstants.paypalData.entryMode,
-      apm: {
-        provider: globalpayconstants.paypalData.paypal
-      }
-    },
-    notifications: {
-      return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(),
-      status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(),
-      cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
-    }
-  };
-  var paypalresp = globalPayHelper.paypal(paypalData);
-  var serverErrors = [];
-  if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
-    error = true;
-    if ('detailedErrorDescription' in paypalresp) {
-      serverErrors.push(paypalresp.error.detailedErrorDescription);
-    }
-  } else {
-    try {
-      Transaction.wrap(function () {
-        paymentInstrument.custom.gp_transactionid = paypalresp.id;
-        paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
-        paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
-      });
-    } catch (e) {
-      error = true;
-      serverErrors.push(
+    var preferences = globalPayPreferences.getPreferences();
+    var captureMode = preferences.captureMode;
+    var currentSite = Site.getCurrent();
+    var error;
+    var paypalData = {
+        account_name: globalpayconstants.paypalData.account_name,
+        channel: globalpayconstants.paypalData.channel,
+        capture_mode: captureMode.value,
+        type: globalpayconstants.paypalData.type,
+        amount: (order.totalGrossPrice.value * 100).toFixed(),
+        currency: order.currencyCode,
+        reference: order.orderNo,
+        country: Locale.getLocale(currentSite.defaultLocale).country,
+        payment_method: {
+            entry_mode: globalpayconstants.paypalData.entryMode,
+            apm: {
+                provider: globalpayconstants.paypalData.paypal
+            }
+        },
+        notifications: {
+            return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(),
+            status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(),
+            cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
+        }
+    };
+    var paypalresp = globalPayHelper.paypal(paypalData);
+    var serverErrors = [];
+    if (typeof paypalresp !== 'undefined' && 'success' in paypalresp && !paypalresp.success) {
+        error = true;
+        if ('detailedErrorDescription' in paypalresp) {
+            serverErrors.push(paypalresp.error.detailedErrorDescription);
+        }
+    } else {
+        try {
+            Transaction.wrap(function () {
+                paymentInstrument.custom.gp_transactionid = paypalresp.id;
+                paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+                paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
+            });
+        } catch (e) {
+            error = true;
+            serverErrors.push(
                         Resource.msg('error.technical', 'checkout', null)
                     );
+        }
     }
-  }
 
-  return { serverErrors: serverErrors, error: error, paypalresp: paypalresp };
+    return {serverErrors: serverErrors, error: error, paypalresp: paypalresp};
 }
 
 /**
@@ -80,14 +80,14 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
  * @return {Object} returns an error object
  */
 function Handle() {
-  var cardErrors = {};
-  var serverErrors = [];
-  Transaction.wrap(function () {
+    var cardErrors = {};
+    var serverErrors = [];
+    Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    PaymentInstrumentUtils.removeExistingPaymentInstruments(
+        PaymentInstrumentUtils.removeExistingPaymentInstruments(
       globalpayconstants.paypalData.paymentTypeCode);
-  });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
+    });
+    return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }
 
 /**
@@ -96,11 +96,11 @@ function Handle() {
  * @returns
  */
 function Capture(order) {
-  var payPalCapture = {
-    transactionId: order.paymentInstrument.custom.gp_transactionid
-  };
-  var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture);
-  return payPalCaptureResp;
+    var payPalCapture = {
+        transactionId: order.paymentInstrument.custom.gp_transactionid
+    };
+    var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture);
+    return payPalCaptureResp;
 }
 
 exports.Authorize = Authorize;

@@ -10,75 +10,75 @@ var PaymentMethod = require('*/cartridge/scripts/dto/nested/paymentMethod');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var CancelRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
-      transactionId: {
-        enumerable: true,
-        writable: true
-      },
-      amount: {
-        enumerable: true,
-        writable: true
-      }
-    });
-    this._super(requestObj);
-  },
-  getEndpoint: function () {
-    return this.prepareEndpoint(
+    init: function (requestObj) {
+        Object.defineProperties(this, {
+            transactionId: {
+                enumerable: true,
+                writable: true
+            },
+            amount: {
+                enumerable: true,
+                writable: true
+            }
+        });
+        this._super(requestObj);
+    },
+    getEndpoint: function () {
+        return this.prepareEndpoint(
             'transactions/:transactionId/reversal',
-            { transactionId: this.transactionId }
+            {transactionId: this.transactionId}
         );
-  },
+    },
 
-  getHttpMethod: function () {
-    return 'POST';
-  }
+    getHttpMethod: function () {
+        return 'POST';
+    }
 });
 /**
  * Forms all the fields to be returned as part of Refund response.
  * @param {obj} responseObj - object that contains fields from response.
  */
 var CancelResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-      type: {
-        enumerable: true,
-        writable: true
-      },
-      status: {
-        enumerable: true,
-        writable: true
-      },
-      amount: {
-        enumerable: true,
-        writable: true
-      },
-      currency: {
-        enumerable: true,
-        writable: true
-      },
-      country: {
-        enumerable: true,
-        writable: true
-      },
-      reference: {
-        enumerable: true,
-        writable: true
-      },
-      batchId: {
-        enumerable: true,
-        writable: true
-      },
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+            type: {
+                enumerable: true,
+                writable: true
+            },
+            status: {
+                enumerable: true,
+                writable: true
+            },
+            amount: {
+                enumerable: true,
+                writable: true
+            },
+            currency: {
+                enumerable: true,
+                writable: true
+            },
+            country: {
+                enumerable: true,
+                writable: true
+            },
+            reference: {
+                enumerable: true,
+                writable: true
+            },
+            batchId: {
+                enumerable: true,
+                writable: true
+            },
       // add more fields as per the Model here:
-      action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
-      paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
-    });
+            action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
+            paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Request: CancelRequest,
-  Response: CancelResponse
+    Request: CancelRequest,
+    Response: CancelResponse
 };

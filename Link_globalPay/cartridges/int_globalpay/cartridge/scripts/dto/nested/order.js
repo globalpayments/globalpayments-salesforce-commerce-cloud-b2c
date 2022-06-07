@@ -9,31 +9,31 @@ var ShippingAddress = require('*/cartridge/scripts/dto/nested/shippingAddress');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var OrderRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
+    init: function (requestObj) {
+        Object.defineProperties(this, {
       // add more fields as per the Model here:
-      timeCreatedReference: {
-        enumerable: true,
-        writable: true
-      },
-      amount: {
-        enumerable: true,
-        writable: true
-      },
-      currency: {
-        enumerable: true,
-        writable: true
-      },
-      addressMatchIndicator: {
-        enumerable: true,
-        writable: true
-      },
-      shippingAddress: AbstractResponse.getAccessorDescriptorWithConstructor(ShippingAddress.Request)
+            timeCreatedReference: {
+                enumerable: true,
+                writable: true
+            },
+            amount: {
+                enumerable: true,
+                writable: true
+            },
+            currency: {
+                enumerable: true,
+                writable: true
+            },
+            addressMatchIndicator: {
+                enumerable: true,
+                writable: true
+            },
+            shippingAddress: AbstractResponse.getAccessorDescriptorWithConstructor(ShippingAddress.Request)
 
-    });
+        });
 
-    this._super(requestObj);
-  }
+        this._super(requestObj);
+    }
 });
 
 
@@ -42,15 +42,15 @@ var OrderRequest = AbstractRequest.extend({
  * @param {obj} responseObj - object that contains response.
  */
 var OrderResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-    });
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Request: OrderRequest,
-  Response: OrderResponse
+    Request: OrderRequest,
+    Response: OrderResponse
 };
