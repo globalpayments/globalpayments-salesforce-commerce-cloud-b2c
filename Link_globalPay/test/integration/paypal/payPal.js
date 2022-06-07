@@ -12,7 +12,7 @@ chai.use(chaiSubset);
  */
 
 describe('billingForm', function () {
-  this.timeout(100000);
+  this.timeout(10000);
 
   it('positive test for paypal', function () {
     var cookieJar = request.jar();
@@ -65,11 +65,6 @@ describe('billingForm', function () {
                 dwfrm_billing_addressFields_city: 'burlington',
                 dwfrm_billing_addressFields_postalCode: '09876',
                 dwfrm_billing_paymentMethod: 'GP_DW_PAYPAL',
-                dwfrm_billing_creditCardFields_cardType: 'Visa',
-                dwfrm_billing_creditCardFields_cardNumber: '4263970000005262',
-                dwfrm_billing_creditCardFields_expirationMonth: '12',
-                dwfrm_billing_creditCardFields_expirationYear: '2030',
-                dwfrm_billing_creditCardFields_securityCode: '342',
                 dwfrm_billing_contactInfoFields_email: 'blahblah@gmail.com',
                 dwfrm_billing_contactInfoFields_phone: '9786543213',
 
@@ -110,14 +105,6 @@ describe('billingForm', function () {
                       assert.containSubset(strippedBody.address, ExpectedResBody.address, 'Expecting actual response address to be equal match expected response address');
                       assert.isFalse(strippedBody.error);    
                         cookieString = cookieJar.getCookieString(myRequest.url);
-                        reqData.url = config.baseUrl + '/GPPayPal-PayPalReturn?id='+strippedBody.paypalresp.id;
-                        var cookie = request.cookie(cookieString);                                       
-                        //step4 : get cookies,submit paypal, then set cookies
-                        cookieJar.setCookie(request.cookie(cookieJar.getCookieString(reqData.url), reqData.url));
-                        return request(reqData);   
-                    }).then(function (response) {
-                        assert.equal(response.statusCode, 200, 'Expected GPPayPal-PayPalReturn statusCode to be 200.');
-                        assert.isFalse(response.error);
                     });
             });
   });
