@@ -6,81 +6,81 @@ var Action = require('*/cartridge/scripts/dto/nested/action');
 var PaymentMethod = require('*/cartridge/scripts/dto/nested/paymentMethod');
 
 var AuthorizeRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
-      accountName: {
-        enumerable: true,
-        writable: true
-      },
-      channel: {
-        enumerable: true,
-        writable: true
-      },
-      captureMode: {
-        enumerable: true,
-        writable: true
-      },
-      type: {
-        enumerable: true,
-        writable: true
-      },
-      amount: {
-        enumerable: true,
-        writable: true
-      },
-      currency: {
-        enumerable: true,
-        writable: true
-      },
-      reference: {
-        enumerable: true,
-        writable: true
-      },
-      country: {
-        enumerable: true,
-        writable: true
-      },
-      paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request)
-    });
+    init: function (requestObj) {
+        Object.defineProperties(this, {
+            accountName: {
+                enumerable: true,
+                writable: true
+            },
+            channel: {
+                enumerable: true,
+                writable: true
+            },
+            captureMode: {
+                enumerable: true,
+                writable: true
+            },
+            type: {
+                enumerable: true,
+                writable: true
+            },
+            amount: {
+                enumerable: true,
+                writable: true
+            },
+            currency: {
+                enumerable: true,
+                writable: true
+            },
+            reference: {
+                enumerable: true,
+                writable: true
+            },
+            country: {
+                enumerable: true,
+                writable: true
+            },
+            paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request)
+        });
 
     // eslint-disable-next-line no-underscore-dangle
-    this._super(requestObj);
-  },
+        this._super(requestObj);
+    },
 
-  getEndpoint: function () {
-    return 'transactions';
-  },
+    getEndpoint: function () {
+        return 'transactions';
+    },
 
-  getHttpMethod: function () {
-    return 'POST';
-  }
+    getHttpMethod: function () {
+        return 'POST';
+    }
 });
 
 var AuthorizeResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-      id: {
-        enumerable: true,
-        writable: true
-      },
-      status: {
-        enumerable: true,
-        writable: true
-      },
-      captureMode: {
-        enumerable: true,
-        writable: true
-      },
-      action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
-      paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
-    });
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+            id: {
+                enumerable: true,
+                writable: true
+            },
+            status: {
+                enumerable: true,
+                writable: true
+            },
+            captureMode: {
+                enumerable: true,
+                writable: true
+            },
+            action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
+            paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)
+        });
 
     // eslint-disable-next-line no-underscore-dangle
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Request: AuthorizeRequest,
-  Response: AuthorizeResponse
+    Request: AuthorizeRequest,
+    Response: AuthorizeResponse
 };

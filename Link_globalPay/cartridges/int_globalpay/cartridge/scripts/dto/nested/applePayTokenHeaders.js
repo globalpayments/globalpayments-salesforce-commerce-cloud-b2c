@@ -9,55 +9,55 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var HeaderRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
+    init: function (requestObj) {
+        Object.defineProperties(this, {
       // add more fields as per the Model here:
-      ephemeralPublicKey: {
-        enumerable: true,
-        writable: true
-      },
-      transactionId: {
-        enumerable: true,
-        writable: true
-      },
-      publicKeyHash: {
-        enumerable: true,
-        writable: true
-      }
+            ephemeralPublicKey: {
+                enumerable: true,
+                writable: true
+            },
+            transactionId: {
+                enumerable: true,
+                writable: true
+            },
+            publicKeyHash: {
+                enumerable: true,
+                writable: true
+            }
       // signedMessage: AbstractResponse.getAccessorDescriptorWithConstructor(SignedMessages.Request)
     //  add more here later as per model
-    });
+        });
 
-    this._super(requestObj);
-  }
+        this._super(requestObj);
+    }
 });
 /**
  * Forms all fields to be Returned as part of PaymentToken response.
  * @param {obj} responseObj - object that contains fields from response.
  */
 var HeaderResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
+    init: function (responseObj) {
+        Object.defineProperties(this, {
       // add more fields as per the Model here:
-      ephemeralPublicKey: {
-        enumerable: true,
-        writable: true
-      },
-      transactionId: {
-        enumerable: true,
-        writable: true
-      },
-      publicKeyHash: {
-        enumerable: true,
-        writable: true
-      }
-    });
+            ephemeralPublicKey: {
+                enumerable: true,
+                writable: true
+            },
+            transactionId: {
+                enumerable: true,
+                writable: true
+            },
+            publicKeyHash: {
+                enumerable: true,
+                writable: true
+            }
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Request: HeaderRequest,
-  Response: HeaderResponse
+    Request: HeaderRequest,
+    Response: HeaderResponse
 };

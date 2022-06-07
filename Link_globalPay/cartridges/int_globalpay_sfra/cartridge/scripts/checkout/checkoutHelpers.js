@@ -24,30 +24,30 @@ var authorizationResult;
  * @returns {Object} an error object
  */
 function handlePayments(order, orderNumber) {
-  var i = 0;
-  var paymentInstrument;
-  var paymentProcessor;
-  if (order.totalNetPrice !== 0.00) {
-    paymentInstruments = order.paymentInstruments;
+    var i = 0;
+    var paymentInstrument;
+    var paymentProcessor;
+    if (order.totalNetPrice !== 0.00) {
+        paymentInstruments = order.paymentInstruments;
 
-    if (paymentInstruments.length === 0) {
-      Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
-      result.error = true;
-    }
+        if (paymentInstruments.length === 0) {
+            Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
+            result.error = true;
+        }
 
-    if (!result.error) {
-      for (i = 0; i < paymentInstruments.length; i++) {
-        paymentInstrument = paymentInstruments[i];
-        paymentProcessor = PaymentMgr
+        if (!result.error) {
+            for (i = 0; i < paymentInstruments.length; i++) {
+                paymentInstrument = paymentInstruments[i];
+                paymentProcessor = PaymentMgr
                     .getPaymentMethod(paymentInstrument.paymentMethod)
                     .paymentProcessor;
-        if (paymentProcessor === null) {
-          Transaction.begin();
-          paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
-          Transaction.commit();
-        } else {
-          if (HookMgr.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-            authorizationResult = HookMgr.callHook(
+                if (paymentProcessor === null) {
+                    Transaction.begin();
+                    paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+                    Transaction.commit();
+                } else {
+                    if (HookMgr.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
+                        authorizationResult = HookMgr.callHook(
                             'app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                             'Authorize',
                             orderNumber,
@@ -55,24 +55,24 @@ function handlePayments(order, orderNumber) {
                             paymentProcessor,
                             order
                         );
-            result.authorizationResult = authorizationResult;
-          } else {
-            authorizationResult = HookMgr.callHook(
+                        result.authorizationResult = authorizationResult;
+                    } else {
+                        authorizationResult = HookMgr.callHook(
                             'app.payment.processor.default',
                             'Authorize'
                         );
-            result.authorizationResult = authorizationResult;
-          }
-          if (authorizationResult.error) {
-            Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
-            result.error = true;
-            break;
-          }
+                        result.authorizationResult = authorizationResult;
+                    }
+                    if (authorizationResult.error) {
+                        Transaction.wrap(function () {OrderMgr.failOrder(order, true);});
+                        result.error = true;
+                        break;
+                    }
+                }
+            }
         }
-      }
     }
-  }
-  return result;
+    return result;
 }
 
 /**
@@ -83,33 +83,33 @@ function handlePayments(order, orderNumber) {
  * @returns {dw.customer.CustomerPaymentInstrument} newly stored payment Instrument
  */
 function savePaymentInstrumentToWallet(billingData, currentBasket, customer, token) {
-  var wallet = customer.getProfile().getWallet();
+    var wallet = customer.getProfile().getWallet();
 
-  return Transaction.wrap(function () {
+    return Transaction.wrap(function () {
       // create payment instrument for credit card
-    var storedPaymentInstrument = wallet.createPaymentInstrument(
+        var storedPaymentInstrument = wallet.createPaymentInstrument(
       PaymentInstrument.METHOD_CREDIT_CARD);
-    var cardOwner = billingData.paymentInformation.cardOwner.value ?
+        var cardOwner = billingData.paymentInformation.cardOwner.value ?
     billingData.paymentInformation.cardOwner.value : currentBasket.billingAddress.fullName;
-    storedPaymentInstrument.setCreditCardHolder(
+        storedPaymentInstrument.setCreditCardHolder(
      cardOwner
       );
-    storedPaymentInstrument.setCreditCardNumber(
+        storedPaymentInstrument.setCreditCardNumber(
           billingData.paymentInformation.cardNumber.value
       );
-    storedPaymentInstrument.setCreditCardType(
+        storedPaymentInstrument.setCreditCardType(
           billingData.paymentInformation.cardType.value
       );
-    storedPaymentInstrument.setCreditCardExpirationMonth(
+        storedPaymentInstrument.setCreditCardExpirationMonth(
           billingData.paymentInformation.expirationMonth.value
       );
-    storedPaymentInstrument.setCreditCardExpirationYear(
+        storedPaymentInstrument.setCreditCardExpirationYear(
           billingData.paymentInformation.expirationYear.value
       );
-    storedPaymentInstrument.setCreditCardToken(token);
+        storedPaymentInstrument.setCreditCardToken(token);
 
-    return storedPaymentInstrument;
-  });
+        return storedPaymentInstrument;
+    });
 }
 
 
@@ -120,34 +120,34 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer, tok
  * @returns {void}
  */
 function sendConfirmationEmail(order, locale) {
-  var OrderModel = require('*/cartridge/models/order');
-  var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
-  var Locale = require('dw/util/Locale');
-  var gputil = require('*/cartridge/scripts/utils/gputil');
-  var orderModel;
-  var currentLocale = Locale.getLocale(locale);
-  var orderObject;
-  var emailObj;
-  gputil.orderUpdate(order);
-  orderModel = new OrderModel(order, {
-    countryCode: currentLocale.country, containerView: 'order' });
+    var OrderModel = require('*/cartridge/models/order');
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+    var Locale = require('dw/util/Locale');
+    var gputil = require('*/cartridge/scripts/utils/gputil');
+    var orderModel;
+    var currentLocale = Locale.getLocale(locale);
+    var orderObject;
+    var emailObj;
+    gputil.orderUpdate(order);
+    orderModel = new OrderModel(order, {
+        countryCode: currentLocale.country, containerView: 'order'});
 
-  orderObject = { order: orderModel };
+    orderObject = {order: orderModel};
 
-  emailObj = {
-    to: order.customerEmail,
-    subject: Resource.msg('subject.order.confirmation.email', 'order', null),
-    from: Site.current.getCustomPreferenceValue('customerServiceEmail') ||
+    emailObj = {
+        to: order.customerEmail,
+        subject: Resource.msg('subject.order.confirmation.email', 'order', null),
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') ||
     'no-reply@testorganization.com',
-    type: emailHelpers.emailTypes.orderConfirmation,
-    paymentMethod: order.paymentInstruments[0].paymentMethod
-  };
+        type: emailHelpers.emailTypes.orderConfirmation,
+        paymentMethod: order.paymentInstruments[0].paymentMethod
+    };
 
-  emailHelpers.sendEmail(emailObj, 'checkout/confirmation/confirmationEmail', orderObject);
+    emailHelpers.sendEmail(emailObj, 'checkout/confirmation/confirmationEmail', orderObject);
 }
 var output = {};
 Object.keys(base).forEach(function (key) {
-  output[key] = base[key];
+    output[key] = base[key];
 });
 
 output.handlePayments = handlePayments;

@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 'use strict';
 
 var server = require('server');
@@ -25,54 +24,54 @@ server.post('RefundTransaction',
 security.ValidateHeaders,
 server.middleware.https,
 function (req, res, next) {
-  var refundresult;
-  var order;
-  var ordertransactionid;
-  var amount;
-  var transactionData;
-  var canceldescription;
-  if (!(res.viewData.securityErrorMessage)) {
-    order = OrderMgr.getOrder(req.querystring.orderID);
-    if (!order) {
-      res.setStatusCode(200);
-      refundresult = Resource.msg('order.invalididerror', 'globalpay', null);
-    } else {
-      ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-      amount = ((order.totalGrossPrice) * 100).toFixed();
+    var refundresult;
+    var order;
+    var ordertransactionid;
+    var amount;
+    var transactionData;
+    var canceldescription;
+    if (!(res.viewData.securityErrorMessage)) {
+        order = OrderMgr.getOrder(req.querystring.orderID);
+        if (!order) {
+            res.setStatusCode(200);
+            refundresult = Resource.msg('order.invalididerror', 'globalpay', null);
+        } else {
+            ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+            amount = ((order.totalGrossPrice) * 100).toFixed();
 
     // check payment status
-      if (order.getPaymentStatus() === 2) {
-        transactionData = {
-          transaction_id: ordertransactionid,
-          amount: amount
-        };
-        refundresult = globalPayHelper.refund(transactionData);
-        if (refundresult === undefined || refundresult == null) {
-          res.setStatusCode(400);
-        } else if (refundresult.status) {
-          canceldescription = Resource.msg('order.refund.canceldecsription', 'globalpay', null);
-          Transaction.wrap(function () {
-            OrderMgr.cancelOrder(order);
-            order.setCancelDescription(canceldescription);
-          });
-        } else {
-          res.setStatusCode(400);
+            if (order.getPaymentStatus() === 2) {
+                transactionData = {
+                    transaction_id: ordertransactionid,
+                    amount: amount
+                };
+                refundresult = globalPayHelper.refund(transactionData);
+                if (refundresult === undefined || refundresult == null) {
+                    res.setStatusCode(400);
+                } else if (refundresult.status) {
+                    canceldescription = Resource.msg('order.refund.canceldecsription', 'globalpay', null);
+                    Transaction.wrap(function () {
+                        OrderMgr.cancelOrder(order);
+                        order.setCancelDescription(canceldescription);
+                    });
+                } else {
+                    res.setStatusCode(400);
+                }
+            } else if (order.status === 6) {
+                res.setStatusCode(200);
+                refundresult = Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
+            } else {
+                res.setStatusCode(200);
+                refundresult = {
+                    error: Resource.msg('order.refund.error', 'globalpay', null)
+                };
+            }
         }
-      } else if (order.status === 6) {
-        res.setStatusCode(200);
-        refundresult = Resource.msg('order.refund.alreadyrefunded', 'globalpay', null);
-      } else {
-        res.setStatusCode(200);
-        refundresult = {
-          error: Resource.msg('order.refund.error', 'globalpay', null)
-        };
-      }
     }
-  }
-  res.json({
-    refundresult: refundresult
-  });
-  next();
+    res.json({
+        refundresult: refundresult
+    });
+    next();
 });
 
 /**
@@ -89,57 +88,57 @@ server.post('CaptureTransaction',
 security.ValidateHeaders,
 server.middleware.https,
 function (req, res, next) {
-  var captureresult;
-  var ordertransactionid;
-  var amount;
-  var paymentID;
-  var order;
-  var transactionData;
-  if (!(res.viewData.securityErrorMessage)) {
-    order = OrderMgr.getOrder(req.querystring.orderID);
-    if (!order) {
-      res.setStatusCode(200);
-      captureresult = Resource.msg('order.invalididerror', 'globalpay', null);
-    } else {
-      ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-      amount = ((order.totalGrossPrice) * 100).toFixed();
-      paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
+    var captureresult;
+    var ordertransactionid;
+    var amount;
+    var paymentID;
+    var order;
+    var transactionData;
+    if (!(res.viewData.securityErrorMessage)) {
+        order = OrderMgr.getOrder(req.querystring.orderID);
+        if (!order) {
+            res.setStatusCode(200);
+            captureresult = Resource.msg('order.invalididerror', 'globalpay', null);
+        } else {
+            ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+            amount = ((order.totalGrossPrice) * 100).toFixed();
+            paymentID = order.paymentTransaction.paymentInstrument.custom.gp_paymentmethodid;
 
     // check payment status
-      if (order.getPaymentStatus() === 0) {
-        transactionData = {
-          transaction_id: ordertransactionid,
-          amount: amount,
-          capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
-          total_capture_count: 0,
-          payment_method: {
-            entry_mode: globalpayconstants.captureTransaction.entry_mode,
-            id: paymentID
-          }
-        };
-        captureresult = globalPayHelper.capture(transactionData);
-        if (captureresult.status != null) {
-          Transaction.wrap(function () {
-            order.setPaymentStatus(Order.PAYMENT_STATUS_PAID);
-          });
-        } else {
-          res.setStatusCode(400);
+            if (order.getPaymentStatus() === 0) {
+                transactionData = {
+                    transaction_id: ordertransactionid,
+                    amount: amount,
+                    capture_sequence: globalpayconstants.captureTransaction.capture_sequence,
+                    total_capture_count: 0,
+                    payment_method: {
+                        entry_mode: globalpayconstants.captureTransaction.entry_mode,
+                        id: paymentID
+                    }
+                };
+                captureresult = globalPayHelper.capture(transactionData);
+                if (captureresult.status != null) {
+                    Transaction.wrap(function () {
+                        order.setPaymentStatus(Order.PAYMENT_STATUS_PAID);
+                    });
+                } else {
+                    res.setStatusCode(400);
+                }
+            } else {
+                res.setStatusCode(200);
+                captureresult = {
+                    error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
+                };
+            }
         }
-      } else {
-        res.setStatusCode(200);
-        captureresult = {
-          error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
-        };
-      }
+    } else {
+        res.setStatusCode(400);
     }
-  } else {
-    res.setStatusCode(400);
-  }
 
-  res.json({
-    captureresult: captureresult
-  });
-  next();
+    res.json({
+        captureresult: captureresult
+    });
+    next();
 });
 
 /**
@@ -156,52 +155,52 @@ server.post('CancelTransaction',
  security.ValidateHeaders,
  server.middleware.https,
  function (req, res, next) {
-   var reverseresult;
-   var ordertransactionid;
-   var amount;
-   var order;
-   var transactionData;
-   var canceldescription;
-   if (!(res.viewData.securityErrorMessage)) {
-     order = OrderMgr.getOrder(req.querystring.orderID);
-     if (!order) {
-       res.setStatusCode(200);
-       reverseresult = Resource.msg('order.invalididerror', 'globalpay', null);
-     } else {
-       ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
-       amount = ((order.totalGrossPrice) * 100).toFixed();
-
-       if (order.getPaymentStatus() === 0) {
-         transactionData = {
-           transaction_id: ordertransactionid,
-           amount: amount
-         };
-         reverseresult = globalPayHelper.cancel(transactionData);
-         if (reverseresult === undefined || reverseresult == null) {
-           res.setStatusCode(400);
-         } else if (reverseresult.status) {
-           canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
-           Transaction.wrap(function () {
-             OrderMgr.cancelOrder(order);
-             order.setCancelDescription(canceldescription);
-           });
+     var reverseresult;
+     var ordertransactionid;
+     var amount;
+     var order;
+     var transactionData;
+     var canceldescription;
+     if (!(res.viewData.securityErrorMessage)) {
+         order = OrderMgr.getOrder(req.querystring.orderID);
+         if (!order) {
+             res.setStatusCode(200);
+             reverseresult = Resource.msg('order.invalididerror', 'globalpay', null);
          } else {
-           res.setStatusCode(400);
+             ordertransactionid = order.paymentTransaction.paymentInstrument.custom.gp_transactionid;
+             amount = ((order.totalGrossPrice) * 100).toFixed();
+
+             if (order.getPaymentStatus() === 0) {
+                 transactionData = {
+                     transaction_id: ordertransactionid,
+                     amount: amount
+                 };
+                 reverseresult = globalPayHelper.cancel(transactionData);
+                 if (reverseresult === undefined || reverseresult == null) {
+                     res.setStatusCode(400);
+                 } else if (reverseresult.status) {
+                     canceldescription = Resource.msg('order.revrese.canceldecsription', 'globalpay', null);
+                     Transaction.wrap(function () {
+                         OrderMgr.cancelOrder(order);
+                         order.setCancelDescription(canceldescription);
+                     });
+                 } else {
+                     res.setStatusCode(400);
+                 }
+             } else {
+                 res.setStatusCode(200);
+                 reverseresult = {
+                     error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
+                 };
+             }
          }
-       } else {
-         res.setStatusCode(200);
-         reverseresult = {
-           error: Resource.msg('order.capture.invalidorder', 'globalpay', null)
-         };
-       }
+     } else {
+         res.setStatusCode(400);
      }
-   } else {
-     res.setStatusCode(400);
-   }
-   res.json({
-     reverseresult: reverseresult
-   });
-   next();
+     res.json({
+         reverseresult: reverseresult
+     });
+     next();
  });
 
 module.exports = server.exports();

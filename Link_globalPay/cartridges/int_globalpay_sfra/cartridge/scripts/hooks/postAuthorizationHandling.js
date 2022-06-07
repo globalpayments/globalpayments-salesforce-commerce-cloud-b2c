@@ -13,16 +13,16 @@ var base = module.superModule;
  * @param {Object} result - Authorization Result
  */
 function postAuthorization(result) { // eslint-disable-line no-unused-vars
-  if ('error' in result && result.error) {
-    return result;
-  }
-  return;
+    if ('error' in result && result.error) {
+        return result;
+    }
+    return;
 }
 
 
 var output = {};
 Object.keys(base).forEach(function (key) {
-  output[key] = base[key];
+    output[key] = base[key];
 });
 
 output.postAuthorization = postAuthorization;

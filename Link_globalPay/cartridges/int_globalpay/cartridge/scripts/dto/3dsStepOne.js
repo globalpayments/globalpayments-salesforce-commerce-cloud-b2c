@@ -12,38 +12,38 @@ var BrowserData = require('*/cartridge/scripts/dto/nested/browserData');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var ThreeDsStepOneRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
-      threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Request),
-      methodUrlCompletionStatus: {
-        enumerable: true,
-        writable: true
-      },
-      authId: {
-        enumerable: true,
-        writable: true
-      },
-      merchantContactUrl: {
-        enumerable: true,
-        writable: true
-      },
-      order: AbstractResponse.getAccessorDescriptorWithConstructor(Order.Request),
-      paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
-      browserData: AbstractResponse.getAccessorDescriptorWithConstructor(BrowserData.Request)
+    init: function (requestObj) {
+        Object.defineProperties(this, {
+            threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Request),
+            methodUrlCompletionStatus: {
+                enumerable: true,
+                writable: true
+            },
+            authId: {
+                enumerable: true,
+                writable: true
+            },
+            merchantContactUrl: {
+                enumerable: true,
+                writable: true
+            },
+            order: AbstractResponse.getAccessorDescriptorWithConstructor(Order.Request),
+            paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
+            browserData: AbstractResponse.getAccessorDescriptorWithConstructor(BrowserData.Request)
 
-    });
+        });
 
-    this._super(requestObj);
-  },
-  getEndpoint: function () {
-    return this.prepareEndpoint(
+        this._super(requestObj);
+    },
+    getEndpoint: function () {
+        return this.prepareEndpoint(
                 'authentications/:authId/initiate',
-                { authId: this.authId }
+                {authId: this.authId}
             );
-  },
-  getHttpMethod: function () {
-    return 'POST';
-  }
+    },
+    getHttpMethod: function () {
+        return 'POST';
+    }
 });
 
 /**
@@ -56,35 +56,35 @@ var ThreeDsStepOneRequest = AbstractRequest.extend({
  * @param {obj} responseObj - object that contains fields from response.
  */
 var ThreeDsStepOneResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-      id: {
-        enumerable: true,
-        writable: true
-      },
-      timeCreated: {
-        enumerable: true,
-        writable: true
-      },
-      time_last_updated: {
-        enumerable: true,
-        writable: true
-      },
-      transactionType: {
-        enumerable: true,
-        writable: true
-      },
-      status: {
-        enumerable: true,
-        writable: true
-      },
-      threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response)
-    });
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+            id: {
+                enumerable: true,
+                writable: true
+            },
+            timeCreated: {
+                enumerable: true,
+                writable: true
+            },
+            time_last_updated: {
+                enumerable: true,
+                writable: true
+            },
+            transactionType: {
+                enumerable: true,
+                writable: true
+            },
+            status: {
+                enumerable: true,
+                writable: true
+            },
+            threeDs: AbstractResponse.getAccessorDescriptorWithConstructor(ThreeDs.Response)
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 module.exports = {
-  Request: ThreeDsStepOneRequest,
-  Response: ThreeDsStepOneResponse
+    Request: ThreeDsStepOneRequest,
+    Response: ThreeDsStepOneResponse
 };

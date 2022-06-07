@@ -12,38 +12,38 @@ var token;
 /**
  * @function getRequest hook is called whenever there is a new request on the site
  */
-exports.getRequest = function (basket, request) {
+exports.getRequest = function () {
     session.custom.applepaysession = 'yes';   // eslint-disable-line
-  var status = new Status(Status.OK);
-  var result = new ApplePayHookResult(status, null);
-  return result;
+    var status = new Status(Status.OK);
+    var result = new ApplePayHookResult(status, null);
+    return result;
 };
 
 exports.authorizeOrderPayment = function (order, responseData) {
-  var status = Status.ERROR;
-  var authResponseStatus;
-  var paymentMethod = require('dw/order/PaymentMgr').getPaymentMethod(paymentMethodID);
+    var status = Status.ERROR;
+    var authResponseStatus;
+    var paymentMethod = require('dw/order/PaymentMgr').getPaymentMethod(paymentMethodID);
 
     // eslint-disable-next-line
     Transaction.wrap(function () {
         //  lineItemCtnr.paymentInstrument field is deprecated.  Get default payment method.
-      var paymentInstrument = null;
+        var paymentInstrument = null;
         // eslint-disable-next-line
         if (!empty(order.getPaymentInstruments())) {
-          paymentInstrument = order.getPaymentInstruments()[0];
-          paymentInstrument.paymentTransaction.paymentProcessor = paymentMethod.getPaymentProcessor();
+            paymentInstrument = order.getPaymentInstruments()[0];
+            paymentInstrument.paymentTransaction.paymentProcessor = paymentMethod.getPaymentProcessor();
         } else {
-          return new Status(status);
+            return new Status(status);
         }
-      paymentInstrument.paymentTransaction.paymentProcessor = paymentMethod.getPaymentProcessor();
+        paymentInstrument.paymentTransaction.paymentProcessor = paymentMethod.getPaymentProcessor();
     });
 
    // service logic import
-  token = responseData.payment.token.paymentData;
-  authResponseStatus = globalpayAuthorization.Authorize(order, token);
-  if (authResponseStatus) {
-    status = Status.OK;
-  }
+    token = responseData.payment.token.paymentData;
+    authResponseStatus = globalpayAuthorization.Authorize(order, token);
+    if (authResponseStatus) {
+        status = Status.OK;
+    }
 
-  return new Status(status);
+    return new Status(status);
 };

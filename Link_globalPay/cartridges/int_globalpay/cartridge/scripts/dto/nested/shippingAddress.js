@@ -9,29 +9,29 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var ShippingAddressRequest = AbstractRequest.extend({
-  init: function (requestObj) {
-    Object.defineProperties(this, {
+    init: function (requestObj) {
+        Object.defineProperties(this, {
         // add more fields as per the Model here:
-      line1: {
-        enumerable: true,
-        writable: true
-      },
-      city: {
-        enumerable: true,
-        writable: true
-      },
-      postalCode: {
-        enumerable: true,
-        writable: true
-      },
-      country: {
-        enumerable: true,
-        writable: true
-      }
-    });
+            line1: {
+                enumerable: true,
+                writable: true
+            },
+            city: {
+                enumerable: true,
+                writable: true
+            },
+            postalCode: {
+                enumerable: true,
+                writable: true
+            },
+            country: {
+                enumerable: true,
+                writable: true
+            }
+        });
 
-    this._super(requestObj);
-  }
+        this._super(requestObj);
+    }
 });
 
 
@@ -40,15 +40,15 @@ var ShippingAddressRequest = AbstractRequest.extend({
  * @param {obj} responseObj - object that contains response.
  */
 var ShippingAddressResponse = AbstractResponse.extend({
-  init: function (responseObj) {
-    Object.defineProperties(this, {
-    });
+    init: function (responseObj) {
+        Object.defineProperties(this, {
+        });
 
-    this._super(responseObj);
-  }
+        this._super(responseObj);
+    }
 });
 
 module.exports = {
-  Request: ShippingAddressRequest,
-  Response: ShippingAddressResponse
+    Request: ShippingAddressRequest,
+    Response: ShippingAddressResponse
 };

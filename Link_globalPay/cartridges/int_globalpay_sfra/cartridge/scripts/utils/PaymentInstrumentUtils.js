@@ -13,61 +13,61 @@ var customer = require('dw/system/Customer');
 
 
 function applePaymentOrderUpdate(order, serviceResponse) {
-  var orderPlacementStatus;
-  var serverErrors;
+    var orderPlacementStatus;
+    var serverErrors;
 	// Update Service Response to the customer  paymentinstrument Object
-  if (serviceResponse.success) {
-    orderPlacementStatus = Transaction.wrap(function () {
-      if (OrderMgr.placeOrder(order) === Status.ERROR) {
-        OrderMgr.failOrder(order);
-        return false;
-      }
+    if (serviceResponse.success) {
+        orderPlacementStatus = Transaction.wrap(function () {
+            if (OrderMgr.placeOrder(order) === Status.ERROR) {
+                OrderMgr.failOrder(order);
+                return false;
+            }
 
-      order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
-      return true;
-    });
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+            return true;
+        });
 
-    if (orderPlacementStatus === Status.ERROR) {
-      return false;
+        if (orderPlacementStatus === Status.ERROR) {
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
-  serverErrors.push(
+    serverErrors.push(
 			Resource.msg('error.technical', 'checkout', null)
 		);
-  return false;
+    return false;
 }
 
 function removeDuplicates(formInfo) {
   // eslint-disable-next-line
   var i = 0;
-  var card;
-  var wallet = customer.getProfile().getWallet();
+    var card;
+    var wallet = customer.getProfile().getWallet();
   // eslint-disable-next-line
   var paymentInstruments = wallet.getPaymentInstruments(dw.order.PaymentInstrument.METHOD_CREDIT_CARD).toArray().sort(function (a, b) {
-    return b.getCreationDate() - a.getCreationDate();
+      return b.getCreationDate() - a.getCreationDate();
   });
-  var ccNumber = formInfo.cardNumber;
-  var isDuplicateCard = false;
-  var oldCard;
-  for (i = 0; i < paymentInstruments.length; i += 1) {
-    card = paymentInstruments[i];
-    if (card.creditCardExpirationMonth === formInfo.expirationMonth &&
+    var ccNumber = formInfo.cardNumber;
+    var isDuplicateCard = false;
+    var oldCard;
+    for (i = 0; i < paymentInstruments.length; i += 1) {
+        card = paymentInstruments[i];
+        if (card.creditCardExpirationMonth === formInfo.expirationMonth &&
        card.creditCardExpirationYear === formInfo.expirationYear
           && card.creditCardType === formInfo.cardType &&
            (card.getCreditCardNumber().indexOf(ccNumber.substring(ccNumber.length - 4)) > 0)) {
-      isDuplicateCard = true;
-      oldCard = card;
-      break;
+            isDuplicateCard = true;
+            oldCard = card;
+            break;
+        }
     }
-  }
-  if (isDuplicateCard) {
-    wallet.removePaymentInstrument(oldCard);
-  }
+    if (isDuplicateCard) {
+        wallet.removePaymentInstrument(oldCard);
+    }
 }
 
 
 module.exports = {
-  applePaymentOrderUpdate: applePaymentOrderUpdate,
-  removeDuplicates: removeDuplicates
+    applePaymentOrderUpdate: applePaymentOrderUpdate,
+    removeDuplicates: removeDuplicates
 };

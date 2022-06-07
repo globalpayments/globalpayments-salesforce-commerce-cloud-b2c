@@ -20,57 +20,57 @@ var Site = require('dw/system/Site');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
-  var preferences = globalPayPreferences.getPreferences();
-  var captureMode = preferences.captureMode;
-  var paymentForm = server.forms.getForm('billing');
-  var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
-  var currentSite = Site.getCurrent();
-  var error = true;
-  var googlePayData = {
-    account_name: globalpayconstants.googlePay.account_name,
-    channel: globalpayconstants.googlePay.channel,
-    type: globalpayconstants.googlePay.type,
-    capture_mode: captureMode.value,
-    amount: Math.ceil(order.totalGrossPrice.value * 100),
-    currency: order.currencyCode,
-    reference: order.orderNo,
-    country: Locale.getLocale(currentSite.defaultLocale).country,
-    payment_method: {
-      name: order.customerName,
-      entry_mode: globalpayconstants.googlePay.entryMode,
-      digital_wallet: {
-        provider: globalpayconstants.googlePay.provider,
-        payment_token: {
-          signature: token.signature,
-          protocolVersion: token.protocolVersion,
-          signedMessage: token.signedMessage
+    var preferences = globalPayPreferences.getPreferences();
+    var captureMode = preferences.captureMode;
+    var paymentForm = server.forms.getForm('billing');
+    var token = JSON.parse(paymentForm.creditCardFields.paymentToken.htmlValue);
+    var currentSite = Site.getCurrent();
+    var error = true;
+    var googlePayData = {
+        account_name: globalpayconstants.googlePay.account_name,
+        channel: globalpayconstants.googlePay.channel,
+        type: globalpayconstants.googlePay.type,
+        capture_mode: captureMode.value,
+        amount: Math.ceil(order.totalGrossPrice.value * 100),
+        currency: order.currencyCode,
+        reference: order.orderNo,
+        country: Locale.getLocale(currentSite.defaultLocale).country,
+        payment_method: {
+            name: order.customerName,
+            entry_mode: globalpayconstants.googlePay.entryMode,
+            digital_wallet: {
+                provider: globalpayconstants.googlePay.provider,
+                payment_token: {
+                    signature: token.signature,
+                    protocolVersion: token.protocolVersion,
+                    signedMessage: token.signedMessage
+                }
+            }
         }
-      }
-    }
-  };
+    };
 
-  var googlePayresp = globalPayHelper.gpay(googlePayData);
-  var serverErrors = [];
-  if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&
+    var googlePayresp = globalPayHelper.gpay(googlePayData);
+    var serverErrors = [];
+    if (typeof googlePayresp !== 'undefined' && 'status' in googlePayresp &&
   (googlePayresp.status !== globalpayconstants.googlePay.captureStatus
     && googlePayresp.status !== globalpayconstants.googlePay.authorizedStatus)) {
-    error = true;
-    if ('payment_method' in googlePayresp) { serverErrors.push(googlePayresp.message); }
-  } else {
-    try {
-      Transaction.wrap(function () {
+        error = true;
+        if ('payment_method' in googlePayresp) {serverErrors.push(googlePayresp.message);}
+    } else {
+        try {
+            Transaction.wrap(function () {
         // eslint-disable-next-line no-param-reassign
-        paymentInstrument.custom.gp_transactionid = googlePayresp.id;
-        paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
-        paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
-      });
-    } catch (e) {
-      error = true;
-      serverErrors.push(Resource.msg('error.technical', 'checkout', null));
+                paymentInstrument.custom.gp_transactionid = googlePayresp.id;
+                paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+                paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
+            });
+        } catch (e) {
+            error = true;
+            serverErrors.push(Resource.msg('error.technical', 'checkout', null));
+        }
     }
-  }
 
-  return { serverErrors: serverErrors, error: error, googlePayresp: googlePayresp };
+    return {serverErrors: serverErrors, error: error, googlePayresp: googlePayresp};
 }
 
 /**
@@ -80,14 +80,14 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
  * @return {Object} returns an error object
  */
 function Handle() {
-  var cardErrors = {};
-  var serverErrors = [];
-  Transaction.wrap(function () {
+    var cardErrors = {};
+    var serverErrors = [];
+    Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
-    PaymentInstrumentUtils.removeExistingPaymentInstruments(
+        PaymentInstrumentUtils.removeExistingPaymentInstruments(
       Resource.msg('paymentmethodname.googlepay', 'globalpay', null));
-  });
-  return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
+    });
+    return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }
 
 
