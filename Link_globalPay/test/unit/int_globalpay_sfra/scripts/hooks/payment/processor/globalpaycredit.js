@@ -179,9 +179,9 @@ var billingData={
 
 describe('creditcard', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
 
-    var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaycredit', {
+    var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/gp_credit', {
         '*/cartridge/scripts/util/collections': {},
         'dw/order/PaymentMgr': {},
         '*/cartridge/scripts/checkout/checkoutHelpers':{
@@ -189,17 +189,18 @@ describe('creditcard', function () {
                 return param;
             }
         },
-        'dw/order/PaymentInstrument':{},
+        'dw/order/PaymentInstrumentreedsstepone':{},
         '*/cartridge/scripts/util/array':{
             find:function(param)
             {
                 return paymentInstrument;
             }
         },
+        'dw/order/PaymentInstrument':{},
         'dw/order/PaymentStatusCodes':{},
-        '*/cartridge/scripts/util/PaymentInstrumentUtils':
+        '*/cartridge/scripts/util/paymentInstrumentUtils':
         {
-            RemoveExistingPaymentInstruments:function(param)
+            removeExistingPaymentInstruments:function(param)
             {
                 return  paymentInstrument ;
             }
@@ -227,7 +228,7 @@ describe('creditcard', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+        '*/cartridge/scripts/constants/globalPayConstant': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;

@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
-var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/helpers/globalPayHelper', {
+var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/helpers/globalPayHelpers', {
 '*/cartridge/scripts/dto/authentication' : {
     Request : function(){
         return{
@@ -290,6 +290,37 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
             },
             setPaymentMethod : function (){
                 return 'payment_method';
+            },
+        }
+    }
+},
+'*/cartridge/scripts/dto/3dsSecure':
+{
+    Request : function(){
+        return {
+            setToken : function () {
+                return 'token';
+            },
+            setThreeDs : function () {
+                return 'three_ds';
+            },
+            setAuthId : function () {
+                return 'auth_id';
+            },
+            setMethodUrlCompletionStatus : function(){
+                return 'method_url_completion_status';
+            },
+            setMerchantContactUrl : function () {
+                return 'merchant_contact_url';
+            },
+            setOrder : function() {
+                return 'order';
+            },
+            setPaymentMethod : function() {
+                return 'payment_method';
+            },
+            setBrowserData : function () {
+                return 'browser_data';
             },
         }
     }

@@ -17,14 +17,16 @@ var serviceResponse = {
 
 
 describe('PaymentInstrumentUtils', function () {
-var paymentUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/PaymentInstrumentUtil', {
+var paymentUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/PaymentInstrumentUtils', {
     'dw/system/Transaction': {
         wrap: function (arg) { arg(); return true; }
       },      
+      'dw/web/Resource':{},
       'dw/system/Status': {
         'ERROR' :false
       },
       'dw/order/Order': {},
+      'dw/system/Customer':{},
       'dw/order/OrderMgr': {
         placeOrder: function (param) {
           return param;
