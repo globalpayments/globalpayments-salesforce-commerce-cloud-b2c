@@ -104,7 +104,6 @@ describe('billingForm', function () {
                       assert.equal(response.statusCode, 200, 'Expected CheckoutServices-SubmitPayment statusCode to be 200.');
                       assert.containSubset(strippedBody.address, ExpectedResBody.address, 'Expecting actual response address to be equal match expected response address');
                       assert.isFalse(strippedBody.error);    
-                        cookieString = cookieJar.getCookieString(myRequest.url);
                     });
             });
   });

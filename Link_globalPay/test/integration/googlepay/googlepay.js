@@ -75,7 +75,7 @@ describe('billingForm', function () {
             // step2 : update shipping method
               return request(myRequest);
             }).then(function (initResponse) {
-              assert.equal(initResponse.statusCode, 200, 'Expected add to Cart request statusCode to be 200.');
+              assert.equal(initResponse.statusCode, 200, 'Expected UpdateShippingMethodsList request statusCode to be 200.');
               cookieString = cookieJar.getCookieString(myRequest.url);
               myRequest.url = config.baseUrl + '/CSRF-Generate';
               var cookie = request.cookie(cookieString);
