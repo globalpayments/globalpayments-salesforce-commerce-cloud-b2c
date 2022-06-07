@@ -43,43 +43,9 @@ function handlePayments(req, res, next) {
     var gputil = require('*/cartridge/scripts/utils/gputil');
     var URLUtils = require('dw/web/URLUtils');
     var serverErrors = [];
-    var formFieldErrors = [];
-    var paymentFormResult;
     billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
     if (Object.keys(billingFormErrors).length) {
-  var billingFormErrors = {};
-  var viewData = {};
-  var Transaction = require('dw/system/Transaction');
-  var BasketMgr = require('dw/order/BasketMgr');
-  var paymentForm = server.forms.getForm('billing');
-  var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-  var PaymentManager = require('dw/order/PaymentMgr');
-  var HookManager = require('dw/system/HookMgr');
-  var Resource = require('dw/web/Resource');
-  var currentBasket = BasketMgr.getCurrentBasket();
-  var billingAddress = currentBasket.billingAddress;
-  var billingForm = server.forms.getForm('billing');
-  var billingData;
-  var Locale = require('dw/util/Locale');
-  var OrderModel = require('*/cartridge/models/order');
-  var AccountModel = require('*/cartridge/models/account');
-  var usingMultiShipping;
-  var currentLocale = Locale.getLocale(req.locale.id);
-  var basketModel;
-  var accountModel;
-  var renderedStoredPaymentInstrument;
-  var paymentMethodIdValue;
-  var order;
-  var paymentProcessor;
-  var handlePaymentResult;
-  var gputil = require('*/cartridge/scripts/utils/gputil');
-  var URLUtils = require('dw/web/URLUtils');
-  var serverErrors = [];
-  var paymentFormResult;
-  billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
-
-  if (Object.keys(billingFormErrors).length) {
         // respond with form data and errors
         res.json({
             form: paymentForm,
@@ -131,9 +97,8 @@ function handlePayments(req, res, next) {
         paymentMethodIdValue = paymentForm.paymentMethod.value;
 
         paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
-
         if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-            paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
+            var paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                 'Handle',
                 currentBasket,
                 req
@@ -141,6 +106,7 @@ function handlePayments(req, res, next) {
         } else {
             paymentFormResult = HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
         }
+
         order = COHelpers.createOrder(currentBasket);
 
          // Handles payment authorization
@@ -213,25 +179,6 @@ server.prepend(
             this.emit('route:Complete', req, res);
             return;
         }
-      var PaymentManager = require('dw/order/PaymentMgr');
-      var HookManager = require('dw/system/HookMgr');
-      var Resource = require('dw/web/Resource');
-      var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-      var viewData = {};
-      var paymentForm = server.forms.getForm('billing');
-      var paymentFormResult;
-      var billingFormErrors;
-      var contactInfoFormErrors;
-      var formFieldErrors = [];
-      var paymentMethodIdValue;
-      var paymentProcessor;
-      var paymentReference;
-
-      if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
-        handlePayments(req, res, next);
-        this.emit('route:Complete', req, res);
-        return;
-      }
         // verify billing form data
         billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
         contactInfoFormErrors = COHelpers.validateFields(paymentForm.contactInfoFields);
@@ -308,92 +255,11 @@ server.prepend(
                 htmlName: viewData.storedPaymentUUID
             };
         } else {
+            var paymentReference = paymentForm.creditCardFields.paymentId != null ? JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference : '';
             viewData.paymentInformation.paymentId = {
-                value: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference,
-                htmlName: JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference
+                value: paymentReference, 
+                htmlName: paymentReference
             };
-        viewData.paymentInformation.paymentId = {
-          value: viewData.storedPaymentUUID,
-          htmlName: viewData.storedPaymentUUID
-        };
-      } else {
-        paymentReference = paymentForm.creditCardFields.paymentId != null ? JSON.parse(paymentForm.creditCardFields.paymentId.htmlValue).paymentReference : '';
-        viewData.paymentInformation.paymentId = {
-          value: paymentReference,
-          htmlName: paymentReference
-        };
-      }
-
-      viewData.paymentInformation.authId = {
-        value: req.form.authId,
-        htmlName: req.form.authId
-      };
-      viewData.paymentInformation.isthreeds = {
-        value: req.form.isthreeds,
-        htmlName: req.form.isthreeds
-      };
-      viewData.paymentInformation.cardOwner = {
-        value: paymentForm.creditCardFields.cardOwner.value,
-        htmlName: paymentForm.creditCardFields.cardOwner.value
-      };
-
-      res.setViewData(viewData);
-
-      this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var BasketMgr = require('dw/order/BasketMgr');
-        var HookMgr = require('dw/system/HookMgr');
-        var PaymentMgr = require('dw/order/PaymentMgr');
-        var Transaction = require('dw/system/Transaction');
-        var AccountModel = require('*/cartridge/models/account');
-        var OrderModel = require('*/cartridge/models/order');
-        var URLUtils = require('dw/web/URLUtils');
-        var Locale = require('dw/util/Locale');
-        var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-        var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
-        var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
-        var validatedProducts;
-        var paymentMethodID;
-        var result;
-        var processor;
-        var calculatedPaymentTransaction;
-        var noPaymentMethod = {};
-        var usingMultiShipping;
-        var currentBasket = BasketMgr.getCurrentBasket();
-        var billingData = res.getViewData();
-        var billingAddress = currentBasket.billingAddress;
-        var billingForm = server.forms.getForm('billing');
-        var currentLocale = Locale.getLocale(req.locale.id);
-        var basketModel;
-        var accountModel;
-        var renderedStoredPaymentInstrument;
-        var threeDRedirectUrl;
-        var authenticationData;
-
-        if (!currentBasket) {
-          delete billingData.paymentInformation;
-
-          res.json({
-            error: true,
-            cartError: true,
-            fieldErrors: [],
-            serverErrors: [],
-            redirectUrl: URLUtils.url('Cart-Show').toString()
-          });
-          return;
-        }
-
-        validatedProducts = validationHelpers.validateProducts(currentBasket);
-        if (validatedProducts.error) {
-          delete billingData.paymentInformation;
-
-          res.json({
-            error: true,
-            cartError: true,
-            fieldErrors: [],
-            serverErrors: [],
-            redirectUrl: URLUtils.url('Cart-Show').toString()
-          });
-          return;
         }
 
         viewData.paymentInformation.authId = {
@@ -408,7 +274,7 @@ server.prepend(
             value: paymentForm.creditCardFields.cardOwner.value,
             htmlName: paymentForm.creditCardFields.cardOwner.value
         };
-
+      
         res.setViewData(viewData);
 
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
@@ -438,8 +304,6 @@ server.prepend(
             var basketModel;
             var accountModel;
             var renderedStoredPaymentInstrument;
-            var threeDRedirectUrl;
-            var authenticationData;
 
             if (!currentBasket) {
                 delete billingData.paymentInformation;
@@ -597,8 +461,8 @@ server.prepend(
 
             delete billingData.paymentInformation;
 
-            threeDRedirectUrl = URLUtils.https('GlobalPay-ThreedsRedirect').toString();
-            authenticationData = {
+            var threeDRedirectUrl = URLUtils.https('GlobalPay-ThreedsRedirect').toString();
+            var authenticationData = {
                 threeDRedirectUrl: threeDRedirectUrl
             };
 
