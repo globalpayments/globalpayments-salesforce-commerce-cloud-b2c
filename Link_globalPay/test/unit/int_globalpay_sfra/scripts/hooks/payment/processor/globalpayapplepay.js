@@ -22,7 +22,7 @@ var paymentdata = {
 
 describe('apple pay', function () {
   var orderNumber = '12345';
-  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
 
   var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
     '*/cartridge/scripts/util/collections': {},
@@ -32,8 +32,8 @@ describe('apple pay', function () {
           return param;
       }
   },
-    '*/cartridge/scripts/utils/PaymentInstrumentUtils':{
-        ApplePaymentOrderUpdate: function (param) {
+    '*/cartridge/scripts/utils/paymentInstrumentUtils':{
+      applePaymentOrderUpdate:function(order, applePayresp) {
             return true;
           }
     },
@@ -63,7 +63,7 @@ describe('apple pay', function () {
       }
     },
     'dw/util/StringUtils': {},
-    '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+    '*/cartridge/scripts/constants/globalPayConstant': gpconst,
     'dw/util/Locale': {
       getLocale: function (param) {
         return param;
@@ -108,7 +108,7 @@ describe('apple pay', function () {
   });
   describe('Authorize', function () {
     it('Should process the apple pay with success result', function () {
-      var result = gpapplepayProcessor.Authorize(order, paymentdata);
+      var result = gpapplepayProcessor.authorize(order, paymentdata);
       assert.isTrue(result);
     });
   });
