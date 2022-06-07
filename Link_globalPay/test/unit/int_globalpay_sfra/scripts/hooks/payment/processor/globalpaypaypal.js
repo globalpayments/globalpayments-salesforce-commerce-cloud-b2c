@@ -3,7 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-
+var paypal = sinon.stub();
 var paymentInstrument = {
     creditCardNumberLastDigits: '1111',
     creditCardHolder: 'The Muffin Man',
@@ -12,13 +12,20 @@ var paymentInstrument = {
     maskedCreditCardNumber: '************1111',
     paymentMethod: 'CREDIT_CARD',
     creditCardExpirationMonth: 1,
+    custom:{
+        gp_transactionid:''
+    },
     paymentTransaction: {
         amount: {
             value: 0
-        }
+        },
+        setTransactionID(){
+            '12345'
+        },
+        setPaymentProcessor(){} 
     }
 };
-var paymentProcessor = {};
+var paymentProcessor = paymentInstrument;
 var order = {
     totalGrossPrice: 10.00,
     currencyCode: 'US',
@@ -28,11 +35,11 @@ var order = {
 
 describe('paypal', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayConstant', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
 
     var paypalProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaypaypal', {
         '*/cartridge/scripts/util/collections': {},
-        '*/cartridge/scripts/util/paymentInstrumentUtil':{},
+        '*/cartridge/scripts/util/PaymentInstrumentUtils':{},
         'dw/order/PaymentInstrument': {},
         'dw/order/PaymentMgr': {},
         'dw/order/PaymentStatusCodes': {},
@@ -64,7 +71,7 @@ describe('paypal', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayConstant': gpconst,
+        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;
@@ -97,25 +104,39 @@ describe('paypal', function () {
                 };
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
-            paypal: function () {
-                return {
-                    success: true,
-                    status: 'AUTHORIZED',
-                }
-            }
+        '*/cartridge/scripts/helpers/globalPayHelpers': {
+            paypal:paypal 
         },
         '*/cartridge/scripts/services/globalPayService': {}
     });
     describe('Authorize', function () {
         it('Should process the paypal with success result', function () {
+            paypal.returns(
+                {
+                    success: true,
+                    status: 'AUTHORIZED',
+                    id:"AUT_id"
+                }
+            )
             var result = paypalProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
             var paypalresp = result.paypalresp;
             assert.isTrue(paypalresp.success);
-
             assert.equal(paypalresp.status, 'AUTHORIZED');
         });
-
+        it('Should process the paypal with error result', function () {
+            paypal.returns(
+                {
+                    success: false,
+                    status: 'NOT_AUTHORIZED',
+                    error:{detailedErrorDescription:"some error"}
+                }
+            )
+            var result = paypalProcessor.Authorize(orderNumber, paymentInstrument, paymentProcessor, order);
+            var paypalresp = result.paypalresp;
+            assert.isTrue(result.error);
+            assert.isFalse(paypalresp.success);
+            assert.equal(paypalresp.status, 'NOT_AUTHORIZED');
+        });
 
     });
 });

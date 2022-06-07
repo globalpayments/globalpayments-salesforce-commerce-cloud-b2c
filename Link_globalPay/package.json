@@ -9,7 +9,8 @@
     "uploadCartridge": "sgmf-scripts --uploadCartridge int_globalpay_sfra",
     "compile:js": "sgmf-scripts --compile js",
     "compile:scss": "sgmf-scripts --compile css",
-    "test": "nyc  mocha test/**/*.js"
+    "test": "nyc  mocha test/unit/**/*.js",
+    "test:integration": "sgmf-scripts --integration 'test/integration/**/*.js'"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
