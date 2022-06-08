@@ -79,10 +79,6 @@ var ThreeDsResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-            enrolledStatus: {
-                enumerable: true,
-                writable: true
-            },
             eci: {
                 enumerable: true,
                 writable: true

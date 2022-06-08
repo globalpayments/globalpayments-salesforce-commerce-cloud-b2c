@@ -20,7 +20,7 @@ var AuthenticationRequest = AbstractRequest.extend({
             id: {
                 enumerable: true,
                 set: createSetter('id'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.id);
                 }
             }

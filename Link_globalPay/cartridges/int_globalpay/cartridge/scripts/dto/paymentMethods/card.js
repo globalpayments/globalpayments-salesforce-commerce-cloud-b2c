@@ -20,21 +20,21 @@ var CardRequest = AbstractRequest.extend({
             number: {
                 enumerable: true,
                 set: createSetter('number'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.number);
                 }
             },
             expiryMonth: {
                 enumerable: true,
                 set: createSetter('expiryMonth'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.expiryMonth);
                 }
             },
             expiryYear: {
                 enumerable: true,
                 set: createSetter('expiryYear'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.expiryYear);
                 }
             },

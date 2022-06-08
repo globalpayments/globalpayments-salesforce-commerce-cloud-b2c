@@ -5,11 +5,6 @@ var AbstractRequest = require('*/cartridge/scripts/dto/base/abstractRequest');
 var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 var Action = require('*/cartridge/scripts/dto/nested/action');
 
-var createSetter = function (fieldName) {
-    return function (val) {
-        this.__[fieldName] = val;
-    };
-};
 /**
  * Forms all the fields required to send for DeletePaymentToken request.
  * @param {obj} requestObj - object that contains fields for request to be sent.

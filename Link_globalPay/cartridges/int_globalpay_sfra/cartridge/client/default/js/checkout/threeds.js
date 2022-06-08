@@ -90,6 +90,7 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
                     ) {
                         $('.cancel-new-payment').removeClass('checkout-hidden');
                     }
+                    // eslint-disable-next-line no-empty
                     if ($('.tab-pane.active').attr('id') !== 'paypal-content') {}
 
                     defer.resolve(data);

@@ -38,6 +38,7 @@ function getService() {
 
             try {
                 serviceResponse = JSON.parse(response.text);
+            // eslint-disable-next-line no-empty
             } catch (e) {
             }
 
@@ -71,6 +72,7 @@ function executeRequest(requestObject, responseClass) {
 
         try {
             errorObject = JSON.parse(serviceResult.getErrorMessage());
+        // eslint-disable-next-line no-empty
         } catch (e) {}
     }
 

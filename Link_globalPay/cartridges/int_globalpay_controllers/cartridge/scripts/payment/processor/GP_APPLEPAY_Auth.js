@@ -4,7 +4,6 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var error;
 
 /**
  * Authorizes a payment using a apple pay.
@@ -54,7 +53,6 @@ function Authorize(order, paymentdata) {
     var applePayresp = globalPayHelper.applePay(applePayData);
     var orderUpdateResult = PaymentInstrumentUtils.applePaymentOrderUpdate(order, applePayresp);
     if (!orderUpdateResult) {
-        error = true;
         serverErrors.push(
                  Resource.msg('error.technical', 'checkout', null)
              );

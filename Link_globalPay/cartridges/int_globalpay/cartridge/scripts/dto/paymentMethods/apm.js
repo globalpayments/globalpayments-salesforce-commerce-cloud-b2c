@@ -19,7 +19,7 @@ var ApmRequest = AbstractRequest.extend({
             provider: {
                 enumerable: true,
                 set: createSetter('provider'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.provider);
                 }
             }
@@ -48,10 +48,6 @@ var ApmResponse = AbstractResponse.extend({
                 writable: true
             },
             provider_redirect_url: {
-                enumerable: true,
-                writable: true
-            },
-            provider: {
                 enumerable: true,
                 writable: true
             },

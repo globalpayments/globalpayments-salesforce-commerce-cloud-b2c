@@ -14,7 +14,7 @@ var currentBasket = BasketMgr.getCurrentBasket();
  * @param res -- resp object
  * @return Object -- authentication object
  */
-function authenticationData(req, res) {
+function authenticationData(req) {
     var requestBodyAsString  = req.httpParameterMap.requestBodyAsString;
     var body = JSON.parse(requestBodyAsString);
 
@@ -70,7 +70,7 @@ function authenticationData(req, res) {
 
 }
 
-function initiationData(req, res) {
+function initiationData(req) {
     var requestBodyAsString  = req.httpParameterMap.requestBodyAsString;
     var body = JSON.parse(requestBodyAsString);
     var browserData = JSON.parse(requestBodyAsString).browserData;
@@ -108,7 +108,6 @@ function initiationData(req, res) {
                 javascript_enabled: browserData.javascriptEnabled,
                 language: browserData.language,
                 screen_height: browserData.screenHeight,
-                language: browserData.language,
                 screen_width: browserData.screenWidth,
                 challenge_window_size: challengeWindow.windowSize,
                 timezone: browserData.timezoneOffset,
@@ -147,7 +146,7 @@ function initiationData(req, res) {
     return threeDSResponse;
 }
 //get threeD secure one card authentication status
-function getAuthenticationResult(req, res) {
+function getAuthenticationResult(req) {
     var paRes = req.httpParameterMap.PaRes.value;
     var authId = req.httpParameterMap.MD.value;
     var authenticationData = {
