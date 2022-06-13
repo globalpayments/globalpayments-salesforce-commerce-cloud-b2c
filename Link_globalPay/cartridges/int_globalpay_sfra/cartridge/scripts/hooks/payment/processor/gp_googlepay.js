@@ -58,6 +58,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         if ('payment_method' in googlePayresp) {serverErrors.push(googlePayresp.message);}
     } else {
         try {
+            error = false;
             Transaction.wrap(function () {
         // eslint-disable-next-line no-param-reassign
                 paymentInstrument.custom.gp_transactionid = googlePayresp.id;
