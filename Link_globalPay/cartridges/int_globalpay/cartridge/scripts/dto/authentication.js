@@ -75,14 +75,6 @@ var AuthenticationResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-            notifications: {
-                enumerable: true,
-                writable: true
-            },
-            action: {
-                enumerable: true,
-                writable: true
-            },
             id: {
                 enumerable: true,
                 writable: true

@@ -77,10 +77,6 @@ var AuthorizeResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
-            action: {
-                enumerable: true,
-                writable: true
-            },
             // add more fields as per the Model here:
             action: AbstractResponse.getAccessorDescriptorWithConstructor(Action.Response),
             paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Response)

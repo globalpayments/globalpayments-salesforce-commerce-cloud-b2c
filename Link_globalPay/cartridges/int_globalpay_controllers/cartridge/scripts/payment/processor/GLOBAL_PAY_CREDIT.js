@@ -116,7 +116,6 @@ function getTokenbyUUID(req, uuidToken) {
         if (card.UUID === uuidToken) {
             creditCardToken = card.creditCardToken;
             return card.creditCardToken;
-            break;
         }
     }
     return creditCardToken;
@@ -178,48 +177,6 @@ function Authorize(args) {
 
 
 /**
- * Save the credit card information to login account if save card option is selected
- * @param {Object} req - The request object
- * @param {dw.order.Basket} basket - The current basket
- * @param {Object} billingData - payment information
- */
-function savePaymentInformation(basket, billingData) {
-    var CustomerMgr = require('dw/customer/CustomerMgr');
-
-    if (customer.authenticated && customer.registered
-        && billingData.saveCard
-    ) {
-        var customer = CustomerMgr.getCustomerByCustomerNumber(
-            req.currentCustomer.profile.customerNo
-        );
-        var token = updateToken(billingData.paymentInformation.paymentId.value);
-        var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
-            billingData,
-            basket,
-            customer,
-            token
-        );
-
-        req.currentCustomer.wallet.paymentInstruments.push({
-            creditCardHolder: saveCardResult.creditCardHolder,
-            maskedCreditCardNumber: saveCardResult.maskedCreditCardNumber,
-            creditCardType: saveCardResult.creditCardType,
-            creditCardExpirationMonth: saveCardResult.creditCardExpirationMonth,
-            creditCardExpirationYear: saveCardResult.creditCardExpirationYear,
-            UUID: saveCardResult.UUID,
-            creditCardNumber: Object.hasOwnProperty.call(
-                saveCardResult,
-                globalpayconstants.creditCardPay.CreditCardNumber
-            )
-                ? saveCardResult.creditCardNumber
-                : null,
-            raw: saveCardResult
-        });
-    }
-}
-
-
-/**
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
@@ -256,7 +213,7 @@ function updateToken(paymentData) {
     if (!empty(tokenization) && !empty(tokenization.id)) {
         return tokenization;
     }
-    tokenization.error;
+    return tokenization.error;
 }
 /*
  * Module exports

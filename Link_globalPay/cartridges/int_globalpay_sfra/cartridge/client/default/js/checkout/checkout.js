@@ -298,7 +298,6 @@ var threeds = require('./threeds');
 
                         const {
                             checkVersion,
-                            getBrowserData,
                             initiateAuthentication,
                             ChallengeWindowSize,
                         } = GlobalPayments.ThreeDSecure;
@@ -325,6 +324,7 @@ var threeds = require('./threeds');
                                 authenticationData.status = 'undefined';
                                 authenticationData.isthreedsone =  true;
                                 threeds.handle(versionCheckData, authenticationData ,paymentForm, defer);
+                            // eslint-disable-next-line no-empty
                             } else if (versionCheckData.error) {
 
                             } else {
@@ -347,14 +347,15 @@ var threeds = require('./threeds');
                                     }).then(function(authenticationData) {
                                         // invoking ajax
                                         threeds.handle(versionCheckData, authenticationData,paymentForm, defer);
-                                    }).catch(function(error){
+                                    }).catch(function(){
                                         $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                                     });
+                                // eslint-disable-next-line no-empty
                                 } catch (e) {
                                    
                                 }
                             }
-                        }).catch(function(error){
+                        }).catch(function(){
                             $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                         });
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
@@ -604,7 +605,7 @@ var threeds = require('./threeds');
                 // Handle add payment and back to saved cards for login flow and 
                 // Handle next step button and save card checkbox
                 //
-                $(document).on('click', '.saved-payment-instrument', function (e) {
+                $(document).on('click', '.saved-payment-instrument', function () {
                     $('.next-step-button .submit-payment').removeAttr('disabled');
                     $('.gpayerror').text('');
                 });

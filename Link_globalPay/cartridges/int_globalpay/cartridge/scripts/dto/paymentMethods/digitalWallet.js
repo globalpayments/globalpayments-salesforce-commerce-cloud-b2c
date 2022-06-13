@@ -20,7 +20,7 @@ var DigitalWalletRequest = AbstractRequest.extend({
             provider: {
                 enumerable: true,
                 set: createSetter('provider'),
-                get: function (val) {
+                get: function () {
                     return String(this.__.provider);
                 }
             },
