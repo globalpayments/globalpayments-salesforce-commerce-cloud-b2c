@@ -71,7 +71,7 @@ function Authorize(args) {
     var serverErrors = [];
     if (!empty(paypalresp) && 'success' in paypalresp && !paypalresp.success) {
         var error = true;
-        if ('detailedErrorDescription' in authorization) {serverErrors.push(authorization.error.detailedErrorDescription);}
+        if ('detailedErrorDescription' in paypalresp) {serverErrors.push(paypalresp.error.detailedErrorDescription);}
     } else {
         try {
             Transaction.wrap(function () {
