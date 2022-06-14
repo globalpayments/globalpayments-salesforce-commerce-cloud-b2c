@@ -98,13 +98,13 @@ function handlePayments(req, res, next) {
 
         paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
         if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
-            var paymentFormResult = HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
+            HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                 'Handle',
                 currentBasket,
                 req
             );
         } else {
-            paymentFormResult = HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
+            HookManager.callHook('app.payment.form.processor.default_form_processor', 'processForm');
         }
 
         order = COHelpers.createOrder(currentBasket);
