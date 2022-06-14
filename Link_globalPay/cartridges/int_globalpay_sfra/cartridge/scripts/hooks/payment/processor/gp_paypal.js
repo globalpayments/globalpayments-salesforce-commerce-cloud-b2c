@@ -97,7 +97,7 @@ function Handle() {
  */
 function Capture(order) {
     var payPalCapture = {
-        transactionId: order.paymentInstrument.custom.gp_transactionid
+        transactionId: order.paymentInstruments.length > 0 ? order.paymentInstruments[0].custom.gp_transactionid : ''
     };
     var payPalCaptureResp = globalPayHelper.payPalCapture(payPalCapture);
     return payPalCaptureResp;
