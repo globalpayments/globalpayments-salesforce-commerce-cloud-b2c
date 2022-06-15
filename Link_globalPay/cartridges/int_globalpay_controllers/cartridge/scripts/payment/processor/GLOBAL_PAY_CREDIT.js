@@ -157,6 +157,7 @@ function Authorize(args) {
         error = true;
         serverErrors.push(authorization.error.detailedErrorDescription);
     } else if ('status' in authorization && authorization.status === globalpayconstants.creditCardPay.declinedStatus) {
+        error = true;
         serverErrors.push(Resource.msg('checkout.status.declined', 'globalpay', null));
     } else {
         try {
