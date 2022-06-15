@@ -12,7 +12,7 @@ var OrderMgr = require('dw/order/OrderMgr');
  * @param {returns} - json
  * @param {serverfunction} - post
  */
-server.use('PayPalReturn', function (req, res, next) {
+server.use('PayPalReturn', server.middleware.https, function (req, res, next) {
     var gputil = require('*/cartridge/scripts/utils/gputil');
     var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
@@ -47,7 +47,7 @@ server.use('PayPalReturn', function (req, res, next) {
  * @param {returns} - json
  * @param {serverfunction} - post
  */
-server.use('PayPalCancel', function (req, res, next) {
+server.use('PayPalCancel', server.middleware.https, function (req, res, next) {
     var orderId;
     var order;
     res.render('globalpay/threeds');
@@ -69,7 +69,7 @@ server.use('PayPalCancel', function (req, res, next) {
  * @param {returns} - json
  * @param {serverfunction} - post
  */
-server.use('PayPalStatus', function (req, res, next) {
+server.use('PayPalStatus', server.middleware.https, function (req, res, next) {
     res.render('globalpay/threeds');
     return next();
 });
