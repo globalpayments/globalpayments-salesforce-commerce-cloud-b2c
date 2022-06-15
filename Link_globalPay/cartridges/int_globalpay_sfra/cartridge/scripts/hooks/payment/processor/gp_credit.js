@@ -51,13 +51,12 @@ function processForm(req, paymentForm, viewFormData) {
         },
         expirationMonth: {
             value: parseInt(
-                paymentForm.creditCardFields.expirationMonth.selectedOption,
-                10
+                paymentForm.creditCardFields.expirationMonth.selectedOption
             ),
             htmlName: paymentForm.creditCardFields.expirationMonth.htmlName
         },
         expirationYear: {
-            value: parseInt(paymentForm.creditCardFields.expirationYear.value, 10),
+            value: parseInt(paymentForm.creditCardFields.expirationYear.value),
             htmlName: paymentForm.creditCardFields.expirationYear.htmlName
         }
     };
