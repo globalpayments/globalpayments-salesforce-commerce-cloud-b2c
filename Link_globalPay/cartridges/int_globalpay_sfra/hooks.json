@@ -8,6 +8,13 @@
         },{
             "name": "app.payment.processor.globalpay_paypal",
             "script": "./cartridge/scripts/hooks/payment/processor/gp_paypal"
+        },{
+            "name": "app.payment.processor.globalpay_ideal",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_ideal"
+        },
+        {
+            "name": "app.payment.processor.globalpay_bitpay",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_bitpay"
         },
         {
             "name": "app.payment.processor.google_pay",

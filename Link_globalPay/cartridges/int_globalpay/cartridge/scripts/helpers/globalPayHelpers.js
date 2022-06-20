@@ -278,6 +278,33 @@ function applePay(data)
     return result;
 }
 
+/**
+ * Forms required data to be sent to service to perform lpm transaction.
+ * @params {data} - data required to form lpm transaction request
+ * @returns {result} - returns lpm response
+ */
+function lpm(data) {
+    var Lpm = require('*/cartridge/scripts/dto/lpm');
+    var lpmRequest = new Lpm.Request();
+    lpmRequest.setToken(getAccessToken());
+    lpmRequest.setAccountName(data.account_name);
+   // lpmRequest.setCaptureMode(data.capture_mode);
+    lpmRequest.setType(data.type);
+    lpmRequest.setChannel(data.channel);
+    lpmRequest.setAmount(data.amount);
+    lpmRequest.setCurrency(data.currency);
+    lpmRequest.setReference(data.reference);
+    lpmRequest.setCountry(data.country);
+    lpmRequest.setPaymentMethod(data.payment_method);
+    lpmRequest.setNotifications(data.notifications);
+    var result = globalPayService.executeRequest(lpmRequest, Lpm.Response);
+    if (result.success) {
+        return result.response;
+    }
+
+    return null;
+}
+
 function  threeDsStepone(data) {
     var threeDsStepone = require('*/cartridge/scripts/dto/3dsSecure');
     var globalPayService = require('*/cartridge/scripts/services/globalPayService');
@@ -380,6 +407,7 @@ module.exports = {
     refund: refund,
     paypal: paypal,
     gpay: gpay,
+    lpm: lpm,
     updateTokenUsageMode: updateTokenUsageMode,
     tokenize: tokenize,
     detokenize: detokenize,

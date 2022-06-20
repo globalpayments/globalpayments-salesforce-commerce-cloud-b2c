@@ -31,6 +31,13 @@ var paypalData = {
     authorizedStatus: 'PREAUTHORIZED'
 };
 
+var lpmData = {
+    account_name: 'transaction_processing',
+    type: 'SALE',
+    channel: 'CNP',
+    entryMode: 'ECOM'
+};
+
 var googlePay = {
     account_name: 'transaction_processing',
     channel: 'CNP',
@@ -106,6 +113,7 @@ function globalPayConstants() {}
 globalPayConstants.authenticationData = authenticationData;
 globalPayConstants.authorizationData = authorizationData;
 globalPayConstants.paypalData = paypalData;
+globalPayConstants.lpmData = lpmData;
 globalPayConstants.googlePay = googlePay;
 globalPayConstants.creditCardPay = creditCardPay;
 globalPayConstants.captureTransaction = captureTransaction;

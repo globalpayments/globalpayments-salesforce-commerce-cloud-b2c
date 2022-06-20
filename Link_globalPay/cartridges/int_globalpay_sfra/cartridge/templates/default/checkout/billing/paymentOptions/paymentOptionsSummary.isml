@@ -9,5 +9,8 @@
          <isif condition="${payment.paymentMethod === 'GP_DW_GOOGLE_PAY'}">
             <isinclude template="checkout/billing/paymentOptions/googlePaySummary" />
         </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_IDEAL'}">
+            <isinclude template="checkout/billing/paymentOptions/idealSummary" />
+        </isif>
     </isloop>
 </div>

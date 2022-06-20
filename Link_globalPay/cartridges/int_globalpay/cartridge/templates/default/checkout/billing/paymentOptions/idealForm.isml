@@ -1,0 +1,8 @@
+<!---Displaying button for payment through paypal--->
+<div class="tab-pane ideal-content" id="ideal-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+<div class="btn-ideal-button-container">
+  <button class="btn btn-dark btn-block ideal-pay" id="ideal-pay" >Pay with IDEAL</button>
+  </div>
+</fieldset>
+</div>

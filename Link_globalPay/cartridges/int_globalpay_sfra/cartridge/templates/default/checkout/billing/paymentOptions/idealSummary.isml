@@ -1,0 +1,3 @@
+<div class="ideal-type"> 
+    <span>${Resource.msg('msg.payment.type.ideal', 'globalpay', null)}</span>
+</div>

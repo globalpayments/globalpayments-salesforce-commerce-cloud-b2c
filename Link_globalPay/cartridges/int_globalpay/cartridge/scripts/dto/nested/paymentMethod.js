@@ -65,6 +65,10 @@ var PaymentMethodResponse = AbstractResponse.extend({
                 enumerable: true,
                 writable: true
             },
+            provider_narrative: {
+                enumerable: true,
+                writable: true
+            },
             redirectUrl: {
                 enumerable: true,
                 writable: true

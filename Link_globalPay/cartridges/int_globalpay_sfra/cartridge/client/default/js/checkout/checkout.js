@@ -564,8 +564,8 @@ var threeds = require('./threeds');
                 }
                 $('body').on('click', '.payment-options .nav-item', function(e) {
                     e.preventDefault();
-                    if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab') {
-                        //if clecked on googlepay, applepay and paypal tabs
+                    if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab' || e.target.classList[1] == 'ideal-tab') {
+                        //if clecked on googlepay, applepay and paypal, LPM tabs
                         $('.next-step-button .submit-payment').hide();
                     } else {
                         $('.next-step-button .submit-payment').show();

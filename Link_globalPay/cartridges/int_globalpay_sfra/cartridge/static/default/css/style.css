@@ -1,0 +1,17 @@
+.gpayerror {
+  color: red;
+  font-size: 18px;
+  font-weight: bold; }
+
+.sandbox-warning {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  color: white;
+  background-color: #770000;
+  padding: 8px 5px;
+  font-family: Verdana;
+  font-weight: 100;
+  font-size: 12px;
+  text-align: center;
+  box-sizing: border-box; }

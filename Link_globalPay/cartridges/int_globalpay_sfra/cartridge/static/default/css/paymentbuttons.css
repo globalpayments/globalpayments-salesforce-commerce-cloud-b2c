@@ -1306,3 +1306,11 @@ opacity: 1;
             height: 32px;
             width: 49px;
         }
+        .ideal-tab-img{
+            height: 36px;
+            width: 49px;
+        }
+        .btn-dark{
+            display: block;
+            width: 40%;
+        }

@@ -25,7 +25,15 @@ var ActionResponse = AbstractResponse.extend({
             resultCode: {
                 enumerable: true,
                 writable: true
-            }
+            },
+            appId: {
+                enumerable: true,
+                writable: true
+            },
+            appName: {
+                enumerable: true,
+                writable: true
+            },
         });
 
         this._super(responseObj);

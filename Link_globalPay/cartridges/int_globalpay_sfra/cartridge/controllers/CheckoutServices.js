@@ -121,6 +121,16 @@ function handlePayments(req, res, next) {
                 error: false,
                 paypalresp: handlePaymentResult.authorizationResult.paypalresp
             });
+        }
+        else if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)) {
+            res.json({
+                renderedPaymentInstruments: renderedStoredPaymentInstrument,
+                customer: accountModel,
+                order: basketModel,
+                form: billingForm,
+                error: false,
+                lpmresp: handlePaymentResult.authorizationResult.lpmresp
+            });
         } else if (!handlePaymentResult.authorizationResult.error) {
             // place and update order
             gputil.orderUpdate(order);
@@ -174,7 +184,7 @@ server.prepend(
         var paymentMethodIdValue;
         var paymentProcessor;
 
-        if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null)) {
+        if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)) {
             handlePayments(req, res, next);
             this.emit('route:Complete', req, res);
             return;

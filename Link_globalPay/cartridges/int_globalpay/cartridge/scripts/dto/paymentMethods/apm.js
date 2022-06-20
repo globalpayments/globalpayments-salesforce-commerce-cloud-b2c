@@ -35,6 +35,10 @@ var ApmRequest = AbstractRequest.extend({
 var ApmResponse = AbstractResponse.extend({
     init: function (responseObj) {
         Object.defineProperties(this, {
+            redirect_url: {
+                enumerable: true,
+                writable: true
+            },
             provider: {
                 enumerable: true,
                 writable: true

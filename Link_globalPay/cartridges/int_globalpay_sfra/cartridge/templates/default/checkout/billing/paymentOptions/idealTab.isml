@@ -1,0 +1,9 @@
+<li class="nav-item ideal-tab" data-method-id="${paymentOption.ID}">
+    <a class="nav-link ideal-tab" data-toggle="tab" href="#ideal-content" role="tab">
+        <img class="ideal-tab-img ideal-tab"
+                src="${URLUtils.staticURL('/images/ideal.png')}"
+                alt="${Resource.msg('msg.payment.type.ideal', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.ideal', 'globalpay', null)}"        
+        />
+    </a>
+</li>

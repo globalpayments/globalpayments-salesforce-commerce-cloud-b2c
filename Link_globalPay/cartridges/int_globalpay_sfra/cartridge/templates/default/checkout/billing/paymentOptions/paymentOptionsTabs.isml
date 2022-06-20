@@ -16,4 +16,8 @@
         <isinclude template="checkout/billing/paymentOptions/googlePayTab" />
     </isif>
 
+    <isif condition="${paymentOption.ID === 'GP_DW_IDEAL'}">
+        <isinclude template="checkout/billing/paymentOptions/idealTab" />
+    </isif>
+
 </isloop>
