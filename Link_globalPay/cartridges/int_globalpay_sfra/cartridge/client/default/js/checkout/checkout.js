@@ -358,7 +358,7 @@ var threeds = require('./threeds');
                         }).catch(function(){
                             $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                         });
-                    } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true') {
+                    } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true' || $('.tab-pane.active').attr('id') == 'ideal-content') {
 
                         paymentForm += '&authId=' + $('#authId').val();
                         paymentForm += '&paReq=' + $('#paReq').val();
@@ -399,8 +399,8 @@ var threeds = require('./threeds');
 
                                     defer.reject();
                                 } else {
-                                    if ($('.tab-pane.active').attr('id') == 'paypal-content') {
-                                        window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;
+                                    if ($('.tab-pane.active').attr('id') == 'paypal-content' || $('.tab-pane.active').attr('id') == 'ideal-content') {
+                                         window.location.href = data.paypalresp.paymentMethod.apm.redirect_url;
                                     } //
                                     // Populate the Address Summary
                                     //
@@ -640,6 +640,14 @@ var threeds = require('./threeds');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
                 });
+
+                $('.btn-ideal-pay-button', plugin).on('click', function() {
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
+                    members.nextStage();
+                });
+
                 $('body').on('submit:googlepay', function(e, data) {
                     $('#paymentToken').val(data.paymentToken);
                     members.nextStage();

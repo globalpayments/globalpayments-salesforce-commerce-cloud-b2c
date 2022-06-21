@@ -96,6 +96,7 @@ function handlePayments(req, res, next) {
         );
         paymentMethodIdValue = paymentForm.paymentMethod.value;
 
+
         paymentProcessor = PaymentManager.getPaymentMethod(paymentMethodIdValue).getPaymentProcessor();
         if (HookManager.hasHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase())) {
             HookManager.callHook('app.payment.processor.' + paymentProcessor.ID.toLowerCase(),

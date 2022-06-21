@@ -74,6 +74,15 @@ var applePay = {
     paymentTypeCode: 'GP_DW_APPLE_PAY'
 };
 
+var idealPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'IDEAL',
+    paymentTypeCode: 'GP_DW_IDEAL'
+};
+
 
 var eciData = {
     five: '05',
@@ -120,6 +129,7 @@ globalPayConstants.captureTransaction = captureTransaction;
 globalPayConstants.applePay = applePay;
 globalPayConstants.eciData = eciData;
 globalPayConstants.captureMode = captureMode;
+globalPayConstants.idealPay = idealPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';
