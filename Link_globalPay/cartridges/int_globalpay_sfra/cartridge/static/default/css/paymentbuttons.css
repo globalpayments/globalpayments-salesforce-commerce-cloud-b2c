@@ -1310,6 +1310,14 @@ opacity: 1;
             height: 36px;
             width: 49px;
         }
+        .giro-tab-img{
+            height: 26px;
+            width: 49px;
+        }
+        .ali-tab-img{
+            height: 16px;
+            width: 58px;
+        }
         .btn-dark{
             display: block;
             width: 40%;

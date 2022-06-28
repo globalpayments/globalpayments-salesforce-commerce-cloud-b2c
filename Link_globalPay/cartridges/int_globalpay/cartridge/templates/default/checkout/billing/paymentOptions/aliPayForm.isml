@@ -1,0 +1,8 @@
+<!---Displaying button for payment through paypal--->
+<div class="tab-pane aliPay-content" id="aliPay-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+<div class="btn-ideal-button-container">
+  <button class="btn btn-dark btn-block btn-ali-pay-button" id="ali-pay" >Pay with Ali Pay</button>
+  </div>
+</fieldset>
+</div>
