@@ -22,18 +22,18 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var currentSite = Site.getCurrent();
     var error;
     var lpmData = {
-        account_name: globalpayconstants.idealPay.account_name,
-        type: globalpayconstants.idealPay.type,
-        channel: globalpayconstants.idealPay.channel,
+        account_name: globalpayconstants.giroPay.account_name,
+        type: globalpayconstants.giroPay.type,
+        channel: globalpayconstants.giroPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
         currency: 'EUR',
         reference: order.orderNo,
-        country: 'NL',
+        country: 'DE',
         payment_method: {
             name: 'James Mason',
-            entry_mode: globalpayconstants.idealPay.entryMode,
+            entry_mode: globalpayconstants.giroPay.entryMode,
             apm: {
-                provider: globalpayconstants.idealPay.provider
+                provider: globalpayconstants.giroPay.provider
             }
         },
         notifications: {
@@ -78,7 +78,7 @@ function Handle() {
     Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
         PaymentInstrumentUtils.removeExistingPaymentInstruments(
-      globalpayconstants.idealPay.paymentTypeCode);
+      globalpayconstants.giroPay.paymentTypeCode);
     });
     return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }

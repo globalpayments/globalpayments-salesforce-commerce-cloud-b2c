@@ -4,7 +4,7 @@
         <!--- payment method is ideal --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="${Resource.msg('paymentmethodname.ideal', 'globalpay', null)}"
+               value="${Resource.msg('paymentmethodname.giropay', 'globalpay', null)}"
         >
 <fieldset class="giroPay-form">
 <isif condition=${pdict.isSandbox=='true'}>

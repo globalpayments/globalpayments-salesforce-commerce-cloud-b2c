@@ -232,6 +232,11 @@ function handlePayment() {
         // redirect to Paypal site if authrization is success
         var paypalresult = handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
+    }
+    else if (!handlePaymentsResult.authorizationResult.error && app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)) {
+        // redirect to giropay site if authrization is success
+        var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;
+        response.redirect(lpmresult.paymentMethod.apm.provider_redirect_url);
     } else if (!handlePaymentsResult.authorizationResult.error) {
         // submit order for Gpay
         var orderPlacementStatus = Order.submit(order);
