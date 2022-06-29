@@ -130,7 +130,7 @@ function handlePayments(req, res, next) {
                 order: basketModel,
                 form: billingForm,
                 error: false,
-                paypalresp: handlePaymentResult.authorizationResult.lpmresp
+                lpmresp: handlePaymentResult.authorizationResult.lpmresp
             });
         }
         else if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)) {
