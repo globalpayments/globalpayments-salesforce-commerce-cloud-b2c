@@ -404,7 +404,7 @@ var threeds = require('./threeds');
                                     }
                                     else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content') {
                                         window.location.href = data.lpmresp.paymentMethod.apm.redirect_url;
-                                   }//
+                                   }
                                     // Populate the Address Summary
                                     //
                                     if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'apple-pay-content') {
