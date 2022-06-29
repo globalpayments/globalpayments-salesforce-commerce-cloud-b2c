@@ -399,8 +399,10 @@ var threeds = require('./threeds');
 
                                     defer.reject();
                                 } else {
-                                    if ($('.tab-pane.active').attr('id') == 'paypal-content' || $('.tab-pane.active').attr('id') == 'ideal-content') {
-                                         window.location.href = data.paypalresp.paymentMethod.apm.redirect_url;
+                                    if ($('.tab-pane.active').attr('id') == 'paypal-content'){
+                                        window.location.href = data.paypalresp.paymentMethod.apm.providerRedirectUrl;
+                                    } else if($('.tab-pane.active').attr('id') == 'ideal-content') {
+                                        window.location.href = data.paypalresp.paymentMethod.apm.redirect_url;
                                     } //
                                     // Populate the Address Summary
                                     //
