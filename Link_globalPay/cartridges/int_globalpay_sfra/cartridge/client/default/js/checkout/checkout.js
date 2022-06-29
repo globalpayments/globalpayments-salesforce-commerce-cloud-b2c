@@ -648,6 +648,27 @@ var threeds = require('./threeds');
                     members.nextStage();
                 });
 
+                $('.btn-ali-pay-button', plugin).on('click', function() {
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
+                    members.nextStage();
+                });
+
+                $('.btn-giro-pay-button', plugin).on('click', function() {
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
+                    members.nextStage();
+                });
+
+                $('.btn-sofort-pay-button', plugin).on('click', function() {
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
+                    members.nextStage();
+                });
+
                 $('body').on('submit:googlepay', function(e, data) {
                     $('#paymentToken').val(data.paymentToken);
                     members.nextStage();

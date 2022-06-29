@@ -1,0 +1,9 @@
+<li class="nav-item sofortpay-tab" data-method-id="${paymentOption.ID}">
+    <a class="nav-link sofortpay-tab" data-toggle="tab" href="#sofortPay-content" role="tab">
+        <img class="ideal-tab-img sofortpay-tab"
+                src="${URLUtils.staticURL('/images/sofort.png')}"
+                alt="${Resource.msg('msg.payment.type.sofort', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.sofort', 'globalpay', null)}"        
+        />
+    </a>
+</li>

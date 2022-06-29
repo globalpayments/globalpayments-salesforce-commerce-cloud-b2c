@@ -19,5 +19,14 @@
     <isif condition="${paymentOption.ID === 'GP_DW_IDEAL'}">
         <isinclude template="checkout/billing/paymentOptions/idealTab" />
     </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_GIROPAY'}">
+        <isinclude template="checkout/billing/paymentOptions/giroPayTab" />
+    </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_ALIPAY'}">
+        <isinclude template="checkout/billing/paymentOptions/aliPayTab" />
+    </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_SOFORTPAY'}">
+        <isinclude template="checkout/billing/paymentOptions/sofortPayTab" />
+    </isif>
 
 </isloop>
