@@ -1,6 +1,6 @@
 <li class="nav-item giropay-tab" data-method-id="${paymentOption.ID}">
-    <a class="nav-link ideal-tab" data-toggle="tab" href="#giroPay-content" role="tab">
-        <img class="giro-tab-img ideal-tab"
+    <a class="nav-link giropay-tab" data-toggle="tab" href="#giroPay-content" role="tab">
+        <img class="giro-tab-img giropay-tab"
                 src="${URLUtils.staticURL('/images/giropay.png')}"
                 alt="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
                 title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"        

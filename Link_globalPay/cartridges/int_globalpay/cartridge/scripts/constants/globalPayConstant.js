@@ -31,13 +31,6 @@ var paypalData = {
     authorizedStatus: 'PREAUTHORIZED'
 };
 
-var lpmData = {
-    account_name: 'transaction_processing',
-    type: 'SALE',
-    channel: 'CNP',
-    entryMode: 'ECOM'
-};
-
 var googlePay = {
     account_name: 'transaction_processing',
     channel: 'CNP',
@@ -83,6 +76,15 @@ var idealPay = {
     paymentTypeCode: 'GP_DW_IDEAL'
 };
 
+var giroPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'GIROPAY',
+    paymentTypeCode: 'GP_DW_GIROPAY'
+};
+
 
 var eciData = {
     five: '05',
@@ -122,7 +124,6 @@ function globalPayConstants() {}
 globalPayConstants.authenticationData = authenticationData;
 globalPayConstants.authorizationData = authorizationData;
 globalPayConstants.paypalData = paypalData;
-globalPayConstants.lpmData = lpmData;
 globalPayConstants.googlePay = googlePay;
 globalPayConstants.creditCardPay = creditCardPay;
 globalPayConstants.captureTransaction = captureTransaction;
@@ -130,6 +131,7 @@ globalPayConstants.applePay = applePay;
 globalPayConstants.eciData = eciData;
 globalPayConstants.captureMode = captureMode;
 globalPayConstants.idealPay = idealPay;
+globalPayConstants.giroPay = giroPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

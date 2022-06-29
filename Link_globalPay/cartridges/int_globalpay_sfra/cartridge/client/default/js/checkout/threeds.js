@@ -72,6 +72,9 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
                 if ($('.tab-pane.active').attr('id') === 'paypal-content') {
                     window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;
                 }
+                else if ($('.tab-pane.active').attr('id') === 'giroPay-content') {
+                    window.location.href = data.lpmresp.paymentMethod.apm.provider_redirect_url;
+                }
                 // Populate the Address Summary
                 if ($('#isthreeds').val() === 'threeDs1') {
                     threeDFormRedirection(data);

@@ -13,6 +13,10 @@
             "script": "./cartridge/scripts/hooks/payment/processor/gp_ideal"
         },
         {
+            "name": "app.payment.processor.globalpay_giropay",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_giropay"
+        },
+        {
             "name": "app.payment.processor.globalpay_bitpay",
             "script": "./cartridge/scripts/hooks/payment/processor/gp_bitpay"
         },
