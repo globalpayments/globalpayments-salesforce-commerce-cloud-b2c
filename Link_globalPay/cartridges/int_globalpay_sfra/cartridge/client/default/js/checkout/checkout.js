@@ -400,11 +400,11 @@ var threeds = require('./threeds');
                                     defer.reject();
                                 } else {
                                     if ($('.tab-pane.active').attr('id') == 'paypal-content') {
-                                         window.location.href = data.paypalresp.paymentMethod.apm.redirect_url;
+                                         window.location.href = data.paypalresp.paymentMethod.apm.providerRedirectUrl;
                                     }
                                     else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content') {
                                         window.location.href = data.lpmresp.paymentMethod.apm.redirect_url;
-                                   }
+                                    }
                                     // Populate the Address Summary
                                     //
                                     if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'apple-pay-content') {
