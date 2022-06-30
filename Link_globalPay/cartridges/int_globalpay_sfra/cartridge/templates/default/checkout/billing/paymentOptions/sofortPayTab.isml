@@ -3,7 +3,7 @@
         <img class="ideal-tab-img sofortpay-tab"
                 src="${URLUtils.staticURL('/images/sofort.png')}"
                 alt="${Resource.msg('msg.payment.type.sofort', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.sofort', 'globalpay', null)}"        
+                title="${Resource.msg('msg.payment.type.sofort', 'globalpay', null)}"
         />
     </a>
 </li>

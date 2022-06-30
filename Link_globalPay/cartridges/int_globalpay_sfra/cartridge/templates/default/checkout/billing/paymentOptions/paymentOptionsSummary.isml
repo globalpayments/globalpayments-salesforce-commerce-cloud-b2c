@@ -15,5 +15,11 @@
         <isif condition="${payment.paymentMethod === 'GP_DW_GIROPAY'}">
             <isinclude template="checkout/billing/paymentOptions/giroPaySummary" />
         </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_ALIPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/aliPaySummary" />
+        </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_SOFORTPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/sofortPaySummary" />
+        </isif>
     </isloop>
 </div>

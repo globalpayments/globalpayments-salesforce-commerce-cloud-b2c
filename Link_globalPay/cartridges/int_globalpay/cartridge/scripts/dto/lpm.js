@@ -6,7 +6,7 @@ var Action = require('*/cartridge/scripts/dto/nested/action');
 var PaymentMethod = require('*/cartridge/scripts/dto/nested/paymentMethod');
 var Notifications = require('*/cartridge/scripts/dto/nested/notifications');
 /**
- * Forms all the fields required to send for paypal request.
+ * Forms all the fields required to send for LPM request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
  */
 var AuthorizeRequest = AbstractRequest.extend({
@@ -57,7 +57,7 @@ var AuthorizeRequest = AbstractRequest.extend({
     }
 });
 /**
- * Forms all the fields to be returned as part of Paypal response.
+ * Forms all the fields to be returned as part of LPM response.
  * @param {obj} responseObj - object that contains fields from response.
  */
 var AuthorizeResponse = AbstractResponse.extend({
