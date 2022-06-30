@@ -1331,3 +1331,8 @@ opacity: 1;
        .tooltip{
             display:none;
        }
+
+       .text-center {
+        text-align: center;
+       }
+       
