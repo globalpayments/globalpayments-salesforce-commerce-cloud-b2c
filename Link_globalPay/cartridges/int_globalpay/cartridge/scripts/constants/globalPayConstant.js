@@ -99,7 +99,7 @@ var sofortPay = {
     channel: 'CNP',
     type: 'SALE',
     entryMode: 'ECOM',
-    provider: 'SOFORTPAY',
+    provider: 'SOFORT',
     paymentTypeCode: 'GP_DW_SOFORTPAY'
 };
 
