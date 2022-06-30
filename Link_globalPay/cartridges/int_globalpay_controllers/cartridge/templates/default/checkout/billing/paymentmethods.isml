@@ -18,7 +18,7 @@
 <isset name="isSandbox" value="true" scope="page"/>
 </isif>
 <isif condition="${pdict.errorMsg}">
-<div class="authError"><isprint value="${pdict.errorMsg}" encoding="off"/></div>
+<div class="authError"><isprint value="${pdict.errorMsg}"/></div>
 </isif>
 <isif condition="${pdict.OrderTotal > 0}">
 	<fieldset>
