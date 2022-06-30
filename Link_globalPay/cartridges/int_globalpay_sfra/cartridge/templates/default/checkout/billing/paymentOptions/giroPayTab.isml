@@ -3,7 +3,7 @@
         <img class="giro-tab-img giropay-tab"
                 src="${URLUtils.staticURL('/images/giropay.png')}"
                 alt="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"        
+                title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
         />
     </a>
 </li>

@@ -1,0 +1,3 @@
+<div class="sofortpay-type">
+    <span>${Resource.msg('msg.payment.type.sofortpay', 'globalpay', null)}</span>
+</div>

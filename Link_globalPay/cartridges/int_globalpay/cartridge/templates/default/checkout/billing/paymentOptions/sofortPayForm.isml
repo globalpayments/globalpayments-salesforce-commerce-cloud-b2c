@@ -1,8 +1,8 @@
-<!---Displaying button for payment through paypal--->
+<!---Displaying button for payment through SofortPay--->
 <div class="tab-pane sofortPay-content" id="sofortPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
-<div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-sofort-pay-button" id="ali-pay" >Pay with Sofort Pay</button>
+<div class="btn-sofort-button-container">
+  <button class="btn btn-dark btn-block btn-sofort-pay-button" id="sofort-pay" >Pay with Sofort Pay</button>
   </div>
 </fieldset>
 </div>

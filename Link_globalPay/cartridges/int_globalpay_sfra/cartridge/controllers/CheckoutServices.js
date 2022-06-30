@@ -142,7 +142,28 @@ function handlePayments(req, res, next) {
                 error: false,
                 lpmresp: handlePaymentResult.authorizationResult.lpmresp
             });
-        } else if (!handlePaymentResult.authorizationResult.error) {
+        }
+        else if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)) {
+            res.json({
+                renderedPaymentInstruments: renderedStoredPaymentInstrument,
+                customer: accountModel,
+                order: basketModel,
+                form: billingForm,
+                error: false,
+                lpmresp: handlePaymentResult.authorizationResult.lpmresp
+            });
+        }
+        else if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)) {
+            res.json({
+                renderedPaymentInstruments: renderedStoredPaymentInstrument,
+                customer: accountModel,
+                order: basketModel,
+                form: billingForm,
+                error: false,
+                lpmresp: handlePaymentResult.authorizationResult.lpmresp
+            });
+        }
+        else if (!handlePaymentResult.authorizationResult.error) {
             // place and update order
             gputil.orderUpdate(order);
             COHelpers.sendConfirmationEmail(order, req.locale.id);
@@ -195,7 +216,7 @@ server.prepend(
         var paymentMethodIdValue;
         var paymentProcessor;
 
-        if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)) {
+        if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)) {
             handlePayments(req, res, next);
             this.emit('route:Complete', req, res);
             return;

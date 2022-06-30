@@ -3,7 +3,7 @@
         <img class="ali-tab-img alipay-tab"
                 src="${URLUtils.staticURL('/images/alipay.png')}"
                 alt="${Resource.msg('msg.payment.type.alipay', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.alipay', 'globalpay', null)}"        
+                title="${Resource.msg('msg.payment.type.alipay', 'globalpay', null)}"
         />
     </a>
 </li>

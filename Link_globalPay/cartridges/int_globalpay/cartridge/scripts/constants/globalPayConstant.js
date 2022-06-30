@@ -85,6 +85,24 @@ var giroPay = {
     paymentTypeCode: 'GP_DW_GIROPAY'
 };
 
+var aliPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'ALIPAY',
+    paymentTypeCode: 'GP_DW_ALIPAY'
+};
+
+var sofortPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'SOFORTPAY',
+    paymentTypeCode: 'GP_DW_SOFORTPAY'
+};
+
 
 var eciData = {
     five: '05',
@@ -132,6 +150,8 @@ globalPayConstants.eciData = eciData;
 globalPayConstants.captureMode = captureMode;
 globalPayConstants.idealPay = idealPay;
 globalPayConstants.giroPay = giroPay;
+globalPayConstants.aliPay = aliPay;
+globalPayConstants.sofortPay = sofortPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';
