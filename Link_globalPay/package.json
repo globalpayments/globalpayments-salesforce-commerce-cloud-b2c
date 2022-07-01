@@ -1,6 +1,6 @@
 {
   "name": "int_globalpay_sfra",
-  "version": "6.1.0",
+  "version": "22.1.0",
   "description": "New overlay cartridge",
   "main": "index.js",
   "scripts": {
