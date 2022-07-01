@@ -28,8 +28,8 @@ describe('billingForm', function () {
         };
 
         var cookieString;
-        var variantPid1 = '701643421084M';
-        var qty1 = 2;
+        var variantPid1 = '013742335262M';
+        var qty1 = 1;
         var addProd = '/Cart-AddProduct';
 
         // ----- Step 1 adding product to Cart
