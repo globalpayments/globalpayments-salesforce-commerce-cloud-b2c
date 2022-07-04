@@ -73,7 +73,9 @@ var idealPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'IDEAL',
-    paymentTypeCode: 'GP_DW_IDEAL'
+    paymentTypeCode: 'GP_DW_IDEAL',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 var giroPay = {

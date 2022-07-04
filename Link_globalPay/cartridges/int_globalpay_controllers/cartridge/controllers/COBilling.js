@@ -567,7 +567,7 @@ function billing() {
                     // Mark step as fulfilled
                     app.getForm('billing').object.fulfilled.value = true;
                 // A successful billing page will jump to the next checkout step.
-                    if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode||selectedPayment==globalpayconstants.googlePay.paymentTypeCode||selectedPayment==globalpayconstants.applePay.paymentTypeCode)
+                    if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode||selectedPayment==globalpayconstants.googlePay.paymentTypeCode||selectedPayment==globalpayconstants.applePay.paymentTypeCode || selectedPayment==globalpayconstants.idealPay.paymentTypeCode)
                   {
                         if(!validatePayment(cart))
                     {
