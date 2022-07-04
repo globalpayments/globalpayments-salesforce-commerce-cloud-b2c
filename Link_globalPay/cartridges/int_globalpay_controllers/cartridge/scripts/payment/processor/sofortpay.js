@@ -8,10 +8,9 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 var Resource = require('dw/web/Resource');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var URLUtils = require('dw/web/URLUtils');
 /**
- * This is where additional ideal integration would go.
+ * This is where additional sofortPay integration would go.
  * The current implementation simply creates a PaymentInstrument and
  * returns 'success'.
  */
@@ -19,15 +18,15 @@ function Handle(args) {
     var cart = Cart.get(args.Basket);
 
     Transaction.wrap(function () {
-        cart.removeExistingPaymentInstruments(globalpayconstants.idealPay.paymentTypeCode);
-        cart.createPaymentInstrument(globalpayconstants.idealPay.paymentTypeCode, cart.getNonGiftCertificateAmount());
+        cart.removeExistingPaymentInstruments(globalpayconstants.sofortPay.paymentTypeCode);
+        cart.createPaymentInstrument(globalpayconstants.sofortPay.paymentTypeCode, cart.getNonGiftCertificateAmount());
     });
 
     return {success: true};
 }
 
 /**
- * Authorizes a payment using idealPay. The payment is authorized by using the ideal pay
+ * Authorizes a payment using sofortPay. The payment is authorized by using the sofortPay
  * and setting the order no as the transaction ID.
  * Customizations may use other processors and custom logic to
  * authorize payment.
@@ -43,17 +42,17 @@ function Authorize(args) {
         }
     }).countryCode;
     var lpmData = {
-        account_name: globalpayconstants.idealPay.account_name,
-        type: globalpayconstants.idealPay.type,
-        channel: globalpayconstants.idealPay.channel,
+        account_name: globalpayconstants.sofortPay.account_name,
+        type: globalpayconstants.sofortPay.type,
+        channel: globalpayconstants.sofortPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
         currency: 'EUR',//currency: order.currencyCode,
         reference: order.orderNo,
         country: 'NL',//country: countryCode,
         payment_method: {
-            entry_mode: globalpayconstants.idealPay.entryMode,
+            entry_mode: globalpayconstants.sofortPay.entryMode,
             apm: {
-                provider: globalpayconstants.idealPay.provider
+                provider: globalpayconstants.sofortPay.provider
             }
         },
         notifications: {

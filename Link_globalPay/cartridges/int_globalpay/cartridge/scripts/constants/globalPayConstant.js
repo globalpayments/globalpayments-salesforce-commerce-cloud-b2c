@@ -84,7 +84,9 @@ var giroPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'GIROPAY',
-    paymentTypeCode: 'GP_DW_GIROPAY'
+    paymentTypeCode: 'GP_DW_GIROPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 var aliPay = {
@@ -93,7 +95,9 @@ var aliPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'ALIPAY',
-    paymentTypeCode: 'GP_DW_ALIPAY'
+    paymentTypeCode: 'GP_DW_ALIPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 var sofortPay = {
@@ -102,7 +106,9 @@ var sofortPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'SOFORT',
-    paymentTypeCode: 'GP_DW_SOFORTPAY'
+    paymentTypeCode: 'GP_DW_SOFORTPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 

@@ -233,8 +233,13 @@ function handlePayment() {
         var paypalresult = handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
     }
-    else if (!handlePaymentsResult.authorizationResult.error && app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)) {
-        // redirect to idealpay site if authrization is success
+    else if (!handlePaymentsResult.authorizationResult.error && 
+    (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)))
+    {
+        // redirect to LPM specific site if authrization is success
         var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;
         response.redirect(lpmresult.paymentMethod.apm.redirect_url);
     } else if (!handlePaymentsResult.authorizationResult.error) {
@@ -357,20 +362,34 @@ function LpmReturn() {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
     var paymentFormResult;
-    if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_PAYPAL')) {
-        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_PAYPAL',
-                   'Capture',
-                   order
-               );
-    }
-    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
+    if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
         paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_IDEAL',
                    'Capture',
                    order
                );
     }
-    if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.paypalData.captureStatus || paymentFormResult.status === globalpayconstants.paypalData.authorizedStatus)) ||
-    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus))) {
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_GIROPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_GIROPAY',
+                   'Capture',
+                   order
+               );
+    }
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_ALIPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_ALIPAY',
+                   'Capture',
+                   order
+               );
+    }
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_SOFORTPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_SOFORTPAY',
+                   'Capture',
+                   order
+               );
+    }
+    if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.giroPay.captureStatus || paymentFormResult.status === globalpayconstants.giroPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.aliPay.captureStatus || paymentFormResult.status === globalpayconstants.aliPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.sofortPay.captureStatus || paymentFormResult.status === globalpayconstants.sofortPay.authorizedStatus))) {
         var orderPlacementStatus = Order.submit(order);
         if (!orderPlacementStatus.error) {
             app.getController('COSummary').ShowConfirmation(order);
