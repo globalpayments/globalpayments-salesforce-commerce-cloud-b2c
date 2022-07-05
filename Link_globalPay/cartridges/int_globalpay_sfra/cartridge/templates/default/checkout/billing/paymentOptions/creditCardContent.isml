@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/style.css')}" />
 <!--- applicable credit cards--->
-<div class="tab-pane active credit-card-content" id="credit-card-content" role="tabpanel">
+<div class="tab-pane credit-card-content" id="credit-card-content" role="tabpanel">
     <fieldset class="payment-form-fields">
 
         <!--- payment method is credit card --->
