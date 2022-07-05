@@ -1,0 +1,9 @@
+<li class="nav-item bancontact-tab" data-method-id="${paymentOption.ID}">
+    <a class="nav-link ideal-tab" data-toggle="tab" href="#bancontactPay-content" role="tab">
+        <img class="giro-tab-img ideal-tab"
+                src="${URLUtils.staticURL('/images/bancontact.png')}"
+                alt="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"        
+        />
+    </a>
+</li>

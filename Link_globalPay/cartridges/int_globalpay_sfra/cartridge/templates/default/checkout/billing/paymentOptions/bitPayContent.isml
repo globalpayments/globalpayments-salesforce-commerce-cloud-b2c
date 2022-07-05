@@ -1,0 +1,16 @@
+<div class="tab-pane bitPay-content" id="bitPay-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is ideal --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="${Resource.msg('paymentmethodname.bitpay', 'globalpay', null)}"
+        >
+<fieldset class="aliPay-form">
+<isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+</isif>
+        <isinclude template="checkout/billing/paymentOptions/bitPayForm" />
+    </fieldset>
+</fieldset>
+  </div>
