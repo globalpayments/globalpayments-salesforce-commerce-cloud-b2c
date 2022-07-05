@@ -358,7 +358,7 @@ var threeds = require('./threeds');
                         }).catch(function(){
                             $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                         });
-                    } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true' || $('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content') {
+                    } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true' || $('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content' || $('.tab-pane.active').attr('id') == 'aliPay-content' || $('.tab-pane.active').attr('id') == 'sofortPay-content') {
 
                         paymentForm += '&authId=' + $('#authId').val();
                         paymentForm += '&paReq=' + $('#paReq').val();
@@ -402,7 +402,7 @@ var threeds = require('./threeds');
                                     if ($('.tab-pane.active').attr('id') == 'paypal-content') {
                                          window.location.href = data.paypalresp.paymentMethod.apm.providerRedirectUrl;
                                     }
-                                    else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content') {
+                                    else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content' || $('.tab-pane.active').attr('id') == 'aliPay-content' || $('.tab-pane.active').attr('id') == 'sofortPay-content') {
                                         window.location.href = data.lpmresp.paymentMethod.apm.redirect_url;
                                     }
                                     // Populate the Address Summary
@@ -567,7 +567,7 @@ var threeds = require('./threeds');
                 }
                 $('body').on('click', '.payment-options .nav-item', function(e) {
                     e.preventDefault();
-                    if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab' || e.target.classList[1] == 'ideal-tab' || e.target.classList[1] == 'giropay-tab') {
+                    if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab' || e.target.classList[1] == 'ideal-tab' || e.target.classList[1] == 'giropay-tab' || e.target.classList[1] == 'alipay-tab' || e.target.classList[1] == 'sofortpay-tab') {
                         //if clecked on googlepay, applepay and paypal, LPM tabs
                         $('.next-step-button .submit-payment').hide();
                     } else {

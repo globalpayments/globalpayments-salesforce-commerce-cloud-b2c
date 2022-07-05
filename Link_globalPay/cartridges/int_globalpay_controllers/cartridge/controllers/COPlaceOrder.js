@@ -233,10 +233,15 @@ function handlePayment() {
         var paypalresult = handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
     }
-    else if (!handlePaymentsResult.authorizationResult.error && app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)) {
-        // redirect to giropay site if authrization is success
+    else if (!handlePaymentsResult.authorizationResult.error && 
+    (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)))
+    {
+        // redirect to LPM specific site if authrization is success
         var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;
-        response.redirect(lpmresult.paymentMethod.apm.provider_redirect_url);
+        response.redirect(lpmresult.paymentMethod.apm.redirect_url);
     } else if (!handlePaymentsResult.authorizationResult.error) {
         // submit order for Gpay
         var orderPlacementStatus = Order.submit(order);
@@ -346,6 +351,63 @@ function payPalCancel() {
     });
     response.redirect(URLUtils.https('Cart-Show', 'orderID', order.orderNo, 'orderToken', order.orderToken));
 }
+
+/**
+ * COPlaceOrder-LpmReturn : The COPlaceOrder-LpmReturn endpoint invokes lpm return
+ * @name Base/COPlaceOrder-LpmReturn
+ * @function
+ * @memberof COPlaceOrder
+ */
+function LpmReturn() {
+    var orderId = request.httpParameterMap.id.toString().split('_')[2];
+    var order = Order.get(orderId).object;
+    var paymentFormResult;
+    if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_IDEAL',
+                   'Capture',
+                   order
+               );
+    }
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_GIROPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_GIROPAY',
+                   'Capture',
+                   order
+               );
+    }
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_ALIPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_ALIPAY',
+                   'Capture',
+                   order
+               );
+    }
+    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_SOFORTPAY')) {
+        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_SOFORTPAY',
+                   'Capture',
+                   order
+               );
+    }
+    if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.giroPay.captureStatus || paymentFormResult.status === globalpayconstants.giroPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.aliPay.captureStatus || paymentFormResult.status === globalpayconstants.aliPay.authorizedStatus)) ||
+    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.sofortPay.captureStatus || paymentFormResult.status === globalpayconstants.sofortPay.authorizedStatus))) {
+        var orderPlacementStatus = Order.submit(order);
+        if (!orderPlacementStatus.error) {
+            app.getController('COSummary').ShowConfirmation(order);
+            changeOrderStatus(order);
+            clearForms();
+        }
+    }
+}
+
+/**
+ * COPlaceOrder-LpmReturn : The COPlaceOrder-LpmReturn endpoint invokes lpm return
+ * @name Base/COPlaceOrder-LpmReturn
+ * @function
+ * @memberof COPlaceOrder
+ */
+function LpmStatus() {
+    
+}
 /*
  * Module exports
  */
@@ -359,6 +421,8 @@ exports.SubmitPaymentJSON = guard.ensure(['https'], submitPaymentJSON);
 exports.Submit = guard.ensure(['https'], submit);
 exports.PayPalReturn = guard.ensure(['https'], payPalReturn);
 exports.PayPalCancel = guard.ensure(['https'], payPalCancel);
+exports.LpmReturn = guard.ensure(['https'], LpmReturn);
+exports.LpmStatus = guard.ensure(['https'], LpmStatus);
 /*
  * Local methods
  */

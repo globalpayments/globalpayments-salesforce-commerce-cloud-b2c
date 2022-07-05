@@ -9,6 +9,22 @@
 			"script": "./payment/processor/PAYPAL_EXPRESS"
 		},
 		{
+			"name": "app.payment.processor.GLOBALPAY_IDEAL",
+			"script": "./payment/processor/idealpay"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_GIROPAY",
+			"script": "./payment/processor/giropay"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_ALIPAY",
+			"script": "./payment/processor/alipay"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_SOFORTPAY",
+			"script": "./payment/processor/sofortpay"
+		},
+		{
 			"name": "app.payment.processor.GOOGLE_PAY",
 			"script": "./payment/processor/GOOGLE_PAY"
 		},

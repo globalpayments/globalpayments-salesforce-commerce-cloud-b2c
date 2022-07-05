@@ -204,6 +204,53 @@
     	</isif>
 			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
 		</div>
+
+		<iscomment>
+			IdealPay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.ideal', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.ideal', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/idealForm" />
+		</div>
+
+		<iscomment>
+			giroPay Payment
+			--------------------------------------------------------------
+		</iscomment>
+		<div class="payment-method text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.giropay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.giropay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/giroPayForm" />
+		</div>
+
+		<iscomment>
+			alipay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.alipay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.alipay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/aliPayForm" />
+		</div>
+
+		<iscomment>
+			sofort Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/sofortPayForm" />
+		</div>
 		<iscomment>
 			ApplePay Payment
 			--------------------------------------------------------------
@@ -214,6 +261,12 @@
     	</isif>
 			<isinclude template="checkout/billing/applePayTab" />
 		</div>
+
+		<iscomment>
+			Ideal Payment
+			--------------------------------------------------------------
+		</iscomment>
+
 		<div class="d-none"> 
  <isinputfield   formfield="${pdict.CurrentForms.billing.paymentMethods.creditCard.paymentToken}" type="input"/>
  <div>

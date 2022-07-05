@@ -73,7 +73,9 @@ var idealPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'IDEAL',
-    paymentTypeCode: 'GP_DW_IDEAL'
+    paymentTypeCode: 'GP_DW_IDEAL',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 var giroPay = {
@@ -82,7 +84,31 @@ var giroPay = {
     type: 'SALE',
     entryMode: 'ECOM',
     provider: 'GIROPAY',
-    paymentTypeCode: 'GP_DW_GIROPAY'
+    paymentTypeCode: 'GP_DW_GIROPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
+};
+
+var aliPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'ALIPAY',
+    paymentTypeCode: 'GP_DW_ALIPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
+};
+
+var sofortPay = {
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    provider: 'SOFORT',
+    paymentTypeCode: 'GP_DW_SOFORTPAY',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
 };
 
 
@@ -132,6 +158,8 @@ globalPayConstants.eciData = eciData;
 globalPayConstants.captureMode = captureMode;
 globalPayConstants.idealPay = idealPay;
 globalPayConstants.giroPay = giroPay;
+globalPayConstants.aliPay = aliPay;
+globalPayConstants.sofortPay = sofortPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';
