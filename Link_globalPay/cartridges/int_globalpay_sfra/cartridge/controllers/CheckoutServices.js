@@ -113,7 +113,7 @@ function handlePayments(req, res, next) {
          // Handles payment authorization
         handlePaymentResult = COHelpers.handlePayments(order, order.orderNo, req);
         var localPayment=paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)|| paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)|| paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null)
-        ||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null);
+        ||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.eps', 'globalpay', null)||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.mybank', 'globalpay', null);
 
         if (empty(handlePaymentResult.error) && paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null)) {
             res.json({
@@ -190,7 +190,8 @@ server.prepend(
 
         if (paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.paypal', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.googlepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.applepay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)
          || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null) || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)
-         || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null) ||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)) {
+         || paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null) ||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)
+         ||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.eps', 'globalpay', null)||paymentForm.paymentMethod.value === Resource.msg('paymentmethodname.mybank', 'globalpay', null)) {
             handlePayments(req, res, next);
             this.emit('route:Complete', req, res);
             return;

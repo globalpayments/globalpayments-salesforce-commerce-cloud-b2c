@@ -128,7 +128,14 @@ var banContactPay = {
     provider: 'bancontact',
     paymentTypeCode: 'GP_DW_BANCONTACTPAY'
 };
-
+var epsPay = {
+    provider: 'eps',
+    paymentTypeCode: 'GP_DW_EPSPAY'
+};
+var myBankPay = {
+    provider: 'myBank',
+    paymentTypeCode: 'GP_DW_MYBANKPAY'
+};
 var eciData = {
     five: '05',
     six: '06',
@@ -180,6 +187,8 @@ globalPayConstants.sofortPay = sofortPay;
 globalPayConstants.bitPay = bitPay;
 globalPayConstants.banContactPay = banContactPay;
 globalPayConstants.localPayment = localPayment;
+globalPayConstants.epsPay = epsPay;
+globalPayConstants.myBankPay = myBankPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';
