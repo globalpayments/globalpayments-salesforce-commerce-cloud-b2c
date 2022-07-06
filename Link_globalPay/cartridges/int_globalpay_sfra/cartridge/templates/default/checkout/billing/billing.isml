@@ -83,3 +83,6 @@
         </form>
     </div>
 </div>
+
+
+<link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />

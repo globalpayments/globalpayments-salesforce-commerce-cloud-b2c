@@ -5,7 +5,6 @@
 
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
-<link rel="stylesheet" href="${URLUtils.staticURL('/css/paymentbuttons.css')}" />
 <script defer type="text/javascript">
 // Configure account
 GlobalPayments.configure({
