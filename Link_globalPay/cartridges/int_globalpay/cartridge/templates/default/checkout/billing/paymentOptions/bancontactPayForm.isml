@@ -1,8 +1,8 @@
 <!---Displaying button for payment through --->
-<div class="tab-pane bancontactpay-content" id="bancontactPay-content" role="tabpanel">
+<div class="tab-pane bancontactpay-content" id="bancontactpay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-bancontact-pay-button" id="giro-pay" >Pay with bancontact Pay</button>
+  <button class="btn btn-dark btn-block btn-bancontact-pay-button" id="bancontact-pay" >Pay with bancontact Pay</button>
   </div>
 </fieldset>
 </div>

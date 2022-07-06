@@ -33,6 +33,10 @@
             "script": "./cartridge/scripts/hooks/payment/processor/gp_googlepay"
         },
         {
+            "name": "app.payment.processor.globalpay_bancontact",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_bancontact"
+        },
+        {
             "name": "dw.extensions.applepay.getRequest",
             "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         },

@@ -67,6 +67,15 @@ var applePay = {
     paymentTypeCode: 'GP_DW_APPLE_PAY'
 };
 
+var localPayment={
+    account_name: 'transaction_processing',
+    channel: 'CNP',
+    type: 'SALE',
+    entryMode: 'ECOM',
+    captureStatus: 'CAPTURED',
+    authorizedStatus: 'PREAUTHORIZED'
+};
+
 var idealPay = {
     account_name: 'transaction_processing',
     channel: 'CNP',
@@ -111,6 +120,14 @@ var sofortPay = {
     authorizedStatus: 'PREAUTHORIZED'
 };
 
+var bitPay = {
+    provider: 'bitpay',
+    paymentTypeCode: 'GP_DW_BITPAY'
+};
+var banContactPay = {
+    provider: 'bancontact',
+    paymentTypeCode: 'GP_DW_BANCONTACTPAY'
+};
 
 var eciData = {
     five: '05',
@@ -160,6 +177,9 @@ globalPayConstants.idealPay = idealPay;
 globalPayConstants.giroPay = giroPay;
 globalPayConstants.aliPay = aliPay;
 globalPayConstants.sofortPay = sofortPay;
+globalPayConstants.bitPay = bitPay;
+globalPayConstants.banContactPay = banContactPay;
+globalPayConstants.localPayment = localPayment;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

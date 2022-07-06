@@ -1,11 +1,16 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable linebreak-style */
 'use strict';
 
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
+var Locale = require('dw/util/Locale');
+
 /**
  * Authorizes a payment using a credit card.
  * Customizations may use other processors and custom
@@ -18,28 +23,32 @@ var URLUtils = require('dw/web/URLUtils');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
+    var preferences = globalPayPreferences.getPreferences();
+    var captureMode = preferences.captureMode;
+
     var error;
     var lpmData = {
         account_name: globalpayconstants.localPayment.account_name,
-        type: globalpayconstants.localPayment.type,
         channel: globalpayconstants.localPayment.channel,
+        capture_mode: captureMode.value,
+        type: globalpayconstants.localPayment.type,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',
+        currency: "EUR",
         reference: order.orderNo,
-        country: 'DE',
+        country: "BE",
         payment_method: {
-            name: 'James Mason',
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.bitPay.provider
+                provider: globalpayconstants.banContactPay.provider
             }
         },
         notifications: {
-            return_url: URLUtils.https('GlobalPayLpm-LpmReturn').toString(),
-            status_url: URLUtils.https('GlobalPayLpm-LpmStatus').toString()
+            return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(),
+            status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(),
+            cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
         }
     };
-    var lpmresp = globalPayHelper.lpm(lpmData);
+    var lpmresp = globalPayHelper.paypal(lpmData);
     var serverErrors = [];
     if (typeof lpmresp !== 'undefined' && 'success' in lpmresp && !lpmresp.success) {
         error = true;
@@ -61,7 +70,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         }
     }
 
-    return {serverErrors: serverErrors, error: error, lpmresp: lpmresp};
+    return {serverErrors: serverErrors, error: error, paypalresp: lpmresp};
 }
 
 /**
@@ -76,7 +85,7 @@ function Handle() {
     Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
         PaymentInstrumentUtils.removeExistingPaymentInstruments(
-      globalpayconstants.bitPay.paymentTypeCode);
+      globalpayconstants.banContactPay.paymentTypeCode);
     });
     return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }
