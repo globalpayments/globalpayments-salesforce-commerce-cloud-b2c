@@ -33,9 +33,9 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         capture_mode: captureMode.value,
         type: globalpayconstants.localPayment.type,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: "EUR",
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: "BE",
+        country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
@@ -70,7 +70,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         }
     }
 
-    return {serverErrors: serverErrors, error: error, paypalresp: lpmresp};
+    return {serverErrors: serverErrors, error: error, lpmresp: lpmresp};
 }
 
 /**

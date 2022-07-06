@@ -6,6 +6,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
+var Locale = require('dw/util/Locale');
 /**
  * Authorizes a payment using a credit card.
  * Customizations may use other processors and custom
@@ -24,11 +25,10 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         type: globalpayconstants.localPayment.type,
         channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'DE',
+        country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
-            name: 'James Mason',
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
                 provider: globalpayconstants.bitPay.provider

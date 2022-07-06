@@ -27,9 +27,9 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         type: globalpayconstants.localPayment.type,
         channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: "EUR",
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: "AT",
+        country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
