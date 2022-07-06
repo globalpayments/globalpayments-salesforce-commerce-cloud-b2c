@@ -119,7 +119,7 @@
 
 						<td colspan="3" class="bonus-item-details">
 							<isprint value="${bonusDiscountLineItem.getPromotion().getName()}" />
-							<isprint value="${bonusDiscountLineItem.getPromotion().getCalloutMsg()}" encoding="off"/>
+							<isprint value="${bonusDiscountLineItem.getPromotion().getCalloutMsg()}" encoding="htmlsinglequote"/>
 							<a class="tooltip" href="#">
 								${Resource.msg('product.promotiondetails','product',null)}
 								<div class="tooltip-content" data-layout="small">
@@ -277,7 +277,7 @@
 															<isif condition="${lineItem.quantityValue > 1 && lineItem.quantityValue != pa.quantity}">
 																<isprint value="${pa.quantity}" /> x
 															</isif>
-															<isprint value="${pa.promotion.calloutMsg}" encoding="off"/>
+															<isprint value="${pa.promotion.calloutMsg}" encoding="htmlsinglequote"/>
 														</div>
 													</isloop>
 
@@ -583,7 +583,7 @@
 
 								<td colspan="3" class="bonus-item-details">
 									<isprint value="${bonusDiscountLineItem.getPromotion().getName()}" />
-									<isprint value="${bonusDiscountLineItem.getPromotion().getCalloutMsg()}" encoding="off"/>
+									<isprint value="${bonusDiscountLineItem.getPromotion().getCalloutMsg()}" encoding="htmlsinglequote"/>
 									<a class="tooltip" href="#">
 										${Resource.msg('product.promotiondetails','product',null)}
 										<div class="tooltip-content" data-layout="small">
@@ -804,7 +804,7 @@
 									<div>
 										<span class="label">${Resource.msg('summary.orderdiscount','checkout',null)}</span>
 										<span class="value">
-											<isprint value="${priceAdjustment.promotion.calloutMsg}" encoding="off" />
+											<isprint value="${priceAdjustment.promotion.calloutMsg}" encoding="htmlsinglequote" />
 										</span>
 									</div>
 								</td>
