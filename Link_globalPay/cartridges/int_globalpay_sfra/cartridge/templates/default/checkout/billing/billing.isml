@@ -11,7 +11,7 @@
     <div class="card-body">
         <form autocomplete="on" method="POST" action="${URLUtils.url('CheckoutServices-SubmitPayment')}"
             data-address-mode="${!pdict.order.billing.billingAddress.address ? 'new' : 'edit'}"
-            <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> novalidate>
+            <isprint value=${pdict.forms.billingForm.attributes} encoding="htmlsinglequote" /> novalidate>
 
             <fieldset class="billing-address-block">
                 <!-------------------------------------------------------------------------->
@@ -65,7 +65,7 @@
                             <input type="tel" class="form-control phone" id="phoneNumber"
                                 value="${pdict.order.billing.billingAddress.address
                                 ? pdict.order.billing.billingAddress.address.phone||''
-                                : ''}" <isprint value=${pdict.forms.billingForm.contactInfoFields.phone.attributes} encoding="off"/>
+                                : ''}" <isprint value=${pdict.forms.billingForm.contactInfoFields.phone.attributes} encoding="htmlsinglequote"/>
                                 aria-describedby="phoneInvalidMessage" >
                             <div class="invalid-feedback" id="phoneInvalidMessage"></div>
                         </div>

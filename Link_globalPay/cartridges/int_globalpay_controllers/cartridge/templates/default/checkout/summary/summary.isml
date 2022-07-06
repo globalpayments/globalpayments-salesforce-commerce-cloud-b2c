@@ -216,7 +216,7 @@
 				<fieldset>
 					<div class="form-row">
 						<a class="back-to-cart" href="${URLUtils.url('Cart-Show')}">
-							<isprint value="${Resource.msg('summary.editcart','checkout',null)}" encoding="off" />
+							<isprint value="${Resource.msg('summary.editcart','checkout',null)}" encoding="htmlsinglequote" />
 						</a>
 						<button class="button-fancy-large" type="submit" name="submit" value="${Resource.msg('global.submitorder','locale',null)}">
 							${Resource.msg('global.submitorder','locale',null)}
