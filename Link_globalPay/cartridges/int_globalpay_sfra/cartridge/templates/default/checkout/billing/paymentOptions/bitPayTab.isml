@@ -1,9 +1,9 @@
 <li class="nav-item bitPay-tab" data-method-id="${paymentOption.ID}">
-    <a class="nav-link ideal-tab" data-toggle="tab" href="#bitPay-content" role="tab">
-        <img class="giro-tab-img ideal-tab"
+    <a class="nav-link bitPay-tab" data-toggle="tab" href="#bitPay-content" role="tab">
+        <img class="lpm-tab-img bitPay-tab"
                 src="${URLUtils.staticURL('/images/bitpay.png')}"
-                alt="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"        
+                alt="${Resource.msg('msg.payment.type.bitpay', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.bitpay', 'globalpay', null)}"        
         />
     </a>
 </li>

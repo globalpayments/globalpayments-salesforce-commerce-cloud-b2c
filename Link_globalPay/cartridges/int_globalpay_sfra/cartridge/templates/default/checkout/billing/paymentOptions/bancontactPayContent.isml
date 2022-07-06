@@ -1,4 +1,4 @@
-<div class="tab-pane bitPay-content" id="bancontactPay-content" role="tabpanel">
+<div class="tab-pane bancontactpay-content" id="bancontactpay-content" role="tabpanel">
     <fieldset class="payment-form-fields">
 
         <!--- payment method is ideal --->

@@ -7,6 +7,7 @@ var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
 var Locale = require('dw/util/Locale');
+var Site = require('dw/system/Site');
 /**
  * Authorizes a payment using a credit card.
  * Customizations may use other processors and custom
@@ -19,6 +20,7 @@ var Locale = require('dw/util/Locale');
  * @return {Object} returns an error object
  */
 function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
+    var currentSite = Site.getCurrent();
     var error;
     var lpmData = {
         account_name: globalpayconstants.localPayment.account_name,
@@ -31,7 +33,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.bitPay.provider
+                provider: globalpayconstants.epsPay.provider
             }
         },
         notifications: {
@@ -76,7 +78,7 @@ function Handle() {
     Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
         PaymentInstrumentUtils.removeExistingPaymentInstruments(
-      globalpayconstants.bitPay.paymentTypeCode);
+      globalpayconstants.epsPay.paymentTypeCode);
     });
     return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }

@@ -77,7 +77,11 @@ function removeExistingPaymentInstruments(paymentType) {
     paymentType === Resource.msg('paymentmethodname.ideal', 'globalpay', null) ||
     paymentType === Resource.msg('paymentmethodname.giropay', 'globalpay', null) ||
     paymentType === Resource.msg('paymentmethodname.alipay', 'globalpay', null) ||
-    paymentType === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)) {
+    paymentType === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)||
+    paymentType === Resource.msg('paymentmethodname.bitpay', 'globalpay', null)||
+    paymentType === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)||
+    paymentType === Resource.msg('paymentmethodname.eps', 'globalpay', null)||
+    paymentType === Resource.msg('paymentmethodname.mybank', 'globalpay', null)) {
         paymentInstrument = currentBasket.createPaymentInstrument(
 		paymentType, currentBasket.totalGrossPrice
 			);

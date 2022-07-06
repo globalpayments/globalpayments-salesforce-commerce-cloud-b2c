@@ -2,7 +2,7 @@
 <div class="tab-pane bitpay-content" id="bitPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-bit-pay-button" id="giro-pay" >Pay with Bit Pay</button>
+  <button class="btn btn-dark btn-block btn-bit-pay-button" id="bit-pay" >Pay with Bit Pay</button>
   </div>
 </fieldset>
 </div>
