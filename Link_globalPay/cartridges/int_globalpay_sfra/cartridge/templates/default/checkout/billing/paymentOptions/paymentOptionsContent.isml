@@ -35,4 +35,10 @@
     <isif condition="${paymentOption.ID === 'GP_DW_BANCONTACTPAY'}">
         <isinclude template="checkout/billing/paymentOptions/bancontactPayContent" />
     </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_UNIOUNPAY'}">
+        <isinclude template="checkout/billing/paymentOptions/uniounPayContent" />
+    </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
+        <isinclude template="checkout/billing/paymentOptions/wechatPayContent" />
+    </isif>
 </isloop>

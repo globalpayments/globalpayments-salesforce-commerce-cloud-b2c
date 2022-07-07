@@ -1326,3 +1326,13 @@ opacity: 1;
             height: 36px;
             width: 49px;
           }
+
+        .union-tab-img {
+            height: 25px;
+            width: 49px;
+        }
+
+        .wechat-tab-img {
+            width: 90px;
+            height: 26px;
+        }
