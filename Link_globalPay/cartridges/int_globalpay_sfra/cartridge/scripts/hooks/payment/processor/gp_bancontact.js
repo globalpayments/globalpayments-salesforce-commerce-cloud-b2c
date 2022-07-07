@@ -43,12 +43,11 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
             }
         },
         notifications: {
-            return_url: URLUtils.https('GPPayPal-PayPalReturn').toString(),
-            status_url: URLUtils.https('GPPayPal-PayPalStatus').toString(),
-            cancel_url: URLUtils.https('GPPayPal-PayPalCancel').toString()
+            return_url: URLUtils.https('GlobalPayLpm-LpmReturn').toString(),
+            status_url: URLUtils.https('GlobalPayLpm-LpmStatus').toString()
         }
     };
-    var lpmresp = globalPayHelper.paypal(lpmData);
+    var lpmresp = globalPayHelper.lpm(lpmData);
     var serverErrors = [];
     if (typeof lpmresp !== 'undefined' && 'success' in lpmresp && !lpmresp.success) {
         error = true;

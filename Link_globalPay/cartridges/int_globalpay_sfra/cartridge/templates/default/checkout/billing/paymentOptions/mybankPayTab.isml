@@ -1,9 +1,9 @@
 <li class="nav-item mybankPay-tab" data-method-id="${paymentOption.ID}">
-    <a class="nav-link ideal-tab" data-toggle="tab" href="#mybankPay-content" role="tab">
-        <img class="giro-tab-img ideal-tab"
+    <a class="nav-link mybankPay-tab" data-toggle="tab" href="#mybankPay-content" role="tab">
+        <img class="lpm-tab-img mybankPay-tab"
                 src="${URLUtils.staticURL('/images/mybank.png')}"
-                alt="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"
-                title="${Resource.msg('msg.payment.type.giropay', 'globalpay', null)}"        
+                alt="${Resource.msg('msg.payment.type.mybankpay', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.mybankpay', 'globalpay', null)}"        
         />
     </a>
 </li>

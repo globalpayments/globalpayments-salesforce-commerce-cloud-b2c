@@ -1322,3 +1322,7 @@ opacity: 1;
             display: block;
             width: 40%;
         }
+        .lpm-tab-img {
+            height: 36px;
+            width: 49px;
+          }
