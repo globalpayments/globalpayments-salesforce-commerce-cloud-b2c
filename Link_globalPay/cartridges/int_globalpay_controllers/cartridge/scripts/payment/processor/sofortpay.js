@@ -46,9 +46,9 @@ function Authorize(args) {
         type: globalpayconstants.sofortPay.type,
         channel: globalpayconstants.sofortPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',//currency: order.currencyCode,
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'NL',//country: countryCode,
+        country: countryCode,
         payment_method: {
             entry_mode: globalpayconstants.sofortPay.entryMode,
             apm: {

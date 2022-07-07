@@ -46,9 +46,9 @@ function Authorize(args) {
         type: globalpayconstants.aliPay.type,
         channel: globalpayconstants.aliPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',//currency: order.currencyCode,
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'CN',//country: countryCode,
+        country: countryCode,
         payment_method: {
             entry_mode: globalpayconstants.aliPay.entryMode,
             apm: {
