@@ -1,0 +1,16 @@
+<div class="tab-pane sofortPay-content" id="uniounPay-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is ideal --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="${Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)}"
+        >
+<fieldset class="uniounPay-form">
+<isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+</isif>
+        <isinclude template="checkout/billing/paymentOptions/uniounPayForm" />
+    </fieldset>
+</fieldset>
+  </div>
