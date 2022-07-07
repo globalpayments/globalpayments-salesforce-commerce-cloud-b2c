@@ -25,6 +25,22 @@
 			"script": "./payment/processor/sofortpay"
 		},
 		{
+			"name": "app.payment.processor.GLOBALPAY_BANCONTACT",
+			"script": "./payment/processor/bancontact"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_BITPAY",
+			"script": "./payment/processor/bitPay"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_MYBANK",
+			"script": "./payment/processor/myBank"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_EPS",
+			"script": "./payment/processor/eps"
+		},
+		{
 			"name": "app.payment.processor.GOOGLE_PAY",
 			"script": "./payment/processor/GOOGLE_PAY"
 		},
