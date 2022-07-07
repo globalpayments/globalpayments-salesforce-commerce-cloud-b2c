@@ -251,6 +251,82 @@
     	</isif>
 			 <isinclude template="checkout/billing/paymentOptions/sofortPayForm" />
 		</div>
+
+		<iscomment>
+			EPS Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.epspay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.epspay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/epsPayForm" />
+		</div>
+
+
+		<iscomment>
+			bancontactPay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/bancontactPayForm" />
+		</div>
+
+
+		<iscomment>
+			bitpay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.bitpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.bitpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/bitPayForm" />
+		</div>
+
+
+		<iscomment>
+			mybank Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.mybankpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.mybankpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/mybankPayForm" />
+		</div>
+
+		<iscomment>
+			UniounPay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.uniounpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.uniounpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/uniounPayForm" />
+		</div>
+
+		<iscomment>
+			WeChatPay Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/wechatPayForm" />
+		</div>
+
 		<iscomment>
 			ApplePay Payment
 			--------------------------------------------------------------
