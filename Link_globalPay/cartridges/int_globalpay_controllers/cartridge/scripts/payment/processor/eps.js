@@ -10,7 +10,7 @@ var Resource = require('dw/web/Resource');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var URLUtils = require('dw/web/URLUtils');
 /**
- * This is where additional sofortPay integration would go.
+ * This is where additional ideal integration would go.
  * The current implementation simply creates a PaymentInstrument and
  * returns 'success'.
  */
@@ -18,15 +18,15 @@ function Handle(args) {
     var cart = Cart.get(args.Basket);
 
     Transaction.wrap(function () {
-        cart.removeExistingPaymentInstruments(globalpayconstants.sofortPay.paymentTypeCode);
-        cart.createPaymentInstrument(globalpayconstants.sofortPay.paymentTypeCode, cart.getNonGiftCertificateAmount());
+        cart.removeExistingPaymentInstruments(globalpayconstants.epsPay.paymentTypeCode);
+        cart.createPaymentInstrument(globalpayconstants.epsPay.paymentTypeCode, cart.getNonGiftCertificateAmount());
     });
 
     return {success: true};
 }
 
 /**
- * Authorizes a payment using sofortPay. The payment is authorized by using the sofortPay
+ * Authorizes a payment using epsPay. The payment is authorized by using the ideal pay
  * and setting the order no as the transaction ID.
  * Customizations may use other processors and custom logic to
  * authorize payment.
@@ -42,17 +42,17 @@ function Authorize(args) {
         }
     }).countryCode;
     var lpmData = {
-        account_name: globalpayconstants.sofortPay.account_name,
-        type: globalpayconstants.sofortPay.type,
-        channel: globalpayconstants.sofortPay.channel,
+        account_name: globalpayconstants.localPayment.account_name,
+        type: globalpayconstants.localPayment.type,
+        channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
         currency: order.currencyCode,
         reference: order.orderNo,
         country: countryCode,
         payment_method: {
-            entry_mode: globalpayconstants.sofortPay.entryMode,
+            entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.sofortPay.provider
+                provider: globalpayconstants.epsPay.provider
             }
         },
         notifications: {

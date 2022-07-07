@@ -47,9 +47,9 @@ function Authorize(args) {
         type: globalpayconstants.idealPay.type,
         channel: globalpayconstants.idealPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',//currency: order.currencyCode,
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'NL',//country: countryCode,
+        country: countryCode,
         payment_method: {
             entry_mode: globalpayconstants.idealPay.entryMode,
             apm: {
