@@ -1336,3 +1336,70 @@ opacity: 1;
         text-align: center;
        }
        
+       .lpm-black-btn , .lpm-black-btn:hover {
+        background-color: #000;
+        border-color: #000;
+        padding-top:0.688rem;
+        padding-bottom: 0.688rem;
+        min-width: 15rem;
+        border-radius: 4px;
+        color: #fff;
+       }
+
+    .lpm-radio {
+       opacity: 0; 
+    }
+    
+    .lpm-icon {
+        color: transparent;
+        width: 50px !important;
+        height: 40px;
+        display: inline-block !important;
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    .icon-PayPal {
+        background-image: url("../images/paypal.png"); 
+    }
+    .icon-DW_APPLE_PAY  {
+        background-image: url("../images/apple.png"); 
+    }
+    .icon-CREDIT_CARD {
+        background-image: url("../images/credit.png"); 
+    }
+    .icon-GP_DW_GOOGLE_PAY {
+        background-image: url("../images/googlepay.png"); 
+    }
+    .icon-GP_DW_IDEAL {
+        background-image: url("../images/ideal.png"); 
+        width: 45px !important;
+    }
+    .icon-GP_DW_GIROPAY {
+        background-image: url("../images/mybank.png"); 
+    }
+    .icon-GP_DW_ALIPAY {
+        background-image: url("../images/alipay.png"); 
+    }
+    .icon-GP_DW_SOFORTPAY {
+        background-image: url("../images/sofort.png"); 
+    }
+    .icon-GP_DW_BANCONTACTPAY {
+        background-image: url("../images/bancontact.png"); 
+    }
+    .icon-GP_DW_BITPAY {
+        background-image: url("../images/bitpay.png"); 
+    }
+    .icon-GP_DW_EPSPAY {
+        background-image: url("../images/eps.png"); 
+    }
+    .icon-GP_DW_MYBANKPAY {
+        background-image: url("../images/mybank.png"); 
+    }
+    .icon-GP_DW_UNIONPAY {
+        background-image: url("../images/union.png"); 
+    }
+    .icon-GP_DW_WECHATPAY {
+        background-image: url("../images/wechat.png"); 
+        width: 95px !important;
+    }
