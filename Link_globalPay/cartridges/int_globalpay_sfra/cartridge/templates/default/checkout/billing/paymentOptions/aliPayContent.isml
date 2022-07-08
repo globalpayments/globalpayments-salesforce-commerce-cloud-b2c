@@ -1,7 +1,7 @@
 <div class="tab-pane aliPay-content" id="aliPay-content" role="tabpanel">
     <fieldset class="payment-form-fields">
 
-        <!--- payment method is ideal --->
+        <!--- payment method is alipay --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
                value="${Resource.msg('paymentmethodname.alipay', 'globalpay', null)}"

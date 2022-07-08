@@ -1,10 +1,10 @@
-<div class="tab-pane sofortPay-content" id="uniounPay-content" role="tabpanel">
+<div class="tab-pane uniounpay-content" id="uniounpay-content" role="tabpanel">
     <fieldset class="payment-form-fields">
 
-        <!--- payment method is ideal --->
+        <!--- payment method is unionpay --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="${Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)}"
+               value="${Resource.msg('paymentmethodname.unionpay', 'globalpay', null)}"
         >
 <fieldset class="uniounPay-form">
 <isif condition=${pdict.isSandbox=='true'}>

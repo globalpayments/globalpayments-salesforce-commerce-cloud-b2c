@@ -67,7 +67,7 @@ var applePay = {
     paymentTypeCode: 'GP_DW_APPLE_PAY'
 };
 
-var localPayment={
+var localPayment = {
     account_name: 'transaction_processing',
     channel: 'CNP',
     type: 'SALE',
@@ -136,6 +136,17 @@ var myBankPay = {
     provider: 'myBank',
     paymentTypeCode: 'GP_DW_MYBANKPAY'
 };
+
+var unionPay = {
+    provider: 'UPOPSECUREPAY',
+    paymentTypeCode: 'GP_DW_UNIONPAY',
+};
+
+var weChatPay = {
+    provider: 'WECHATPAY',
+    paymentTypeCode: 'GP_DW_WECHATPAY',
+};
+
 var eciData = {
     five: '05',
     six: '06',
@@ -189,6 +200,8 @@ globalPayConstants.banContactPay = banContactPay;
 globalPayConstants.localPayment = localPayment;
 globalPayConstants.epsPay = epsPay;
 globalPayConstants.myBankPay = myBankPay;
+globalPayConstants.unionPay = unionPay;
+globalPayConstants.weChatPay = weChatPay;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

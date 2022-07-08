@@ -72,7 +72,9 @@ var submitPaymentAajx = function (versionCheckData, authenticationData, paymentF
                 if ($('.tab-pane.active').attr('id') === 'paypal-content') {
                     window.location.href = data.paypalresp.paymentMethod.apm.provider_redirect_url;
                 }
-                else if (($('.tab-pane.active').attr('id') === 'giroPay-content') || ($('.tab-pane.active').attr('id') === 'aliPay-content') || ($('.tab-pane.active').attr('id') === 'sofortPay-content')) {
+                else if (($('.tab-pane.active').attr('id') === 'giroPay-content') || ($('.tab-pane.active').attr('id') === 'aliPay-content') || ($('.tab-pane.active').attr('id') === 'sofortPay-content')
+                || ($('.tab-pane.active').attr('id') === 'epsPay-content') || ($('.tab-pane.active').attr('id') === 'mybankPay-content') || ($('.tab-pane.active').attr('id') === 'bancontactpay-content')
+                || ($('.tab-pane.active').attr('id') === 'bitPay-content') || ($('.tab-pane.active').attr('id') === 'uniounpay-content') || ($('.tab-pane.active').attr('id') === 'wechatpay-content')) {
                     window.location.href = data.lpmresp.paymentMethod.apm.provider_redirect_url;
                 }
                 // Populate the Address Summary
