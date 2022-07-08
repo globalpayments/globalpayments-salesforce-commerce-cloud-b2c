@@ -237,7 +237,11 @@ function handlePayment() {
     (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)||
-     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)))
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.epspay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.mybankpay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null)))
     {
         // redirect to LPM specific site if authrization is success
         var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;
@@ -361,42 +365,71 @@ function payPalCancel() {
 function LpmReturn() {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
-    var paymentFormResult;
-    if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
-        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_IDEAL',
-                   'Capture',
-                   order
-               );
-    }
-    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_GIROPAY')) {
-        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_GIROPAY',
-                   'Capture',
-                   order
-               );
-    }
-    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_ALIPAY')) {
-        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_ALIPAY',
-                   'Capture',
-                   order
-               );
-    }
-    else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_SOFORTPAY')) {
-        paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_SOFORTPAY',
-                   'Capture',
-                   order
-               );
-    }
-    if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus)) ||
-    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.giroPay.captureStatus || paymentFormResult.status === globalpayconstants.giroPay.authorizedStatus)) ||
-    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.aliPay.captureStatus || paymentFormResult.status === globalpayconstants.aliPay.authorizedStatus)) ||
-    (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.sofortPay.captureStatus || paymentFormResult.status === globalpayconstants.sofortPay.authorizedStatus))) {
+    // var paymentFormResult;
+    // if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_IDEAL',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_GIROPAY')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_GIROPAY',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_ALIPAY')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_ALIPAY',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_SOFORTPAY')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_SOFORTPAY',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_BANCONTACT')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_BANCONTACT',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_BITPAY')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_BITPAY',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_MYBANK')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_MYBANK',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // else if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_EPS')) {
+    //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_EPS',
+    //                'Capture',
+    //                order
+    //            );
+    // }
+    // if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus)) ||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.giroPay.captureStatus || paymentFormResult.status === globalpayconstants.giroPay.authorizedStatus)) ||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.aliPay.captureStatus || paymentFormResult.status === globalpayconstants.aliPay.authorizedStatus)) ||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.sofortPay.captureStatus || paymentFormResult.status === globalpayconstants.sofortPay.authorizedStatus))||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.bitPay.captureStatus || paymentFormResult.status === globalpayconstants.bitPay.authorizedStatus))||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.banContactPay.captureStatus || paymentFormResult.status === globalpayconstants.banContactPay.authorizedStatus))||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.myBankPay.captureStatus || paymentFormResult.status === globalpayconstants.myBankPay.authorizedStatus))||
+    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.epsPay.captureStatus || paymentFormResult.status === globalpayconstants.epsPay.authorizedStatus))) {
         var orderPlacementStatus = Order.submit(order);
         if (!orderPlacementStatus.error) {
             app.getController('COSummary').ShowConfirmation(order);
             changeOrderStatus(order);
             clearForms();
         }
-    }
+    //}
+    
 }
 
 /**
