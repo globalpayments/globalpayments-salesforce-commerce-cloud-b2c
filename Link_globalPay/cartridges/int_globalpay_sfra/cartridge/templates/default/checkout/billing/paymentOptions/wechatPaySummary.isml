@@ -1,0 +1,3 @@
+<div class="wechatpay-type">
+    <span>${Resource.msg('msg.payment.type.wechatpay', 'globalpay', null)}</span>
+</div>

@@ -35,7 +35,7 @@
     <isif condition="${paymentOption.ID === 'GP_DW_BANCONTACTPAY'}">
         <isinclude template="checkout/billing/paymentOptions/bancontactPayContent" />
     </isif>
-    <isif condition="${paymentOption.ID === 'GP_DW_UNIOUNPAY'}">
+    <isif condition="${paymentOption.ID === 'GP_DW_UNIONPAY'}">
         <isinclude template="checkout/billing/paymentOptions/uniounPayContent" />
     </isif>
     <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
