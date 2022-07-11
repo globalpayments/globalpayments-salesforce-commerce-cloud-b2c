@@ -1357,6 +1357,7 @@ opacity: 1;
         display: inline-block !important;
         background-size: 100%;
         background-repeat: no-repeat;
+        background-position: center;
     }
 
     .icon-PayPal {
