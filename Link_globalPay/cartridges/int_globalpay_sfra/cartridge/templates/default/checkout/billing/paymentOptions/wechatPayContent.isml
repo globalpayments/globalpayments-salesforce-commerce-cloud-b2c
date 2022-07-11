@@ -1,12 +1,12 @@
-<div class="tab-pane sofortPay-content" id="wechatPay-content" role="tabpanel">
+<div class="tab-pane wechatpay-content" id="wechatpay-content" role="tabpanel">
     <fieldset class="payment-form-fields">
 
-        <!--- payment method is ideal --->
+        <!--- payment method is wechat --->
         <input type="hidden" class="form-control"
                name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-               value="${Resource.msg('paymentmethodname.sofortpay', 'globalpay', null)}"
+               value="${Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)}"
         >
-<fieldset class="sofortPay-form">
+<fieldset class="wechatPay-form">
 <isif condition=${pdict.isSandbox=='true'}>
     <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
 </isif>

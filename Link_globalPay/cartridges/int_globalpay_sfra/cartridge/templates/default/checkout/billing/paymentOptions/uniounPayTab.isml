@@ -1,7 +1,7 @@
 <li class="nav-item union-tab" data-method-id="${paymentOption.ID}">
-    <a class="nav-link union-tab" data-toggle="tab" href="#uniounPay-content" role="tab">
+    <a class="nav-link union-tab" data-toggle="tab" href="#uniounpay-content" role="tab">
         <img class="union-tab-img union-tab"
-                src="${URLUtils.staticURL('/images/union.png')}" 
+                src="${URLUtils.staticURL('/images/union.png')}"
                 alt="${Resource.msg('msg.payment.type.union', 'globalpay', null)}"
                 title="${Resource.msg('msg.payment.type.union', 'globalpay', null)}"
         />
