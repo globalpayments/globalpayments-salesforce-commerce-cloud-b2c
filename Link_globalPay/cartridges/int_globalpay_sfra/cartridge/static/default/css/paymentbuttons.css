@@ -1337,4 +1337,7 @@ opacity: 1;
             height: 26px;
         }
 
+        .dropdown-menu.show a {
+            color: #444;
+        }
         
