@@ -41,6 +41,14 @@
 			"script": "./payment/processor/eps"
 		},
 		{
+			"name": "app.payment.processor.GLOBALPAY_UNIONPAY",
+			"script": "./payment/processor/unionpay"
+		},
+		{
+			"name": "app.payment.processor.GLOBALPAY_WECHATPAY",
+			"script": "./payment/processor/wechatpay"
+		},
+		{
 			"name": "app.payment.processor.GOOGLE_PAY",
 			"script": "./payment/processor/GOOGLE_PAY"
 		},

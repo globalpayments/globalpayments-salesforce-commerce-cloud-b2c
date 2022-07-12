@@ -7,10 +7,11 @@ var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
 var Site = require('dw/system/Site');
+var Locale = require('dw/util/Locale');
 /**
- * Authorizes a payment using a credit card.
+ * Authorizes a payment using a giropay.
  * Customizations may use other processors and custom
- * logic to authorize credit card payment.
+ * logic to authorize giropay payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
@@ -22,16 +23,15 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var currentSite = Site.getCurrent();
     var error;
     var lpmData = {
-        account_name: globalpayconstants.giroPay.account_name,
-        type: globalpayconstants.giroPay.type,
-        channel: globalpayconstants.giroPay.channel,
+        account_name: globalpayconstants.localPayment.account_name,
+        type: globalpayconstants.localPayment.type,
+        channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'DE',
+        country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
-            name: 'James Mason',
-            entry_mode: globalpayconstants.giroPay.entryMode,
+            entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
                 provider: globalpayconstants.giroPay.provider
             }

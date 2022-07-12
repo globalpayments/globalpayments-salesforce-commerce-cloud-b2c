@@ -7,6 +7,7 @@ var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
 var Site = require('dw/system/Site');
+var Locale = require('dw/util/Locale');
 /**
  * Authorizes a payment using sofort.
  * Customizations may use other processors and custom
@@ -22,15 +23,15 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var currentSite = Site.getCurrent();
     var error;
     var lpmData = {
-        account_name: globalpayconstants.sofortPay.account_name,
-        type: globalpayconstants.sofortPay.type,
-        channel: globalpayconstants.sofortPay.channel,
+        account_name: globalpayconstants.localPayment.account_name,
+        type: globalpayconstants.localPayment.type,
+        channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
         currency: order.currencyCode,
         reference: order.orderNo,
         country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
-            entry_mode: globalpayconstants.sofortPay.entryMode,
+            entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
                 provider: globalpayconstants.sofortPay.provider
             }

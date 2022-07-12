@@ -7,6 +7,7 @@ var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
 var Site = require('dw/system/Site');
+var Locale = require('dw/util/Locale');
 /**
  * Authorizes a payment using alipay.
  * Customizations may use other processors and custom

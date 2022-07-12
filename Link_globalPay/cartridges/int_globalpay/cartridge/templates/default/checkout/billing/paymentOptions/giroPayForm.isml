@@ -1,8 +1,8 @@
-<!---Displaying button for payment through paypal--->
+<!---Displaying button for payment through giropay--->
 <div class="tab-pane giroPay-content" id="giroPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="btn-giropay-button-container">
-  <button class="btn btn-dark btn-block btn-giro-pay-button lpm-black-btn" id="giro-pay" >Pay with GIRO Pay</button>
+  <button class="btn btn-dark btn-block btn-giro-pay-button lpm-black-btn" id="giro-pay" >Pay with Giropay</button>
   </div>
 </fieldset>
 </div>

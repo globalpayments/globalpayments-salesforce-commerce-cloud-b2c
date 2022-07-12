@@ -1,4 +1,4 @@
-<!---Displaying button for payment through paypal--->
+<!---Displaying button for payment through ideal--->
 <div class="tab-pane ideal-content" id="ideal-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="btn-ideal-button-container">

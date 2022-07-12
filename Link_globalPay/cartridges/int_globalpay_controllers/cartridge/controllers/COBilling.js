@@ -567,8 +567,9 @@ function billing() {
                     // Mark step as fulfilled
                     app.getForm('billing').object.fulfilled.value = true;
                 // A successful billing page will jump to the next checkout step.
-                    if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode || selectedPayment==globalpayconstants.googlePay.paymentTypeCode || selectedPayment==globalpayconstants.applePay.paymentTypeCode || selectedPayment==globalpayconstants.idealPay.paymentTypeCode || selectedPayment==globalpayconstants.giroPay.paymentTypeCode || selectedPayment==globalpayconstants.aliPay.paymentTypeCode || selectedPayment==globalpayconstants.sofortPay.paymentTypeCode || selectedPayment==globalpayconstants.epsPay.paymentTypeCode || selectedPayment==globalpayconstants.myBankPay.paymentTypeCode
-                       || selectedPayment==globalpayconstants.banContactPay.paymentTypeCode || selectedPayment==globalpayconstants.bitPay.paymentTypeCode )
+                    if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode || selectedPayment==globalpayconstants.googlePay.paymentTypeCode || selectedPayment==globalpayconstants.applePay.paymentTypeCode || selectedPayment==globalpayconstants.idealPay.paymentTypeCode
+                       || selectedPayment==globalpayconstants.giroPay.paymentTypeCode || selectedPayment==globalpayconstants.aliPay.paymentTypeCode || selectedPayment==globalpayconstants.sofortPay.paymentTypeCode || selectedPayment==globalpayconstants.epsPay.paymentTypeCode
+                       || selectedPayment==globalpayconstants.myBankPay.paymentTypeCode || selectedPayment==globalpayconstants.banContactPay.paymentTypeCode || selectedPayment==globalpayconstants.bitPay.paymentTypeCode || selectedPayment==globalpayconstants.unionPay.paymentTypeCode || selectedPayment==globalpayconstants.weChatPay.paymentTypeCode)
                   {
                         if(!validatePayment(cart))
                     {

@@ -2,7 +2,7 @@
 <div class="tab-pane aliPay-content" id="aliPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="btn-alipay-button-container">
-  <button class="btn btn-dark btn-block btn-ali-pay-button lpm-black-btn" id="ali-pay" >Pay with Ali Pay</button>
+  <button class="btn btn-dark btn-block btn-ali-pay-button lpm-black-btn" id="ali-pay" >Pay with Alipay</button>
   </div>
 </fieldset>
 </div>

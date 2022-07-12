@@ -1,8 +1,8 @@
-<!---Displaying button for payment through --->
+<!---Displaying button for payment through eps--->
 <div class="tab-pane epspay-content" id="epsPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
-<div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-eps-pay-button lpm-black-btn" id="giro-pay" >Pay with EPS Pay</button>
+<div class="btn-eps-button-container">
+  <button class="btn btn-dark btn-block btn-eps-pay-button lpm-black-btn" id="eps-pay" >Pay with EPS</button>
   </div>
 </fieldset>
 </div>

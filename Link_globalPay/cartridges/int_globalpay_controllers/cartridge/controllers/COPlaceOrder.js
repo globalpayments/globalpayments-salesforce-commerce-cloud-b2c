@@ -233,7 +233,7 @@ function handlePayment() {
         var paypalresult = handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
     }
-    else if (!handlePaymentsResult.authorizationResult.error && 
+    else if (!handlePaymentsResult.authorizationResult.error &&
     (app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.ideal', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.giropay', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.alipay', 'globalpay', null)||
@@ -241,7 +241,9 @@ function handlePayment() {
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.epspay', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.mybankpay', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)||
-     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null)))
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null) ||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.unionpay', 'globalpay', null) ||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)))
     {
         // redirect to LPM specific site if authrization is success
         var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;

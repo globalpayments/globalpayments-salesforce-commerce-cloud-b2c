@@ -1,8 +1,8 @@
-<!---Displaying button for payment through --->
+<!---Displaying button for payment through mybank--->
 <div class="tab-pane mybankpay-content" id="mybankPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
-<div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-mybank-pay-button lpm-black-btn" id="giro-pay" >Pay with Mybank Pay</button>
+<div class="btn-mybankpay-button-container">
+  <button class="btn btn-dark btn-block btn-mybank-pay-button lpm-black-btn" id="mybank-pay" >Pay with Mybank</button>
   </div>
 </fieldset>
 </div>
