@@ -5,6 +5,7 @@ var AbstractResponse = require('*/cartridge/scripts/dto/base/abstractResponse');
 var Action = require('*/cartridge/scripts/dto/nested/action');
 var PaymentMethod = require('*/cartridge/scripts/dto/nested/paymentMethod');
 var Notifications = require('*/cartridge/scripts/dto/nested/notifications');
+var Payer = require('*/cartridge/scripts/dto/nested/payer');
 /**
  * Forms all the fields required to send for LPM request.
  * @param {obj} requestObj - object that contains fields for request to be sent.
@@ -43,6 +44,7 @@ var AuthorizeRequest = AbstractRequest.extend({
             },
             paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
             notifications: AbstractResponse.getAccessorDescriptorWithConstructor(Notifications.Request),
+            payer: AbstractResponse.getAccessorDescriptorWithConstructor(Payer.Request),
         });
 
         this._super(requestObj);

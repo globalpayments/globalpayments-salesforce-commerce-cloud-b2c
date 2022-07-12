@@ -360,7 +360,7 @@ var threeds = require('./threeds');
                         });
                     } else if ($('.tab-pane.active').attr('id') == 'google-pay-content' || $('.tab-pane.active').attr('id') == 'paypal-content' || $('#isnewcard').val() == 'true' || $('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content' || $('.tab-pane.active').attr('id') == 'aliPay-content'
                     || $('.tab-pane.active').attr('id') == 'sofortPay-content'|| $('.tab-pane.active').attr('id') == 'bitPay-content'|| $('.tab-pane.active').attr('id') == 'bancontactpay-content' || $('.tab-pane.active').attr('id') == 'epsPay-content' || $('.tab-pane.active').attr('id') == 'mybankPay-content' || $('.tab-pane.active').attr('id') == 'uniounpay-content'
-                    || $('.tab-pane.active').attr('id') == 'wechatpay-content') {
+                    || $('.tab-pane.active').attr('id') == 'wechatpay-content' || $('.tab-pane.active').attr('id') == 'przelewy24pay-content') {
 
                         paymentForm += '&authId=' + $('#authId').val();
                         paymentForm += '&paReq=' + $('#paReq').val();
@@ -406,7 +406,7 @@ var threeds = require('./threeds');
                                     }
                                     else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content' || $('.tab-pane.active').attr('id') == 'aliPay-content' || $('.tab-pane.active').attr('id') == 'sofortPay-content'
                                     || $('.tab-pane.active').attr('id') == 'bitPay-content'|| $('.tab-pane.active').attr('id') == 'epsPay-content' || $('.tab-pane.active').attr('id') == 'mybankPay-content'|| $('.tab-pane.active').attr('id') == 'bancontactpay-content'
-                                    || $('.tab-pane.active').attr('id') == 'uniounpay-content' || $('.tab-pane.active').attr('id') == 'wechatpay-content') {
+                                    || $('.tab-pane.active').attr('id') == 'uniounpay-content' || $('.tab-pane.active').attr('id') == 'wechatpay-content' || $('.tab-pane.active').attr('id') == 'przelewy24pay-content') {
                                         window.location.href = data.lpmresp.paymentMethod.apm.redirect_url;
                                     }
                                     // Populate the Address Summary
@@ -572,7 +572,7 @@ var threeds = require('./threeds');
                 $('body').on('click', '.payment-options .nav-item', function(e) {
                     e.preventDefault();
                     if (e.target.classList[1] == 'google-pay-tab' || e.target.classList[1] == 'paypal-tab' || e.target.classList[1] == 'apple-pay-tab' || e.target.classList[1] == 'ideal-tab' || e.target.classList[1] == 'giropay-tab'
-                    || e.target.classList[1] == 'alipay-tab' || e.target.classList[1] == 'sofortpay-tab' || e.target.classList[1] == 'union-tab' || e.target.classList[1] == 'wechatpay-tab') {
+                    || e.target.classList[1] == 'alipay-tab' || e.target.classList[1] == 'sofortpay-tab' || e.target.classList[1] == 'union-tab' || e.target.classList[1] == 'wechatpay-tab' || e.target.classList[1] == 'przelewy24pay-tab') {
                         //if clecked on googlepay, applepay and paypal, LPM tabs
                         $('.next-step-button .submit-payment').hide();
                     } else {

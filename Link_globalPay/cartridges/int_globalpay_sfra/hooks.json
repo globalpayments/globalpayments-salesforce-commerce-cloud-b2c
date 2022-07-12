@@ -53,6 +53,10 @@
             "script": "./cartridge/scripts/hooks/payment/processor/gp_wechatpay"
         },
         {
+            "name": "app.payment.processor.globalpay_przelewy24",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_przelewy24"
+        },
+        {
             "name": "dw.extensions.applepay.getRequest",
             "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         },

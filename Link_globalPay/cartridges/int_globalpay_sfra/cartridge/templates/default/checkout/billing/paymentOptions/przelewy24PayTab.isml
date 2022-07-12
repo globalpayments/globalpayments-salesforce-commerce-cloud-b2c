@@ -1,0 +1,9 @@
+<li class="nav-item przelewy24pay-tab" data-method-id="${paymentOption.ID}">
+    <a class="nav-link przelewy24pay-tab" data-toggle="tab" href="#przelewy24pay-content" role="tab">
+        <img class="lpm-tab-img przelewy24pay-tab"
+                src="${URLUtils.staticURL('/images/mybank.png')}"
+                alt="${Resource.msg('msg.payment.type.przelewy24pay', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.przelewy24pay', 'globalpay', null)}"
+        />
+    </a>
+</li>

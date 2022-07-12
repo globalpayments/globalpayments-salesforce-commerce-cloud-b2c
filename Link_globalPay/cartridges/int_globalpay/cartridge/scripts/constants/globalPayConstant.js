@@ -147,6 +147,11 @@ var weChatPay = {
     paymentTypeCode: 'GP_DW_WECHATPAY',
 };
 
+var przelewy24 = {
+    provider: 'P24',
+    paymentTypeCode: 'GP_DW_PRZELEWY24'
+};
+
 var eciData = {
     five: '05',
     six: '06',
@@ -202,6 +207,7 @@ globalPayConstants.epsPay = epsPay;
 globalPayConstants.myBankPay = myBankPay;
 globalPayConstants.unionPay = unionPay;
 globalPayConstants.weChatPay = weChatPay;
+globalPayConstants.przelewy24 = przelewy24;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

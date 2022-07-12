@@ -1,0 +1,3 @@
+<div class="przelewy24pay-type">
+    <span>${Resource.msg('msg.payment.type.przelewy24pay', 'globalpay', null)}</span>
+</div>
