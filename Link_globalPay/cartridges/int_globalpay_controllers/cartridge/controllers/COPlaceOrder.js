@@ -217,14 +217,23 @@ function handlePayment() {
         return {};
     }
     paymentInstrument = PaymentProcessor.handle(order, app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value);
-    handlePaymentsResult = handlePayments(order);
+    var handlePaymentsResult = handlePayments(order);
 
-    if (handlePaymentsResult.error || handlePaymentsResult.missingPaymentInfo) {
+    if (handlePaymentsResult.error && handlePaymentsResult.missingPaymentInfo) {
         Transaction.wrap(function () {
             OrderMgr.failOrder(order);
             return {
                 error: true,
                 PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
+            };
+        });
+    }
+    else if(handlePaymentsResult.error && handlePaymentsResult.authorizationResult.lpmresp.error){
+        Transaction.wrap(function () {
+            OrderMgr.failOrder(order);
+            return {
+                error: true,
+                PlaceOrderError: new Status(Status.ERROR, handlePaymentsResult.authorizationResult.lpmresp.error.detailedErrorDescription)
             };
         });
     }
