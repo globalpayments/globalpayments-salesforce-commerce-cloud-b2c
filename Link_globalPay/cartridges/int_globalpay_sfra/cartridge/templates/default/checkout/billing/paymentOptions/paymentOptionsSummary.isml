@@ -21,5 +21,23 @@
         <isif condition="${payment.paymentMethod === 'GP_DW_SOFORTPAY'}">
             <isinclude template="checkout/billing/paymentOptions/sofortPaySummary" />
         </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_BITPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/bitPaySummary" />
+        </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_EPSPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/epsPaySummary" />
+        </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_MYBANKPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/mybankPaySummary" />
+        </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_BANCONTACTPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/bancontactPaySummary" />
+        </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_UNIOUNPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/uniounPaySummary" />
+        </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/wechatPaySummary" />
+        </isif>
     </isloop>
 </div>
