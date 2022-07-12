@@ -6,11 +6,12 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
+var Locale = require('dw/util/Locale');
 var Site = require('dw/system/Site');
 /**
- * Authorizes a payment using sofort.
+ * Authorizes a payment using wechatpay.
  * Customizations may use other processors and custom
- * logic to authorize sofort payment.
+ * logic to authorize wechatpay payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
@@ -22,17 +23,17 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var currentSite = Site.getCurrent();
     var error;
     var lpmData = {
-        account_name: globalpayconstants.sofortPay.account_name,
-        type: globalpayconstants.sofortPay.type,
-        channel: globalpayconstants.sofortPay.channel,
+        account_name: globalpayconstants.localPayment.account_name,
+        type: globalpayconstants.localPayment.type,
+        channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
         currency: order.currencyCode,
         reference: order.orderNo,
         country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
-            entry_mode: globalpayconstants.sofortPay.entryMode,
+            entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.sofortPay.provider
+                provider: globalpayconstants.weChatPay.provider
             }
         },
         notifications: {
@@ -77,7 +78,7 @@ function Handle() {
     Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
         PaymentInstrumentUtils.removeExistingPaymentInstruments(
-      globalpayconstants.sofortPay.paymentTypeCode);
+      globalpayconstants.weChatPay.paymentTypeCode);
     });
     return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }

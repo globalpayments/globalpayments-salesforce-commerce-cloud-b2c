@@ -8,9 +8,9 @@ var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrument
 var URLUtils = require('dw/web/URLUtils');
 var Site = require('dw/system/Site');
 /**
- * Authorizes a payment using a credit card.
+ * Authorizes a payment using alipay.
  * Customizations may use other processors and custom
- * logic to authorize credit card payment.
+ * logic to authorize alipay payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
@@ -26,11 +26,10 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         type: globalpayconstants.aliPay.type,
         channel: globalpayconstants.aliPay.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'EUR',
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'CN',
+        country: Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
-            name: 'James Mason',
             entry_mode: globalpayconstants.aliPay.entryMode,
             apm: {
                 provider: globalpayconstants.aliPay.provider

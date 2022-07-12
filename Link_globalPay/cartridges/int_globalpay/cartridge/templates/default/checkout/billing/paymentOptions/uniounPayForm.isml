@@ -1,8 +1,13 @@
-<!---Displaying button for payment through --->
-<div class="tab-pane uniounPay-content" id="uniounPay-content" role="tabpanel">
+<!---Displaying button for payment through unionpay --->
+<div class="tab-pane uniounpay-content" id="uniounpay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
+<<<<<<< HEAD
 <div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-unioun-pay-button" id="unioun-pay" >Pay with Uniuon Pay</button>
+  <button class="btn btn-dark btn-block btn-unioun-pay-button lpm-black-btn" id="unioun-pay" >Pay with Uniuon Pay</button>
+=======
+<div class="btn-unionpay-button-container">
+  <button class="btn btn-dark btn-block btn-unioun-pay-button" id="unioun-pay" >Pay with Union Pay</button>
+>>>>>>> 8e6724a398ce9da5baa8b7371485e90034bb74e2
   </div>
 </fieldset>
 </div>

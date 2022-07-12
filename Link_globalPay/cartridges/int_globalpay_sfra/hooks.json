@@ -45,6 +45,14 @@
             "script": "./cartridge/scripts/hooks/payment/processor/gp_eps"
         },
         {
+            "name": "app.payment.processor.globalpay_unionpay",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_unionpay"
+        },
+        {
+            "name": "app.payment.processor.globalpay_wechatpay",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_wechatpay"
+        },
+        {
             "name": "dw.extensions.applepay.getRequest",
             "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         },

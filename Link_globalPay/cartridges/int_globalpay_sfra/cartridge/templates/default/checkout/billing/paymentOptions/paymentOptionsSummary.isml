@@ -1,4 +1,4 @@
-<div class="payment-details"> 
+<div class="payment-details">
     <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
         <isif condition="${payment.paymentMethod === 'GP_DW_CREDIT_CARD'}">
             <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
@@ -33,7 +33,7 @@
         <isif condition="${paymentOption.ID === 'GP_DW_BANCONTACTPAY'}">
             <isinclude template="checkout/billing/paymentOptions/bancontactPaySummary" />
         </isif>
-        <isif condition="${paymentOption.ID === 'GP_DW_UNIOUNPAY'}">
+        <isif condition="${paymentOption.ID === 'GP_DW_UNIONPAY'}">
             <isinclude template="checkout/billing/paymentOptions/uniounPaySummary" />
         </isif>
         <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
