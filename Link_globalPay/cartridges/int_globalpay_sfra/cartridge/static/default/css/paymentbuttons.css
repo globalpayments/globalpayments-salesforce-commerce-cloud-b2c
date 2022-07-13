@@ -1337,7 +1337,7 @@ opacity: 1;
             height: 26px;
         }
 
-        .dropdown-menu.show a {
-            color: #444;
+        .dropdown-menu.show a , .dropdown-menu.dropdown-country-selector a {
+            color: #444 !important;
         }
         
