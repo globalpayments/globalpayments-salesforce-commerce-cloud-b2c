@@ -328,6 +328,18 @@
 		</div>
 
 		<iscomment>
+			Przelewy24 Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.przelewy24pay', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.przelewy24pay', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+    		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+    	</isif>
+			 <isinclude template="checkout/billing/paymentOptions/przelewy24PayForm" />
+		</div>
+
+		<iscomment>
 			ApplePay Payment
 			--------------------------------------------------------------
 		</iscomment>

@@ -243,7 +243,8 @@ function handlePayment() {
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bancontactpay', 'globalpay', null)||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.bitpay', 'globalpay', null) ||
      app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.unionpay', 'globalpay', null) ||
-     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)))
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.wechatpay', 'globalpay', null) ||
+     app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === Resource.msg('paymentmethodname.przelewy24pay', 'globalpay', null)))
     {
         // redirect to LPM specific site if authrization is success
         var lpmresult = handlePaymentsResult.authorizationResult.lpmresp;

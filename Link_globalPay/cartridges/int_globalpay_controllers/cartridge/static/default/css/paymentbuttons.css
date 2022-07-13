@@ -1404,3 +1404,7 @@ opacity: 1;
         background-image: url("../images/wechat.png"); 
         width: 95px !important;
     }
+    .icon-GP_DW_PRZELEWY24 {
+        background-image: url("../images/przelewy24.png");
+        width: 78px !important;
+    }
