@@ -1,8 +1,8 @@
-<!---Displaying button for payment through paypal--->
+<!---Displaying button for payment through bitpay--->
 <div class="tab-pane bitpay-content" id="bitPay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
-<div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-bit-pay-button lpm-black-btn" id="bit-pay" >Pay with Bit Pay</button>
+<div class="btn-bitpay-button-container">
+  <button class="btn btn-dark btn-block btn-bit-pay-button lpm-black-btn" id="bit-pay" >Pay with Bitpay</button>
   </div>
 </fieldset>
 </div>
