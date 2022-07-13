@@ -6,6 +6,7 @@ var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstan
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var PaymentInstrumentUtils = require('*/cartridge/scripts/util/paymentInstrumentUtils');
 var URLUtils = require('dw/web/URLUtils');
+var Locale = require('dw/util/Locale');
 var Site = require('dw/system/Site');
 /**
  * Authorizes a payment using alipay.
@@ -44,7 +45,11 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
     var serverErrors = [];
     if (typeof lpmresp !== 'undefined' && 'success' in lpmresp && !lpmresp.success) {
         error = true;
-        if ('detailedErrorDescription' in lpmresp) {
+        if ('error' in lpmresp && lpmresp.error.detailedErrorCode==globalpayconstants.localPayment.detailed_error_code) {
+            serverErrors.push(
+                Resource.msg('error.country.payment.not.valid', 'globalpay', null)
+            );
+        }else{
             serverErrors.push(lpmresp.error.detailedErrorDescription);
         }
     } else {
@@ -57,7 +62,7 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         } catch (e) {
             error = true;
             serverErrors.push(
-                        Resource.msg('error.technical', 'checkout', null)
+                        Resource.msg('error.payment.not.valid', 'checkout', null)
                     );
         }
     }

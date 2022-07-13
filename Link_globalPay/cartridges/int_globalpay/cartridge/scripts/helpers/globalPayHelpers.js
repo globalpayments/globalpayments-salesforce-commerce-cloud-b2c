@@ -302,7 +302,7 @@ function lpm(data) {
         return result.response;
     }
 
-    return null;
+    return result;
 }
 
 function  threeDsStepone(data) {

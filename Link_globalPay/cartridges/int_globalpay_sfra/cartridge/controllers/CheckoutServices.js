@@ -147,13 +147,13 @@ function handlePayments(req, res, next) {
                 continueUrl: URLUtils.url('Order-Confirm').toString()
             });
         } else {
-            serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
+           // serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
     // redirect to Cart page if there is error
             res.json({
                 error: true,
                 cartError: false,
                 fieldErrors: [],
-                serverErrors: serverErrors
+                serverErrors: handlePaymentResult.authorizationResult.serverErrors
             });
             return;
         }

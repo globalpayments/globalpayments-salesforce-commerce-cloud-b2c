@@ -73,7 +73,9 @@ var localPayment = {
     type: 'SALE',
     entryMode: 'ECOM',
     captureStatus: 'CAPTURED',
-    authorizedStatus: 'PREAUTHORIZED'
+    authorizedStatus: 'PREAUTHORIZED',
+    detailed_error_code: '50025'
+   
 };
 
 var idealPay = {
