@@ -1,8 +1,8 @@
 <!---Displaying button for payment through wechatpay --->
 <div class="tab-pane wechatpay-content" id="wechatpay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
-<div class="btn-ideal-button-container">
-  <button class="btn btn-dark btn-block btn-wechat-pay-button lpm-black-btn" id="wechat-pay" >Pay with WeChat Pay</button>
+<div class="btn-wechatpay-button-container">
+  <button class="btn btn-dark btn-block btn-wechat-pay-button lpm-black-btn" id="wechat-pay" >Pay with WeChat</button>
   </div>
 </fieldset>
 </div>
