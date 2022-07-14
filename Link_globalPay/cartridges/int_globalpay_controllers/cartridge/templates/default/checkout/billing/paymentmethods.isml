@@ -340,6 +340,18 @@
 		</div>
 
 		<iscomment>
+			Trustly Payment
+			--------------------------------------------------------------
+		</iscomment>
+
+		<div class="payment-method  text-center <isif condition="${!empty(pdict.selectedPaymentID) && pdict.selectedPaymentID==Resource.msg('paymentmethodname.trustly', 'globalpay', null)}">payment-method-expanded</isif>" data-method="${Resource.msg('paymentmethodname.trustly', 'globalpay', null)}">
+		<isif condition=${isSandbox=='true'}>
+		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+		</isif>
+			<isinclude template="checkout/billing/paymentOptions/trustlyForm" />
+		</div>
+
+		<iscomment>
 			ApplePay Payment
 			--------------------------------------------------------------
 		</iscomment>

@@ -53,6 +53,10 @@
 			"script": "./payment/processor/przelewy24pay"
 		},
 		{
+			"name": "app.payment.processor.GLOBALPAY_TRUSTLY",
+			"script": "./payment/processor/trustly"
+		},
+		{
 			"name": "app.payment.processor.GOOGLE_PAY",
 			"script": "./payment/processor/GOOGLE_PAY"
 		},

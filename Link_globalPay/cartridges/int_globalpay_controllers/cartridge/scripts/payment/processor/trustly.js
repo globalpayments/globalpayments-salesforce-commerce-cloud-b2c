@@ -10,7 +10,7 @@ var Resource = require('dw/web/Resource');
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var URLUtils = require('dw/web/URLUtils');
 /**
- * This is where additional przelewy24pay integration would go.
+ * This is where additional trustly integration would go.
  * The current implementation simply creates a PaymentInstrument and
  * returns 'success'.
  */
@@ -18,15 +18,15 @@ function Handle(args) {
     var cart = Cart.get(args.Basket);
 
     Transaction.wrap(function () {
-        cart.removeExistingPaymentInstruments(globalpayconstants.przelewy24.paymentTypeCode);
-        cart.createPaymentInstrument(globalpayconstants.przelewy24.paymentTypeCode, cart.getNonGiftCertificateAmount());
+        cart.removeExistingPaymentInstruments(globalpayconstants.trustly.paymentTypeCode);
+        cart.createPaymentInstrument(globalpayconstants.trustly.paymentTypeCode, cart.getNonGiftCertificateAmount());
     });
 
     return {success: true};
 }
 
 /**
- * Authorizes a payment using przelewy24. The payment is authorized by using the przelewy24 pay
+ * Authorizes a payment using trustly. The payment is authorized by using the trustly
  * and setting the order no as the transaction ID.
  * Customizations may use other processors and custom logic to
  * authorize payment.
@@ -46,17 +46,15 @@ function Authorize(args) {
         type: globalpayconstants.localPayment.type,
         channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: 'PLN',//order.currencyCode,
+        currency: order.currencyCode,
         reference: order.orderNo,
-        country: 'PL',//countryCode,
+        country: countryCode,
+        consumer_reference: order.orderNo,
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.przelewy24.provider
+                provider: globalpayconstants.trustly.provider
             }
-        },
-        payer: {
-            email: "abcd@gmail.com"
         },
         notifications: {
 

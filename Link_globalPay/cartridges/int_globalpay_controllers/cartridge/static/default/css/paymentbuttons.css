@@ -1408,3 +1408,7 @@ opacity: 1;
         background-image: url("../images/przelewy24.png");
         width: 78px !important;
     }
+    .icon-GP_DW_TRUSTLY {
+        background-image: url("../images/trustly.png");
+        width: 78px !important;
+    }

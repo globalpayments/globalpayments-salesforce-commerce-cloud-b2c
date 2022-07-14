@@ -27,17 +27,17 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         type: globalpayconstants.localPayment.type,
         channel: globalpayconstants.localPayment.channel,
         amount: (order.totalGrossPrice.value * 100).toFixed(),
-        currency: order.currencyCode,
+        currency: 'PLN',//order.currencyCode,
         reference: order.orderNo,
-        country: Locale.getLocale(order.customerLocaleID).country,
+        country: 'PL',//Locale.getLocale(order.customerLocaleID).country,
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
                 provider: globalpayconstants.przelewy24.provider
             }
         },
-        payer:{
-            email:"abcd@gmail.com"
+        payer: {
+            email: "abcd@gmail.com"
         },
         notifications: {
             return_url: URLUtils.https('GlobalPayLpm-LpmReturn').toString(),
