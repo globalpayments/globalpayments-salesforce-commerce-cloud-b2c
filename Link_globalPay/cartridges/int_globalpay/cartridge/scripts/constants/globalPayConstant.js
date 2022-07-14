@@ -152,6 +152,11 @@ var przelewy24 = {
     paymentTypeCode: 'GP_DW_PRZELEWY24'
 };
 
+var trustly = {
+    provider: 'trustly',
+    paymentTypeCode: 'GP_DW_TRUSTLY'
+};
+
 var eciData = {
     five: '05',
     six: '06',
@@ -208,6 +213,7 @@ globalPayConstants.myBankPay = myBankPay;
 globalPayConstants.unionPay = unionPay;
 globalPayConstants.weChatPay = weChatPay;
 globalPayConstants.przelewy24 = przelewy24;
+globalPayConstants.trustly = trustly;
 
 // site preferences
 globalPayConstants.gpApiVersion = '2021-03-22';

@@ -42,6 +42,10 @@ var AuthorizeRequest = AbstractRequest.extend({
                 enumerable: true,
                 writable: true
             },
+            consumerReference: {
+                enumerable: true,
+                writable: true
+            },
             paymentMethod: AbstractResponse.getAccessorDescriptorWithConstructor(PaymentMethod.Request),
             notifications: AbstractResponse.getAccessorDescriptorWithConstructor(Notifications.Request),
             payer: AbstractResponse.getAccessorDescriptorWithConstructor(Payer.Request),

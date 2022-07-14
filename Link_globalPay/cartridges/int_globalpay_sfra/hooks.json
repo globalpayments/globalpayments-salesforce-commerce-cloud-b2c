@@ -57,6 +57,10 @@
             "script": "./cartridge/scripts/hooks/payment/processor/gp_przelewy24"
         },
         {
+            "name": "app.payment.processor.globalpay_trustly",
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_trustly"
+        },
+        {
             "name": "dw.extensions.applepay.getRequest",
             "script": "./cartridge/scripts/hooks/payment/processor/applepay"
         },

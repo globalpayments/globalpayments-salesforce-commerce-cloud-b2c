@@ -9,9 +9,9 @@ var URLUtils = require('dw/web/URLUtils');
 var Locale = require('dw/util/Locale');
 var Site = require('dw/system/Site');
 /**
- * Authorizes a payment using a przelewy24.
+ * Authorizes a payment using a trustly.
  * Customizations may use other processors and custom
- * logic to authorize przelewy24 payment.
+ * logic to authorize trustly payment.
  * @param {number} orderNumber - The current order's number
  * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
  * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
@@ -30,14 +30,12 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor, order) {
         currency: order.currencyCode,
         reference: order.orderNo,
         country: Locale.getLocale(order.customerLocaleID).country,
+        consumer_reference: order.orderNo,
         payment_method: {
             entry_mode: globalpayconstants.localPayment.entryMode,
             apm: {
-                provider: globalpayconstants.przelewy24.provider
+                provider: globalpayconstants.trustly.provider
             }
-        },
-        payer:{
-            email:"abcd@gmail.com"
         },
         notifications: {
             return_url: URLUtils.https('GlobalPayLpm-LpmReturn').toString(),
@@ -81,7 +79,7 @@ function Handle() {
     Transaction.wrap(function () {
     // clear previous payment instrument and update new selected payment instrument
         PaymentInstrumentUtils.removeExistingPaymentInstruments(
-      globalpayconstants.przelewy24.paymentTypeCode);
+      globalpayconstants.trustly.paymentTypeCode);
     });
     return {fieldErrors: cardErrors, serverErrors: serverErrors, error: false};
 }

@@ -49,4 +49,7 @@
     <isif condition="${paymentOption.ID === 'GP_DW_PRZELEWY24'}">
         <isinclude template="checkout/billing/paymentOptions/przelewy24PayTab" />
     </isif>
+    <isif condition="${paymentOption.ID === 'GP_DW_TRUSTLY'}">
+        <isinclude template="checkout/billing/paymentOptions/trustlyTab" />
+    </isif>
 </isloop>
