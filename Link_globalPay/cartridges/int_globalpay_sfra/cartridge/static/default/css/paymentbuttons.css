@@ -1336,8 +1336,6 @@ opacity: 1;
             width: 90px;
             height: 26px;
         }
-
-        .dropdown-menu.show a , .dropdown-menu.dropdown-country-selector a {
-            color: #444 !important;
+        .dragon-tab-img {
+            width: 55px;
         }
-        
