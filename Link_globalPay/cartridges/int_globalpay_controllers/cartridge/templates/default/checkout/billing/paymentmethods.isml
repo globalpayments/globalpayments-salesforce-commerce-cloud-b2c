@@ -349,7 +349,7 @@
 		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
 		</isif>
 			<isinclude template="checkout/billing/paymentOptions/trustlyForm" />
-
+		<iscomment>
 			DragonPay Payment
 			--------------------------------------------------------------
 		</iscomment>
