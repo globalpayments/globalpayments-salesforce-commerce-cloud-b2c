@@ -1336,6 +1336,16 @@ opacity: 1;
             width: 90px;
             height: 26px;
         }
+
+        .trustly-tab-img{
+            width: 90px;
+            height: 26px;
+        }
+
+        .dropdown-menu.show a {
+            color: #444;
+        }
+        
         .dragon-tab-img {
             width: 55px;
         }

@@ -295,6 +295,8 @@ function lpm(data) {
     lpmRequest.setCurrency(data.currency);
     lpmRequest.setReference(data.reference);
     lpmRequest.setCountry(data.country);
+    lpmRequest.setConsumerReference(data.consumerReference);
+    lpmRequest.setPayer(data.payer);
     lpmRequest.setPaymentMethod(data.payment_method);
     lpmRequest.setNotifications(data.notifications);
     var result = globalPayService.executeRequest(lpmRequest, Lpm.Response);

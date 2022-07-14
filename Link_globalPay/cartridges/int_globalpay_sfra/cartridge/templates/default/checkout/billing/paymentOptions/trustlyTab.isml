@@ -1,0 +1,9 @@
+<li class="nav-item trustly-tab" data-method-id="${paymentOption.ID}">
+    <a class="nav-link trustly-tab" data-toggle="tab" href="#trustly-content" role="tab">
+        <img class="trustly-tab-img trustly-tab"
+                src="${URLUtils.staticURL('/images/trustly.png')}"
+                alt="${Resource.msg('msg.payment.type.trustly', 'globalpay', null)}"
+                title="${Resource.msg('msg.payment.type.trustly', 'globalpay', null)}"
+        />
+    </a>
+</li>

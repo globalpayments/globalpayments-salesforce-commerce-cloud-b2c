@@ -1,0 +1,16 @@
+<div class="tab-pane trustly-content" id="trustly-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is trustly --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="${Resource.msg('paymentmethodname.trustly', 'globalpay', null)}"
+        >
+<fieldset class="trustly-form">
+<isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+</isif>
+        <isinclude template="checkout/billing/paymentOptions/trustlyForm" />
+    </fieldset>
+</fieldset>
+  </div>

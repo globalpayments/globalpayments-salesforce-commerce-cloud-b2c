@@ -1,0 +1,8 @@
+<!---Displaying button for payment through trustly --->
+<div class="tab-pane trustly-content" id="trustly-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+<div class="btn-trustly-button-container">
+  <button class="btn btn-dark btn-block btn-trustly-pay-button lpm-black-btn" id="trustly-pay">Pay with Trustly</button>
+  </div>
+</fieldset>
+</div>

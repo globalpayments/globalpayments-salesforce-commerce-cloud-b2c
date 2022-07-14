@@ -83,7 +83,9 @@ function removeExistingPaymentInstruments(paymentType) {
     paymentType === Resource.msg('paymentmethodname.eps', 'globalpay', null)||
     paymentType === Resource.msg('paymentmethodname.mybank', 'globalpay', null) ||
     paymentType === Resource.msg('paymentmethodname.unionpay', 'globalpay', null) ||
-    paymentType === Resource.msg('paymentmethodname.wechatpay', 'globalpay', null)) {
+    paymentType === Resource.msg('paymentmethodname.wechatpay', 'globalpay', null) ||
+    paymentType === Resource.msg('paymentmethodname.przelewy24pay', 'globalpay', null) ||
+    paymentType === Resource.msg('paymentmethodname.trustly', 'globalpay', null)) {
         paymentInstrument = currentBasket.createPaymentInstrument(
 		paymentType, currentBasket.totalGrossPrice
 			);

@@ -39,6 +39,12 @@
         <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
             <isinclude template="checkout/billing/paymentOptions/wechatPaySummary" />
         </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_PRZELEWY24'}">
+            <isinclude template="checkout/billing/paymentOptions/przelewy24PaySummary" />
+        </isif>
+        <isif condition="${payment.paymentMethod === 'GP_DW_TRUSTLY'}">
+            <isinclude template="checkout/billing/paymentOptions/trustlySummary" />
+        </isif>
         <isif condition="${paymentOption.ID === 'GP_DW_DRAGONPAY'}">
             <isinclude template="checkout/billing/paymentOptions/dragonPaySummary" />
         </isif>

@@ -44,5 +44,9 @@
 {
     "id": "fr_BE",
     "currencyCode": "EUR"
+},
+{
+    "id": "pl_PL",
+    "currencyCode": "PLN"
 }
 ]

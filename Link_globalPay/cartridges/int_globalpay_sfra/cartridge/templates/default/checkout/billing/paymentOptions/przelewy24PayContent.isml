@@ -1,0 +1,16 @@
+<div class="tab-pane przelewy24pay-content" id="przelewy24pay-content" role="tabpanel">
+    <fieldset class="payment-form-fields">
+
+        <!--- payment method is przelewy24 --->
+        <input type="hidden" class="form-control"
+               name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+               value="${Resource.msg('paymentmethodname.przelewy24pay', 'globalpay', null)}"
+        >
+<fieldset class="przelewy24Pay-form">
+<isif condition=${pdict.isSandbox=='true'}>
+    <div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
+</isif>
+        <isinclude template="checkout/billing/paymentOptions/przelewy24PayForm" />
+    </fieldset>
+</fieldset>
+  </div>

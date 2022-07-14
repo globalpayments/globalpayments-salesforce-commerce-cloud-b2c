@@ -1,0 +1,8 @@
+<!---Displaying button for payment through przelewy24 --->
+<div class="tab-pane przelewy24pay-content" id="przelewy24pay-content" role="tabpanel">
+<fieldset class="payment-form-fields">
+<div class="btn-przelewy24-button-container">
+  <button class="btn btn-dark btn-block btn-przelewy24-pay-button lpm-black-btn" id="przelewy24-pay">Pay with Przelewy24</button>
+  </div>
+</fieldset>
+</div>

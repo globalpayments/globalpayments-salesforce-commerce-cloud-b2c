@@ -1,0 +1,3 @@
+<div class="trustly-type">
+    <span>${Resource.msg('msg.payment.type.trustly', 'globalpay', null)}</span>
+</div>
