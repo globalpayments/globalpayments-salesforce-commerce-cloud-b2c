@@ -1404,3 +1404,7 @@ opacity: 1;
         background-image: url("../images/wechat.png"); 
         width: 95px !important;
     }
+    .icon-GP_DW_DRAGONPAY {
+        background-image: url("../images/dragon.png"); 
+        width: 65px !important;
+    }

@@ -39,5 +39,8 @@
         <isif condition="${paymentOption.ID === 'GP_DW_WECHATPAY'}">
             <isinclude template="checkout/billing/paymentOptions/wechatPaySummary" />
         </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_DRAGONPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/dragonPaySummary" />
+        </isif>
     </isloop>
 </div>
