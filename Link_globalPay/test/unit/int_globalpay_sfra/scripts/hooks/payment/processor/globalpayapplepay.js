@@ -24,7 +24,7 @@ describe('apple pay', function () {
   var orderNumber = '12345';
   var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
 
-  var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
+  var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayApplepay', {
     '*/cartridge/scripts/util/collections': {},
     'dw/order/PaymentMgr': {},
     'dw/web/Resource': {

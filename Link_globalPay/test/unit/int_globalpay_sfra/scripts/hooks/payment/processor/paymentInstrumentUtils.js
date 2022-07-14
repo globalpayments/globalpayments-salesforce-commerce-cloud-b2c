@@ -17,7 +17,7 @@ var serviceResponse = {
 
 
 describe('PaymentInstrumentUtils', function () {
-var paymentUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/PaymentInstrumentUtils', {
+var paymentUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/paymentInstrumentUtils', {
     'dw/system/Transaction': {
         wrap: function (arg) { arg(); return true; }
       },      

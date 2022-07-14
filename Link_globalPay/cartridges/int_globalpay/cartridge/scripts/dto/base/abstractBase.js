@@ -6,14 +6,14 @@
 
 var Logger = require('dw/system/Logger');
 
-var Class = require('*/cartridge/scripts/util/Class').Class;
+var Class = require('*/cartridge/scripts/util/class').Class;
 
 /**
  * AbstractBase class
  * Other DTO modules extend this class.
  *
  * @class AbstractBase
- * @extends module:util/Class~Class
+ * @extends module:util/class~Class
  * @returns {module:dtos/base/abstractBase~AbstractBase}
  */
 var AbstractBase = Class.extend({

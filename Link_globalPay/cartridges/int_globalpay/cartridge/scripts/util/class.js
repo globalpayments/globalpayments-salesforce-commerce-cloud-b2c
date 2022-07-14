@@ -13,13 +13,13 @@
  *
  * @see http://etobi.de/blog/artikel/weiterlesen/vererbung-mit-javascript/
  *
- * @module util/Class
+ * @module util/class
  */
 
 /**
  * Base class which allows simple inheritance.
  *
- * @class module:util/Class~Class
+ * @class module:util/class~Class
  * @example
  * var MyClass = Class.extends({
  *     init : function(){
@@ -103,5 +103,5 @@ function Class() {}
     };
 }());
 
-/** @type {module:util/Class~Class} */
+/** @type {module:util/class~Class} */
 exports.Class = Class;

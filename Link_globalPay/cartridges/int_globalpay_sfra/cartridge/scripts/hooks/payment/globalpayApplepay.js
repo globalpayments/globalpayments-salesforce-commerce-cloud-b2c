@@ -6,7 +6,7 @@ var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPrefere
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var Locale = require('dw/util/Locale');
 var Site = require('dw/system/Site');
-var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/PaymentInstrumentUtils');
+var PaymentInstrumentUtils = require('*/cartridge/scripts/utils/paymentInstrumentUtils');
 /**
  * Authorizes a payment using a apple pay.
  * @param {dw.order.order}  -  order data.
