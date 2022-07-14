@@ -1,0 +1,3 @@
+<div class="epspay-type">
+    <span>${Resource.msg('msg.payment.type.dragonpay', 'globalpay', null)}</span>
+</div>

@@ -719,8 +719,16 @@ var threeds = require('./threeds');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
                 });
+                
+                 $('.btn-przelewy24-pay-button', plugin).on('click', function() {
+                    $('a.nav-link.credit-card-tab').addClass('disabled');
+                    $('a.nav-link.google-pay-tab').addClass('disabled');
+                    $('a.nav-link.apple-pay-tab').addClass('disabled');
+                    members.nextStage();
+                });
 
-                $('.btn-przelewy24-pay-button', plugin).on('click', function() {
+                $('.btn-dragon-pay-button', plugin).on('click', function() {
+
                     $('a.nav-link.credit-card-tab').addClass('disabled');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');

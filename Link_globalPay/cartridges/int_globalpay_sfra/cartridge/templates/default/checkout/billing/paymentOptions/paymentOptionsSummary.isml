@@ -45,5 +45,8 @@
         <isif condition="${payment.paymentMethod === 'GP_DW_TRUSTLY'}">
             <isinclude template="checkout/billing/paymentOptions/trustlySummary" />
         </isif>
+        <isif condition="${paymentOption.ID === 'GP_DW_DRAGONPAY'}">
+            <isinclude template="checkout/billing/paymentOptions/dragonPaySummary" />
+        </isif>
     </isloop>
 </div>

@@ -1360,7 +1360,7 @@ opacity: 1;
         background-position: center;
     }
 
-    .icon-DW_PAYPAL {
+    .icon-GP_DW_PAYPAL {
         background-image: url("../images/paypal.png"); 
     }
     .icon-DW_APPLE_PAY  {
@@ -1377,7 +1377,7 @@ opacity: 1;
         width: 45px !important;
     }
     .icon-GP_DW_GIROPAY {
-        background-image: url("../images/mybank.png"); 
+        background-image: url("../images/giropay.png"); 
     }
     .icon-GP_DW_ALIPAY {
         background-image: url("../images/alipay.png"); 
@@ -1404,6 +1404,7 @@ opacity: 1;
         background-image: url("../images/wechat.png"); 
         width: 95px !important;
     }
+
     .icon-GP_DW_PRZELEWY24 {
         background-image: url("../images/przelewy24.png");
         width: 78px !important;
@@ -1411,4 +1412,8 @@ opacity: 1;
     .icon-GP_DW_TRUSTLY {
         background-image: url("../images/trustly.png");
         width: 78px !important;
+    }
+    .icon-GP_DW_DRAGONPAY {
+        background-image: url("../images/dragon.png"); 
+        width: 65px !important;
     }

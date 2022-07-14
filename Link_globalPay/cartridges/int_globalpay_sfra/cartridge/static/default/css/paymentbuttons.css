@@ -1345,3 +1345,7 @@ opacity: 1;
         .dropdown-menu.show a {
             color: #444;
         }
+        
+        .dragon-tab-img {
+            width: 55px;
+        }
