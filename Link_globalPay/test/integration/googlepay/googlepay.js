@@ -108,15 +108,13 @@ describe('billingForm', function () {
                     dwfrm_billing_contactInfoFields_phone: '9786543213',
                     dwfrm_billing_creditCardFields_authId: '',
                     dwfrm_billing_creditCardFields_isthreeds: '',
-                    dwfrm_billing_creditCardFields_paymentToken: '',
                     dwfrm_billing_creditCardFields_saveCard: false,
                     dwfrm_billing_creditCardFields_paymentId: '',
                     dwfrm_billing_creditCardFields_cardOwner: '',
                     dwfrm_billing_creditCardFields_paymentToken: JSON.stringify({
-                        signature: 'MEUCIQDfv0N0rp2jqU1a2ixkEPYUCkK5MuKw4NgboBaokXNVnAIgJYt10K8RBqoAdcgyAumIW1R4WQV3CqscMU0b/y36qTg=',    
-                        protocolVersion: 'ECv1',    
-                        signedMessage: '{"encryptedMessage":"iFbAYRlAfodD+iKO0yaucfrqUC7J88EmnsjhnU9k8jSSxW7H5AjGwd4TPDCIfmFggqAetM/sXDmA26fhsHAr+heBOUNQB1gGlGsm7Fv6q9FesFTG40Hn/j2sVwdsHNnNtOIcEoDFkh6or8rIqc3rjkow6HYPcrVYmoN1D7uG2AT+enpwHByENZUHLoSZRN4t8TlEbObRUbToUZ6SZZACaHy/ufeWSt62Ik7Cu/mtXJleU/p9nkX+Z8NZhKiGCMTWI6oeMEYUUEp5a5YHNdYruP1c/vOW/sR/RNYajaai9YiAUqtgKp4lVgShhmBq5m9gg8fCNn4z/YXPD04Pp87UkZOADz0l+8WdRX/8WY+CpBPjb7Qbni5MdPzCPTsWmWdcbv2c/mnA5BKi+oH6K/CbYerhiT/mC4Fq5TvgV0zbbGfP1ZRHIPNgMMWzTbeUpfF1AZPz","ephemeralPublicKey":"BNuSeV9tnQ7vreWkdhgQF941W8Fg7Qr+W0Pnp/d4KdBRRjTnRKxYPBOxuPBsgySzChEiGm6KJWpMFCjz4fvXEyA\\u003d","tag":"2COuUhMA+mwP0YTB71Su44OLsNibkvGk3ybNE22vGEk\\u003d"}'
-    
+                        signature: 'MEQCIE8tVNBclyCWY1T7qVpqZL3YqSp82JbORtX4XiSxO2fhAiBz7cdTgYucXGWKn5N9SZkG5tk4wbnQibpQ7NxTTDY9qg==',
+                        protocolVersion: 'ECv1',
+                        signedMessage: '{"encryptedMessage":"oAGw2rrRRMVAv4t4IehLY0wBCdN7p56VrBhhX6wjjP5/ladpqfemh/3KgGGrS1Otj4hbil8mp65qrxcBdKx1FavrjPuzr2vefeBaVanvfxC2xZC1aHZ7Qp9I7C6rEGsLD+XdqdMz9PcWoifbLErGhaYCyEQ0GQXW4IfIDW65yWNnkN4chUDuIqjKJc984PPdx+FpqxEzLcqZXU4wv3TJZt9hdMEpBsILELxyn4zPjIicJr7/caLC2GLfDrOt6N0yJkSQxSlEKHJTvScAJ/d9U+6qBudva5sjyQycm6uGJMUYBfQRnZxZgtYLJ5llm9PqmBr6MB6sU5qyXsNLyJ4klyfirTSfhpu8xZ2xzzpl0rzLAz/nQnyaozZc2p0n/r72/NMaxYdGyWdZDUSwb7LOJMnY3xjPqIC5y6GvPTWh49iPCgyZT+78RM5fklfz1I9ig+nU","ephemeralPublicKey":"BAWOpb0ZKriBJrDVlk1ayB6rb4d/hKcFpWRCmWC1+2P2e8vzl61EYZmCbwA6A4SJ7yCsYqFXcSzjKroJjt73Viw\\u003d","tag":"9YZ24ZD3CwHz+1VQSjj1pIqm6dyZm7jNxEPFBYq2hv4\\u003d"}'
                     })
                 };
 

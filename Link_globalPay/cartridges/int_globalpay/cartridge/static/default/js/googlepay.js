@@ -153,20 +153,7 @@
      };
  }
 
-  /**
-   * Prefetch payment data to improve performance
-   */
- function prefetchGooglePaymentData() {
-     const paymentDataRequest = getGooglePaymentDataRequest();
-    // transactionInfo must be set but does not affect cache
-     paymentDataRequest.transactionInfo = {
-         totalPriceStatus: 'NOT_CURRENTLY_KNOWN',
-         currencyCode: $('input[name=currency]').val()
-     };
-     const paymentsClient = getGooglePaymentsClient();
-     paymentsClient.prefetchPaymentData(paymentDataRequest);
- }
-
+  
   /**
    * Show Google Pay payment sheet when Google Pay payment button is clicked
    */
