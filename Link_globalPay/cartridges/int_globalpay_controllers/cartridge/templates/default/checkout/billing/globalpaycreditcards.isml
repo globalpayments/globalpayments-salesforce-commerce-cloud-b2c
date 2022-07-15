@@ -1,9 +1,3 @@
-  <isscript>
-  var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
-    var gpayToken =  globalPayHelper.getCheckoutToken();
-    var preferences = globalPayPreferences.getPreferences();
-  </isscript>
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
  <div class="gpayerror"></div>
  <form id="payment-form" action="/Payment/Charge" method="post">
@@ -18,13 +12,13 @@
 <script type="text/javascript">
 // Configure account
 GlobalPayments.configure({
-    accessToken: '${gpayToken}',
-    env: '${preferences.env}', // or "production"
+    accessToken: '${pdict.gpayToken}',
+    env: '${pdict.preferences.env}', // or "production"
     currency: '${pdict.currency}',
     country:'${pdict.country}',
-    gpaymerchantid:'${preferences.gpayMerchantId}',
-    gpaymerchantname:'${preferences.gpayMerchantName}',
-    gpayenv:'${preferences.gpayEnv}'
+    gpaymerchantid:'${pdict.preferences.gpayMerchantId}',
+    gpaymerchantname:'${pdict.preferences.gpayMerchantName}',
+    gpayenv:'${pdict.preferences.gpayEnv}'
 });
 
 // Create Form
