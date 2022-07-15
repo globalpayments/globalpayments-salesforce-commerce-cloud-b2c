@@ -5,7 +5,7 @@ var Status = require('dw/system/Status');
 var server = require('server');
 var Transaction = require('dw/system/Transaction');
 var ApplePayHookResult = require('dw/extensions/applepay/ApplePayHookResult');
-var globalpayAuthorization = require('*/cartridge/scripts/hooks/payment/globalpayapplepay');
+var globalpayAuthorization = require('*/cartridge/scripts/hooks/payment/globalpayApplepay');
 var PaymentMgr = require('dw/order/PaymentMgr');
 
 

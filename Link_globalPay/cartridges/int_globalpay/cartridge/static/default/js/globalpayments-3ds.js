@@ -1370,7 +1370,7 @@ this.GlobalPayments.ThreeDSecure = (function (exports) {
             ? true
             : false);
     // For IOs/Android and small screen devices always open in new tab/window
-    // TODO: Confirm/implement once sandbox support is in place
+    //  Confirm/implement once sandbox support is in place
     var isMobileNewTab = !isWindowsMobileOs && (isAndroidOrIOs || isMobileXS);
     // Display IFrame on WIndows Phone OS mobile devices
     var isMobileIFrame = isWindowsMobileOs || isMobileNewTab;
@@ -1537,7 +1537,7 @@ this.GlobalPayments.ThreeDSecure = (function (exports) {
             var form = createForm(endpoint, iframe.id, fields);
             switch (options.displayMode) {
                 case "redirect":
-                    // TODO: Add redirect support once sandbox environment respects configured
+                    // : Add redirect support once sandbox environment respects configured
                     // challengeNotificationUrl instead of hardcoded value
                     ensureIframeClosed(timeout);
                     reject(new Error("Not implemented"));

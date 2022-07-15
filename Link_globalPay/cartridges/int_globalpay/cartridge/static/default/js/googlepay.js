@@ -91,7 +91,7 @@
      paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
      paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
      paymentDataRequest.merchantInfo = {
-      // @todo a merchant ID is available for a production environment after approval by Google
+      // add merchant ID is available for a production environment after approval by Google
          merchantId: $('input[name=gpaymerchantid]').val(),
          merchantName: $('input[name=gpayMerchantName]').val()
      };

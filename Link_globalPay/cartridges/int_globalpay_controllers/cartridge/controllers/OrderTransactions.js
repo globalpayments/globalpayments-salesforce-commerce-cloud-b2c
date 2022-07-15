@@ -8,7 +8,7 @@
  **/
 var globalPayHelper = require('*/cartridge/scripts/helpers/globalPayHelpers');
 var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
-var security = require('*/cartridge/scripts/models/SecurityModel');
+var security = require('*/cartridge/scripts/models/securityModel');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var OrderMgr = require('dw/order/OrderMgr');
