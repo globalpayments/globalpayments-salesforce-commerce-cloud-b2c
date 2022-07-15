@@ -523,7 +523,7 @@ function billing() {
         applyCoupon: function () {
             var couponCode = request.httpParameterMap.couponCode.stringValue || request.httpParameterMap.dwfrm_billing_couponCode.stringValue;
 
-            // TODO what happened to this start node?
+           
             app.getController('Cart').AddCoupon(couponCode);
 
             handleCoupon();
@@ -534,7 +534,7 @@ function billing() {
             return;
         },
         paymentSelect: function () {
-            // ToDo - pass parameter ?
+            
             publicStart();
             return;
         },

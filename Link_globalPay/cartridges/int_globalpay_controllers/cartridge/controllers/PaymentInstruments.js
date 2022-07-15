@@ -212,7 +212,7 @@ function create() {
  * In either case, redirects to the {@link module:controllers/PaymentInstruments~list|List}
  * function.
  * @transaction
- * @TODO Should be moved into handlePaymentForm
+ * 
  * @FIXME Inner method should be lowercase.error action should do something
  */
 function Delete() {
@@ -225,7 +225,7 @@ function Delete() {
             });
         },
         error: function () {
-            // @TODO When could this happen
+            //  When could this happen
         }
     });
 

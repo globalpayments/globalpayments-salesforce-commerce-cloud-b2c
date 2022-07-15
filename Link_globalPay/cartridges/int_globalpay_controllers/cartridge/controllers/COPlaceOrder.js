@@ -211,7 +211,7 @@ function handlePayment() {
     var order = cart.createOrder();
 
     if (!order) {
-        // TODO - need to pass BasketStatus to Cart-Show ?
+        //   need to pass BasketStatus to Cart-Show ?
         app.getController('Cart').Show();
 
         return {};
