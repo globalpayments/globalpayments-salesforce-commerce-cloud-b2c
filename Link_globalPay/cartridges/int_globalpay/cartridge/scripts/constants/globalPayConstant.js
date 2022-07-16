@@ -73,6 +73,8 @@ var localPayment = {
     type: 'SALE',
     entryMode: 'ECOM',
     captureStatus: 'CAPTURED',
+    declinedStatus: 'DECLINED',
+    pendingStatus: 'PENDING',
     authorizedStatus: 'PREAUTHORIZED'
 };
 
