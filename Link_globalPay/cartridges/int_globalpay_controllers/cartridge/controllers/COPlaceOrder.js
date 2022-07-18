@@ -105,6 +105,7 @@ function changeOrderStatus(order) {
         } else if (preferences.captureMode.value === globalpayconstants.captureMode.later) {
             order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_NOTPAID);
         }
+        order.setExportStatus(Order.EXPORT_STATUS_READY);
     });
 }
 function start() {
@@ -378,6 +379,7 @@ function payPalCancel() {
 function LpmReturn() {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
+    var paymentStatus=request.httpParameterMap.status.toString();
     // var paymentFormResult;
     // if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_IDEAL')) {
     //     paymentFormResult = dw.system.HookMgr.callHook('app.payment.processor.GLOBALPAY_IDEAL',
@@ -427,21 +429,25 @@ function LpmReturn() {
     //                order
     //            );
     // }
-    // if ((!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.idealPay.captureStatus || paymentFormResult.status === globalpayconstants.idealPay.authorizedStatus)) ||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.giroPay.captureStatus || paymentFormResult.status === globalpayconstants.giroPay.authorizedStatus)) ||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.aliPay.captureStatus || paymentFormResult.status === globalpayconstants.aliPay.authorizedStatus)) ||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.sofortPay.captureStatus || paymentFormResult.status === globalpayconstants.sofortPay.authorizedStatus))||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.bitPay.captureStatus || paymentFormResult.status === globalpayconstants.bitPay.authorizedStatus))||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.banContactPay.captureStatus || paymentFormResult.status === globalpayconstants.banContactPay.authorizedStatus))||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.myBankPay.captureStatus || paymentFormResult.status === globalpayconstants.myBankPay.authorizedStatus))||
-    // (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.epsPay.captureStatus || paymentFormResult.status === globalpayconstants.epsPay.authorizedStatus))) {
+    if (!empty(paymentStatus) && (paymentStatus === globalpayconstants.localPayment.captureStatus || paymentStatus === globalpayconstants.localPayment.authorizedStatus))
+       {
         var orderPlacementStatus = Order.submit(order);
         if (!orderPlacementStatus.error) {
             app.getController('COSummary').ShowConfirmation(order);
             changeOrderStatus(order);
             clearForms();
         }
-    //}
+    }
+    else {
+        Transaction.wrap(function () {
+            OrderMgr.failOrder(order);
+            return {
+                error: true,
+                FailedOrderError: new Status(Status.ERROR, 'confirm.error.technical')
+            };
+        });
+        response.redirect(URLUtils.https('Cart-Show', 'orderID', order.orderNo, 'orderToken', order.orderToken));
+    }
     
 }
 

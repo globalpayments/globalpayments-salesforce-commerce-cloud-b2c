@@ -17,6 +17,7 @@ var orderUpdate = function (order) {
         } else if (captureMode.value === globalpayconstants.captureMode.later) {
             order.setPaymentStatus(Order.PAYMENT_STATUS_NOTPAID);
         }
+        order.setExportStatus(Order.EXPORT_STATUS_READY);
     });
 
     return;
