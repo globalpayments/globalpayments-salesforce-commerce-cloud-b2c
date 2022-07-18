@@ -99,6 +99,7 @@ function clearForms() {
  */
 function changeOrderStatus(order) {
     var preferences = globalPayPreferences.getPreferences();
+    var Order = require('dw/order/Order');
     Transaction.wrap(function () {
         if (preferences.captureMode.value === globalpayconstants.captureMode.auto) {
             order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
