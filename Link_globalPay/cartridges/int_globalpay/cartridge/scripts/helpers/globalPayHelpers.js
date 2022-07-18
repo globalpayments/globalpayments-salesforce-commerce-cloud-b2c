@@ -228,7 +228,7 @@ function paypal(data) {
         return result.response;
     }
 
-    return null;
+    return result;
 }
 /**
  * Forms required data to be sent to service to perform googlepay transaction.
@@ -304,7 +304,7 @@ function lpm(data) {
         return result.response;
     }
 
-    return null;
+    return result;
 }
 
 function  threeDsStepone(data) {

@@ -148,7 +148,7 @@ function handlePayments(req, res, next) {
                 continueUrl: URLUtils.url('Order-Confirm').toString()
             });
         } else {
-            serverErrors.push(Resource.msg('error.payment.not.valid', 'checkout', null));
+            serverErrors.push(handlePaymentResult.authorizationResult.lpmresp.error.detailedErrorDescription);
     // redirect to Cart page if there is error
             res.json({
                 error: true,
