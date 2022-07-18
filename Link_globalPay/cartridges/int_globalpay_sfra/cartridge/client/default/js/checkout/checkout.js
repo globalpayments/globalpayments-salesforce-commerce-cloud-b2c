@@ -402,7 +402,7 @@ var threeds = require('./threeds');
                                     defer.reject();
                                 } else {
                                     if ($('.tab-pane.active').attr('id') == 'paypal-content') {
-                                         window.location.href = data.paypalresp.paymentMethod.apm.providerRedirectUrl;
+                                        window.location.href = data.paypalresp.paymentMethod.apm.providerRedirectUrl;
                                     }
                                     else if ($('.tab-pane.active').attr('id') == 'ideal-content' || $('.tab-pane.active').attr('id') == 'giroPay-content' || $('.tab-pane.active').attr('id') == 'aliPay-content' || $('.tab-pane.active').attr('id') == 'sofortPay-content'
                                     || $('.tab-pane.active').attr('id') == 'bitPay-content'|| $('.tab-pane.active').attr('id') == 'epsPay-content' || $('.tab-pane.active').attr('id') == 'mybankPay-content'|| $('.tab-pane.active').attr('id') == 'bancontactpay-content'
@@ -648,6 +648,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-ideal-pay-button', plugin).on('click', function() {
@@ -655,13 +656,14 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
                 $('.btn-trustly-pay-button', plugin).on('click', function() {
                     $('a.nav-link.credit-card-tab').addClass('disabled');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
-
+                    showLoadingImage();
                 });
 
                 $('.btn-ali-pay-button', plugin).on('click', function() {
@@ -669,6 +671,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-giro-pay-button', plugin).on('click', function() {
@@ -676,6 +679,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-sofort-pay-button', plugin).on('click', function() {
@@ -683,6 +687,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-bancontact-pay-button', plugin).on('click', function() {
@@ -690,6 +695,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-bit-pay-button', plugin).on('click', function() {
@@ -697,6 +703,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-eps-pay-button', plugin).on('click', function() {
@@ -704,6 +711,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-mybank-pay-button', plugin).on('click', function() {
@@ -711,6 +719,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-unioun-pay-button', plugin).on('click', function() {
@@ -718,6 +727,7 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-wechat-pay-button', plugin).on('click', function() {
@@ -725,13 +735,15 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
                 
-                 $('.btn-przelewy24-pay-button', plugin).on('click', function() {
+                $('.btn-przelewy24-pay-button', plugin).on('click', function() {
                     $('a.nav-link.credit-card-tab').addClass('disabled');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('.btn-dragon-pay-button', plugin).on('click', function() {
@@ -740,14 +752,17 @@ var threeds = require('./threeds');
                     $('a.nav-link.google-pay-tab').addClass('disabled');
                     $('a.nav-link.apple-pay-tab').addClass('disabled');
                     members.nextStage();
+                    showLoadingImage();
                 });
 
                 $('body').on('submit:googlepay', function(e, data) {
                     $('#paymentToken').val(data.paymentToken);
                     members.nextStage();
+                    showLoadingImage();
                 });
                 $('.apple-pay-content #apple-pay-button', plugin).on('click', function() {
                     members.nextStage();
+                    showLoadingImage();
                 });
                 //
                 // remember stage (e.g. shipping)
@@ -924,5 +939,12 @@ var exports = {
         }
     });
 });
+
+var showLoadingImage = function() {
+    $('.page').append('<div class="overlay"></div>');
+    setTimeout(function() {
+        $('body').find(".overlay").remove();
+    }, 5000);
+}
 
 module.exports = exports;

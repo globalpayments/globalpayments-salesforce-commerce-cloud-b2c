@@ -1349,3 +1349,14 @@ opacity: 1;
         .dragon-tab-img {
             width: 55px;
         }
+        
+        .overlay {
+            width: 100%;
+            height: 100Vh;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0;
+            z-index: 2;
+            overflow: hidden;
+            bottom: 0;
+        }
