@@ -153,7 +153,7 @@ var przelewy24 = {
 };
 
 var trustly = {
-    provider: 'trustly',
+    provider: 'TRUSTLY',
     paymentTypeCode: 'GP_DW_TRUSTLY'
 };
 
