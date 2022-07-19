@@ -7,11 +7,13 @@
             <preference preference-id="CouponGeneratorIncludeDashes">true</preference>
             <preference preference-id="CouponGeneratorIncludeVowels">true</preference>
             <preference preference-id="EnableSiteOrderNumbers">false</preference>
+            <preference preference-id="EnforceHTTPS">false</preference>
             <preference preference-id="IntegrationOrderCenterIncludeSite">true</preference>
             <preference preference-id="OrderEditExportDelay">30</preference>
             <preference preference-id="OrderExportDelay">30</preference>
             <preference preference-id="OrderIPLoggingEnabled">true</preference>
             <preference preference-id="OrderLifetime">0</preference>
+            <preference preference-id="RedirectUrlCopySourceParameters">false</preference>
             <preference preference-id="SiteCatalog">storefront-catalog-m-en</preference>
             <preference preference-id="SiteCurrencies">USD:EUR:JPY:CNY</preference>
             <preference preference-id="SiteCustomerList">RefArch</preference>
@@ -21,7 +23,7 @@
             <preference preference-id="SiteLocales">default:en_US</preference>
             <preference preference-id="SitePriceBooks">cny-m-list-prices:cny-m-sale-prices:eur-m-list-prices:eur-m-sale-prices:jpy-m-list-prices:jpy-m-sale-prices:usd-m-list-prices:usd-m-sale-prices</preference>
             <preference preference-id="SiteTimezone">Etc/UTC</preference>
-            <preference preference-id="StorefrontURLsEnabled">true</preference>
+            <preference preference-id="StorefrontURLsEnabled">false</preference>
         </all-instances>
         <development>
             <preference preference-id="AvailabilityFiltering">Disabled</preference>
@@ -58,7 +60,7 @@
         <all-instances/>
         <development>
             <preference preference-id="gp_app_id">6N2pxX3SVk3eqy49kARXhPUnbubneuhr</preference>
-            <preference preference-id="gp_app_key">DeLqgkOVn+Pw4G9rKe4cs0qiv33SNs1EFs3pxJFwUYWxLAJ9Knv5yx0XXh4cjD/Q</preference>
+            <preference preference-id="gp_app_key">GyFPoVJ/EMaWhiJ0pJAtwwaQ4NMngyeV5rzRrV8yBFLrAdDrGJ1VexvWOBkNPIMn</preference>
             <preference preference-id="gp_captureMode">AUTO</preference>
             <preference preference-id="gp_clientID">4230946d-3f35-4e91-8303-a51720ba7a5b</preference>
             <preference preference-id="gp_enable_applepay">true</preference>

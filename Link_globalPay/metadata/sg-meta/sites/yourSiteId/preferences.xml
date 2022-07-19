@@ -54,9 +54,9 @@
     <custom-preferences>
         <all-instances/>
         <development>
-            <preference preference-id="gp_app_id">Rar92ezom1ZCjp3ueZXWqnsxSLS2vnyW</preference>
-            <preference preference-id="gp_app_key">+dcztqAHviMSIDbfQa8XlJMlEl0AU38FW0t3F/1PkQlRu3XwGV7VlNqNzHATTMmq</preference>
-            <preference preference-id="gp_captureMode">LATER</preference>
+            <preference preference-id="gp_app_id">6N2pxX3SVk3eqy49kARXhPUnbubneuhr</preference>
+            <preference preference-id="gp_app_key">Nn5JD5h4UNI/CDTjdGUlZGNSfah0pSv7NN9vOxyRcShKfBAZa17e49GlVZSjOriX</preference>
+            <preference preference-id="gp_captureMode">AUTO</preference>
             <preference preference-id="gp_clientID">4230946d-3f35-4e91-8303-a51720ba7a5b</preference>
             <preference preference-id="gp_enable_applepay">true</preference>
             <preference preference-id="gp_enable_googlepay">true</preference>
