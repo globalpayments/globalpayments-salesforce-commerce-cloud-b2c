@@ -1,52 +1,66 @@
 [{
     "id": "en_US",
-    "currencyCode": "USD"
+    "currencyCode": "USD",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "it",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "de_DE",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 }, {
     "id": "en_IN",
-    "currencyCode": "INR"
+    "currencyCode": "INR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "en_GB",
-    "currencyCode": "GBP"
+    "currencyCode": "GBP",
+    "supportedCurrency":["EUR","USD","AUD"]
 }, {
     "id": "ja_JP",
-    "currencyCode": "JPY"
+    "currencyCode": "JPY",
+    "supportedCurrency":["EUR","USD","AUD"]
 }, {
     "id": "zh_CN",
-    "currencyCode": "CNY"
+    "currencyCode": "CNY",
+    "supportedCurrency":["EUR","USD","AUD"]
 }, {
     "id": "fr_FR",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 }, {
     "id": "it_IT",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "nl_NL",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "tl_PH",
-    "currencyCode": "PHP"
+    "currencyCode": "PHP",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "en_AT",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "fr_BE",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "pl_PL",
-    "currencyCode": "PLN"
+    "currencyCode": "PLN",
+    "supportedCurrency":["EUR","USD","AUD"]
 }
 ]
