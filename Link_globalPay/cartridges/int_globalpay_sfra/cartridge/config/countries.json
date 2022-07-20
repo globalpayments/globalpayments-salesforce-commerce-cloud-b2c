@@ -1,26 +1,21 @@
 [{
     "id": "en_US",
     "currencyCode": "USD",
-    "supportedCurrency":["EUR","USD","AUD"]
-},
-{
-    "id": "it",
-    "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["USD"]
 },
 {
     "id": "de_DE",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","AUD"]
 }, {
     "id": "en_IN",
     "currencyCode": "INR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD","INR"]
 },
 {
     "id": "en_GB",
     "currencyCode": "GBP",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","GBP"]
 }, {
     "id": "ja_JP",
     "currencyCode": "JPY",
@@ -32,7 +27,7 @@
 }, {
     "id": "fr_FR",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD"]
 }, {
     "id": "it_IT",
     "currencyCode": "EUR",

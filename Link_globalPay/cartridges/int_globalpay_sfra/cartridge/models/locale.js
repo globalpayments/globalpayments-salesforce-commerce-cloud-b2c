@@ -25,6 +25,7 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
                 displayCountry: apiLocale.displayCountry,
                 currencyCode: locale.currencyCode,
                 displayName: apiLocale.displayName,
+                supportedCurrency: locale.supportedCurrency,
                 language: apiLocale.language,
                 displayLanguage: apiLocale.displayLanguage
             };
