@@ -1,52 +1,81 @@
 [{
     "id": "en_US",
-    "currencyCode": "USD"
+    "name":"United States",
+    "currencyCode": "USD",
+    "alternativeCurrencyCodes":["USD"]
 },
 {
     "id": "it",
-    "currencyCode": "EUR"
+    "name":"Italia",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "de_DE",
-    "currencyCode": "EUR"
-}, {
-    "id": "en_IN",
-    "currencyCode": "INR"
-},
+    "name":"Germany",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
+}, 
 {
     "id": "en_GB",
-    "currencyCode": "GBP"
+    "name":"United Kingdom",
+    "currencyCode": "GBP",
+    "alternativeCurrencyCodes":["EUR","GBP"]
 }, {
     "id": "ja_JP",
-    "currencyCode": "JPY"
+    "name":"Japan",
+    "currencyCode": "JPY",
+    "alternativeCurrencyCodes":["EUR","USD","JPY"]
 }, {
     "id": "zh_CN",
-    "currencyCode": "CNY"
-}, {
+    "name":"中国",
+    "currencyCode": "CNY",
+    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
+}, 
+{
+    "id": "en_CN",
+    "name":"China",
+    "currencyCode": "CNY",
+    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
+},{
     "id": "fr_FR",
-    "currencyCode": "EUR"
+    "name":"France",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
 }, {
     "id": "it_IT",
-    "currencyCode": "EUR"
+    "name":"Italia",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "nl_NL",
-    "currencyCode": "EUR"
+    "name":  "Netharlands",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "tl_PH",
-    "currencyCode": "PHP"
+    "name": "Philippines",
+    "currencyCode": "PHP",
+    "alternativeCurrencyCodes":["PHP"]
 },
 {
     "id": "en_AT",
-    "currencyCode": "EUR"
+    "name":  "Austria",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "fr_BE",
-    "currencyCode": "EUR"
+    "name": "Belgium",
+    "currencyCode": "EUR",
+    "alternativeCurrencyCodes":["EUR","USD"]
 },
 {
     "id": "pl_PL",
-    "currencyCode": "PLN"
+    "name":"Poland",
+    "currencyCode": "PLN",
+    "alternativeCurrencyCodes":["EUR","PLN"]
 }
 ]
