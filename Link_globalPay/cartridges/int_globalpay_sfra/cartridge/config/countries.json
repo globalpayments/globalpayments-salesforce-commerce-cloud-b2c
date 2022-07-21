@@ -2,80 +2,80 @@
     "id": "en_US",
     "name":"United States",
     "currencyCode": "USD",
-    "supportedCurrency":["USD"]
+    "alternativeCurrencyCodes":["USD"]
 },
 {
     "id": "it",
     "name":"Italia",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD"]
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "de_DE",
     "name":"Germany",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "alternativeCurrencyCodes":["EUR"]
 }, 
 {
     "id": "en_GB",
     "name":"United Kingdom",
     "currencyCode": "GBP",
-    "supportedCurrency":["EUR","GBP"]
+    "alternativeCurrencyCodes":["EUR","GBP"]
 }, {
     "id": "ja_JP",
     "name":"Japan",
     "currencyCode": "JPY",
-    "supportedCurrency":["EUR","USD","JPY"]
+    "alternativeCurrencyCodes":["EUR","USD","JPY"]
 }, {
     "id": "zh_CN",
     "name":"中国",
     "currencyCode": "CNY",
-    "supportedCurrency":["EUR","USD","CNY"]
+    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
 }, 
 {
     "id": "en_CN",
     "name":"China",
     "currencyCode": "CNY",
-    "supportedCurrency":["EUR","USD","CNY"]
+    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
 },{
     "id": "fr_FR",
     "name":"France",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD"]
+    "alternativeCurrencyCodes":["EUR"]
 }, {
     "id": "it_IT",
     "name":"Italia",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "nl_NL",
     "name":  "Netharlands",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "tl_PH",
     "name": "Philippines",
     "currencyCode": "PHP",
-    "supportedCurrency":["EUR","USD","PHP"]
+    "alternativeCurrencyCodes":["PHP"]
 },
 {
     "id": "en_AT",
     "name":  "Austria",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD"]
+    "alternativeCurrencyCodes":["EUR"]
 },
 {
     "id": "fr_BE",
     "name": "Belgium",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD"]
+    "alternativeCurrencyCodes":["EUR","USD"]
 },
 {
     "id": "pl_PL",
     "name":"Poland",
     "currencyCode": "PLN",
-    "supportedCurrency":["EUR","USD","PLN"]
+    "alternativeCurrencyCodes":["EUR","PLN"]
 }
 ]

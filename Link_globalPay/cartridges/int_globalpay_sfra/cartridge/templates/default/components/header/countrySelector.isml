@@ -15,13 +15,13 @@
             </isloop>
         </div>
     </div>
-    <div class="dropdown currency-selector" data-url="${URLUtils.url('Page-SetCurrency')}" tabindex="0">
+    <div class="dropdown country-selector" data-url="${URLUtils.url('Page-SetLocale')}" tabindex="0">
         <span class="btn dropdown-toggle" id="dropdownCountrySelector" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
             <i class="flag-icon flag-icon-${pdict.localeModel.locale.countryCode.toLowerCase()}"></i>
             ${pdict.localeModel.locale.currencyCode}
         </span>
-        <div class="dropdown-menu dropdown-currency-selector" aria-labelledby="dropdownCountrySelector">
+        <div class="dropdown-menu dropdown-country-selector" aria-labelledby="dropdownCountrySelector">
             <isloop items="${pdict.localeModel.locale.currency}" var="currency">
                 <a class="dropdown-item" href="${'#'}" data-locale="${pdict.localeModel.locale.ID}"
                     data-currencyCode="${currency}">

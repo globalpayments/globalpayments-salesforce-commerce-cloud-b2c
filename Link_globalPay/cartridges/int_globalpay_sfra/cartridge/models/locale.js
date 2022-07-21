@@ -66,11 +66,11 @@ function Locale(currentLocale, allowedLocales, siteId,currency) {
         name: currentLocale.displayCountry,
         localeLinks: localeLinks,
         localLinks: localeLinks,
-        currencyCode: 'USD',
+        currencyCode: currentCountry.currencyCode,
         displayName: currentCountry.name,
         language: currentLocale.language,
         displayLanguage: currentLocale.displayLanguage,
-        currency: currentCountry.supportedCurrency,
+        currency: currentCountry.alternativeCurrencyCodes,
         ID: currentCountry.id
     };
 }
