@@ -1,66 +1,81 @@
 [{
     "id": "en_US",
+    "name":"United States",
     "currencyCode": "USD",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["USD"]
 },
 {
     "id": "it",
+    "name":"Italia",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD"]
 },
 {
     "id": "de_DE",
+    "name":"Germany",
     "currencyCode": "EUR",
     "supportedCurrency":["EUR","USD","AUD"]
-}, {
-    "id": "en_IN",
-    "currencyCode": "INR",
-    "supportedCurrency":["EUR","USD","AUD"]
-},
+}, 
 {
     "id": "en_GB",
+    "name":"United Kingdom",
     "currencyCode": "GBP",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","GBP"]
 }, {
     "id": "ja_JP",
+    "name":"Japan",
     "currencyCode": "JPY",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD","JPY"]
 }, {
     "id": "zh_CN",
+    "name":"中国",
     "currencyCode": "CNY",
-    "supportedCurrency":["EUR","USD","AUD"]
-}, {
+    "supportedCurrency":["EUR","USD","CNY"]
+}, 
+{
+    "id": "en_CN",
+    "name":"China",
+    "currencyCode": "CNY",
+    "supportedCurrency":["EUR","USD","CNY"]
+},{
     "id": "fr_FR",
+    "name":"France",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD"]
 }, {
     "id": "it_IT",
+    "name":"Italia",
     "currencyCode": "EUR",
     "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "nl_NL",
+    "name":  "Netharlands",
     "currencyCode": "EUR",
     "supportedCurrency":["EUR","USD","AUD"]
 },
 {
     "id": "tl_PH",
+    "name": "Philippines",
     "currencyCode": "PHP",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD","PHP"]
 },
 {
     "id": "en_AT",
+    "name":  "Austria",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD"]
 },
 {
     "id": "fr_BE",
+    "name": "Belgium",
     "currencyCode": "EUR",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD"]
 },
 {
     "id": "pl_PL",
+    "name":"Poland",
     "currencyCode": "PLN",
-    "supportedCurrency":["EUR","USD","AUD"]
+    "supportedCurrency":["EUR","USD","PLN"]
 }
 ]

@@ -21,10 +21,11 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
            
             localeOption = {
                 localID: locale.id,
+             
                 country: apiLocale.country,
                 displayCountry: apiLocale.displayCountry,
                 currencyCode: locale.currencyCode,
-                displayName: apiLocale.displayName,
+                displayName: locale.name,
                 language: apiLocale.language,
                 displayLanguage: apiLocale.displayLanguage
             };
@@ -50,7 +51,7 @@ function isLocaleValid(currentLocale) {
  * @param {string} siteId - id of the current site
  * @constructor
  */
-function Locale(currentLocale, allowedLocales, siteId) {
+function Locale(currentLocale, allowedLocales, siteId,currency) {
     var currentCountry = !isLocaleValid(currentLocale) ? countries[0]
         : countries.filter(function (country) {
             return country.id === currentLocale.ID;
@@ -65,8 +66,8 @@ function Locale(currentLocale, allowedLocales, siteId) {
         name: currentLocale.displayCountry,
         localeLinks: localeLinks,
         localLinks: localeLinks,
-        currencyCode: currentCountry.currencyCode,
-        displayName: currentLocale.displayName,
+        currencyCode: 'USD',
+        displayName: currentCountry.name,
         language: currentLocale.language,
         displayLanguage: currentLocale.displayLanguage,
         currency: currentCountry.supportedCurrency,
