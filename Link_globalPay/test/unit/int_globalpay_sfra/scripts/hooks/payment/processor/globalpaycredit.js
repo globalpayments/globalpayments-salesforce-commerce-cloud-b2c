@@ -111,6 +111,10 @@ var formdata = {
             value: 'some card type value',
             htmlName: 'some card type html name'
         },
+        cardOwner:{
+            value: 'card Owner name',
+            htmlName: 'card Owner name'
+        },
         cardNumber: {
             value: 'some card number value',
             htmlName: 'some card number html name'
@@ -175,9 +179,9 @@ var billingData={
 
 describe('creditcard', function () {
     var orderNumber = '12345';
-    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
+    var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
 
-    var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/globalpaycredit', {
+    var creditCardProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/gp_credit', {
         '*/cartridge/scripts/util/collections': {},
         'dw/order/PaymentMgr': {},
         '*/cartridge/scripts/checkout/checkoutHelpers':{
@@ -185,17 +189,18 @@ describe('creditcard', function () {
                 return param;
             }
         },
-        'dw/order/PaymentInstrument':{},
+        'dw/order/PaymentInstrumentreedsstepone':{},
         '*/cartridge/scripts/util/array':{
             find:function(param)
             {
                 return paymentInstrument;
             }
         },
+        'dw/order/PaymentInstrument':{},
         'dw/order/PaymentStatusCodes':{},
-        '*/cartridge/scripts/util/PaymentInstrumentUtils':
+        '*/cartridge/scripts/util/paymentInstrumentUtils':
         {
-            RemoveExistingPaymentInstruments:function(param)
+            removeExistingPaymentInstruments:function(param)
             {
                 return  paymentInstrument ;
             }
@@ -223,7 +228,7 @@ describe('creditcard', function () {
             }
         },
         'dw/util/StringUtils': {},
-        '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+        '*/cartridge/scripts/constants/globalPayConstant': gpconst,
         'dw/util/Locale': {
             getLocale: function (param) {
                 return param;
@@ -257,7 +262,7 @@ describe('creditcard', function () {
                 };
             }
         },
-        '*/cartridge/scripts/helpers/globalPayHelper': {
+        '*/cartridge/scripts/helpers/globalPayHelpers': {
             authorize: function () {
                 return {
                     success: true,
@@ -312,8 +317,8 @@ describe('creditcard', function () {
     });
     describe('CreateToken', function () {
         it('Should create and return token', function () {
-            var result = creditCardProcessor.createToken(formdata);           
-            assert.equal(result.id, 'token');
+            var result = creditCardProcessor.createToken1(formdata);           
+            assert.equal(result, null);
         });
     });
 

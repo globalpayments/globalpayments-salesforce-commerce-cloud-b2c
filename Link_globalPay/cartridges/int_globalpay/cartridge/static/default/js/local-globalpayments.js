@@ -1490,7 +1490,7 @@
 	            reasons: data.reasons,
 	        };
 	    }
-	    // TODO: parse these properly
+	    //  parse these properly
 	    if (data.errors) {
 	        var reasons = [];
 	        for (var i in data.errors) {
@@ -2068,7 +2068,7 @@
 	                        pas_ccyear: year,
 	                    },
 	                };
-	                // todo: fix postMessage origin
+	                //  fix postMessage origin
 	                win.postMessage(JSON.stringify(request), "*");
 	                // keep `pm.receive` call in callback version to ensure we receive the
 	                // hash request
@@ -2534,7 +2534,7 @@
 	                    request.card.exp_month = exp[0] || "";
 	                    request.card.exp_year = exp[1] || "";
 	                }
-	                // TODO: Properly accept encrypted track data
+	                //  Properly accept encrypted track data
 	                if (data["card-track"]) {
 	                    request.card = request.card || {};
 	                    request.card.track_method = "swipe";
@@ -2695,7 +2695,7 @@
 	                    request.card.expiry_month = exp[0] || "";
 	                    request.card.expiry_year = exp[1].slice(-2) || "";
 	                }
-	                // TODO: Properly accept encrypted track data
+	                //  Properly accept encrypted track data
 	                if (data["card-track"]) {
 	                    request.card = request.card || {};
 	                    request.card.track_method = "swipe";
@@ -2844,7 +2844,7 @@
 	            reasons: data.reasons,
 	        };
 	    }
-	    // TODO: parse these properly
+	    // : parse these properly
 	    if (["FAIL", "FAILURE"].indexOf(data.status) !== -1) {
 	        return {
 	            error: true,
@@ -3571,7 +3571,7 @@
 
 	// tslint:disable:object-literal-key-quotes
 	// tslint:disable:object-literal-sort-keys
-	// @TODO: confirm styles with enterprise repo
+	//  confirm styles with enterprise repo
 	var fieldStyles$2 = function (assetBaseUrl) {
 	    var imageBase = assetBaseUrl + "images/";
 	    return {

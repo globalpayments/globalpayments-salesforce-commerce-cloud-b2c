@@ -8,6 +8,7 @@
 <input type="hidden" name="gpaymerchantname" id="gpaymerchantname" value="${pdict.preferences.gpayMerchantName}"/>
 <input type="hidden" name="gatewayMerchantId" id="gatewayMerchantId" value="${pdict.preferences.gatewayMerchantId}"/>
 <input type="hidden" name="gpayenv" id="gpayenv" value="${pdict.preferences.gpayEnv}"/>
+<input type="hidden" name="eciData" id="eciData" value="${JSON.stringify(pdict.eciData)}"/>
 <input type="hidden" name="autenticationurl" id="autenticationurl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentication').toString()}"/>
 <input type="hidden" name="initiationurl" id="initiationurl" value="${require('dw/web/URLUtils').url('GlobalPay-Initiation').toString()}"/>
 <input type="hidden" name="threedsoneUrl" id="threedsoneUrl" value="${require('dw/web/URLUtils').abs('GlobalPay-ThreeDsOne').toString()}"/>
@@ -17,7 +18,7 @@
 <isset name="isSandbox" value="true" scope="page"/>
 </isif>
 <isif condition="${pdict.errorMsg}">
-<div class="authError"><isprint value="${pdict.errorMsg}" encoding="off"/></div>
+<div class="authError"><isprint value="${pdict.errorMsg}"/></div>
 </isif>
 <isif condition="${pdict.OrderTotal > 0}">
 	<fieldset>
@@ -118,7 +119,7 @@
 					<span>${Resource.msg('billing.creditcardlistexpdate', 'checkout', null)}</span>
 				</label>
 				<isscript>
-					var currentCountry = require('~/cartridge/scripts/util/Countries').getCurrent(pdict);
+					var currentCountry = require('*/cartridge/scripts/util/Countries').getCurrent(pdict);
 				</isscript>
 
 				<isdynamicform formobject="${pdict.CurrentForms.billing.paymentMethods.creditCard.expiration}" formdata="${currentCountry.dynamicForms.expirationInfo}"/>
@@ -201,7 +202,6 @@
 		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
-			<!-- Your custom payment method implementation goes here. -->
 			 <isinclude template="checkout/billing/paymentOptions/googlePayForm" />
 		</div>
 		<iscomment>
@@ -212,7 +212,6 @@
 		<isif condition=${isSandbox=='true'}>
     		<div class="sandbox-warning">${Resource.msg('payment.error.general', 'globalpay', null)}</div>
     	</isif>
-			<!-- Your custom payment method implementation goes here. -->
 			<isinclude template="checkout/billing/applePayTab" />
 		</div>
 		<div class="d-none"> 

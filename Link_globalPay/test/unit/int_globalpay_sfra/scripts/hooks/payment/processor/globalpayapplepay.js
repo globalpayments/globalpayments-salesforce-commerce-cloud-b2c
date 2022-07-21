@@ -4,22 +4,6 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-var paymentInstrument = {
-  creditCardNumberLastDigits: '1111',
-  creditCardHolder: 'The Muffin Man',
-  creditCardExpirationYear: 2018,
-  creditCardType: 'Visa',
-  maskedCreditCardNumber: '************1111',
-  paymentMethod: 'CREDIT_CARD',
-  creditCardExpirationMonth: 1,
-  paymentTransaction: {
-    amount: {
-      value: 0
-    }
-  }
-};
-
-var paymentProcessor = {};
 var order = {
   totalGrossPrice: 10.00,
   currencyCode: 'US',
@@ -38,28 +22,19 @@ var paymentdata = {
 
 describe('apple pay', function () {
   var orderNumber = '12345';
-  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalpayconstants', {});
-//   var gpPaymentUtils = proxyquire(gpPaymentUtilsObj, {
-//      'dw/system/Transaction': {
-//          wrap: function (arg) { arg(); }
-//      },
-//   });
-var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/processor/applepay', {
-    'dw/system/Status': {},
-    'server': {},
-    'dw/system/Transaction': {
-        wrap: function (arg) { arg(); }
-      },
-      'dw/extensions/applepay/ApplePayHookResult': {},
-});
-  var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayapplepay', {
+  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
+
+  var gpapplepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/hooks/payment/globalpayApplepay', {
     '*/cartridge/scripts/util/collections': {},
     'dw/order/PaymentMgr': {},
-    '*/cartridge/scripts/utils/PaymentInstrumentUtils':{
-        ApplePaymentOrderUpdate: function (param) {
-            return {
-                success: true,
-              };
+    'dw/web/Resource': {
+      msg: function (param) {
+          return param;
+      }
+  },
+    '*/cartridge/scripts/utils/paymentInstrumentUtils':{
+      applePaymentOrderUpdate:function(order, applePayresp) {
+            return true;
           }
     },
     'dw/order/PaymentInstrument': {},
@@ -70,11 +45,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
       }
     },
     'dw/system/HookMgr': {},
-    'dw/web/Resource': {
-      msg: function (param) {
-        return param;
-      }
-    },
+
     'dw/system/Transaction': {
       wrap: function (arg) { arg(); }
     },
@@ -92,7 +63,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
       }
     },
     'dw/util/StringUtils': {},
-    '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+    '*/cartridge/scripts/constants/globalPayConstant': gpconst,
     'dw/util/Locale': {
       getLocale: function (param) {
         return param;
@@ -125,7 +96,7 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
         };
       }
     },
-    '*/cartridge/scripts/helpers/globalPayHelper': {
+    '*/cartridge/scripts/helpers/globalPayHelpers': {
       applePay: function () {
         return {
           success: true,
@@ -137,9 +108,8 @@ var applepayProcessor = proxyquire('../../../../../../../cartridges/int_globalpa
   });
   describe('Authorize', function () {
     it('Should process the apple pay with success result', function () {
-      var result = gpapplepayProcessor.Authorize(order, paymentdata);
-      var applePayresp = result.success;
-      assert.isTrue(result.success);
+      var result = gpapplepayProcessor.authorize(order, paymentdata);
+      assert.isTrue(result);
     });
   });
 });

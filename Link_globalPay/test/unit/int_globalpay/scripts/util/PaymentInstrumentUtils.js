@@ -31,7 +31,7 @@ var serviceResponse = {
 };
 
 describe('paymentInstrumentUtils', function () {
-  var PaymentInstrumentUtils = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/util/PaymentInstrumentUtils', {
+  var PaymentInstrumentUtils = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/util/paymentInstrumentUtils', {
     'dw/web/Resource': {
       msg: function (param) {
         return param;
@@ -73,18 +73,18 @@ describe('paymentInstrumentUtils', function () {
     }
   });
 
-  describe('ApplePaymentOrderUpdate', function () {
+  describe('applePaymentOrderUpdate', function () {
     it('Should process the Applepayorder with succes result', function () {
-      var result = PaymentInstrumentUtils.ApplePaymentOrderUpdate(order, serviceResponse);
+      var result = PaymentInstrumentUtils.applePaymentOrderUpdate(order, serviceResponse);
       assert.equal(serviceResponse.success, false);
     });
 
   });
 
-  describe('RemoveExistingPaymentInstruments', function () {
+  describe('removeExistingPaymentInstruments', function () {
     var paymentType = 'paymentmethodname.googlepay';
     it('Should remove the existing payment instrument', function () {
-      var result = PaymentInstrumentUtils.RemoveExistingPaymentInstruments(paymentType);
+      var result = PaymentInstrumentUtils.removeExistingPaymentInstruments(paymentType);
       assert.deepEqual(
         result,
         paymentInstrument

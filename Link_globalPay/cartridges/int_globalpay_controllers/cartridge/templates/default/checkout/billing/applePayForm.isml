@@ -2,13 +2,7 @@
 <div class="tab-pane apple-pay-content" id="apple-pay-content" role="tabpanel">
 <fieldset class="payment-form-fields">
 <div class="apple-pay-button">
-  <iscomment> <button id="apple-pay-button" class="btn btn-apple-pay-button" >
-                <img class="apple-pay-logo" src="${URLUtils.staticURL('/images/apple-pay-button.png')}" 
-                 alt="ApplePay">
-  </button> </iscomment>
   <button id="apple-pay-button" class="btn btn-apple-pay-button" >
-               <!-- <img class="apple-pay-logo" src="${URLUtils.staticURL('/images/apple-pay-button.png')}" 
-                  alt="ApplePay">-->
       <div class="dom-ready">
         <div id="buttons-container" class="buttons-container" role="main" aria-label="PayPal">
           <div class="paypal-button-container paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-sandbox ">

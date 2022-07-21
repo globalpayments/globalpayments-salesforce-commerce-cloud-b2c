@@ -19,7 +19,7 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
 var gpapp = require(globalpayconstants.GPAPP);
@@ -27,8 +27,14 @@ var gpapp = require(globalpayconstants.GPAPP);
 var Cart = app.getModel('Cart');
 var Order = app.getModel('Order');
 
-var PaymentProcessor =require('*/cartridge/scripts/models/PaymentProcessorModel');
-
+var PaymentProcessor = require('*/cartridge/scripts/models/PaymentProcessorModel');
+var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
+var authorizationResult;
+var paymentInstrument;
+var paymentInstruments;
+var handlePaymentTransaction;
+var handlePaymentsResult;
+var saveCCResult;
 /**
  * Responsible for payment handling. This function uses PaymentProcessorModel methods to
  * handle payment processing specific to each payment instrument. It returns an
@@ -38,42 +44,34 @@ var PaymentProcessor =require('*/cartridge/scripts/models/PaymentProcessorModel'
  *
  * @transactional
  * @param {dw.order.Order} order - the order to handle payments for.
- * @return {Object} JSON object containing information about missing payments, errors, or an empty object if the function is successful.
+ * @return {Object} JSON object containing information about missing payments,
+ * errors, or an empty object if the function is successful.
  */
 function handlePayments(order) {
-
-    var result={};
+    var result = {};
     if (order.getTotalNetPrice().value !== 0.00) {
-
-        var paymentInstruments = order.getPaymentInstruments();
+        paymentInstruments = order.getPaymentInstruments();
 
         if (paymentInstruments.length === 0) {
-           
-            result.missingPaymentInfo= true;
-           
+            result.missingPaymentInfo = true;
         }
         /**
          * Sets the transaction ID for the payment instrument.
          */
-        var handlePaymentTransaction = function () {
+        handlePaymentTransaction = function () {
             paymentInstrument.getPaymentTransaction().setTransactionID(order.getOrderNo());
         };
 
         for (var i = 0; i < paymentInstruments.length; i++) {
-            var paymentInstrument = paymentInstruments[i];
+            paymentInstrument = paymentInstruments[i];
 
             if (PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod()).getPaymentProcessor() === null) {
-
                 Transaction.wrap(handlePaymentTransaction);
-
             } else {
-
-              var authorizationResult = PaymentProcessor.authorize(order, paymentInstrument);
-                result.authorizationResult=authorizationResult;
+                authorizationResult = PaymentProcessor.authorize(order, paymentInstrument);
+                result.authorizationResult = authorizationResult;
                 if (authorizationResult.not_supported || authorizationResult.error) {
-                    
-                    result.error= true;
-                    
+                    result.error = true;
                 }
             }
         }
@@ -89,6 +87,26 @@ function handlePayments(order) {
  * @transactional
  * @return {Object} JSON object that is empty, contains error information, or PlaceOrderError status information.
  */
+function clearForms() {
+  // Clears all forms used in the checkout process.
+    session.forms.singleshipping.clearFormElement();
+    session.forms.multishipping.clearFormElement();
+    session.forms.billing.clearFormElement();
+}
+/**
+ * To changes the Payment status
+ * @param {*object} order
+ */
+function changeOrderStatus(order) {
+    var preferences = globalPayPreferences.getPreferences();
+    Transaction.wrap(function () {
+        if (preferences.captureMode.value === globalpayconstants.captureMode.auto) {
+            order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
+        } else if (preferences.captureMode.value === globalpayconstants.captureMode.later) {
+            order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_NOTPAID);
+        }
+    });
+}
 function start() {
     var cart = Cart.get();
 
@@ -102,7 +120,8 @@ function start() {
     // Clean shipments.
     COShipping.PrepareShipments(cart);
 
-    // Make sure there is a valid shipping address, accounting for gift certificates that do not have one.
+    // Make sure there is a valid shipping address, accounting for gift
+    // certificates that do not have one.
     if (cart.getProductLineItems().size() > 0 && cart.getDefaultShipment().getShippingAddress() === null) {
         COShipping.Start();
         return {};
@@ -137,7 +156,7 @@ function start() {
     });
 
     // Handle used addresses and credit cards.
-    var saveCCResult = COBilling.SaveCreditCard();
+    saveCCResult = COBilling.SaveCreditCard();
 
     if (!saveCCResult) {
         return {
@@ -145,18 +164,16 @@ function start() {
             PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
         };
     }
-
     // Creates a new order. This will internally ReserveInventoryForOrder and will create a new Order with status
     // 'Created'.
     var order = cart.createOrder();
 
     if (!order) {
-        // TODO - need to pass BasketStatus to Cart-Show ?
         app.getController('Cart').Show();
 
         return {};
     }
-    var handlePaymentsResult = handlePayments(order);
+    handlePaymentsResult = handlePayments(order);
 
     if (handlePaymentsResult.error) {
         return Transaction.wrap(function () {
@@ -166,7 +183,6 @@ function start() {
                 PlaceOrderError: new Status(Status.ERROR, Resource.msg('checkout.status.declined', 'globalpay', null))
             };
         });
-
     } else if (handlePaymentsResult.missingPaymentInfo) {
         return Transaction.wrap(function () {
             OrderMgr.failOrder(order);
@@ -186,76 +202,47 @@ function start() {
 }
 
 /**
- * To changes the Payment status
- * @param {*object} order 
- */
-function changeOrderStatus(order)
-{
-    var globalPayPreferences = require('*/cartridge/scripts/helpers/globalPayPreferences');
-    var preferences = globalPayPreferences.getPreferences();
-    Transaction.wrap(function () {
-    if (preferences.captureMode.value === globalpayconstants.captureMode.auto) {
-      order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_PAID);
-    } else if (preferences.captureMode.value === globalpayconstants.captureMode.later) {
-      order.setPaymentStatus(dw.order.Order.PAYMENT_STATUS_NOTPAID);
-    }
-});
-}
-
-/**
  * handle payment transaction for Gpay and Paypal
- * @returns 
+ * @returns
  */
-function handlePayment()
-{
+function handlePayment() {
     var cart = Cart.get();
 
     var order = cart.createOrder();
 
     if (!order) {
-        // TODO - need to pass BasketStatus to Cart-Show ?
+        //   need to pass BasketStatus to Cart-Show ?
         app.getController('Cart').Show();
 
         return {};
     }
-    var paymentInstrument = PaymentProcessor.handle(order, app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value);
-    var handlePaymentsResult = handlePayments(order);
+    paymentInstrument = PaymentProcessor.handle(order, app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value);
+    handlePaymentsResult = handlePayments(order);
 
-    if (handlePaymentsResult.error ||handlePaymentsResult.missingPaymentInfo) {
-         Transaction.wrap(function () {
+    if (handlePaymentsResult.error || handlePaymentsResult.missingPaymentInfo) {
+        Transaction.wrap(function () {
             OrderMgr.failOrder(order);
             return {
                 error: true,
                 PlaceOrderError: new Status(Status.ERROR, 'confirm.error.technical')
             };
         });
-
     }
-    if(!handlePaymentsResult.authorizationResult.error&&app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value=='GP_DW_PAYPAL')
-    {
-        //redirect to Paypal site if authrization is success
-        var paypalresult=handlePaymentsResult.authorizationResult.paypalresp;
+    if (!handlePaymentsResult.authorizationResult.error && app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value === 'GP_DW_PAYPAL') {
+        // redirect to Paypal site if authrization is success
+        var paypalresult = handlePaymentsResult.authorizationResult.paypalresp;
         response.redirect(paypalresult.paymentMethod.apm.provider_redirect_url);
-    }
-    else if(!handlePaymentsResult.authorizationResult.error){
+    } else if (!handlePaymentsResult.authorizationResult.error) {
         // submit order for Gpay
-    var orderPlacementStatus = Order.submit(order);
-    if (!orderPlacementStatus.error) { 
-        changeOrderStatus(order);
-        clearForms();
+        var orderPlacementStatus = Order.submit(order);
+        if (!orderPlacementStatus.error) {
+            changeOrderStatus(order);
+            clearForms();
+        }
+        app.getController('COSummary').ShowConfirmation(order);
+    } else {
+        response.redirect(URLUtils.https('COShipping-Start')); // redirect to shipping page if there is any error
     }
-    app.getController('COSummary').ShowConfirmation(order);
-    }
-    else{
-        response.redirect(URLUtils.https('COShipping-Start')); //redirect to shipping page if there is any error
-    }
-}
-
-function clearForms() {
-    // Clears all forms used in the checkout process.
-    session.forms.singleshipping.clearFormElement();
-    session.forms.multishipping.clearFormElement();
-    session.forms.billing.clearFormElement();
 }
 
 /**
@@ -318,8 +305,7 @@ function submit() {
  * @function
  * @memberof COPlaceOrder
  */
-function payPalReturn()
-{
+function payPalReturn() {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
     if (dw.system.HookMgr.hasHook('app.payment.processor.GLOBALPAY_PAYPAL')) {
@@ -327,15 +313,15 @@ function payPalReturn()
                    'Capture',
                    order
                );
-         }
-         if(!empty(paymentFormResult) && (paymentFormResult.status == globalpayconstants.paypalData.captureStatus||paymentFormResult.status == globalpayconstants.paypalData.authorizedStatus)){
-            var orderPlacementStatus = Order.submit(order);
-            if (!orderPlacementStatus.error) {
-                app.getController('COSummary').ShowConfirmation(order);
-                changeOrderStatus(order);
-                clearForms();
-            }
-         }
+    }
+    if (!empty(paymentFormResult) && (paymentFormResult.status === globalpayconstants.paypalData.captureStatus || paymentFormResult.status === globalpayconstants.paypalData.authorizedStatus)) {
+        var orderPlacementStatus = Order.submit(order);
+        if (!orderPlacementStatus.error) {
+            app.getController('COSummary').ShowConfirmation(order);
+            changeOrderStatus(order);
+            clearForms();
+        }
+    }
 }
 /**
  * COPlaceOrder-PayPalCancel : The COPlaceOrder-PayPalCancel endpoint invokes paypal Cancel
@@ -343,8 +329,7 @@ function payPalReturn()
  * @function
  * @memberof COPlaceOrder
  */
-function payPalCancel()
-{
+function payPalCancel() {
     var orderId = request.httpParameterMap.id.toString().split('_')[2];
     var order = Order.get(orderId).object;
     Transaction.wrap(function () {

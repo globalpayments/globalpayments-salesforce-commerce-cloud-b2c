@@ -3,16 +3,18 @@
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
 var ApplePayHookResult = require('dw/extensions/applepay/ApplePayHookResult');
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 
 var paymentMethodID = globalpayconstants.applePay.paymentTypeCode;
+var globalpayAuthorization = require('./GP_APPLEPAY_Auth');
+var token;
 
 /**
  * @function getRequest hook is called whenever there is a new request on the site
  */
- exports.getRequest = function (basket, request) {
+exports.getRequest = function () {
     session.custom.applepaysession = 'yes';   // eslint-disable-line
-    var status = new Status(Status.OK );
+    var status = new Status(Status.OK);
     var result = new ApplePayHookResult(status, null);
     return result;
 };
@@ -35,11 +37,10 @@ exports.authorizeOrderPayment = function (order, responseData) {
         }
         paymentInstrument.paymentTransaction.paymentProcessor = paymentMethod.getPaymentProcessor();
     });
-   
+
    // service logic import
-  var globalpayAuthorization = require('./GP_APPLEPAY_Auth');
-  var token = responseData.payment.token.paymentData;
-  authResponseStatus= globalpayAuthorization.Authorize( order ,token);
+    token = responseData.payment.token.paymentData;
+    authResponseStatus = globalpayAuthorization.Authorize(order, token);
     if (authResponseStatus) {
         status = Status.OK;
     }

@@ -15,11 +15,11 @@ var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
 var gpapp = require(globalpayconstants.GPAPP);
-var pageMeta=require(globalpayconstants.SGPAGEMETA);
+var pageMeta = require(globalpayconstants.SGPAGEMETA);
 
 var Cart = app.getModel('Cart');
 
@@ -30,32 +30,30 @@ var Cart = app.getModel('Cart');
 function start(context) {
     var cart = Cart.get();
 
-    // Checks whether all payment methods are still applicable. Recalculates all existing non-gift certificate payment
-    // instrument totals according to redeemed gift certificates or additional discounts granted through coupon
+    // Checks whether all payment methods are still applicable.
+    // Recalculates all existing non-gift certificate payment
+    // instrument totals according to redeemed gift certificates
+    // or additional discounts granted through coupon
     // redemptions on this page.
     var COBilling = app.getController('COBilling');
     if (!COBilling.ValidatePayment(cart)) {
         COBilling.Start();
         return;
-    } else {
-        Transaction.wrap(function () {
-            cart.calculate();
-        });
-
-        Transaction.wrap(function () {
-            if (!cart.calculatePaymentTransactionTotal()) {
-                COBilling.Start();
-            }
-        });
-        var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
-        var gpapp = require(globalpayconstants.GPAPP);
-
-        var viewContext = require('app_storefront_core/cartridge/scripts/common/extend').immutable(context, {
-            Basket: cart.object
-        });
-        pageMeta.update({pageTitle: Resource.msg('summary.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')});
-        app.getView(viewContext).render('checkout/summary/summary');
     }
+    Transaction.wrap(function () {
+        cart.calculate();
+    });
+
+    Transaction.wrap(function () {
+        if (!cart.calculatePaymentTransactionTotal()) {
+            COBilling.Start();
+        }
+    });
+    var viewContext = require('app_storefront_core/cartridge/scripts/common/extend').immutable(context, {
+        Basket: cart.object
+    });
+    pageMeta.update({pageTitle: Resource.msg('summary.meta.pagetitle', 'checkout', 'SiteGenesis Checkout')});
+    app.getView(viewContext).render('checkout/summary/summary');
 }
 
 /**
@@ -63,8 +61,9 @@ function start(context) {
  * customer.
  */
 function submit() {
-    // Calls the COPlaceOrder controller that does the place order action and any payment authorization.
-    // COPlaceOrder returns a JSON object with an order_created key and a boolean value if the order was created successfully.
+    // Calls the COPlaceOrder controller that does the place order action
+    // and any payment authorization. COPlaceOrder returns a JSON object with and
+    // order_created key and a boolean value if the order was created successfully.
     // If the order creation failed, it returns a JSON object with an error key and a boolean value.
     var placeOrderResult = gpapp.getController('COPlaceOrder').Start();
     if (placeOrderResult.error) {
@@ -84,7 +83,8 @@ function submit() {
  */
 function showConfirmation(order) {
     if (!customer.authenticated) {
-        // Initializes the account creation form for guest checkouts by populating the first and last name with the
+        // Initializes the account creation form for guest checkouts
+        // by populating the first and last name with the
         // used billing address.
         var customerForm = app.getForm('profile.customer');
         customerForm.setValue('firstname', order.billingAddress.firstName);

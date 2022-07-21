@@ -4,8 +4,8 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
-var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/helpers/globalPayHelper', {
-'*/cartridge/scripts/dtos/Authentication' : {
+var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartridge/scripts/helpers/globalPayHelpers', {
+'*/cartridge/scripts/dto/authentication' : {
     Request : function(){
         return{
             setToken : function () {
@@ -42,7 +42,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
 
     }
 },
-'*/cartridge/scripts/dtos/paymentMethods/PaymentTokenization' : {
+'*/cartridge/scripts/dto/paymentMethods/paymentTokenization' : {
     Request : function(){
         return{
             setToken : function () {
@@ -70,7 +70,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/paymentMethods/UpdatePaymentTokenizationMode' : {
+'*/cartridge/scripts/dto/paymentMethods/updatePaymentTokenizationMode' : {
     Request : function(){
         return{
             setToken : function () {
@@ -90,7 +90,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/paymentMethods/DeletePaymentTokenization' : {
+'*/cartridge/scripts/dto/paymentMethods/deletePaymentTokenization' : {
     Request : function(){
         return{
             setToken : function () {
@@ -103,7 +103,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/Authorize' : {
+'*/cartridge/scripts/dto/authorize' : {
     Request : function(){
         return{
             setToken : function () {
@@ -139,7 +139,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
         }
     }
 },
-'*/cartridge/scripts/dtos/Refund' : {
+'*/cartridge/scripts/dto/refund' : {
     Request : function(){
     return {
         setToken : function () {
@@ -155,7 +155,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
 }
 },
 
-'*/cartridge/scripts/dtos/Capture' : {
+'*/cartridge/scripts/dto/capture' : {
     Request : function(){
         return {
             setToken : function () {
@@ -180,7 +180,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/Paypal' : {
+'*/cartridge/scripts/dto/paypal' : {
     Request : function(){
         return {
             setToken : function () {
@@ -220,7 +220,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/GooglePay' : {
+'*/cartridge/scripts/dto/googlePay' : {
     Request : function(){
         return {
             setToken : function () {
@@ -258,7 +258,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
 
 },
 
-'*/cartridge/scripts/dtos/ApplePay' : {
+'*/cartridge/scripts/dto/applePay' : {
     Request : function(){
         return {
             setToken : function () {
@@ -294,7 +294,38 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
         }
     }
 },
-'*/cartridge/scripts/dtos/ThreeDsStepone' : {
+'*/cartridge/scripts/dto/3dsSecure':
+{
+    Request : function(){
+        return {
+            setToken : function () {
+                return 'token';
+            },
+            setThreeDs : function () {
+                return 'three_ds';
+            },
+            setAuthId : function () {
+                return 'auth_id';
+            },
+            setMethodUrlCompletionStatus : function(){
+                return 'method_url_completion_status';
+            },
+            setMerchantContactUrl : function () {
+                return 'merchant_contact_url';
+            },
+            setOrder : function() {
+                return 'order';
+            },
+            setPaymentMethod : function() {
+                return 'payment_method';
+            },
+            setBrowserData : function () {
+                return 'browser_data';
+            },
+        }
+    }
+},
+'*/cartridge/scripts/dto/3dsStepOne' : {
     Request : function(){
         return {
             setToken : function () {
@@ -325,7 +356,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
     }
 },
 
-'*/cartridge/scripts/dtos/ThreeDsSteptwo' : {
+'*/cartridge/scripts/dto/3dsStepTwo' : {
     Request : function(){
         return {
             setToken : function () {
@@ -337,7 +368,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
         }
     }
 },
-'*/cartridge/scripts/dtos/PayPalCapture' : {
+'*/cartridge/scripts/dto/paypalCaptures' : {
     Request : function(){
         return {
             setToken : function () {
@@ -349,7 +380,7 @@ var globalpayHelper = proxyquire('../../../../../cartridges/int_globalpay/cartri
         }
     }
 },
-'*/cartridge/scripts/dtos/AccessToken' : {
+'*/cartridge/scripts/dto/accessToken' : {
     Request : function(){
         return {
             setGrantType : function () {

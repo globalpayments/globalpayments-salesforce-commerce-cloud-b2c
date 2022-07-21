@@ -3,7 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-var son = require('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/gputil');
+//var son = require('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/gputil');
 
 var order = {
   totalGrossPrice: 10.00,
@@ -16,11 +16,13 @@ var order = {
 
 
 describe('gputil', function () {
+  var gpconst = proxyquire('../../../../../../../cartridges/int_globalpay/cartridge/scripts/constants/globalPayConstant', {});
 var gpUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_sfra/cartridge/scripts/utils/gputil', {
     'dw/system/Transaction': {
         wrap: function (arg) { arg(); return true; }
-      },      
-      'dw/order/Order': {},
+      },
+      '*/cartridge/scripts/constants/globalpayconstants': gpconst,
+      'dw/order/Order':{},
       '*/cartridge/scripts/helpers/globalPayPreferences':{
         getPreferences: function () {
           return {
@@ -44,6 +46,7 @@ var gpUtilProcessor = proxyquire('../../../../../../../cartridges/int_globalpay_
       }
       },
       '*/cartridge/scripts/helpers/globalPayHelper':{},
+      '*/cartridge/scripts/constants/globalPayConstant': gpconst,
       'dw/order/OrderMgr': {
         placeOrder: function (param) {
           return param;

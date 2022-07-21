@@ -22,7 +22,7 @@ var URLUtils = require('dw/web/URLUtils');
 var Countries = require('app_storefront_core/cartridge/scripts/util/Countries');
 
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 
 var PaymentProcessor =require('*/cartridge/scripts/models/PaymentProcessorModel');
 var guard = require(globalpayconstants.GUARD);
@@ -100,27 +100,29 @@ function returnToForm(cart, params) {
         CurrentRequest: {
             locale: request.locale
         }
-      }).countryCode;
+    }).countryCode;
     var gpayToken =  globalPayHelper.getAccessToken();
     var preferences = globalPayPreferences.getPreferences();
     if (params) {
         app.getView(require(globalpayconstants.SGOBJECT).extend(params, {
             Basket: cart.object,
-            preferences:preferences,
-            gpayToken:gpayToken,
+            preferences: preferences,
+            gpayToken: gpayToken,
             country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing'),
             error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
-            errorMsg: request.httpParameterMap.payerAuthError
+            errorMsg: request.httpParameterMap.payerAuthError,
+            eciData: globalpayconstants.eciData
         })).render('checkout/billing/billing');
     } else {
         app.getView({
             Basket: cart.object,
-            preferences:preferences,
+            preferences: preferences,
             country: countryCode,
             ContinueURL: URLUtils.https('COBilling-Billing'),
             error: !!(request.httpParameterMap.payerAuthError != null && request.httpParameterMap.payerAuthError != ''),
-            errorMsg: request.httpParameterMap.payerAuthError
+            errorMsg: request.httpParameterMap.payerAuthError,
+            eciData: globalpayconstants.eciData
         }).render('checkout/billing/billing');
     }
 }
@@ -521,7 +523,7 @@ function billing() {
         applyCoupon: function () {
             var couponCode = request.httpParameterMap.couponCode.stringValue || request.httpParameterMap.dwfrm_billing_couponCode.stringValue;
 
-            // TODO what happened to this start node?
+           
             app.getController('Cart').AddCoupon(couponCode);
 
             handleCoupon();
@@ -532,7 +534,7 @@ function billing() {
             return;
         },
         paymentSelect: function () {
-            // ToDo - pass parameter ?
+            
             publicStart();
             return;
         },
@@ -551,8 +553,7 @@ function billing() {
         save: function () {
             Transaction.wrap(function () {
                 var cart = app.getModel('Cart').get();
-                var selectedPayment=app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value;
-	   
+                var selectedPayment=app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value; 
                 if (!resetPaymentForms() || !validateBilling() || !handleBillingAddress(cart) || // Performs validation steps, based upon the entered billing address
                 // and address options.
                 handlePaymentSelection(cart).error) {// Performs payment method specific checks, such as credit card verification.
@@ -566,31 +567,31 @@ function billing() {
                     // Mark step as fulfilled
                     app.getForm('billing').object.fulfilled.value = true;
                 // A successful billing page will jump to the next checkout step.
-                  if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode||selectedPayment==globalpayconstants.googlePay.paymentTypeCode||selectedPayment==globalpayconstants.applePay.paymentTypeCode)
+                    if(selectedPayment==globalpayconstants.paypalData.paymentTypeCode||selectedPayment==globalpayconstants.googlePay.paymentTypeCode||selectedPayment==globalpayconstants.applePay.paymentTypeCode)
                   {
-                    if(!validatePayment(cart))
+                        if(!validatePayment(cart))
                     {
-                        start();
-                    }
-                   else
+                            start();
+                        }
+                        else
                    {
-                    initAddressForm(cart);
-                    initEmailAddress(cart);
-                    gpapp.getController('COPlaceOrder').HandlePayment();
-                   }
-                  }
-               else
+                            initAddressForm(cart);
+                            initEmailAddress(cart);
+                            gpapp.getController('COPlaceOrder').HandlePayment();
+                        }
+                    }
+                    else
                  {
-                    var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
-                    if(creditCardForm.object.isThreedsone.value == 'true')
+                        var creditCardForm = gpapp.getForm('billing.paymentMethods.creditCard');
+                        if(creditCardForm.object.isThreedsone.value == 'true')
                     {
-                        app.getView({globalpayData : gpapp.getForm('billing.paymentMethods.creditCard')}).render('checkout/summary/threedsone');
+                            app.getView({globalpayData: gpapp.getForm('billing.paymentMethods.creditCard')}).render('checkout/summary/threedsone');
+                        }
+                        else{
+                            app.getController('COSummary').Start();
+                        }
+                        return;
                     }
-                    else{
-                    app.getController('COSummary').Start();
-                    }
-                    return;
-                 }
                 }
             });
         },
@@ -726,7 +727,7 @@ function editBillingAddress() {
  */
 function getGiftCertificateBalance() {
     var giftCertificate = GiftCertificateMgr.getGiftCertificateByCode(request.httpParameterMap.giftCertificateID.value);
-    var responseUtils = require('~/cartridge/scripts/util/Response');
+    var responseUtils = require('*/cartridge/scripts/util/Response');
 
     if (giftCertificate && giftCertificate.isEnabled()) {
         responseUtils.renderJSON({
@@ -837,13 +838,13 @@ function saveCreditCard() {
                 var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
 
                 var token= HookMgr.callHook('app.payment.processor.' + processor.ID, 'UpdateToken', {
-                paymentTokenID:JSON.parse(paymentTokenId).paymentReference
+                    paymentTokenID: JSON.parse(paymentTokenId).paymentReference
                 });
                 if (!empty(token) && !empty(token.id)) {
-                 newCreditCard.setCreditCardToken(token.id);
+                    newCreditCard.setCreditCardToken(token.id);
                 }
             }
-           for (i = 0; i < creditCards.length; i++) {
+            for (i = 0; i < creditCards.length; i++) {
                 var creditcard = creditCards[i];
 
                 if (creditcard.maskedCreditCardNumber === newCreditCard.maskedCreditCardNumber && creditcard.creditCardType === newCreditCard.creditCardType) {
@@ -855,8 +856,6 @@ function saveCreditCard() {
     }
     return true;
 }
-var OrderMgr = require('dw/order/OrderMgr');
-var Order = app.getModel('Order');
 
 /*
 * Redirect to 3D secure page

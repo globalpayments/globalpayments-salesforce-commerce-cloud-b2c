@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 'use strict';
 
 var util = {
@@ -51,7 +52,7 @@ function placeOrderSuccess(data) {
     $('[name$="_acsUrl"]').val(data.acschallengerequesturl);
     $('[name$="_isThreedsone"]').val(true);
 
-    }
+}
 /**
  * @function
  * @description Updates the credit card form with the attributes of a given card
@@ -103,7 +104,8 @@ $('.GPcreditCardList').on('change', function () {
 //submit billing form for selected credit card  from the list
 $('.button-fancy-large').on('click', function () {
     var pmttoken = $('#savedPaymentToken').val();
-    $('.gpayerror').text(''); 
+    $('.gpayerror').text('');
+    var eciData = JSON.parse($('#eciData').val());
     var cartData = {
         amount: parseFloat($('.order-total .order-value').text().replace('$', '').replace(/,/g, '')) * 100,
         address1: $('input[name*="_addressFields_address1"]').val(),
@@ -128,19 +130,18 @@ $('.button-fancy-large').on('click', function () {
 
             if(
             versionCheckData.versions.directoryServer.start == '1.0.0'
-            && versionCheckData.versions.directoryServer.end == '1.0.0' ){
-            $('input[name*=_authId]').val(versionCheckData.id);
-            var authenticationData = new Object();
-            authenticationData.status = 'undefined';
-            authenticationData.isthreedsone =  true;
-          //  $('#dwfrm_billing').submit();
-          if(versionCheckData.enrolled == 'ENROLLED'){
-            placeOrderSuccess(versionCheckData);
-            $('#dwfrm_billing').submit();
-            } else {
-                $('#dwfrm_billing').submit();   
-            }
-          } else if (versionCheckData.error) {
+            && versionCheckData.versions.directoryServer.end == '1.0.0'){
+                $('input[name*=_authId]').val(versionCheckData.id);
+                var authenticationData = new Object();
+                authenticationData.status = 'undefined';
+                authenticationData.isthreedsone =  true;
+                if(versionCheckData.enrolled == 'ENROLLED'){
+                    placeOrderSuccess(versionCheckData);
+                    $('#dwfrm_billing').submit();
+                } else {
+                    $('#dwfrm_billing').submit();
+                }
+            } else if (versionCheckData.error) {
 
             } else {
                 $('input[name*=_authId]').val(versionCheckData.id);
@@ -159,37 +160,31 @@ $('.button-fancy-large').on('click', function () {
                             displayMode: 'lightbox',
                         }
                     }).then(function (authenticationData) {
-                        $("#isthreeds").val(authenticationData.status);
+                        $('#isthreeds').val(authenticationData.status);
                         $('input[name*=_isthreeds]').val(authenticationData.status);
                         $('input[name*=_authId]').val(versionCheckData.id);
                         
                         if (authenticationData.mpi != undefined){
                             var eci = authenticationData.mpi.eci;
-                        if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                            if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {
-                                console.log("Frictionless Issuer Authentication Success, Recommend proceed to auth");
-                                console.log("ECI: ", eci);
-                                $('#dwfrm_billing').submit();
-                            } else {
-                                console.log("Frictionless Issuer Authentication Failed, Recommend decline auth!");
-                                console.log("ECI: ", eci);
-                                $('.gpayerror').text('Card got declined, please enter another card.');
-                            }
-                        }// Challenge Flow
-                        else {
+                            if (authenticationData.status !== 'CHALLENGE_REQUIRED') {
+                                if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {
+                                    $('#dwfrm_billing').submit();
+                                } else {
+                                    $('.gpayerror').text('Card got declined, please enter another card.');
+                                }
+                            }// Challenge Flow
+                            else {
                             
-                            if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {
-                                console.log("Challenge Issuer Authentication Success, Recommend proceed to auth");
-                                $('#dwfrm_billing').submit();
-                            } else {
-                                console.log("Challenge Issuer Authentication Failed, Recommend decline auth!");
-                                $('.gpayerror').text('Card got declined, please enter another card.');
+                                if (JSON.parse(authenticationData.challenge.response.data).transStatus === 'Y') {
+                                    $('#dwfrm_billing').submit();
+                                } else {
+                                    $('.gpayerror').text('Card got declined, please enter another card.');
+                                }
                             }
                         }
-                    }
-                    else{
-                        $('.gpayerror').text('Card got declined, please enter another card.');
-                    }
+                        else{
+                            $('.gpayerror').text('Card got declined, please enter another card.');
+                        }
                     })
                 }
                 catch (e) {
@@ -200,6 +195,5 @@ $('.button-fancy-large').on('click', function () {
     }
 
     catch (e) {
-        // TODO: add your error handling here
     }
 });

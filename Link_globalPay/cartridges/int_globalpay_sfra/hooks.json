@@ -1,17 +1,17 @@
 {
     "hooks": [{
             "name": "app.payment.processor.globalpay_creditcard",
-            "script": "./cartridge/scripts/hooks/payment/processor/globalpaycredit"
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_credit"
         },{
             "name": "app.payment.globalpay.processor.globalpay_creditcard",
             "script": "./cartridge/scripts/hooks/payment/processor/gpbasic_credit_form_processor"
         },{
             "name": "app.payment.processor.globalpay_paypal",
-            "script": "./cartridge/scripts/hooks/payment/processor/globalpaypaypal"
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_paypal"
         },
         {
             "name": "app.payment.processor.google_pay",
-            "script": "./cartridge/scripts/hooks/payment/processor/globalpaygooglepay"
+            "script": "./cartridge/scripts/hooks/payment/processor/gp_googlepay"
         },
         {
             "name": "dw.extensions.applepay.getRequest",

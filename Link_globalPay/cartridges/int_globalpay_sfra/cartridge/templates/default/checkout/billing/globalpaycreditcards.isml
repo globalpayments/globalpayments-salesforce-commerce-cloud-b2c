@@ -1,11 +1,7 @@
   <isset name="gp_AuthenticationsUrl" value="${require('dw/web/URLUtils').url('GlobalPay-Authentications').toString()}" scope="page"/>
  <form id="payment-form" action="/Payment/Charge" method="post">
-    <!-- Other input fields to capture relevant data -->
-    <!-- Target for the credit card form -->
     <div id="credit-card"></div>
 </form>
-
-<!--<script src="https://js.globalpay.com/v1/globalpayments.js"></script>-->
 
 <script src="${URLUtils.staticURL('/js/local-globalpayments.js')}"></script>
 <script src="${URLUtils.staticURL('/js/globalpayments-3ds.js')}"></script>
@@ -46,14 +42,15 @@ cardForm.on("token-success", (resp) => {
     const token = document.createElement("input");
     token.type = "hidden";
     token.name = "payment_token";
-    token.value = resp.paymentReference; 
+    token.value = resp.paymentReference;
     $('.gpayerror').text('');
     $("input[name='dwfrm_billing_creditCardFields_cardNumber']").val(resp.details.cardNumber);
     $('#cardType').val(resp.details.cardType.charAt(0).toUpperCase()+resp.details.cardType.substring(1, resp.details.cardType.length));
     $("#expirationMonth").val(parseInt(resp.details.expiryMonth, 10));
     $("#expirationYear").val(resp.details.expiryYear);
     $("#paymentId").val(JSON.stringify(resp));
-    $("#cardOwner").val(resp.details.cardholderName?resp.details.cardholderName:$("#billingFirstName").val()); 
+    $("#cardOwner").val(resp.details.cardholderName?resp.details.cardholderName:$("#billingFirstName").val());
+    var eciData = JSON.parse($('#eciData').val());
     if($("#expirationYear").val()){
     var pmttoken = $('#isnewcard').val()?resp.paymentReference : $('.saved-payment-instrument' + '.selected-payment').data('pmt');
          if($('#isnewcard').val()){
@@ -93,7 +90,7 @@ cardForm.on("token-success", (resp) => {
                         } else if ( versionCheckData.error ) {
 
                         }else{
-                         $("#authId").val(versionCheckData.id);                        
+                         $("#authId").val(versionCheckData.id);
                                 try {
                                     authenticationData = initiateAuthentication('GlobalPay-Initiation', {
                                     serverTransactionId: versionCheckData.serverTransactionId,
@@ -101,28 +98,26 @@ cardForm.on("token-success", (resp) => {
                                     authId: versionCheckData.id,
                                     methodUrlComplete: true,
                                     card: {
-                                        reference:pmttoken,// resp.paymentReference,
+                                        reference:pmttoken,
                                          cartData:cartData
                                     },
                                     challengeWindow: {
                                         windowSize: ChallengeWindowSize.Windowed600x400,
                                         displayMode: 'lightbox',
                                     }
-                                    // order: {}, // optional if data available on client-side
-                                    // payer: {}, // optional if data available on client-side
-                                }).then(function(authenticationData){                                   
+                                }).then(function(authenticationData){
                                     $("#isthreeds").val(authenticationData.status);
                                     if (authenticationData.mpi != undefined){
                                     var eci = authenticationData.mpi.eci;
-                                      if (authenticationData.status != "CHALLENGE_REQUIRED") {
-                                            if (eci == "05" || eci == "06" || eci == "01" || eci == "02") {                                            
+                                      if (authenticationData.status !== "CHALLENGE_REQUIRED") {
+                                            if (eci === eciData.five || eci === eciData.six || eci === eciData.one || eci === eciData.two) {                                            
                                                 $( ".submit-payment" ).trigger( "click" );
                                             } else {
                                                  $('.gpayerror').text('Card got declined, please enter another card.');
                                             }
-                                    }// Challenge Flow
+                                    }
                                     else {
-                                        if (JSON.parse(authenticationData.challenge.response.data).transStatus == "Y") {                            
+                                        if (JSON.parse(authenticationData.challenge.response.data).transStatus === "Y") {
                                            $( ".submit-payment" ).trigger( "click" );
                                         } else {
                                             
@@ -132,7 +127,6 @@ cardForm.on("token-success", (resp) => {
                                     } else {
                                          $('.gpayerror').text('Card got declined, please enter another card.');
                                     }
-
                                 }).catch(function(error){
                                    $('.gpayerror').text('Unable to process your request, please try again or use another card.');
                                  });
@@ -146,7 +140,6 @@ cardForm.on("token-success", (resp) => {
                     });
                  }
                  catch (e) {
-                    // TODO: add your error handling here
                  }
          }
     form.appendChild(token);
@@ -158,7 +151,6 @@ cardForm.on("token-success", (resp) => {
 });
 
 cardForm.on("token-error", (resp) => {
-    // show error to the consumers
-    $('.gpayerror').text('Card details are not valid, please enter valid card details.'); 
+    $('.gpayerror').text('Card details are not valid, please enter valid card details.');
 });
 </script>

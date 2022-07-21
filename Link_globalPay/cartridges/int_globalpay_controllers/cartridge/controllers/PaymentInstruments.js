@@ -16,16 +16,17 @@ var URLUtils = require('dw/web/URLUtils');
 
 /* Script Modules */
 /* Script Modules */
-var globalpayconstants = require('*/cartridge/scripts/constants/globalpayconstants');
+var globalpayconstants = require('*/cartridge/scripts/constants/globalPayConstant');
 var app = require(globalpayconstants.APP);
 var guard = require(globalpayconstants.GUARD);
-var pageMeta=require(globalpayconstants.SGPAGEMETA);
+var pageMeta = require(globalpayconstants.SGPAGEMETA);
 
 
 /**
  * Displays a list of customer payment instruments.
  *
- * Gets customer payment instrument information. Clears the paymentinstruments form and adds the customer
+ * Gets customer payment instrument information.
+ * Clears the paymentinstruments form and adds the customer
  * payment information to it. Updates the page metadata.
  * Renders a list of the saved credit card payment instruments of the current
  * customer (account/payment/paymentinstrumentlist template).
@@ -47,11 +48,14 @@ function list() {
 
 
 /**
- * Adds a new credit card payment instrument to the saved payment instruments of the current customer.
- * Sets the ContinueURL to PaymentInstruments-PaymentForm and renders the payment instrument details page
+ * Adds a new credit card payment instrument to the saved payment instruments
+ * of the current customer.Sets the ContinueURL to PaymentInstruments-PaymentForm
+ * and renders the payment instrument details page
  * (account/payment/paymentinstrumentdetails template).
- * __Note:__this function is called by the {@link module:controllers/PaymentInstruments~handlePaymentForm|handlePaymentForm} function.
- * @param {boolean} clearForm true or missing clears the form before displaying the page, false skips it
+ * __Note:__this function is called by the
+ * {@link module:controllers/PaymentInstruments~handlePaymentForm|handlePaymentForm} function.
+ * @param {boolean} clearForm true or missing clears the form before displaying the page,
+ * false skips it
  */
 function add(clearForm) {
     var paymentForm = app.getForm('paymentinstruments');
@@ -69,10 +73,13 @@ function add(clearForm) {
 
 /**
  * Form handler for the paymentinstruments form. Handles the following actions:
- * - __create__ - calls the {@link module:controllers/PaymentInstruments~create|create} function to create a payment instrument
- * and redirects to {@link module:controllers/PaymentInstruments~list|list}. If the
- * creation fails, calls the {@link module:controllers/PaymentInstruments~add|add} function with a clearform value of false.
- * - __error__ - calls the {@link module:controllers/PaymentInstruments~add|add} function with a clearform value of false.
+ * - __create__ - calls the {@link module:controllers/PaymentInstruments~create|create}
+ * function to create a payment instrument
+ * and redirects to {@link module:controllers/PaymentInstruments~list|list}.
+ * If the creation fails, calls the {@link module:controllers/PaymentInstruments~add|add}
+ * function with a clearform value of false.
+ * - __error__ - calls the {@link module:controllers/PaymentInstruments~add|add}
+ * function with a clearform value of false.
  */
 function handlePaymentForm() {
     var paymentForm = app.getForm('paymentinstruments');
@@ -81,9 +88,8 @@ function handlePaymentForm() {
             if (!create()) {
                 add(false);
                 return;
-            } else {
-                response.redirect(URLUtils.https('PaymentInstruments-List'));
             }
+            response.redirect(URLUtils.https('PaymentInstruments-List'));
         },
         error: function () {
             add(false);
@@ -105,43 +111,41 @@ function save(params) {
 }
 /**
  * create and update creditcard token in payment instrument.
- * @param {object} params 
- * @returns 
+ * @param {object} params
+ * @returns
  */
-function updateCardToken(params)
-{
+function updateCardToken(params) {
     var HookMgr = require('dw/system/HookMgr');
-    var creditCardFields=params.CreditCardFormFields;
+    var creditCardFields = params.CreditCardFormFields;
     var paymentInstr = params.PaymentInstrument;
-    var formdata =  {
-        name: creditCardFields.owner.value ,
+    var formdata = {
+        name: creditCardFields.owner.value,
         cardNumber: creditCardFields.number.value,
-        cardType:creditCardFields.type.value ,
-        expirationMonth: creditCardFields.expiration.month.value ,
+        cardType: creditCardFields.type.value,
+        expirationMonth: creditCardFields.expiration.month.value,
         expirationYear: creditCardFields.expiration.year.value,
         paymentForm: creditCardFields
-      };
-        var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
+    };
+    var processor = PaymentMgr.getPaymentMethod(app.getForm('billing').object.paymentMethods.selectedPaymentMethodID.value).getPaymentProcessor();
 
-        var token= HookMgr.callHook('app.payment.processor.' + processor.ID, 'CreateToken', 
+    var token = HookMgr.callHook('app.payment.processor.' + processor.ID, 'CreateToken',
             formdata
         );
-        if (!empty(token) && !empty(token.id)) {
-             paymentInstr.setCreditCardToken(token.id);
-        }
-        else if(!empty(token) && empty(token.error)){
-            throw new Error('Problem saving credit card');
-        }
-   return    paymentInstr;
+    if (!empty(token) && !empty(token.id)) {
+        paymentInstr.setCreditCardToken(token.id);
+    } else if (!empty(token) && empty(token.error)) {
+        throw new Error('Problem saving credit card');
+    }
+    return paymentInstr;
 }
 
 /**
  * Creates a new payment instrument. Verifies the credit card and checks if it is a duplicate of
  * a card already in the current customer's payment instruments. In a transaction, the function
  * attempts to save the credit card to the customer's payment instruments. If a duplicate card was
- * detected, the original card is removed after the new card is created. If the card cannot be created
- * successfully, the transaction is rolled back. Whether successful or not, the paymentinstruments
- * form is cleared.
+ * detected, the original card is removed after the new card is created.
+ *  If the card cannot be created successfully, the transaction is rolled back.
+ * Whether successful or not, the paymentinstruments form is cleared.
  *
  * @transaction
  * @return {boolean} true if the credit card can be verified, false otherwise
@@ -172,7 +176,7 @@ function create() {
 
     Transaction.begin();
     var paymentInstrument = wallet.createPaymentInstrument(dw.order.PaymentInstrument.METHOD_CREDIT_CARD);
-    
+
     try {
         save({
             PaymentInstrument: paymentInstrument,
@@ -201,13 +205,14 @@ function create() {
 
 /**
  * Form handler for the paymentinstruments form. Handles the following actions:
- * - __remove__ - uses the form and action supplied by the FormModel to remove a customer payment instrument
- * in a transaction.
+ * - __remove__ - uses the form and action supplied by the FormModel to remove
+ *  a customer payment instrument in a transaction.
  * - __error__ - does nothing.
  *
- * In either case, redirects to the {@link module:controllers/PaymentInstruments~list|List} function.
+ * In either case, redirects to the {@link module:controllers/PaymentInstruments~list|List}
+ * function.
  * @transaction
- * @TODO Should be moved into handlePaymentForm
+ * 
  * @FIXME Inner method should be lowercase.error action should do something
  */
 function Delete() {
@@ -218,10 +223,9 @@ function Delete() {
                 var wallet = customer.getProfile().getWallet();
                 wallet.removePaymentInstrument(action.object);
             });
-
         },
         error: function () {
-            // @TODO When could this happen
+            //  When could this happen
         }
     });
 
@@ -248,7 +252,6 @@ function verifyCreditCard() {
     var verifyPaymentCardResult = paymentCard.verify(expirationMonth, expirationYear, cardNumber);
 
     if (verifyPaymentCardResult.error === true) {
-
         if (!newCreditCardForm.isValid()) {
             return false;
         }
@@ -278,7 +281,8 @@ function verifyCreditCard() {
 /** Renders a list of the saved credit card payment instruments of the current customer.
  * @see module:controllers/PaymentInstruments~list */
 exports.List = guard.ensure(['https', 'get', 'loggedIn'], list);
-/** Adds a new credit card payment instrument to the saved payment instruments of the current customer.
+/** Adds a new credit card payment instrument to the saved payment instruments
+ * of the current customer.
  * @see module:controllers/PaymentInstruments~add */
 exports.Add = guard.ensure(['https', 'get', 'loggedIn'], add);
 /** Handles the submitted form for creating payment instruments.
