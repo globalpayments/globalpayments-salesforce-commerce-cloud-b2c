@@ -69,7 +69,7 @@
 			--------------------------------------------------------------
 		</iscomment>
 
-		<div class="payment-method <isif condition="${empty(pdict.selectedPaymentID) || pdict.selectedPaymentID=='CREDIT_CARD'}">payment-method-expanded</isif>" data-method="CREDIT_CARD">
+		<div class="payment-method creditcardForm hide <isif condition="${empty(pdict.selectedPaymentID) || pdict.selectedPaymentID=='CREDIT_CARD'}">payment-method-expanded</isif>" data-method="CREDIT_CARD">
 		<isif condition=${isSandbox=='true'}>
     		<div id="errormsg"></div>
 		</isif>
