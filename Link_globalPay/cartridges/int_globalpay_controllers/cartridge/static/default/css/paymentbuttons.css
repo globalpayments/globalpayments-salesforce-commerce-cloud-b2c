@@ -1420,4 +1420,7 @@ opacity: 1;
     .payment-method-options .field-wrapper {
         height: 0;
     }
-    
+
+    .creditcardForm.payment-method-expanded.show {
+        display: block;
+    }

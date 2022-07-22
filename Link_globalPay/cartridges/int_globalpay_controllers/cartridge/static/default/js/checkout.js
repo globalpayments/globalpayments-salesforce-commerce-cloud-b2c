@@ -197,3 +197,9 @@ $('.button-fancy-large').on('click', function () {
     catch (e) {
     }
 });
+
+
+if ($('.icon-CREDIT_CARD').length > 0){
+    $('.creditcardForm').addClass('show');
+    $('.creditcardForm').removeClass('hide');
+}
