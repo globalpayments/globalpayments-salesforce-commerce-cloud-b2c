@@ -21,6 +21,7 @@
             <i class="flag-icon flag-icon-${pdict.localeModel.locale.countryCode.toLowerCase()}"></i>
             ${pdict.localeModel.locale.currencyCode}
         </span>
+        <isif condition="${!empty(pdict.localeModel.locale.currency)}">
         <div class="dropdown-menu dropdown-country-selector" aria-labelledby="dropdownCountrySelector">
             <isloop items="${pdict.localeModel.locale.currency}" var="currency">
                 <a class="dropdown-item" href="${'#'}" data-locale="${pdict.localeModel.locale.ID}"
@@ -29,5 +30,6 @@
                 </a>
             </isloop>
         </div>
+        </isif>
     </div>
 </isif>

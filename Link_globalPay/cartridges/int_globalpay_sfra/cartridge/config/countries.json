@@ -1,81 +1,202 @@
 [{
-    "id": "en_US",
-    "name":"United States",
-    "currencyCode": "USD",
-    "alternativeCurrencyCodes":["USD"]
+    "id": "en_AT",
+    "name":  "Austria",
+    "currencyCode": "EUR"
 },
 {
-    "id": "it",
-    "name":"Italia",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
+    "id": "en_AU",
+    "name":  "Australia",
+    "currencyCode": "AUD",
+    "alternativeCurrencyCodes":["EUR","USD","AUD"]
 },
 {
-    "id": "de_DE",
-    "name":"Germany",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
-}, 
+    "id": "fr_BE",
+    "name": "Belgium",
+    "currencyCode": "EUR"
+},
 {
-    "id": "en_GB",
-    "name":"United Kingdom",
-    "currencyCode": "GBP",
-    "alternativeCurrencyCodes":["EUR","GBP"]
-}, {
-    "id": "ja_JP",
-    "name":"Japan",
-    "currencyCode": "JPY",
-    "alternativeCurrencyCodes":["EUR","USD","JPY"]
-}, {
+    "id": "en_CA",
+    "name": "Canada",
+    "currencyCode": "CAD"
+},
+{
     "id": "zh_CN",
     "name":"中国",
     "currencyCode": "CNY",
-    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
+    "alternativeCurrencyCodes":["AUD","CAD","EUR","GBP","HKD","SGD","USD","CNY"]
 }, 
 {
     "id": "en_CN",
     "name":"China",
     "currencyCode": "CNY",
-    "alternativeCurrencyCodes":["EUR","USD","CNY","AUD","CAD","HKD","SGD"]
-},{
+    "alternativeCurrencyCodes":["AUD","CAD","EUR","GBP","HKD","SGD","USD","CNY"]
+},
+{
+    "id": "en_CY",
+    "name": "Cyprus",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_CZ",
+    "name": "Czech Republic",
+    "currencyCode": "EUR"
+},
+{
+    "id": "de_DE",
+    "name":"Germany",
+    "currencyCode": "EUR"
+}, 
+{
+    "id": "en_DK",
+    "name":"Denmark",
+    "currencyCode": "DKK",
+    "alternativeCurrencyCodes":["DKK","EUR"]
+}, 
+{
+    "id": "en_EE",
+    "name":"Estonia",
+    "currencyCode": "EUR"
+}, 
+{
+    "id": "en_EE",
+    "name":"Spain",
+    "currencyCode": "EUR"
+}, 
+{
+    "id": "en_FI",
+    "name":"Finland",
+    "currencyCode": "EUR"
+}, {
     "id": "fr_FR",
     "name":"France",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
-}, {
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_GB",
+    "name":"United Kingdom",
+    "currencyCode": "GBP",
+    "alternativeCurrencyCodes":["EUR","GBP"]
+},
+{
+    "id": "en_GR",
+    "name":"Greece",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_HK",
+    "name":"Hong Kong",
+    "currencyCode": "HKD"
+},
+{
+    "id": "it",
+    "name":"Italia",
+    "currencyCode": "EUR"
+},
+{
     "id": "it_IT",
     "name":"Italia",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
+    "currencyCode": "EUR"
 },
+{
+    "id": "en_IR",
+    "name":"Ireland",
+    "currencyCode": "EUR"
+},
+ {
+    "id": "ja_JP",
+    "name":"Japan",
+    "currencyCode": "JPY"
+}, 
+{
+    "id": "en_LI",
+    "name":"Liechtenstein",
+    "currencyCode": "CHF"
+},
+{
+    "id": "en_LT",
+    "name":"Lithuania",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_LU",
+    "name":"Luxembourg",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_LV",
+    "name":"Latvia",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_MA",
+    "name":"Morocco",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_MT",
+    "name":"Malta",
+    "currencyCode": "EUR"
+},
+
 {
     "id": "nl_NL",
     "name":  "Netharlands",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
+    "currencyCode": "EUR"
 },
 {
-    "id": "tl_PH",
+    "id": "en_NO",
+    "name":"Norway",
+    "currencyCode": "NOK",
+    "alternativeCurrencyCodes":["EUR","NOK"]
+},
+{
+    "id": "en_NZ",
+    "name":"New Zealand",
+    "currencyCode": "NZD"
+},
+
+{
+    "id": "en_PH",
     "name": "Philippines",
-    "currencyCode": "PHP",
-    "alternativeCurrencyCodes":["PHP"]
+    "currencyCode": "PHP"
 },
-{
-    "id": "en_AT",
-    "name":  "Austria",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR"]
-},
-{
-    "id": "fr_BE",
-    "name": "Belgium",
-    "currencyCode": "EUR",
-    "alternativeCurrencyCodes":["EUR","USD"]
-},
+
 {
     "id": "pl_PL",
     "name":"Poland",
     "currencyCode": "PLN",
     "alternativeCurrencyCodes":["EUR","PLN"]
+},
+{
+    "id": "en_PT",
+    "name":"Portugal",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_SE",
+    "name":"Sweden",
+    "currencyCode": "SEK",
+    "alternativeCurrencyCodes":["EUR","SEK"]
+},
+{
+    "id": "en_SG",
+    "name":"Singapore",
+    "currencyCode": "SGD"
+}
+,
+{
+    "id": "en_SI",
+    "name":"Slovenia",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_SI",
+    "name":"Slovakia",
+    "currencyCode": "EUR"
+},
+{
+    "id": "en_US",
+    "name":"United States",
+    "currencyCode": "USD"
 }
 ]
