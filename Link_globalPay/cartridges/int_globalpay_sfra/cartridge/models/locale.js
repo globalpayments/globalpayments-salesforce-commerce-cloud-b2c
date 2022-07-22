@@ -51,7 +51,7 @@ function isLocaleValid(currentLocale) {
  * @param {string} siteId - id of the current site
  * @constructor
  */
-function Locale(currentLocale, allowedLocales, siteId,currency) {
+function Locale(currentLocale, allowedLocales, siteId,currentCurrency) {
     var currentCountry = !isLocaleValid(currentLocale) ? countries[0]
         : countries.filter(function (country) {
             return country.id === currentLocale.ID;
@@ -66,7 +66,7 @@ function Locale(currentLocale, allowedLocales, siteId,currency) {
         name: currentLocale.displayCountry,
         localeLinks: localeLinks,
         localLinks: localeLinks,
-        currencyCode: currentCountry.currencyCode,
+        currencyCode: currentCurrency,
         displayName: currentCountry.name,
         language: currentLocale.language,
         displayLanguage: currentLocale.displayLanguage,
