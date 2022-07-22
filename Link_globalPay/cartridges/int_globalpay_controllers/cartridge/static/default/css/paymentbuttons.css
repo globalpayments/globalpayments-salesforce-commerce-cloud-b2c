@@ -1417,3 +1417,7 @@ opacity: 1;
         background-image: url("../images/dragon.png"); 
         width: 65px !important;
     }
+    .payment-method-options .field-wrapper {
+        height: 0;
+    }
+    
