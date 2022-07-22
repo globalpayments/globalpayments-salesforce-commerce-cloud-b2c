@@ -1360,3 +1360,17 @@ opacity: 1;
             overflow: hidden;
             bottom: 0;
         }
+
+        .sandbox-warning {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            color: rgb(255, 255, 255);
+            background-color: rgb(119, 0, 0);
+            padding: 8px 5px;
+            font-family: Verdana;
+            font-weight: 100;
+            font-size: 12px;
+            text-align: center;
+            box-sizing: border-box;
+        }
